@@ -63,7 +63,7 @@ npm install vue-plugin-hiprint
 ```
 ## Global use
 ```javascript
-import {hiPrintPlugin} from 'vue-plugin-hiprint-test'
+import {hiPrintPlugin} from 'vue-plugin-hiprint'
 Vue.use(hiPrintPlugin, '$pluginName')
 // then use
 this.$pluginName
@@ -97,7 +97,7 @@ hiprintTemplate.print2({});
 ```
 ## Custom design
 ```javascript
-import {hiprint,defaultElementTypeProvider} from 'vue-plugin-hiprint-test'
+import {hiprint,defaultElementTypeProvider} from 'vue-plugin-hiprint'
 hiprint.init({
   providers: [new defaultElementTypeProvider()]
 })
