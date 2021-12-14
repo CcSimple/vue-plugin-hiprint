@@ -134,9 +134,9 @@ hiprintTemplate.design('#hiprint-printTemplate');
 
 
 
-[npm]: https://img.shields.io/npm/v/vue-plugin-hiprint-test.svg
-[npm-url]: https://npmjs.com/package/vue-plugin-hiprint-test
-[node]: https://img.shields.io/node/v/vue-plugin-hiprint-test.svg
+[npm]: https://img.shields.io/npm/v/vue-plugin-hiprint.svg
+[npm-url]: https://npmjs.com/package/vue-plugin-hiprint
+[node]: https://img.shields.io/node/v/vue-plugin-hiprint.svg
 [node-url]: https://nodejs.org
-[size]: https://packagephobia.now.sh/badge?p=vue-plugin-hiprint-test
-[size-url]: https://packagephobia.now.sh/result?p=vue-plugin-hiprint-test
+[size]: https://packagephobia.now.sh/badge?p=vue-plugin-hiprint
+[size-url]: https://packagephobia.now.sh/result?p=vue-plugin-hiprint
