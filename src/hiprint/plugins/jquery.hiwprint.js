@@ -47,7 +47,7 @@
       }
       loadAllImages(printDocument, function () {
 
-        performPrint($iframe[0]);
+        performPrint($iframe[0], opt);
       });
 
     };
@@ -58,10 +58,11 @@
 
   $.fn.hiwprint.defaults = {
     importCss: true,
-    printContainer: true
+    printContainer: true,
+    callback: null,
   };
 
-  function performPrint(iframeElement) {
+  function performPrint(iframeElement, opt) {
     try {
       iframeElement.focus();
       if (isEdge() || isIE()) {
@@ -73,6 +74,9 @@
       } else {
         // Other browsers
         iframeElement.contentWindow.print();
+      }
+      if (opt.callback) {
+        opt.callback()
       }
     } catch (error) {
       console.log(error);
@@ -102,11 +106,9 @@
       if (image.src && image.src !== window.location.href && image.src.indexOf('base64') == -1) {
 
         if (!image || typeof image.naturalWidth === 'undefined' || image.naturalWidth === 0 || !image.complete) {
-          console.log(image.complete);
           if (!image.complete) {
             allLoaded = false;
           }
-
         }
       }
     }

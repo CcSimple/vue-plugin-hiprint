@@ -7473,8 +7473,8 @@ var hiprint = function (t) {
         return null == t && (t = 0), this.printPanels[t].height > this.printPanels[t].width ? 1 : 2;
       }, t.prototype.getPrintStyle = function (t) {
         return this.printPanels[t].getPrintStyle();
-      }, t.prototype.print = function (t, e) {
-        t || (t = {}), this.getHtml(t, e).hiwprint();
+      }, t.prototype.print = function (t, e, o) {
+        t || (t = {}), this.getHtml(t, e).hiwprint(o);
       }, t.prototype.print2 = function (t, e) {
         if (t || (t = {}), e || (e = {}), this.clientIsOpened()) {
           var n = this,
