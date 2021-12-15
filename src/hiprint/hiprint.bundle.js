@@ -1391,6 +1391,11 @@ var hiprint = function (t) {
           o = void 0;
         t.attr("tabindex", "1"), t.keydown(function (r) {
           switch (r.keyCode) {
+            // BackSpace/Delete 删除元素
+            case 8:
+            case 46:
+              n.delete();
+              break
             case 37:
               i = n.options.getLeft(), n.updateSizeAndPositionOptions(i - _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.movingDistance), t.css("left", n.options.displayLeft()), n.createLineOfPosition(e), r.preventDefault();
               break;
