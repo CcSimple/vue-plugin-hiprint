@@ -4707,7 +4707,29 @@ var hiprint = function (t) {
 
     function o(i) {
       var o = t.data(i.data.target, "hidraggable");
-      e(i), 0 != o.options.onDrag.call(i.data.target, i, t.fn.dragLengthCNum(i.data.left, o.options), t.fn.dragLengthCNum(i.data.top, o.options)) && n(i);
+      e(i);
+      if (i.data.target.className.startsWith('resize-panel') || i.data.target.className.startsWith('hiprint-printElement')) {
+        var data = i.data
+        // 当前纸张宽高
+        var parent = data.parent.className.endsWith('design') ? data.parent : data.parent.offsetParent;
+        var paperW = parent.clientWidth, paperH = parent.clientHeight;
+        // 当前元素宽高
+        var elementW = data.target.clientWidth,elementH = data.target.clientHeight;
+        // 左右
+        if (data.left < 0) {
+          data.left = 0
+        } else if (data.left >= paperW - elementW) {
+          data.left = paperW - elementW
+        }
+        // 上下
+        if (data.top < 0) {
+          data.top = 0
+        } else if (data.top >= paperH - elementH) {
+          data.top = paperH - elementH
+        }
+        i.data = data
+      }
+      0 != o.options.onDrag.call(i.data.target, i, t.fn.dragLengthCNum(i.data.left, o.options), t.fn.dragLengthCNum(i.data.top, o.options)) && n(i);
       var r = i.data.target;
       return o.hidroppables.each(function () {
         var e = t(this);
@@ -7656,6 +7678,7 @@ var hiprint = function (t) {
 
 // 默认自定义拖拽列表
 import defaultTypeProvider from './etypes/default-etyps-provider'
+
 var defaultElementTypeProvider = defaultTypeProvider(hiprint)
 
 export {
