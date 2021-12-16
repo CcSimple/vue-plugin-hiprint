@@ -7518,19 +7518,33 @@ var hiprint = function (t) {
           var n = this,
             i = 0,
             o = {},
-            r = $("link[media=print]").length > 0 ? $("link[media=print]") : $("link");
-          r.each(function (a, p) {
-            var s = new XMLHttpRequest();
-            s.open("GET", $(p).attr("href")), s.onreadystatechange = function () {
-              if (4 === s.readyState && 200 === s.status && (o[a + ""] = '<style rel="stylesheet" type="text/css">' + s.responseText + "</style>", ++i == r.length)) {
-                for (var p = "", l = 0; l < r.length; l++) {
-                  p += o[l + ""];
-                }
-
-                n.sentToClient(p, t, e);
-              }
-            }, s.send();
-          });
+            // r = $("link[media=print]").length > 0 ? $("link[media=print]") : $("link"),
+            css = '';
+          if (!window.__VUE_HOT_MAP__) { // production 环境
+            var linkList = $("link").toArray().filter((e) => {
+              return e.href.includes("css/app") && e.rel === "stylesheet"
+            })
+            linkList.forEach((e) => {
+              css += e.outerHTML
+            })
+          }
+          var styleList = $("style").toArray().filter((e) => e.innerHTML.includes(".hiprint"))
+          styleList.forEach((e) => {
+            css += e.outerHTML
+          })
+          n.sentToClient(css, t, e);
+          // r.forEach(function (p, a) {
+          //   var s = new XMLHttpRequest();
+          //   s.open("GET", $(p).attr("href")), s.onreadystatechange = function () {
+          //     if (4 === s.readyState && 200 === s.status && (o[a + ""] = '<style rel="stylesheet" type="text/css">' + s.responseText + "</style>", ++i == r.length)) {
+          //       for (var p = "", l = 0; l < r.length; l++) {
+          //         p += o[l + ""];
+          //       }
+          //
+          //       n.sentToClient(p, t, e);
+          //     }
+          //   }, s.send();
+          // });
         } else alert("连接客户端失败");
       }, t.prototype.imageToBase64 = function (t) {
         var e = $(t).attr("src");
