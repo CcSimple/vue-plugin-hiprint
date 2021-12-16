@@ -5257,6 +5257,7 @@ var hiprint = function (t) {
   jQuery, n = "connected", i = "reconnecting", window.hiwebSocket = {
     opened: !1,
     name: "webSockets",
+    host: "http://localhost:17521",
     reconnectTimeout: 6e4,
     reconnectWindowSetTimeout: null,
     reconnectDelay: 2e3,
@@ -5276,11 +5277,16 @@ var hiprint = function (t) {
     getPrinterList: function getPrinterList() {
       return this.printerList;
     },
+    setHost: function (host) {
+      this.host = host
+      this.socket = null
+      this.start()
+    },
     start: function start() {
       var _this = this;
 
       var t = this;
-      window.WebSocket ? this.socket || (this.socket = io("http://localhost:17521", {
+      window.WebSocket ? this.socket || (this.socket = io(this.host, {
         reconnectionAttempts: 5
       }), this.socket.on("connect", function (e) {
         t.opened = !0, console.log("Websocket opened."), _this.socket.on("successs", function (t) {
