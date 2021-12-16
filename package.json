@@ -1,11 +1,23 @@
 {
   "name": "vue-plugin-hiprint",
   "description": "hiprint for vue2.0",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": "CcSimple",
   "license": "MIT",
   "main": "dist/vue-plugin-hiprint.js",
   "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CcSimple/vue-plugin-hiprint.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CcSimple/vue-plugin-hiprint/issues"
+  },
+  "keywords": [
+    "vue",
+    "hiprint",
+    "print"
+  ],
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
