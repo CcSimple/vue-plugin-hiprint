@@ -6959,11 +6959,11 @@ var hiprint = function (t) {
     }(),
     at = function () {
       function t(t, e, n, i) {
-        this.startX = this.minX = t, this.startY = this.minY = e, this.maxX = t, this.maxY = e, this.lastLeft = n, this.lastTop = i;
+        this.bx = t, this.by = e, this.ex = t, this.ey = e, this.startX = this.minX = t, this.startY = this.minY = e, this.maxX = t, this.maxY = e, this.lastLeft = n, this.lastTop = i;
       }
 
       return t.prototype.updateRect = function (t, e) {
-        this.minX = this.startX < t ? this.startX : t, this.minY = this.startY < e ? this.startY : e, this.maxX = this.startX < t ? t : this.startX, this.maxY = this.startY < e ? e : this.startY;
+        this.ex = t, this.ey = e, this.minX = this.startX < t ? this.startX : t, this.minY = this.startY < e ? this.startY : e, this.maxX = this.startX < t ? t : this.startX, this.maxY = this.startY < e ? e : this.startY;
       }, t.prototype.updatePositionByMultipleSelect = function (t, e) {
         null != t && (this.lastLeft = this.lastLeft + t), null != e && (this.lastTop = this.lastTop + e), this.target.css({
           left: this.lastLeft + "pt",
@@ -7207,8 +7207,12 @@ var hiprint = function (t) {
           n = this.designPaper.getTarget();
         this.mouseRect.target || (this.mouseRect.target = $('<div tabindex="1" style="z-index:2;position: absolute;opacity:0.2;border: 1px dashed #000;background-color:#31676f;"><span></span></div>'), n.find(".hiprint-printPaper-content").append(this.mouseRect.target), this.mouseRect.target.focus(), this.bingKeyboardMoveEvent(this.mouseRect.target), this.mouseRect.target.hidraggable({
           onDrag: function onDrag(t, n, i) {
-            e.mouseRect.lastLeft = e.mouseRect.lastLeft ? e.mouseRect.lastLeft : n, e.mouseRect.lastTop = e.mouseRect.lastTop ? e.mouseRect.lastTop : i, (e.mouseRect.mouseRectSelectedElement || []).forEach(function (t) {
-              t.updatePositionByMultipleSelect(n - e.mouseRect.lastLeft, i - e.mouseRect.lastTop);
+            e.mouseRect.target.css({
+              transform: 'unset'
+            }),
+            e.mouseRect.lastLeft = e.mouseRect.lastLeft ? o.a.px.toPt(e.mouseRect.target[0].offsetLeft) : n, e.mouseRect.lastTop = e.mouseRect.lastTop ? o.a.px.toPt(e.mouseRect.target[0].offsetTop) : i
+              , (e.mouseRect.mouseRectSelectedElement || []).forEach(function (t) {
+               t.updatePositionByMultipleSelect(n - e.mouseRect.lastLeft, i - e.mouseRect.lastTop);
             }), e.mouseRect.lastLeft = n, e.mouseRect.lastTop = i;
           },
           moveUnit: "pt",
@@ -7219,12 +7223,40 @@ var hiprint = function (t) {
           onStopDrag: function onStopDrag(t) {
             s.a.instance.draging = !1;
           }
-        })), this.mouseRect.target.css({
-          height: t.maxY - t.minY + "px",
-          width: t.maxX - t.minX + "px",
-          left: t.lastLeft + "pt",
-          top: t.lastTop + "pt"
-        });
+        }))
+        if (t.ex >= t.bx && t.ey >= t.by) {// 终点大于起点
+          this.mouseRect.target.css({
+            height: t.maxY - t.minY + "px",
+            width: t.maxX - t.minX + "px",
+            left: t.lastLeft + "pt",
+            top: t.lastTop + "pt",
+            transform: 'unset',
+          });
+        } else if (t.ex < t.bx && t.ey < t.by) {
+            this.mouseRect.target.css({
+              height: t.maxY - t.minY + "px",
+              width: t.maxX - t.minX + "px",
+              left: t.lastLeft + "pt",
+              top: t.lastTop + "pt",
+              transform: 'rotate(180deg)',
+              'transform-origin': '0 0'
+            });
+        } else {
+          var r = '',f = 'rotate(180deg)';
+          if (t.startX == t.minX || t.startX == t.maxX) {
+            if (t.ey >= t.by) {f = 'scaleX(-1)',r = 'left'} else {r = 'center top'}
+          } else if (t.startY == t.minY || t.startY == t.maxY) {
+            r = t.ex >= t.bx ? 'right' : 'left'
+          }
+          this.mouseRect.target.css({
+            height: t.maxY - t.minY + "px",
+            width: t.maxX - t.minX + "px",
+            left: t.lastLeft + "pt",
+            top: t.lastTop + "pt",
+            transform: f,
+            'transform-origin': r
+          });
+        }
       }, t.prototype.bingKeyboardMoveEvent = function (t) {
         var e = this;
         t.attr("tabindex", "1"), t.keydown(function (t) {
