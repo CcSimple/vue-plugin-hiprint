@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -20,6 +21,23 @@ module.exports = {
       $: "jquery"
     }),
   ],
+  optimization:{
+    minimizer:[
+      new UglifyJsPlugin({
+        sourceMap: true, //方便使用是查看具体错误位置
+        parallel: true,  //使用多进程并行运行来提高构建速度
+        uglifyOptions: {
+          output: {
+            comments: false
+          },
+          compress: {
+            drop_debugger: true,
+            drop_console: true
+          }
+        }
+      })
+    ]
+  },
   module: {
     rules: [
       {
@@ -79,18 +97,12 @@ module.exports = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map'
+  module.exports.devtool = 'cheap-module-source-map' // 
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
       }
     }),
     new webpack.LoaderOptionsPlugin({
