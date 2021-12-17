@@ -1,24 +1,61 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
+    <a-space class="logos" style="float: left;">
+      <img src="./assets/logo.png">
+      <img src="./assets/hi.png">
+      <div>期待大家的参与😁</div>
+    </a-space>
+    <a-row type="flex" class="menus">
+      <a-button-group>
+        <template v-for="demo in demoList">
+          <a-button :type="demo.name === curDemo ? 'primary' : 'info'" @click="curDemo = demo.name" :key="demo">
+            {{ demo.title }}
+          </a-button>
+        </template>
+      </a-button-group>
+    </a-row>
+    <!-- 动态渲染组件，懒得去弄路由了 -->
+    <component :is="curDemo"/>
   </div>
 </template>
 
 <script>
 
+import printDesign from '@/demo/design/index'
+
 export default {
   name: 'App',
-  components: {}
+  components: {printDesign},
+  data() {
+    return {
+      curDemo: 'printDesign',
+      demoList: [
+        {name: 'printDesign', title: '默认拖拽设计'}
+      ]
+    }
+  },
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="less">
+.logos {
+  padding: 6px 24px;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  img {
+    height: 40px;
+    width: 40px;
+  }
+}
+.menus {
+  padding: 10px 24px;
+}
+
+// hiprint 拖拽图片
+.hiprint-printElement-image-content {
+  img {
+    content: url("~@/assets/logo.png");
+  }
 }
 </style>
