@@ -7207,7 +7207,7 @@ var hiprint = function (t) {
       }, t.prototype.updateRectPanel = function (t) {
         var e = this,
           n = this.designPaper.getTarget();
-        this.mouseRect.target || (this.mouseRect.target = $('<div tabindex="1" style="z-index:2;position: absolute;opacity:0.2;border: 1px dashed #000;background-color:#31676f;"><span></span></div>'), n.find(".hiprint-printPaper-content").append(this.mouseRect.target), this.mouseRect.target.focus(), this.bingKeyboardMoveEvent(this.mouseRect.target), this.mouseRect.target.hidraggable({
+        this.mouseRect.target || (this.mouseRect.target = $('<div tabindex="1" style="z-index:2;position: absolute;opacity:0.2;border: 1px dashed #000;background-color:#31676f;"><span></span></div>'), n.find(".hiprint-printPaper-content").append(this.mouseRect.target), this.bingKeyboardMoveEvent(this.mouseRect.target), this.mouseRect.target.hidraggable({
           onDrag: function onDrag(t, n, i) {
             e.mouseRect.target.css({
               transform: 'unset'
