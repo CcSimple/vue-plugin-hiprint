@@ -5809,6 +5809,8 @@ var hiprint = function (t) {
       }, e.prototype.updateTargetImage = function (t, e, n) {
         var i = t.find(".hiprint-printElement-image-content");
         i.find("img").length ? i.find("img").attr("src", n) : i.html('<img style="width:100%;height:100%;" src="' + n + '">');
+        if (n.length) i.find("img").css('cssText',`width:100%;height:100%;content:url("${n}")!important`)
+        else i.find("img").css('cssText','width:100%;height:100%;')
       }, e.prototype.getHtml = function (t, e, n) {
         return this.getHtml2(t, e, n);
       }, e;
