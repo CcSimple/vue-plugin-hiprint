@@ -14,6 +14,34 @@
 # vue-plugin-hiprint
 > hiprint for vue2.0
 
+## 参与/预览
+```console
+git clone https://github.com/CcSimple/vue-plugin-hiprint.git
+// or
+git clone https://gitee.com/CcSimple/vue-plugin-hiprint.git
+// init
+cd vue-plugin-hiprint
+npm i
+// 调试预览
+npm run serve
+// 打包
+npm run build
+```
+
+## 演示/截个图咯~
+<div align="center">
+![image](./res/img.png)
+![image](./res/img_1.png)
+</div>
+
+## 状态/调整/优化
+- [x] `vue 插件` 发布npm包,方便直接使用
+- [x] `Ant Design Vue` 默认demo
+- [x] `优化删除元素功能` 支持 backSpace/delete 按键删除
+- [x] `优化拖动功能` fix 元素拖出窗口外的问题
+- [x] `优化框选功能` fix 原只能从上往下框选问题
+- [x] `支持修改默认直接打印主机` window.hiwebSocket.setHost("xxx:17521")
+
 ### 咳咳..
 第一次写插件(webpack打包这些都不太了解)，不合理的地方欢迎指正<a href="https://github.com/CcSimple/vue-plugin-hiprint/issues">issues</a>。
 简单的修改了下`hiprint.bundle.js`引入了相关资源,然后`export hiprint,defaultElementTypeProvider`
