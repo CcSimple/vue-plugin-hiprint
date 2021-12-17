@@ -30,7 +30,9 @@ npm run build
 
 ## 演示/截个图咯~
 <div align="center">
+
 ![image](./res/img.png)
+
 ![image](./res/img_1.png)
 </div>
 
