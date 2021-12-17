@@ -8,7 +8,7 @@
     <a-row type="flex" class="menus">
       <a-button-group>
         <template v-for="demo in demoList">
-          <a-button :type="demo.name === curDemo ? 'primary' : 'info'" @click="curDemo = demo.name" :key="demo">
+          <a-button :type="demo.name === curDemo ? 'primary' : 'info'" @click="curDemo = demo.name" :key="demo.name">
             {{ demo.title }}
           </a-button>
         </template>
