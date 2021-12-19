@@ -1390,6 +1390,11 @@ var hiprint = function (t) {
           i = void 0,
           o = void 0;
         t.attr("tabindex", "1"), t.keydown(function (r) {
+          // table处理
+          if (n.printElementType.type.includes('table') && n.columns.length) {
+            var isEditing = n.columns[0].isHead && n.columns[0].columns.some((e) => e.isEditing == true)
+            if (isEditing) return
+          }
           switch (r.keyCode) {
             // BackSpace/Delete 删除元素
             case 8:
@@ -1492,6 +1497,7 @@ var hiprint = function (t) {
           e.endEdit(t);
         }), this.tableOptions.editingCell && this.tableOptions.editingCell.id != t.id && this.tableOptions.editingCell.innerElement.endEdit(this.tableOptions.editingCell), this.tableOptions.editingCell = t;
       }, t.prototype.endEdit = function (t) {
+        t.isEditing = 0
         var e = this.editor.getValue();
         if (e) {
           if (this.tableOptions.options.isEnableEditField) {
