@@ -1461,6 +1461,44 @@ var hiprint = function (t) {
         configurable: !0
       }), t;
     }(),
+    i2 = function () {
+      function t() {
+      }
+
+      return t.prototype.init = function (e,i) {
+        var n = '<select class="auto-submit" style="width:100%">\n                <option value="" disabled>请选择字段</option>';
+        e.forEach(function (t, e) {
+          if (t.field == i.field) {
+            n += ' <option value="' + (t.field || "") + '" selected >' + (t.text || "") + "</option>";
+          } else {
+            n += ' <option value="' + (t.field || "") + '" >' + (t.text || "") + "</option>";
+          }
+        }), n += " </select>";
+          this.target = $(n), i.getTarget().append(this.target), this.target.focus();
+      }, t.prototype.getValue = function () {
+        var val = this.target.val()
+        var text = this.target.find('option[value="' + val + '"]').text()
+        return text + '#' + val;
+      }, t.prototype.setValue = function (t) {
+        t && (this.target.find('option[value="' + t + '"]').length || this.target.find("select").prepend('<option value="' + t + '" >' + t + "</option>"));
+        this.target.find("select").val(t);
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
+    o2 = function () {
+      function t() {
+        this.select = new i2();
+      }
+
+      return Object.defineProperty(t, "Instance", {
+        get: function get() {
+          return t._instance || (t._instance = new t()), t._instance;
+        },
+        enumerable: !0,
+        configurable: !0
+      }), t;
+    }(),
     r = function () {
       function t() {
       }
@@ -1473,6 +1511,8 @@ var hiprint = function (t) {
         configurable: !0
       }), t.prototype.createEditor = function (t) {
         return $.extend({}, o.Instance[t]);
+      }, t.prototype.createSelect = function (t) {
+        return $.extend({}, o2.Instance[t]);
       }, t;
     }(),
     a = n(10),
@@ -1491,16 +1531,28 @@ var hiprint = function (t) {
         return this.title;
       }, t.prototype.beginEdit = function (t) {
         var e = this;
-        this.editor = r.Instance.createEditor("text"), t.getTarget().html(""), this.editor.init(t), (this.title || this.field) && (this.tableOptions.options.isEnableEditField ? this.editor.setValue((this.title || "") + "#" + (this.field || "")) : this.editor.setValue(this.title || "")), $(this.editor.target).keydown(function (n) {
-          13 == n.keyCode && e.endEdit(t);
-        }), $(this.editor.target).blur(function (n) {
-          e.endEdit(t);
-        }), this.tableOptions.editingCell && this.tableOptions.editingCell.id != t.id && this.tableOptions.editingCell.innerElement.endEdit(this.tableOptions.editingCell), this.tableOptions.editingCell = t;
+        console.log(t)
+        console.log(e)
+        if (e.tableOptions.options.fields && e.tableOptions.options.fields.length) {
+          this.editor = r.Instance.createSelect("select"), t.getTarget().html(""), this.editor.init(e.tableOptions.options.fields, t), this.editor.setValue(this.field || ""), $(this.editor.target).keydown(function (n) {
+            13 == n.keyCode && e.endEdit(t);
+          }), $(this.editor.target).change(function (n) {
+            e.endEdit(t);
+          }), $(this.editor.target).blur(function (n) {
+            e.endEdit(t);
+          })
+        } else {
+          this.editor = r.Instance.createEditor("text"), t.getTarget().html(""), this.editor.init(t), (this.title || this.field) && (this.tableOptions.options.isEnableEditField ? this.editor.setValue((this.title || "") + "#" + (this.field || "")) : this.editor.setValue(this.title || "")), $(this.editor.target).keydown(function (n) {
+            13 == n.keyCode && e.endEdit(t);
+          }), $(this.editor.target).blur(function (n) {
+            e.endEdit(t);
+          }), this.tableOptions.editingCell && this.tableOptions.editingCell.id != t.id && this.tableOptions.editingCell.innerElement.endEdit(this.tableOptions.editingCell), this.tableOptions.editingCell = t;
+        }
       }, t.prototype.endEdit = function (t) {
         t.isEditing = 0
         var e = this.editor.getValue();
         if (e) {
-          if (this.tableOptions.options.isEnableEditField) {
+          if (this.tableOptions.options.isEnableEditField || this.tableOptions.options.fields) {
             var n = e.split("#");
             t.title = this.title = n[0], n.length > 0 && (t.field = this.field = n[1]);
           } else t.title = this.title = e;
@@ -3900,6 +3952,7 @@ var hiprint = function (t) {
           rows: this.getColumns(),
           resizeRow: !1,
           resizeColumn: !0,
+          fields: this.options.fields,
           trs: this.designTarget.find(".hiprint-printElement-tableTarget:eq(0)").find("tbody tr"),
           handle: this.designTarget.find(".hiprint-printElement-tableTarget:eq(0)").find("thead"),
           isEnableEdit: this.printElementType.editable,
@@ -3976,7 +4029,7 @@ var hiprint = function (t) {
 
   var i = function () {
       return function (t) {
-        this.table = t.table, this.isEnableEdit = t.isEnableEdit, this.trs = t.trs, this.resizeRow = t.resizeRow, this.resizeColumn = t.resizeColumn, this.isEnableEditField = t.isEnableEditField, this.isEnableContextMenu = t.isEnableContextMenu, this.isEnableEditField = t.isEnableEditField, this.isEnableInsertRow = t.isEnableInsertRow, this.isEnableDeleteRow = t.isEnableDeleteRow, this.isEnableInsertColumn = t.isEnableInsertColumn, this.isEnableDeleteColumn = t.isEnableDeleteColumn, this.isEnableMergeCell = t.isEnableMergeCell, this.columnResizable = t.columnResizable, this.columnAlignEditable = t.columnAlignEditable;
+        this.table = t.table, this.fields = t.fields, this.isEnableEdit = t.isEnableEdit, this.trs = t.trs, this.resizeRow = t.resizeRow, this.resizeColumn = t.resizeColumn, this.isEnableEditField = t.isEnableEditField, this.isEnableContextMenu = t.isEnableContextMenu, this.isEnableEditField = t.isEnableEditField, this.isEnableInsertRow = t.isEnableInsertRow, this.isEnableDeleteRow = t.isEnableDeleteRow, this.isEnableInsertColumn = t.isEnableInsertColumn, this.isEnableDeleteColumn = t.isEnableDeleteColumn, this.isEnableMergeCell = t.isEnableMergeCell, this.columnResizable = t.columnResizable, this.columnAlignEditable = t.columnAlignEditable;
       };
     }(),
     o = function () {
@@ -4583,7 +4636,7 @@ var hiprint = function (t) {
     r = (function () {
     }(), function () {
       return function (t) {
-        this.width = t.width, this.title = t.title, this.columnId = t.columnId, this.fixed = !1, this.rowspan = t.rowspan || 1, this.colspan = t.colspan || 1, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.formatter2 = t.formatter2, this.styler2 = t.styler2;
+        this.width = t.width, this.title = t.title, this.field = t.field, this.columnId = t.columnId, this.fixed = !1, this.rowspan = t.rowspan || 1, this.colspan = t.colspan || 1, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.formatter2 = t.formatter2, this.styler2 = t.styler2;
       };
     }()),
     a = n(5);
@@ -6812,6 +6865,7 @@ var hiprint = function (t) {
           rows: this.columns,
           resizeRow: !1,
           resizeColumn: !0,
+          fields: this.options.fields,
           trs: $(this.designTarget).find("tbody tr"),
           handle: this.designTarget.find("table thead"),
           columnDisplayEditable: !0,
