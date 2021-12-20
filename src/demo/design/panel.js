@@ -145,6 +145,7 @@ export default {
         "height": 44,
         "width": 511.5,
         "field": "table",
+        "fields": [{"text":'id',"field":'id'},{"text":'姓名',"field":'name'},{"text":'性别',"field":'gender'},{"text":'数量',"field":'count'}],
         "columns": [[{"width": 85.25, "colspan": 1, "rowspan": 1, "checked": true}, {
           "width": 85.25,
           "colspan": 1,
@@ -158,14 +159,21 @@ export default {
           "colspan": 1,
           "rowspan": 1,
           "checked": true,
-          "columnId": "name"
         }, {"width": 85.25, "colspan": 1, "rowspan": 1, "checked": true}, {
           "width": 85.25,
           "colspan": 1,
           "rowspan": 1,
           "checked": true
         }, {"width": 85.25, "colspan": 1, "rowspan": 1, "checked": true}]]
-      }, "printElementType": {"title": "表格", "type": "tableCustom"}
+      }, "printElementType": {
+        "title": "表格", "type": "table",
+        editable:true,
+        columnDisplayEditable: true,//列显示是否能编辑
+        columnDisplayIndexEditable: true,//列顺序显示是否能编辑
+        columnTitleEditable: true,//列标题是否能编辑
+        columnResizable: true, //列宽是否能调整
+        columnAlignEditable: true,//列对齐是否调整
+      }
     }, {
       "options": {
         "left": 21,
