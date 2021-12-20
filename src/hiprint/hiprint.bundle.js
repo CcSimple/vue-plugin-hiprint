@@ -5749,6 +5749,11 @@ var hiprint = function (t) {
         this[t] ? this[t] = this[t].concat(e) : this[t] = e, e.forEach(function (t) {
           n.allElementTypes = n.allElementTypes.concat(t.printElementTypes);
         });
+      }, t.prototype.removePrintElementTypes = function (t) {
+        var n = this;
+        delete n[t], n.allElementTypes = n.allElementTypes.filter(function (e) {
+          return e.tid.startsWith(t)
+        });
       }, t.prototype.getElementTypeGroups = function (t) {
         return this[this.formatterModule(t)] || [];
       }, t.prototype.getElementType = function (t) {
