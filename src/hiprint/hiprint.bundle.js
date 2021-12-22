@@ -1391,7 +1391,7 @@ var hiprint = function (t) {
           o = void 0;
         t.attr("tabindex", "1"), t.keydown(function (r) {
           // table处理
-          if (n.printElementType.type.includes('table') && n.columns.length) {
+          if (n.printElementType.type.includes('table') && n.columns && n.columns.length) {
             var isEditing = n.columns[0].isHead && n.columns[0].columns.some((e) => e.isEditing == true)
             if (isEditing) return
           }
