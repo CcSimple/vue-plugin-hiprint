@@ -5,6 +5,14 @@ import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 Vue.use(Antd);
 
+import Storage from 'vue-ls'
+let options = {
+  namespace: 'hiPrint-',
+  name: 'ls',
+  storage: 'local',
+};
+Vue.use(Storage, options);
+
 Vue.config.productionTip = false
 
 new Vue({

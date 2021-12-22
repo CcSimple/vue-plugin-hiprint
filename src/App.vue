@@ -22,15 +22,17 @@
 <script>
 
 import printDesign from '@/demo/design/index'
+import printCustom from '@/demo/custom/index'
 
 export default {
   name: 'App',
-  components: {printDesign},
+  components: {printDesign, printCustom},
   data() {
     return {
       curDemo: 'printDesign',
       demoList: [
-        {name: 'printDesign', title: '默认拖拽设计'}
+        {name: 'printDesign', title: '默认拖拽设计'},
+        {name: 'printCustom', title: '自定义设计'}
       ]
     }
   },
@@ -43,11 +45,13 @@ export default {
   display: flex;
   justify-content: center;
   align-self: center;
+
   img {
     height: 40px;
     width: 40px;
   }
 }
+
 .menus {
   padding: 10px 24px;
 }

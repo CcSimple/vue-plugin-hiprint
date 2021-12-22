@@ -25,7 +25,8 @@
   "dependencies": {
     "ant-design-vue": "^1.7.8",
     "core-js": "^3.6.5",
-    "vue": "^2.5.11"
+    "vue": "^2.5.11",
+    "vue-ls": "^4.0.0"
   },
   "browserslist": [
     "> 1%",
