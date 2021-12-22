@@ -7413,7 +7413,14 @@ var hiprint = function (t) {
           };
 
           var n = t.createTarget(i, i.options, i.printElementType);
-          e.printElementOptionSettingPanel[t.name] = n, r.append(n), t.setValue(i.options[t.name], i.options, i.printElementType);
+          e.printElementOptionSettingPanel[t.name] = n, r.append(n);
+          // 貌似只有这两个才需要多个参数
+          if (['columns','dataType'].includes(t.name)) {
+            t.setValue(i.options[t.name], i.options, i.printElementType);
+          } else {
+            // options 没有就取 printElementType内的 (如 table 的 footerFormatter)
+            t.setValue(i.options[t.name] || i.printElementType[t.name])
+          }
         });
         var a = $('<button class="hiprint-option-item-settingBtn hiprint-option-item-submitBtn"\n        type="button">确定</button>'),
           p = $('<button  class="hiprint-option-item-settingBtn hiprint-option-item-deleteBtn"\n        type="button">删除</button>');
