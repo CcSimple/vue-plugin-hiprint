@@ -4694,6 +4694,7 @@ var hiprint = function (t) {
         return this.gridColumns || 1;
       }, e.prototype.getPrintElementOptionEntity = function () {
         var e = t.prototype.getPrintElementOptionEntity.call(this);
+        e.fields = this.fields;
         return this.columns && (e.columns = [], this.columns.forEach(function (t) {
           var n = t.getPrintElementOptionEntity().filter(function (t) {
             return t.checked;
@@ -5787,7 +5788,7 @@ var hiprint = function (t) {
     d = n(15),
     c = function () {
       return function (t) {
-        this.field = t.field, this.title = t.title, this.type = t.type, this.columns = t.columns;
+        this.field = t.field, this.title = t.title, this.type = t.type, this.columns = t.columns, this.editable = t.editable, this.columnDisplayEditable = t.columnDisplayEditable, this.columnDisplayIndexEditable = t.columnDisplayIndexEditable, this.columnTitleEditable = t.columnTitleEditable, this.columnResizable = t.columnResizable, this.columnAlignEditable = t.columnAlignEditable;
       };
     }(),
     h = function () {
@@ -5813,6 +5814,18 @@ var hiprint = function (t) {
           e.push(new u.a(t));
         }), e;
       }, t.prototype.getPrintElementTypeEntity = function () {
+        if ('table' == this.type) {
+          return new c({
+            title: this.title,
+            type: this.type,
+            editable: this.editable,
+            columnDisplayEditable: this.columnDisplayEditable,
+            columnDisplayIndexEditable: this.columnDisplayIndexEditable,
+            columnResizable: this.columnResizable,
+            columnAlignEditable: this.columnAlignEditable,
+            columnTitleEditable: this.columnTitleEditable
+          });
+        }
         return new c({
           title: this.title,
           type: this.type
@@ -6670,6 +6683,7 @@ var hiprint = function (t) {
 
       return G(e, t), e.prototype.getPrintElementOptionEntity = function () {
         var e = t.prototype.getPrintElementOptionEntity.call(this);
+        e.fields = this.fields;
         return e.columns = [], this.columns.forEach(function (t) {
           e.columns.push(t.getPrintElementOptionEntity());
         }), e;
