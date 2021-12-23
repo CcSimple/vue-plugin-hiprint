@@ -3878,7 +3878,15 @@ var hiprint = function (t) {
             }
 
             if (c) {
-              if (this.getFooterFormatter()) d.find("tfoot").length && d.find("tfoot").html(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, this.getData(t), this.options, this.printElementType, t, h).html());
+              // 这里是table 没有tfoot, 后面再看什么原因...
+              if ("last" == this.options.tableFooterRepeat && !c.isEnd) break;
+              if (this.getFooterFormatter()) {
+                if (d.find("tfoot").length) {
+                  d.find("tfoot").html(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, this.getData(t), this.options, this.printElementType, t, h).html());
+                } else {
+                  d.find("tbody").length && d.find("tbody").append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, this.getData(t), this.options, this.printElementType, t, h).html());
+                }
+              }
               break;
             }
           }
@@ -6826,7 +6834,11 @@ var hiprint = function (t) {
           };
 
           if (p) {
-            this.printElementType.footerFormatter && e.find("tfoot") && e.find("tfoot").html(X.a.createTableFooter(this.printElementType.columns, this.getData(a), this.options, this.printElementType, a, d).html());
+            // 这里是tableCustom, 有tfoot
+            if ("last" == this.options.tableFooterRepeat && !p.isEnd) break;
+            if (this.printElementType.footerFormatter) {
+              e.find("tfoot") && e.find("tfoot").html(X.a.createTableFooter(this.printElementType.columns, this.getData(a), this.options, this.printElementType, a, d).html());
+            }
             break;
           }
         }
