@@ -99,6 +99,7 @@ import printPreview from './preview'
 
 import {hiprint} from '../../index'
 import providers from './providers'
+import printData from './print-data'
 
 let hiprintTemplate;
 export default {
@@ -111,9 +112,9 @@ export default {
       modeList: [],
       // 当前纸张
       curPaper: {
-        type: 'A4',
+        type: 'other',
         width: 220,
-        height: 150
+        height: 80
       },
       // 纸张类型
       paperTypes: {
@@ -144,8 +145,8 @@ export default {
       },
       // 自定义纸张
       paperPopVisible: false,
-      paperWidth: '',
-      paperHeight: '',
+      paperWidth: '220',
+      paperHeight: '80',
     }
   },
   computed: {
@@ -164,6 +165,7 @@ export default {
   },
   mounted() {
     this.init()
+    this.otherPaper()
   },
   methods: {
     init() {
@@ -217,13 +219,13 @@ export default {
     },
     preView() {
       let {width} = this.curPaper
-      this.$refs.preView.show(hiprintTemplate, {}, width)
+      this.$refs.preView.show(hiprintTemplate, printData, width)
     },
     print() {
       if (window.hiwebSocket.opened) {
         const printerList = hiprintTemplate.getPrinterList();
         console.log(printerList)
-        hiprintTemplate.print2({}, {printer: '', title: 'hiprint测试打印'});
+        hiprintTemplate.print2(printData, {printer: '', title: 'hiprint测试打印'});
         return
       }
       this.$message.error('客户端未连接,无法直接打印')

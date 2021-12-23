@@ -133,10 +133,11 @@ export const aProvider = function (ops) {
         ]),
         new hiprint.PrintElementTypeGroup("表格/其他", [
           {
-            tid: 'aProviderModule.BT', title: '订单数据',
+            tid: 'aProviderModule.table', title: '订单数据',
             type: 'table',
             options: {
-              field: 'BT',
+              field: 'table',
+              tableFooterRepeat: 'last',
               fields: [
                 {text: '名称', field: 'NAME'},
                 {text: '数量', field: 'SL'},
@@ -154,7 +155,7 @@ export const aProvider = function (ops) {
             columnAlignEditable: true,//列对齐是否调整
             columns: [
               [
-                {title: '名称', align: 'center', field: 'SPNAME', width: 150},
+                {title: '名称', align: 'center', field: 'NAME', width: 150},
                 {title: '数量', align: 'center', field: 'SL', width: 80},
                 {title: '规格', align: 'center', field: 'GG', width: 80},
                 {title: '条码', align: 'center', field: 'TM', width: 100},
@@ -327,7 +328,7 @@ export const bProvider = function (ops) {
             options: {
               field: 'table',
               fields: [
-                {text: '名称', field: 'SPNAME'},
+                {text: '名称', field: 'NAME'},
                 {text: '数量', field: 'SL'},
                 {text: '规格', field: 'GG'},
                 {text: '条码', field: 'TM'},
