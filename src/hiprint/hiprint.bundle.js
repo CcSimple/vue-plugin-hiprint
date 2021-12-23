@@ -3295,7 +3295,7 @@ var hiprint = function (t) {
         var t = this.target.find("textarea").val();
         if (t) return t;
       }, t.prototype.setValue = function (t) {
-        this.target.find("textarea").val(t);
+        this.target.find("textarea").val(t?t.toString():null);
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
@@ -3311,7 +3311,7 @@ var hiprint = function (t) {
         var t = this.target.find("textarea").val();
         if (t) return t;
       }, t.prototype.setValue = function (t) {
-        this.target.find("textarea").val(t);
+        this.target.find("textarea").val(t?t.toString():null);
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
@@ -3327,7 +3327,7 @@ var hiprint = function (t) {
         var t = this.target.find("textarea").val();
         if (t) return t;
       }, t.prototype.setValue = function (t) {
-        this.target.find("textarea").val(t);
+        this.target.find("textarea").val(t?t.toString():null);
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
@@ -3343,7 +3343,7 @@ var hiprint = function (t) {
         var t = this.target.find("textarea").val();
         if (t) return t;
       }, t.prototype.setValue = function (t) {
-        this.target.find("textarea").val(t);
+        this.target.find("textarea").val(t?t.toString():null);
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
@@ -3359,7 +3359,7 @@ var hiprint = function (t) {
         var t = this.target.find("textarea").val();
         if (t) return t;
       }, t.prototype.setValue = function (t) {
-        this.target.find("textarea").val(t);
+        this.target.find("textarea").val(t?t.toString():null);
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
@@ -3423,7 +3423,7 @@ var hiprint = function (t) {
         var t = this.target.find("textarea").val();
         if (t) return t;
       }, t.prototype.setValue = function (t) {
-        this.target.find("textarea").val(t);
+        this.target.find("textarea").val(t?t.toString():null);
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
@@ -3439,7 +3439,7 @@ var hiprint = function (t) {
         var t = this.target.find("textarea").val();
         if (t) return t;
       }, t.prototype.setValue = function (t) {
-        this.target.find("textarea").val(t);
+        this.target.find("textarea").val(t?t.toString():null);
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
