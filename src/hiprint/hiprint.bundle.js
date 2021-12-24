@@ -1130,6 +1130,7 @@ var hiprint = function (t) {
       }, BasePrintElement.prototype.SetProxyTargetOption = function (t) {
         this.options.getPrintElementOptionEntity();
         $.extend(this.options, t);
+        this.copyFromType()
       }, BasePrintElement.prototype.showInPage = function (t, e) {
         var n = this.options.showInPage,
           i = this.options.unShowInPage;
@@ -1291,6 +1292,15 @@ var hiprint = function (t) {
         }
       }, BasePrintElement.prototype.getData = function (t) {
         return t ? t[this.getField()] || "" : this.printElementType.getData();
+      }, BasePrintElement.prototype.copyFromType = function () {
+        var options = this.options,type = this.printElementType;
+        var names = this.getConfigOptions().supportOptions.map(function(e){return e.name});
+        Object.keys(type).forEach(function (e) {
+          if (type[e] && ('columns' != e) && names.indexOf(e) > -1) {
+            options[e] = 'function' == _typeof(type[e]) ? type[e].toString() : type[e]
+          }
+        })
+        return options
       }, BasePrintElement.prototype.getPrintElementOptionItems = function () {
         if (this._printElementOptionItems) return this._printElementOptionItems;
         var t = [],
