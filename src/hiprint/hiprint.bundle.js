@@ -590,6 +590,9 @@ var hiprint = function (t) {
             name: "gridColumnsGutter",
             hidden: !1
           }, {
+            name: "tableHeaderRepeat",
+            hidden: !1
+          }, {
             name: "tableBorder",
             hidden: !1
           }, {
@@ -1750,7 +1753,11 @@ var hiprint = function (t) {
         var o = $("<tr></tr>");
         o.data("rowData", e), t.rowColumns.forEach(function (t, i) {
           var r = $("<td></td>");
-          t.field && r.attr("field", t.field), t.align && r.css("text-align", t.align), t.vAlign && r.css("vertical-align", t.vAlign);
+          if ("first" == n.tableHeaderRepeat) {
+            t.field && r.attr("field", t.field), t.align && r.css("text-align", t.align), t.vAlign && r.css("vertical-align", t.vAlign), r.css("width", t.width + "pt");
+          } else {
+            t.field && r.attr("field", t.field), t.align && r.css("text-align", t.align), t.vAlign && r.css("vertical-align", t.vAlign);
+          }
           var a = TableExcelHelper.getColumnFormatter(t),
             p = a ? a(e[t.field], e, i, n) : e[t.field];
           r.html(p);
@@ -3207,6 +3214,22 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
+    it = function () {
+      function t() {
+        this.name = "tableHeaderRepeat";
+      }
+
+      return t.prototype.createTarget = function () {
+        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        表格头显示\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n        <option value="page" >每页显示</option>\n        <option value="first" >首页显示</option>\n        </select>\n        </div>\n    </div>'), this.target;
+      }, t.prototype.getValue = function () {
+        var t = this.target.find("select").val();
+        if (t) return t.toString();
+      }, t.prototype.setValue = function (t) {
+        this.target.find("select").val(t);
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
     dt = function () {
       function t() {
         this.name = "paddingLeft";
@@ -3503,7 +3526,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new C(), new O(), new H(), new D(), new I(), new R(), new M(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt()], t;
+    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new C(), new O(), new H(), new D(), new I(), new R(), new M(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new it(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -3864,6 +3887,10 @@ var hiprint = function (t) {
           p = _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.pt.toPx(e);
 
         n.find(".hiprint-printElement-tableTarget tbody").html("");
+        // 仅首页显示表头
+        if ("first" == this.options.tableHeaderRepeat && o > 0) {
+          n.find(".hiprint-printElement-tableTarget thead").remove();
+        }
         var s = n.outerHeight();
         if (s > p) return {
           target: void 0,

@@ -137,6 +137,7 @@ export const aProvider = function (ops) {
             type: 'table',
             options: {
               field: 'table',
+              tableHeaderRepeat: 'first',
               tableFooterRepeat: 'last',
               fields: [
                 {text: '名称', field: 'NAME'},

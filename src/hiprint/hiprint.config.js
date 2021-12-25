@@ -367,7 +367,10 @@
                 name: 'gridColumnsGutter',
                 hidden: false
             },
-
+            {
+              name: 'tableHeaderRepeat',
+              hidden: false
+            },
             {
                 name: 'tableBorder',
                 hidden: false
