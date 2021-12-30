@@ -5387,7 +5387,7 @@ var hiprint = function (t) {
     },
     setHost: function (host) {
       this.host = host
-      this.socket = null
+      this.stop()
       this.start()
     },
     start: function start() {
@@ -5412,7 +5412,7 @@ var hiprint = function (t) {
       this.state !== n && this.state !== i || (this.stop(), this.ensureReconnectingState() && (console.log("Websocket reconnecting."), this.start()));
     },
     stop: function stop() {
-      this.socket && (console.log("Closing the Websocket."), this.socket.close(), this.socket = null);
+      this.socket && (console.log("Closing the Websocket."), this.socket.close(), this.socket = null, this.printerList = []);
     },
     ensureReconnectingState: function ensureReconnectingState() {
       return this.state = i, this.state === i;
