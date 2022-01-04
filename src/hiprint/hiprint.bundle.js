@@ -4006,13 +4006,13 @@ var hiprint = function (t) {
           columnResizable: this.printElementType.columnResizable,
           columnAlignEditable: this.printElementType.columnAlignEditable,
           isEnableEditText: this.printElementType.columnTitleEditable,
-          isEnableEditField: !1,
-          isEnableContextMenu: !0,
-          isEnableInsertRow: !1,
-          isEnableDeleteRow: !1,
-          isEnableInsertColumn: !1,
-          isEnableDeleteColumn: !1,
-          isEnableMergeCell: !1
+          isEnableEditField: this.printElementType.isEnableEditField,
+          isEnableContextMenu: this.printElementType.isEnableContextMenu,
+          isEnableInsertRow: this.printElementType.isEnableInsertRow,
+          isEnableDeleteRow: this.printElementType.isEnableDeleteRow,
+          isEnableInsertColumn: this.printElementType.isEnableInsertColumn,
+          isEnableDeleteColumn: this.printElementType.isEnableDeleteColumn,
+          isEnableMergeCell: this.printElementType.isEnableMergeCell
         }), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.event.on("updateTable" + this.hitable.id, function () {
           t.updateDesignViewFromOptions();
         });
@@ -5833,7 +5833,8 @@ var hiprint = function (t) {
     d = n(15),
     c = function () {
       return function (t) {
-        this.field = t.field, this.title = t.title, this.type = t.type, this.columns = t.columns, this.editable = t.editable, this.columnDisplayEditable = t.columnDisplayEditable, this.columnDisplayIndexEditable = t.columnDisplayIndexEditable, this.columnTitleEditable = t.columnTitleEditable, this.columnResizable = t.columnResizable, this.columnAlignEditable = t.columnAlignEditable;
+        this.field = t.field, this.title = t.title, this.type = t.type, this.columns = t.columns, this.editable = t.editable, this.columnDisplayEditable = t.columnDisplayEditable, this.columnDisplayIndexEditable = t.columnDisplayIndexEditable, this.columnTitleEditable = t.columnTitleEditable, this.columnResizable = t.columnResizable, this.columnAlignEditable = t.columnAlignEditable,
+          this.isEnableEditField = t.isEnableEditField, this.isEnableContextMenu = t.isEnableContextMenu, this.isEnableInsertRow = t.isEnableInsertRow, this.isEnableDeleteRow = t.isEnableDeleteRow, this.isEnableInsertColumn = t.isEnableInsertColumn, this.isEnableDeleteColumn = t.isEnableDeleteColumn, this.isEnableMergeCell = t.isEnableMergeCell;
       };
     }(),
     h = function () {
@@ -5841,7 +5842,8 @@ var hiprint = function (t) {
         var e = this;
         this.text = t.text, this.field = t.field, this.fields = t.fields, this.title = t.title, this.tid = t.tid, this.data = t.data, this.styler = t.styler, this.formatter = t.formatter, this.type = t.type, this.options = t.options, this.editable = t.editable, this.columnDisplayEditable = t.columnDisplayEditable, this.columnDisplayIndexEditable = t.columnDisplayIndexEditable, this.columnTitleEditable = t.columnTitleEditable, this.columnResizable = t.columnResizable, this.columnAlignEditable = t.columnAlignEditable, this.columns = [], (t.columns || []).forEach(function (t, n) {
           e.columns.push(e.createTableColumnArray(t));
-        }), this.rowStyler = t.rowStyler, this.striped = t.striped, this.groupFields = t.groupFields || [], this.groupFormatter = t.groupFormatter, this.groupFooterFormatter = t.groupFooterFormatter, this.footerFormatter = t.footerFormatter, this.gridColumnsFooterFormatter = t.gridColumnsFooterFormatter, this.columnObj = this.makeColumnObj();
+        }), this.rowStyler = t.rowStyler, this.striped = t.striped, this.groupFields = t.groupFields || [], this.groupFormatter = t.groupFormatter, this.groupFooterFormatter = t.groupFooterFormatter, this.footerFormatter = t.footerFormatter, this.gridColumnsFooterFormatter = t.gridColumnsFooterFormatter,
+          this.isEnableEditField = t.isEnableEditField, this.isEnableContextMenu = t.isEnableContextMenu, this.isEnableInsertRow = t.isEnableInsertRow, this.isEnableDeleteRow = t.isEnableDeleteRow, this.isEnableInsertColumn = t.isEnableInsertColumn, this.isEnableDeleteColumn = t.isEnableDeleteColumn, this.isEnableMergeCell = t.isEnableMergeCell, this.columnObj = this.makeColumnObj();
       }
 
       return t.prototype.getText = function () {
@@ -5868,7 +5870,14 @@ var hiprint = function (t) {
             columnDisplayIndexEditable: this.columnDisplayIndexEditable,
             columnResizable: this.columnResizable,
             columnAlignEditable: this.columnAlignEditable,
-            columnTitleEditable: this.columnTitleEditable
+            columnTitleEditable: this.columnTitleEditable,
+            isEnableEditField: this.isEnableEditField,
+            isEnableContextMenu: this.isEnableContextMenu,
+            isEnableInsertRow: this.isEnableInsertRow,
+            isEnableDeleteRow: this.isEnableDeleteRow,
+            isEnableInsertColumn: this.isEnableInsertColumn,
+            isEnableDeleteColumn: this.isEnableDeleteColumn,
+            isEnableMergeCell: this.isEnableMergeCell
           });
         }
         return new c({

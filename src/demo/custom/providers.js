@@ -154,6 +154,13 @@ export const aProvider = function (ops) {
             columnTitleEditable: true,//列标题是否能编辑
             columnResizable: true, //列宽是否能调整
             columnAlignEditable: true,//列对齐是否调整
+            isEnableEditField: true, //编辑字段
+            isEnableContextMenu: true, //开启右键菜单 默认true
+            isEnableInsertRow: true, //插入行
+            isEnableDeleteRow: true, //删除行
+            isEnableInsertColumn: true, //插入列
+            isEnableDeleteColumn: true, //删除列
+            isEnableMergeCell: true, //合并单元格
             columns: [
               [
                 {title: '名称', align: 'center', field: 'NAME', width: 150},
