@@ -43,6 +43,10 @@ npm run build
 - [x] `优化拖动功能` fix 元素拖出窗口外的问题
 - [x] `优化框选功能` fix 原只能从上往下框选问题
 - [x] `支持修改默认直接打印主机` window.hiwebSocket.setHost("xxx:17521")
+- [x] `print优化调整` 支持设置callback 见demo的preview.vue
+- [x] `table/tableCustom优化调整` 支持设置options.fields 双击选择字段,
+- [x] `table优化调整` 支持设置isEnableInsertColumn/isEnableDeleteColumn等参数，支持插入/删除列
+- [x] `table/tableCustom优化调整` 支持设置options.tableHeaderRepeat/tableFooterRepeat 表头/表脚显示模式
 
 ### 咳咳..
 第一次写插件(webpack打包这些都不太了解)，不合理的地方欢迎指正<a href="https://github.com/CcSimple/vue-plugin-hiprint/issues">issues</a>。
@@ -160,6 +164,23 @@ hiprintTemplate.design('#hiprint-printTemplate');
   }
 }
 </style>
+```
+> print/print2 打印回调
+```javascript
+// 浏览器预览打印
+hiprintTemplate.print(this.printData, {}, {
+  callback: () => {
+    console.log('浏览器打印窗口已打开')
+  }
+})
+// 直接打印
+hiprintTemplate.print2(printData, {printer: '打印机名称', title: '打印标题'})
+hiprintTemplate.on('printSuccess', function (data) {
+  console.log('打印完成')
+})
+hiprintTemplate.on('printError', function (data) {
+  console.log('打印失败')
+})
 ```
 
 
