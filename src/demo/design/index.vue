@@ -192,6 +192,24 @@ export default {
     hiprint.init({
       providers: [new defaultElementTypeProvider()]
     });
+    // 还原配置
+    hiprint.setConfig()
+    // 替换配置
+    hiprint.setConfig({
+      movingDistance: 2.5,
+      text:{
+        supportOptions: [
+          {
+            name: 'styler',
+            hidden: true
+          },
+          {
+            name: 'formatter',
+            hidden: true
+          },
+        ]
+      }
+    })
     // eslint-disable-next-line no-undef
     hiprint.PrintElementTypeManager.buildByHtml($('.ep-draggable-item'));
     hiprintTemplate = new hiprint.PrintTemplate({

@@ -7868,8 +7868,31 @@ var hiprint = function (t) {
     });
   }
 
+  function cig(t) {
+    if (t) {
+      t && Object.keys(t).forEach(function (i) {
+        if (t[i].supportOptions) {
+          var options = t[i].supportOptions,
+            configs = p.a.instance[i].supportOptions,
+            list = configs.filter(function (e) {
+              return options.every(function (ee) {
+                return ee.name != e.name
+              })
+            }),list = list.concat(options);
+          $.extend(p.a.instance[i].supportOptions, list);
+          delete t[i].supportOptions;
+        }
+        $.extend(p.a.instance[i], t[i]);
+      });
+    } else {
+      $.extend(p.a.instance, HIPRINT_CONFIG);
+    }
+  }
+
   n.d(e, "init", function () {
     return mt;
+  }), n.d(e, "setConfig", function () {
+    return cig;
   }), n.d(e, "PrintElementTypeManager", function () {
     return it;
   }), n.d(e, "PrintElementTypeGroup", function () {
