@@ -28,6 +28,25 @@ npm run serve
 npm run build
 ```
 
+## 交流群
+<div style="display: flex;">
+<div align="center" style="height: 200px;width: 200px;">
+
+![image](./res/wechat_group.png "微信群")
+
+</div>
+<div align="center" style="height: 200px;width: 200px; margin-left: 10px">
+
+![image](./res/wechat.png "备注加群")
+
+</div>
+</div>
+<br/>
+<br/>
+<br/>
+<br/>
+若过期 加我 备注加群
+
 ## 演示/截个图咯~
 <div align="center">
 
