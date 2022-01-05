@@ -1414,6 +1414,7 @@ var hiprint = function (t) {
             case 46:
               var templete = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(n.templateId)
               templete.deletePrintElement(n)
+              _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("clearSettingContainer")
               break
             case 37:
               i = n.options.getLeft(), n.updateSizeAndPositionOptions(i - _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.movingDistance), t.css("left", n.options.displayLeft()), n.createLineOfPosition(e), r.preventDefault();
@@ -7451,19 +7452,23 @@ var hiprint = function (t) {
           n.buildSetting(t);
         }), o.a.event.on(t.getBuildCustomOptionSettingEventKey(), function (t) {
           n.buildSettingByCustomOptions(t);
+        }), o.a.event.on('clearSettingContainer', function () {
+          n.clearSettingContainer();
         });
       }
 
       return t.prototype.init = function () {
+      }, t.prototype.clearSettingContainer = function () {
+        this.lastPrintElement && this.lastPrintElement.getPrintElementOptionItems().forEach(function (t) {
+          t.destroy();
+        });
+        this.lastPrintElement = void 0, this.settingContainer.html("");
       }, t.prototype.buildSetting = function (t) {
         var e = this,
           n = this,
           i = t.printElement,
           o = t.customOptionsInput;
-        this.lastPrintElement && this.lastPrintElement.getPrintElementOptionItems().forEach(function (t) {
-          t.destroy();
-        });
-        this.lastPrintElement = void 0, this.settingContainer.html("");
+        e.clearSettingContainer();
         var r = $('<div class="hiprint-option-items"></div>');
         i.getPrintElementOptionItems().forEach(function (t) {
           t.submit = function (t) {
@@ -7486,6 +7491,7 @@ var hiprint = function (t) {
           i.submitOption();
         }), p.bind("click.deleteBtn", function () {
           n.printTemplate.deletePrintElement(i);
+          e.clearSettingContainer();
         }), r.find(".auto-submit").change(function (t) {
           i.submitOption();
         }), r.find(".auto-submit:input").bind("keydown.submitOption", function (t) {
