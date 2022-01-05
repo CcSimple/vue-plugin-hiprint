@@ -7,19 +7,23 @@
     var $iframe = $('<iframe id="hiwprint_iframe"  style="visibility: hidden; height: 0; width: 0; position: absolute;"></iframe>');
     var css = '';
     if (opt.importCss) {
-      // vue模式 处理打印时的样式问题
-      if (!window.__VUE_HOT_MAP__) { // production 环境
-        var linkList = $("link").toArray().filter((e) => {
-          return e.href.includes("css/app") && e.rel === "stylesheet"
-        })
-        linkList.forEach((e) => {
+      if (opt.styleHandler) {
+        css += opt.styleHandler()
+      } else {
+        // vue模式 处理打印时的样式问题
+        if (!window.__VUE_HOT_MAP__) { // production 环境
+          var linkList = $("link").toArray().filter((e) => {
+            return e.href.includes("css/app") && e.rel === "stylesheet"
+          })
+          linkList.forEach((e) => {
+            css += e.outerHTML
+          })
+        }
+        var styleList = $("style").toArray().filter((e) => e.innerHTML.includes(".hiprint"))
+        styleList.forEach((e) => {
           css += e.outerHTML
         })
       }
-      var styleList = $("style").toArray().filter((e) => e.innerHTML.includes(".hiprint"))
-      styleList.forEach((e) => {
-        css += e.outerHTML
-      })
       // 原js模式
       // if ($("link[media=print]").length > 0) {
       //     $("link[media=print]").each(function () {
@@ -60,6 +64,7 @@
     importCss: true,
     printContainer: true,
     callback: null,
+    styleHandler: null,
   };
 
   function performPrint(iframeElement, opt) {

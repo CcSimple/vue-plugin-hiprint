@@ -7669,18 +7669,22 @@ var hiprint = function (t) {
             o = {},
             // r = $("link[media=print]").length > 0 ? $("link[media=print]") : $("link"),
             css = '';
-          if (!window.__VUE_HOT_MAP__) { // production 环境
-            var linkList = $("link").toArray().filter((e) => {
-              return e.href.includes("css/app") && e.rel === "stylesheet"
-            })
-            linkList.forEach((e) => {
+          if (e.styleHandler) {
+            css += e.styleHandler()
+          } else {
+            if (!window.__VUE_HOT_MAP__) { // production 环境
+              var linkList = $("link").toArray().filter((e) => {
+                return e.href.includes("css/app") && e.rel === "stylesheet"
+              })
+              linkList.forEach((e) => {
+                css += e.outerHTML
+              })
+            }
+            var styleList = $("style").toArray().filter((e) => e.innerHTML.includes(".hiprint"))
+            styleList.forEach((e) => {
               css += e.outerHTML
             })
           }
-          var styleList = $("style").toArray().filter((e) => e.innerHTML.includes(".hiprint"))
-          styleList.forEach((e) => {
-            css += e.outerHTML
-          })
           n.sentToClient(css, t, e);
           // r.forEach(function (p, a) {
           //   var s = new XMLHttpRequest();
