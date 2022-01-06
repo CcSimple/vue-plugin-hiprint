@@ -9,7 +9,8 @@
 
 [![npm][npm]][npm-url]
 [![node][node]][node-url]
-[![size][size]][size-url]
+![image](https://badgen.net/packagephobia/publish/vue-plugin-hiprint)
+![image](https://badgen.net/packagephobia/install/vue-plugin-hiprint)
 
 # vue-plugin-hiprint
 > hiprint for vue2.0
@@ -26,6 +27,141 @@ npm i
 npm run serve
 // 打包
 npm run build
+```
+
+## 安装
+```console
+npm install vue-plugin-hiprint
+```
+## 全局使用
+```javascript
+// main.js中 引入安装
+import {hiPrintPlugin} from 'vue-plugin-hiprint'
+Vue.use(hiPrintPlugin, '$pluginName')
+// 然后使用
+this.$pluginName
+
+// 例如
+this.$pluginName.init();
+var hiprintTemplate = new this.$pluginName.PrintTemplate();
+var panel = hiprintTemplate.addPrintPanel({ width: 100, height: 130, paperFooter: 340, paperHeader: 10 });
+//文本
+panel.addPrintText({ options: { width: 140, height: 15, top: 20, left: 20, title: 'hiprint插件手动添加text', textAlign: 'center' } });
+//条形码
+panel.addPrintText({ options: { width: 140, height: 35, top: 40, left: 20, title: '123456', textType: 'barcode' } });
+//二维码
+panel.addPrintText({ options: { width: 35, height: 35, top: 40, left: 165, title: '123456', textType: 'qrcode' } });
+//长文本
+panel.addPrintLongText({ options: { width: 180, height: 35, top: 90, left: 20, title: '长文本：hiprint是一个很好的webjs打印,浏览器在的地方他都可以运行' } });
+//表格
+panel.addPrintTable({ options: { width: 252, height: 35, top: 130, left: 20, content: $('#testTable').html() } });
+//Html
+panel.addPrintHtml({ options: { width: 140, height: 35, top: 180, left: 20, content:'' } });
+//竖线//不设置宽度
+panel.addPrintVline({ options: { height: 35, top: 230, left: 20 } });
+//横线 //不设置高度
+panel.addPrintHline({ options: { width: 140, top: 245, left: 120 } });
+//矩形
+panel.addPrintRect({ options: { width: 35, height: 35, top: 230, left: 60 } });
+//打印
+hiprintTemplate.print({});
+//直接打印，需要安装客户端
+hiprintTemplate.print2({});
+```
+## 自定义设计 （详情查看demo目录）
+```javascript
+import {hiprint,defaultElementTypeProvider} from 'vue-plugin-hiprint'
+hiprint.init({
+  providers: [new defaultElementTypeProvider()]
+})
+hiprint.PrintElementTypeManager.buildByHtml($('.ep-draggable-item'));
+hiprintTemplate = new hiprint.PrintTemplate({
+  template: {},
+  settingContainer: '#PrintElementOptionSetting',
+  paginationContainer: '.hiprint-printPagination'
+});
+hiprintTemplate.design('#hiprint-printTemplate');
+```
+
+## 常见问题
+> design时怎么修改默认图片？
+```vue
+<!-- 组件内, 显示的图片-->
+<style lang="less" scoped>
+/deep/ .hiprint-printElement-image-content {
+  img {
+    content: url("~@/assets/logo.png");
+  }
+}
+</style>
+<!-- App.vue 拖拽时显示的图片-->
+<!-- 不要 scoped, 拖拽时是添加到 html body内的-->
+<style lang="less">
+.hiprint-printElement-image-content {
+  img {
+    content: url("~@/assets/logo.png");
+  }
+}
+</style>
+```
+> print/print2 打印回调
+```javascript
+// 浏览器预览打印
+hiprintTemplate.print(this.printData, {}, {
+  callback: () => {
+    console.log('浏览器打印窗口已打开')
+  }
+})
+// 直接打印
+hiprintTemplate.print2(printData, {printer: '打印机名称', title: '打印标题'})
+hiprintTemplate.on('printSuccess', function (data) {
+  console.log('打印完成')
+})
+hiprintTemplate.on('printError', function (data) {
+  console.log('打印失败')
+})
+```
+> 打印重叠 / 样式问题
+```javascript
+// 开发时默认用的Ant Design Vue， 所有其他ui框架没有测试过
+// 自0.0.13起， 可自定义样式处理
+hiprintTemplate.print(this.printData, {}, {
+  styleHandler: () => {
+    let css = ''
+    // xxxxx
+    return css
+  }
+})
+// 直接打印
+hiprintTemplate.print2(this.printData, {
+  styleHandler: () => {
+    let css = ''
+    // xxxxx
+    return css
+  }
+})
+```
+> 修改默认配置 / 显示/隐藏元素设置参数
+```javascript
+// 0.0.13， 新增setConfig方法
+// 还原配置
+hiprint.setConfig()
+// 替换配置
+hiprint.setConfig({
+  movingDistance: 2.5,
+  text:{
+    supportOptions: [
+      {
+        name: 'styler',
+        hidden: true
+      },
+      {
+        name: 'formatter',
+        hidden: true
+      },
+    ]
+  }
+})
 ```
 
 ## 交流群
@@ -99,103 +235,7 @@ npm run build
 ```
 
 
-## Install
-```console
-npm install vue-plugin-hiprint
-```
-## Global use
-```javascript
-import {hiPrintPlugin} from 'vue-plugin-hiprint'
-Vue.use(hiPrintPlugin, '$pluginName')
-// then use
-this.$pluginName
-
-// for example
-this.$pluginName.init();
-var hiprintTemplate = new this.$pluginName.PrintTemplate();
-var panel = hiprintTemplate.addPrintPanel({ width: 100, height: 130, paperFooter: 340, paperHeader: 10 });
-//文本
-panel.addPrintText({ options: { width: 140, height: 15, top: 20, left: 20, title: 'hiprint插件手动添加text', textAlign: 'center' } });
-//条形码
-panel.addPrintText({ options: { width: 140, height: 35, top: 40, left: 20, title: '123456', textType: 'barcode' } });
-//二维码
-panel.addPrintText({ options: { width: 35, height: 35, top: 40, left: 165, title: '123456', textType: 'qrcode' } });
-//长文本
-panel.addPrintLongText({ options: { width: 180, height: 35, top: 90, left: 20, title: '长文本：hiprint是一个很好的webjs打印,浏览器在的地方他都可以运行' } });
-//表格
-panel.addPrintTable({ options: { width: 252, height: 35, top: 130, left: 20, content: $('#testTable').html() } });
-//Html
-panel.addPrintHtml({ options: { width: 140, height: 35, top: 180, left: 20, content:'' } });
-//竖线//不设置宽度
-panel.addPrintVline({ options: { height: 35, top: 230, left: 20 } });
-//横线 //不设置高度
-panel.addPrintHline({ options: { width: 140, top: 245, left: 120 } });
-//矩形
-panel.addPrintRect({ options: { width: 35, height: 35, top: 230, left: 60 } });
-//打印
-hiprintTemplate.print({});
-//直接打印，需要安装客户端
-hiprintTemplate.print2({});
-```
-## Custom design
-```javascript
-import {hiprint,defaultElementTypeProvider} from 'vue-plugin-hiprint'
-hiprint.init({
-  providers: [new defaultElementTypeProvider()]
-})
-hiprint.PrintElementTypeManager.buildByHtml($('.ep-draggable-item'));
-hiprintTemplate = new hiprint.PrintTemplate({
-  template: {},
-  settingContainer: '#PrintElementOptionSetting',
-  paginationContainer: '.hiprint-printPagination'
-});
-hiprintTemplate.design('#hiprint-printTemplate');
-```
-
-## Questions
-> design时怎么修改默认图片？
-```javascript
-<!-- 组件内, 显示的图片-->
-<style lang="less" scoped>
-/deep/ .hiprint-printElement-image-content {
-  img {
-    content: url("~@/assets/logo.png");
-  }
-}
-</style>
-<!-- App.vue 拖拽时显示的图片-->
-<!-- 不要 scoped, 拖拽时是添加到 html body内的-->
-<style lang="less">
-.hiprint-printElement-image-content {
-  img {
-    content: url("~@/assets/logo.png");
-  }
-}
-</style>
-```
-> print/print2 打印回调
-```javascript
-// 浏览器预览打印
-hiprintTemplate.print(this.printData, {}, {
-  callback: () => {
-    console.log('浏览器打印窗口已打开')
-  }
-})
-// 直接打印
-hiprintTemplate.print2(printData, {printer: '打印机名称', title: '打印标题'})
-hiprintTemplate.on('printSuccess', function (data) {
-  console.log('打印完成')
-})
-hiprintTemplate.on('printError', function (data) {
-  console.log('打印失败')
-})
-```
-
-
-
 [npm]: https://img.shields.io/npm/v/vue-plugin-hiprint.svg
 [npm-url]: https://npmjs.com/package/vue-plugin-hiprint
 [node]: https://img.shields.io/node/v/vue-plugin-hiprint.svg
 [node-url]: https://nodejs.org
-[size]: https://packagephobia.now.sh/badge?p=vue-plugin-hiprint
-[size-url]: https://packagephobia.now.sh/result?p=vue-plugin-hiprint
