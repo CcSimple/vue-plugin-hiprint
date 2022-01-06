@@ -1404,9 +1404,15 @@ var hiprint = function (t) {
           o = void 0;
         t.attr("tabindex", "1"), t.keydown(function (r) {
           // table处理
-          if (n.printElementType.type.includes('table') && n.columns && n.columns.length) {
-            var isEditing = n.columns[0].isHead && n.columns[0].columns.some((e) => e.isEditing == true)
-            if (isEditing) return
+          if (n.printElementType.type.includes('table')) {
+            // 拖拽出来的表格
+            if (n.columns && n.columns.length) {
+              var isEditing = n.columns[0].isHead && n.columns[0].columns.some((e) => e.isEditing == true)
+              if (isEditing) return
+            } else if (n.options.columns && n.options.columns.length) { // json生成的表格
+              var isEditing = n.options.columns[0].isHead && n.options.columns[0].columns.some((e) => e.isEditing == true)
+              if (isEditing) return
+            }
           }
           switch (r.keyCode) {
             // BackSpace/Delete 删除元素
