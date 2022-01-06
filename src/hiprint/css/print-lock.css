@@ -14,7 +14,7 @@
     box-sizing: border-box;
     -moz-box-sizing: border-box; /* Firefox */
     -webkit-box-sizing: border-box; /* Safari */
-   
+
 }
 
     .hiprint-printPaper *:focus {
@@ -165,8 +165,8 @@
     font-weight: normal;
     direction: ltr;
     padding-bottom: 0pt;
-    padding-left: 0pt;
-    padding-right: 0pt;
+    padding-left: 4pt;
+    padding-right: 4pt;
     padding-top: 0pt;
     text-decoration: none;
     vertical-align: middle;
@@ -202,7 +202,7 @@
 
 .hiprint-printElement-vline, .hiprint-printElement-hline {
     border: 0px none rgb(0,0,0);
-    
+
 }
 .hiprint-printElement-vline {
     border-left: 0.75pt solid #000;
