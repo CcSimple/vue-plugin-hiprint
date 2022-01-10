@@ -5840,7 +5840,12 @@ var hiprint = function (t) {
     d = n(15),
     c = function () {
       return function (t) {
-        this.field = t.field, this.title = t.title, this.type = t.type, this.columns = t.columns, this.editable = t.editable, this.columnDisplayEditable = t.columnDisplayEditable, this.columnDisplayIndexEditable = t.columnDisplayIndexEditable, this.columnTitleEditable = t.columnTitleEditable, this.columnResizable = t.columnResizable, this.columnAlignEditable = t.columnAlignEditable,
+        this.title = t.title, this.type = t.type;
+      };
+    }(),
+    ctable = function () {
+      return function (t) {
+        this.title = t.title, this.type = t.type, this.editable = t.editable, this.columnDisplayEditable = t.columnDisplayEditable, this.columnDisplayIndexEditable = t.columnDisplayIndexEditable, this.columnTitleEditable = t.columnTitleEditable, this.columnResizable = t.columnResizable, this.columnAlignEditable = t.columnAlignEditable,
           this.isEnableEditField = t.isEnableEditField, this.isEnableContextMenu = t.isEnableContextMenu, this.isEnableInsertRow = t.isEnableInsertRow, this.isEnableDeleteRow = t.isEnableDeleteRow, this.isEnableInsertColumn = t.isEnableInsertColumn, this.isEnableDeleteColumn = t.isEnableDeleteColumn, this.isEnableMergeCell = t.isEnableMergeCell;
       };
     }(),
@@ -5869,7 +5874,7 @@ var hiprint = function (t) {
         }), e;
       }, t.prototype.getPrintElementTypeEntity = function () {
         if ('table' == this.type) {
-          return new c({
+          return new ctable({
             title: this.title,
             type: this.type,
             editable: this.editable,
