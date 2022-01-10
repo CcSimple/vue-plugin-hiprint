@@ -4576,7 +4576,7 @@ var hiprint = function (t) {
           text: "删除行",
           enabled: this.optionsCoat.options.isEnableDeleteRow,
           disable: function disable() {
-            return !t.tableCellSelector.getSingleSelect();
+            return !t.tableCellSelector.getSingleSelect() || t.rows.length <= 1;
           },
           callback: function callback() {
             t.deleteRow(), t.resizer.updateRowGrips(), r.a.event.trigger("updateTable" + t.id);
