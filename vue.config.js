@@ -2,6 +2,10 @@ let path = require('path')
 let webpack = require('webpack')
 
 module.exports = {
+  publicPath: '/vue-plugin-hiprint/demo',
+  outputDir: 'demo',
+  assetsDir: 'static',
+  productionSourceMap: false,
   configureWebpack: {
     plugins: [
       new webpack.ProvidePlugin({

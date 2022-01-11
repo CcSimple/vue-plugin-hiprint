@@ -23,6 +23,7 @@
   ],
   "scripts": {
     "serve": "vue-cli-service serve",
+    "build-demo": "vue-cli-service build",
     "build": "cross-env NODE_ENV=production webpack --progress"
   },
   "dependencies": {
