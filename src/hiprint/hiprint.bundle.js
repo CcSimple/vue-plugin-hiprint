@@ -2515,11 +2515,11 @@ var hiprint = function (t) {
       }
 
       return t.prototype.createTarget = function () {
-        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        启用/禁用\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n        <option value="false" >启用</option>\n        <option value="true" >禁用</option>\n        </select>\n        </div>\n    </div>'), this.target;
+        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        显示页码\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >显示</option>\n        <option value="true" >隐藏</option>\n        </select>\n        </div>\n    </div>'), this.target;
       }, t.prototype.getValue = function () {
         if ("true" == this.target.find("select").val()) return !0;
       }, t.prototype.setValue = function (t) {
-        this.target.find("select").val(t);
+        this.target.find("select").val((null == t ? "" : t).toString());
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
@@ -7148,10 +7148,11 @@ var hiprint = function (t) {
               topOffset: e.topOffset,
               fontFamily: e.fontFamily,
               orient: e.orient,
+              paperNumberDisabled: e.paperNumberDisabled,
               paperNumberFormat: e.paperNumberFormat
             },
             callback: function callback(t) {
-              e.panelPaperRule = t.panelPaperRule, e.firstPaperFooter = t.firstPaperFooter, e.evenPaperFooter = t.evenPaperFooter, e.oddPaperFooter = t.oddPaperFooter, e.lastPaperFooter = t.lastPaperFooter, e.leftOffset = t.leftOffset, e.topOffset = t.topOffset, e.fontFamily = t.fontFamily, e.orient = t.orient, e.paperNumberFormat = t.paperNumberFormat, e.designPaper.setOffset(e.leftOffset, e.topOffset), e.css(e.target);
+              e.panelPaperRule = t.panelPaperRule, e.firstPaperFooter = t.firstPaperFooter, e.evenPaperFooter = t.evenPaperFooter, e.oddPaperFooter = t.oddPaperFooter, e.lastPaperFooter = t.lastPaperFooter, e.leftOffset = t.leftOffset, e.topOffset = t.topOffset, e.fontFamily = t.fontFamily, e.orient = t.orient, e.paperNumberDisabled = e.designPaper.paperNumberDisabled = !!t.paperNumberDisabled || void 0, e.paperNumberFormat = t.paperNumberFormat, e.designPaper.setOffset(e.leftOffset, e.topOffset), e.css(e.target), e.designPaper.resetPaperNumber(e.designPaper.paperNumberTarget), e.designPaper.triggerOnPaperBaseInfoChanged();
             }
           });
         }), this.bindBatchMoveElement();
