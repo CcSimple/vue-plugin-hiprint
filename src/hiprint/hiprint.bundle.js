@@ -1442,7 +1442,7 @@ var hiprint = function (t) {
         var x1 = this.designTarget[0].offsetLeft,
           y1 = this.designTarget[0].offsetTop, h = this.designTarget[0].offsetHeight, w = this.designTarget[0].offsetWidth,
         x2 = x1 + w, y2 = y1 + h,
-        ex1 = t.target[0].offsetLeft, ey1 = t.target[0].offsetTop, eh = t.target[0].offsetHeight, ew = t.target[0].offsetWidth,
+        ex1 = $(t.target[0]).position().left, ey1 = $(t.target[0]).position().top, eh = t.target[0].offsetHeight, ew = t.target[0].offsetWidth,
         ex2 = ex1 + ew, ey2 = ey1 + eh;
         return ex1 < x2 && ex2 > x1 && y1 < ey2 && y2 > ey1;
       }, BasePrintElement.prototype.multipleSelect = function (t) {
