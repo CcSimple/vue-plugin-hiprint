@@ -15,7 +15,7 @@
 # vue-plugin-hiprint
 > hiprint for vue2.0
 
-## 参与/预览
+## 参与/预览 <a href="https://ccsimple.gitee.io/vue-plugin-hiprint/">demo</a>
 ```console
 git clone https://github.com/CcSimple/vue-plugin-hiprint.git
 // or
