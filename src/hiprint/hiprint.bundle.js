@@ -7412,6 +7412,7 @@ var hiprint = function (t) {
             'transform-origin': r
           });
         }
+		t.target.focus()
       }, t.prototype.bingKeyboardMoveEvent = function (t) {
         var e = this;
         t.attr("tabindex", "1"), t.keydown(function (t) {
