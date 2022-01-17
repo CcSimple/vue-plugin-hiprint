@@ -165,10 +165,10 @@ export const aProvider = function (ops) {
               [
                 {title: '名称', align: 'center', field: 'NAME', width: 150},
                 {title: '数量', align: 'center', field: 'SL', width: 80},
-                {title: '规格', align: 'center', field: 'GG', width: 80},
-                {title: '条码', align: 'center', field: 'TM', width: 100},
+                {title: '规格', align: 'center', field: 'GG', width: 80, checked: false},
+                {title: '条码', align: 'center', field: 'TM', width: 100, checked: false},
                 {title: '单价', align: 'center', field: 'DJ', width: 100},
-                {title: '金额', align: 'center', field: 'JE', width: 100},
+                {title: '金额', align: 'center', field: 'JE', width: 100, checked: false},
               ],
             ],
             footerFormatter: function (options, rows, data, currentPageGridRowsData) {
