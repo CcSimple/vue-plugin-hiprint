@@ -4586,7 +4586,7 @@ var hiprint = function (t) {
           borderBottom: !0,
           enabled: this.optionsCoat.options.isEnableDeleteColumn,
           disable: function disable() {
-            return !t.tableCellSelector.getSingleSelect();
+            return !t.tableCellSelector.getSingleSelect() || (t.rows.length > 0 && t.rows[0].columns.length <= 1);
           },
           callback: function callback() {
             t.deleteColums(), t.resizer.updateColumnGrips(), r.a.event.trigger("updateTable" + t.id);
