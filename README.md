@@ -15,6 +15,14 @@
 # vue-plugin-hiprint
 > hiprint for vue2.0
 
+## 配套直接打印客户端(win/mac/linux)
+### <a href="https://gitee.com/CcSimple/electron-hiprint">gitee</a> <a href="https://gitee.com/CcSimple/electron-hiprint"> github</a>
+<div align="center">
+
+![image](./res/tool.jpeg)
+
+</div>
+
 ## 参与/预览 <a href="https://ccsimple.gitee.io/vue-plugin-hiprint/">demo</a>
 ```console
 git clone https://github.com/CcSimple/vue-plugin-hiprint.git
