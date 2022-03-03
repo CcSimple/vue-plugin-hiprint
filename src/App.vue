@@ -15,7 +15,9 @@
       </a-button-group>
     </a-row>
     <!-- 动态渲染组件，懒得去弄路由了 -->
-    <component :is="curDemo"/>
+    <keep-alive :include='keepInclude' :max="10">
+      <component :is="curDemo"/>
+    </keep-alive>
   </div>
 </template>
 
@@ -23,16 +25,19 @@
 
 import printDesign from '@/demo/design/index'
 import printCustom from '@/demo/custom/index'
+import printTasks from '@/demo/tasks/index'
 
 export default {
   name: 'App',
-  components: {printDesign, printCustom},
+  components: {printDesign, printCustom, printTasks},
   data() {
     return {
       curDemo: 'printDesign',
+      keepInclude: 'printDesign,printCustom,printTasks',
       demoList: [
         {name: 'printDesign', title: '默认拖拽设计'},
-        {name: 'printCustom', title: '自定义设计'}
+        {name: 'printCustom', title: '自定义设计'},
+        {name: 'printTasks', title: '队列/批量打印'}
       ]
     }
   },

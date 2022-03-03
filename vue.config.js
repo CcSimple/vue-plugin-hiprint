@@ -16,6 +16,7 @@ module.exports = {
           "ant-design-vue": "^1.7.8",
           "core-js": "^3.6.5",
           "vue": "^2.5.11",
+          "concurrent-tasks": "^1.0.7",
           "vue-ls": "^4.0.0"
         }
       }
