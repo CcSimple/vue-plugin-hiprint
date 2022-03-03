@@ -1,5 +1,6 @@
 let path = require('path')
 let webpack = require('webpack')
+const fs = require("fs");
 
 module.exports = {
   publicPath: '/vue-plugin-hiprint',
