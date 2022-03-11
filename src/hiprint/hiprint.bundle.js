@@ -1760,7 +1760,7 @@ var hiprint = function (t) {
         var o = $("<tr></tr>");
         o.data("rowData", e), t.rowColumns.forEach(function (t, i) {
           var r = $("<td></td>");
-          if ("first" == n.tableHeaderRepeat) {
+          if ("first" == n.tableHeaderRepeat || "none" == n.tableHeaderRepeat) {
             t.field && r.attr("field", t.field), t.align && r.css("text-align", t.align), t.vAlign && r.css("vertical-align", t.vAlign), r.css("width", t.width + "pt");
           } else {
             t.field && r.attr("field", t.field), t.align && r.css("text-align", t.align), t.vAlign && r.css("vertical-align", t.vAlign);
@@ -3229,7 +3229,7 @@ var hiprint = function (t) {
       }
 
       return t.prototype.createTarget = function () {
-        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        表格头显示\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n        <option value="page" >每页显示</option>\n        <option value="first" >首页显示</option>\n        </select>\n        </div>\n    </div>'), this.target;
+        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        表格头显示\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n        <option value="page" >每页显示</option>\n        <option value="first" >首页显示</option>\n        <option value="none" >不显示</option>\n        </select>\n        </div>\n    </div>'), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
         if (t) return t.toString();
@@ -3899,6 +3899,13 @@ var hiprint = function (t) {
         // 仅首页显示表头
         if ("first" == this.options.tableHeaderRepeat && o > 0) {
           n.find(".hiprint-printElement-tableTarget thead").remove();
+        } else if ("none" == this.options.tableHeaderRepeat) {
+          // 有数据（不是design）
+          if (t) {
+            n.find(".hiprint-printElement-tableTarget thead").remove();
+          } else {
+            n.find(".hiprint-printElement-tableTarget thead").css("background", "firebrick");
+          }
         }
         var s = n.outerHeight();
         if (s > p) return {
