@@ -12,7 +12,7 @@
 ![image](https://badgen.net/packagephobia/publish/vue-plugin-hiprint)
 ![image](https://badgen.net/packagephobia/install/vue-plugin-hiprint)
 
-# vue-plugin-hiprint
+# vue-plugin-hiprint <a href="http://hiprint.io/docs/start">hiprint官方文档</a>
 > hiprint for vue2.0
 
 ## 配套直接打印客户端(win/mac/linux)
