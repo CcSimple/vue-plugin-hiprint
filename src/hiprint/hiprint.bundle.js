@@ -158,6 +158,9 @@ var hiprint = function (t) {
     toPx: function toPx(t) {
       return t * (this.getDpi() / 72);
     },
+    toMm: function toMm(t) {
+      return hinnn.px.toMm(hinnn.pt.toPx(t));
+    },
     dpi: 0,
     getDpi: function getDpi() {
       if (!this.dpi) {
@@ -171,6 +174,9 @@ var hiprint = function (t) {
   }, hinnn.px = {
     toPt: function toPt(t) {
       return t * (72 / this.getDpi());
+    },
+    toMm: function toMm(t) {
+      return Math.round((t / this.getDpi() * 25.4) * 100) / 100;
     },
     dpi: 0,
     getDpi: function getDpi() {
@@ -1241,7 +1247,8 @@ var hiprint = function (t) {
         var o = [],
           r = this.getBeginPrintTopInPaperByReferenceElement(t),
           a = t.getPaperFooter(i);
-        this.isHeaderOrFooter() || this.isFixed() || (r > a && (o.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_3__.a({
+        // 处理文本/辅助元素 当高度大于模板高度, 插入的分页...
+        this.isHeaderOrFooter() || this.isFixed() || ("none" != t.panelPageRule && r > a && (o.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_3__.a({
           target: void 0,
           printLine: void 0
         })), r = r - a + t.paperHeader, i++ , a = t.getPaperFooter(i)), r <= a && r + this.options.getHeight() > a && (o.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_3__.a({
@@ -1250,6 +1257,7 @@ var hiprint = function (t) {
         })), r = t.paperHeader, i++ , a = t.getPaperFooter(i)));
         var p = this.getData(e),
           s = this.createTarget(this.getTitle(), p);
+        this.updatePanelHeight(r + this.options.getHeight(),t);
         return this.updateTargetSize(s), this.css(s, p), s.css("position", "absolute"), s.css("left", this.options.displayLeft()), s.css("top", r + "pt"), o.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_3__.a({
           target: s,
           printLine: r + this.options.getHeight(),
@@ -1263,6 +1271,15 @@ var hiprint = function (t) {
             printTopInPaper: r
           })
         })), o;
+      }, BasePrintElement.prototype.updatePanelHeight = function (h,p) {
+        if ("none" == this.panel.panelPageRule) {
+          var nmh = _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.pt.toMm(h);
+          // 更改模板高度 paperType, width(mm), height(mm), rotate
+          // this.panel.resize(void 0, t.mmwidth, nmh, !1);
+          // 这个会更新模板的高度...
+          // this.panel.target.css("height", nmh + "mm"), this.panel.target.attr("original-height", nmh);
+          p.target.css("height", nmh + "mm"), p.target.attr("original-height", nmh);
+        }
       }, BasePrintElement.prototype.getBeginPrintTopInPaperByReferenceElement = function (t) {
         var e = this.options.getTop();
         return this.isHeaderOrFooter() || this.isFixed() ? e : t.referenceElement.isPositionLeftOrRight(e) ? t.referenceElement.printTopInPaper + (e - t.referenceElement.top) : t.referenceElement.bottomInLastPaper + (e - (t.referenceElement.top + t.referenceElement.height));
@@ -3904,6 +3921,7 @@ var hiprint = function (t) {
               printTopInPaper: a
             })
           })), s++;
+          this.updatePanelHeight(f + this.options.getHeight(),t);
         }
 
         return n;
@@ -3923,27 +3941,46 @@ var hiprint = function (t) {
             n.find(".hiprint-printElement-tableTarget thead").css("background", "firebrick");
           }
         }
+        var noPaging = "none" == this.panel.panelPageRule;
         var s = n.outerHeight();
-        if (s > p) return {
+        if (!noPaging && s > p) return {
           target: void 0,
           length: 0,
           height: 0,
           isEnd: !1
         };
-
-        for (var l = [], u = 0; u < this.options.getGridColumns(); u++) {
+        var getGridColumns = this.options.getGridColumns();
+        for (var l = [], u = 0; u < getGridColumns; u++) {
           for (var d = n.find(".hiprint-printElement-tableTarget:eq(" + u + ")"), c = void 0, h = []; ;) {
-            if (s <= p) if (0 == a.find("tr").length) c = {
-              height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
-              isEnd: !0
-            }, t && this.options.autoCompletion && (this.autoCompletion(p, d), s = n.outerHeight()); else {
-              var f = a.find("tr:lt(1)");
-              d.find("tbody").append(f);
-              var g = f.data("rowData");
-              l.push(g), h.push(g), (s = n.outerHeight()) > p && (a.prepend(f), l.pop(), h.pop(), s = n.outerHeight(), c = {
+            // 不分页处理
+            if (noPaging) {
+              var trLen = a.find("tr").length;
+              if (0 == trLen) c = {
                 height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
-                isEnd: !1
-              });
+                isEnd: !0
+              }, t && this.options.autoCompletion && (this.autoCompletion(p, d), s = n.outerHeight()); else {
+                var f = a.find("tr:lt(1)");
+                d.find("tbody").append(f);
+                var g = f.data("rowData");
+                l.push(g), h.push(g), s = n.outerHeight();
+                0 == trLen && (a.prepend(f), l.pop(), h.pop(), c = {
+                  height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
+                  isEnd: !1
+                })
+              }
+            } else {
+              if (s <= p) if (0 == a.find("tr").length) c = {
+                height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
+                isEnd: !0
+              }, t && this.options.autoCompletion && (this.autoCompletion(p, d), s = n.outerHeight()); else {
+                var f = a.find("tr:lt(1)");
+                d.find("tbody").append(f);
+                var g = f.data("rowData");
+                l.push(g), h.push(g), (s = n.outerHeight()) > p && (a.prepend(f), l.pop(), h.pop(), s = n.outerHeight(), c = {
+                  height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
+                  isEnd: !1
+                });
+              }
             }
 
             if (c) {
@@ -3963,7 +4000,9 @@ var hiprint = function (t) {
 
         var m = n.find(".hiprint-printElement-tableTarget tbody tr").length,
           v = this.getGridColumnsFooterFormatter();
-        return v && n.find(this.gridColumnsFooterCss).html(v(this.options, this.getData(t), t, l)), 0 == a.find("tr").length ? 0 == m && r ? {
+        v && n.find(this.gridColumnsFooterCss).html(v(this.options, this.getData(t), t, l));
+        // 方便调试看 值...
+        var zz = 0 == a.find("tr").length ? 0 == m && r ? {
           target: void 0,
           length: 0,
           height: 0,
@@ -3979,6 +4018,7 @@ var hiprint = function (t) {
           height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
           isEnd: !1
         };
+        return zz;
       }, TablePrintElement.prototype.autoCompletion = function (t, e) {
         for (var n, i = this.getEmptyRowTarget(), o = e.outerHeight(); t > o;) {
           n = i.clone(), e.find("tbody").append(n), o = e.outerHeight();
@@ -7208,8 +7248,13 @@ var hiprint = function (t) {
         }).forEach(function (e) {
           var n = [],
             i = p[p.length - 1];
-          i.referenceElement.isPositionLeftOrRight(e.options.getTop()) ? (l = p[i.referenceElement.beginPrintPaperIndex], n = e.getHtml(l, t)) : (l = p[i.referenceElement.endPrintPaperIndex], n = e.getHtml(l, t)), n.forEach(function (t, i) {
-            t.referenceElement && (t.referenceElement.endPrintPaperIndex = t.referenceElement.beginPrintPaperIndex + n.length - 1), i > 0 && (l.index < p.length - 1 ? l = p[l.index + 1] : (l = s.createNewPage(p.length, l.referenceElement), p.push(l)), a.append(l.getTarget())), t.target && (l.append(t.target), l.updatePrintLine(t.printLine), e.onRendered(l, t.target)), i == n.length - 1 && t.referenceElement && l.updateReferenceElement(t.referenceElement);
+          i.referenceElement.isPositionLeftOrRight(e.options.getTop()) ? (l = p[i.referenceElement.beginPrintPaperIndex], n = e.getHtml(l, t)) : (l = p[i.referenceElement.endPrintPaperIndex], n = e.getHtml(l, t));
+          n.forEach(function (t, i) {
+            t.referenceElement && (t.referenceElement.endPrintPaperIndex = t.referenceElement.beginPrintPaperIndex + n.length - 1);
+            // 不分页时,不创建新page  后面调整了，好像不添加也行...
+            "none" != r.panelPageRule && i > 0 && (l.index < p.length - 1 ? l = p[l.index + 1] : (l = s.createNewPage(p.length, l.referenceElement), p.push(l)), a.append(l.getTarget()));
+            t.target && (l.append(t.target), l.updatePrintLine(t.printLine), e.onRendered(l, t.target));
+            i == n.length - 1 && t.referenceElement && l.updateReferenceElement(t.referenceElement);
           });
         }), o && o.templates.forEach(function (t, e) {
           var i = t.data || {},
@@ -7219,9 +7264,12 @@ var hiprint = function (t) {
           });
         }), !i) {
           if (this.lastPaperFooter) p[p.length - 1].printLine > this.lastPaperFooter && (l = s.createNewPage(p.length, l.referenceElement), p.push(l), a.append(l.getTarget()));
-          this.panelPaperRule && ("odd" == this.panelPaperRule && p.length % 2 == 0 && (l = s.createNewPage(p.length, l.referenceElement), p.push(l), a.append(l.getTarget())), "even" == this.panelPaperRule && p.length % 2 == 1 && (l = s.createNewPage(p.length, l.referenceElement), p.push(l), a.append(l.getTarget()))), p.forEach(function (n) {
+          // 这里是处理奇偶页设置
+          this.panelPaperRule && ("odd" == this.panelPaperRule && p.length % 2 == 0 && (l = s.createNewPage(p.length, l.referenceElement), p.push(l), a.append(l.getTarget())), "even" == this.panelPaperRule && p.length % 2 == 1 && (l = s.createNewPage(p.length, l.referenceElement), p.push(l), a.append(l.getTarget())));
+          p.forEach(function (n) {
             n.updatePaperNumber(n.index + 1, p.length, e.paperNumberToggleInEven), r.fillPaperHeaderAndFooter(n, t, p.length), e && (null != e.leftOffset && n.setLeftOffset(e.leftOffset), null != e.topOffset && n.setTopOffset(e.topOffset));
-          }), a.prepend(this.getPrintStyle());
+          });
+          a.prepend(this.getPrintStyle());
         }
 
         return a;
