@@ -36,6 +36,19 @@ npm run serve
 // 打包
 npm run build
 ```
+## demo调试（显示打印iframe）
+```javascript
+// 快速显示/隐藏 打印iframe  方便调试 ￣□￣｜｜
+// 在浏览器控制台输入：
+// 显示打印页面
+$('#app').css('display','block');
+$('#hiwprint_iframe').css('visibility','hidden');
+$('#hiwprint_iframe').css('width','100%');
+$('#hiwprint_iframe').css('height','251.09mm'); // 这里替换个实际高度才能显示完
+// 显示vue页面
+$('#app').css('display','block');
+$('#hiwprint_iframe').css('visibility','hidden');
+```
 
 ## 安装
 ```console
