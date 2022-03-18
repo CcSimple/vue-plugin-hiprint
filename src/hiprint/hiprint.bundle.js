@@ -1311,7 +1311,8 @@ var hiprint = function (t) {
           });
         }
       }, BasePrintElement.prototype.getData = function (t) {
-        return t ? t[this.getField()] || "" : this.printElementType.getData();
+        var f = this.getField();
+        return t ? f.split('.').reduce((a,c)=>a ? a[c] : t[c], !1) || "" : this.printElementType.getData();
       }, BasePrintElement.prototype.copyFromType = function () {
         var options = this.options,type = this.printElementType;
         var names = this.getConfigOptions().supportOptions.map(function(e){return e.name});
@@ -4027,7 +4028,8 @@ var hiprint = function (t) {
         n && n.remove();
       }, TablePrintElement.prototype.getData = function (t) {
         if (!t) return [{}];
-        var e = t[this.getField()];
+        var f = this.getField();
+        var e = f.split('.').reduce((a,c)=>a ? a[c] : t[c], !1);
         return e ? JSON.parse(JSON.stringify(e)) : [];
       }, TablePrintElement.prototype.onResize = function (t, e, n, i, o) {
         _super.prototype.updateSizeAndPositionOptions.call(this, o, i, n, e), _table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.resizeTableCellWidth(this.designTarget, this.getColumns(), this.options.getWidth());
@@ -6005,7 +6007,7 @@ var hiprint = function (t) {
         return ["se"];
       }, e.prototype.getData = function (t) {
         var e = "";
-        t ? e = this.getField() ? t[this.getField()] || "" : this.options.src || this.printElementType.getData() : e = this.options.src || this.printElementType.getData();
+        t ? e = this.getField() ? e.split('.').reduce((a,c)=>a ? a[c] : t[c], !1) || "" : this.options.src || this.printElementType.getData() : e = this.options.src || this.printElementType.getData();
         var n = this.getFormatter();
         return n && (e = n(e, this.options, this._currenttemplateData)), e || "";
       }, e.prototype.createTarget = function (t, e) {
@@ -6223,7 +6225,9 @@ var hiprint = function (t) {
       }, e.prototype.getTitle = function () {
         return this.options.title || this.printElementType.title;
       }, e.prototype.getData = function (t) {
-        return t ? t[this.getField()] || "" : this.options.testData || this.printElementType.getData() || "";
+        var f = this.getField();
+        var e = f.split('.').reduce((a,c)=>a ? a[c] : t[c], !1);
+        return t ? e || "" : this.options.testData || this.printElementType.getData() || "";
       }, e.prototype.updateTargetText = function (t, e, n) {
         var i = t.find(".hiprint-printElement-longText-content"),
           o = this.getText(e, n);
@@ -6435,8 +6439,8 @@ var hiprint = function (t) {
         return t && (t = x.replaceEnterAndNewlineAndTab(t, "")), t;
       }, e.prototype.getData = function (t) {
         var e = void 0;
-
-        if (e = t ? t[this.getField()] || "" : this.options.testData || this.printElementType.getData() || "", this.options.format) {
+        var f = this.getField();
+        if (e = t ? f.split('.').reduce((a,c)=>a ? a[c] : t[c], !1) || "" : this.options.testData || this.printElementType.getData() || "", this.options.format) {
           if ("datetime" == this.options.dataType) return o.a.dateFormat(e, this.options.format);
 
           if ("boolen" == this.options.dataType) {
@@ -6971,7 +6975,8 @@ var hiprint = function (t) {
         return p;
       }, e.prototype.getData = function (t) {
         if (!t) return [{}];
-        var e = t[this.getField()];
+        var f = this.getField();
+        var e = f.split('.').reduce((a,c)=>a ? a[c] : t[c], !1);
         return e ? JSON.parse(JSON.stringify(e)) : [];
       }, e.prototype.autoCompletion = function (t, e) {
         for (var n, i = this.getEmptyRowTarget(), o = e.outerHeight(); t > o;) {
