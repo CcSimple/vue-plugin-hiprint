@@ -6300,12 +6300,19 @@ var hiprint = function (t) {
               printTopInPaper: m
             })
           })), r++;
+          this.updatePanelHeight(g + this.options.getHeight(),t);
         }
 
         return o;
       }, e.prototype.getStringBySpecificHeight = function (t, e, n) {
-        var i = o.a.pt.toPx(e),
+        var i = o.a.pt.toPx(e);
+        var r = void 0;
+        var noPaging = "none" == this.panel.panelPageRule;
+        if (noPaging) {
+          r = this.IsPaginationIndex(t, t.length, -1, n);
+        } else {
           r = this.IsPaginationIndex(t, t.length - 1, i, n);
+        }
         return r.IsPagination ? r : this.BinarySearch(t, 0, t.length - 1, i, n);
       }, e.prototype.BinarySearch = function (t, e, n, i, o) {
         var r = Math.floor((e + n) / 2);
@@ -6318,6 +6325,16 @@ var hiprint = function (t) {
         var a = this.IsPaginationIndex(t, r, i, o);
         return a.IsPagination ? a : "l" == a.move ? this.BinarySearch(t, e, r - 1, i, o) : this.BinarySearch(t, r + 1, n, i, o);
       }, e.prototype.IsPaginationIndex = function (t, e, n, i) {
+        if (-1 == n) {
+          i.find(".hiprint-printElement-longText-content").html(t.slice(0, e).join(""));
+          var a = i.height();
+          return  {
+            IsPagination: !0,
+            height: o.a.px.toPt(a),
+            length: t.length,
+            target: i.clone()
+          }
+        }
         i.find(".hiprint-printElement-longText-content").html(t.slice(0, e + 2).join(""));
         var r = i.height();
         i.find(".hiprint-printElement-longText-content").html(t.slice(0, e + 1).join(""));

@@ -178,7 +178,14 @@ export const aProvider = function (ops) {
               return '<td style="padding:0 10px" colspan="100">应收金额大写: </td>'
             },
           },
-          {tid: 'aProviderModule.customText', title: '文本', customText: '自定义文本', custom: true, type: 'text'}
+          {tid: 'aProviderModule.customText', title: '文本', customText: '自定义文本', custom: true, type: 'text'},
+          {
+            tid: 'aProviderModule.longText', title: '长文本', type: 'longText', options: {
+              field: 'test.longText',
+              width: 200,
+              testData: '长文本分页/不分页测试'
+            },
+          }
         ]),
         new hiprint.PrintElementTypeGroup("辅助", [
           {
@@ -369,7 +376,14 @@ export const bProvider = function (ops) {
               return '<td style="padding:0 10px" colspan="100">应收金额大写: </td>'
             },
           },
-          {tid: 'bProviderModule.customText', title: '文本', customText: '自定义文本', custom: true, type: 'text'}
+          {tid: 'bProviderModule.customText', title: '文本', customText: '自定义文本', custom: true, type: 'text'},
+          {
+            tid: 'bProviderModule.longText', title: '长文本', type: 'longText', options: {
+              field: 'test.longText',
+              width: 200,
+              testData: '长文本分页/不分页测试'
+            },
+          }
         ]),
         new hiprint.PrintElementTypeGroup("辅助", [
           {
