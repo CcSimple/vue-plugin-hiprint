@@ -1398,6 +1398,53 @@ var hiprint = function (t) {
         var t = this.printElementType.getFields();
         return t || (t = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(this.templateId).getFields());
       }, BasePrintElement.prototype.bingCopyEvent = function (t) {
+        var n = this;
+        t.keydown(function (r) {
+          // ctrl + c / command + c
+          if ((r.ctrlKey || r.metaKey) && 67 == r.keyCode) {
+            n.copyJson();
+            r.preventDefault();
+          }
+        });
+      }, BasePrintElement.prototype.copyJson = function () {
+        try {
+          var n = this;
+          // 使用textarea 存储复制的元素信息
+          var copyArea = $('#copyArea');
+          if (!copyArea.length) copyArea = $('<textarea id="copyArea" style="position: absolute; left: 0px; top: 0px;opacity: 0"></textarea>');
+          $("body").append(copyArea);
+          var json = JSON.stringify({
+            options: n.options,
+            printElementType: n.printElementType,
+            id: n.id,
+            templateId: n.templateId
+          });
+          copyArea.text(json);
+          // 元素需可见才能选中复制到剪切板
+          copyArea.css('visibility','visible');
+          copyArea.focus();
+          if (copyArea.setSelectionRange)
+            copyArea.setSelectionRange(0, copyArea.value.length);
+          else
+            copyArea.select();
+          var flag = false;
+          flag = document.execCommand("copy");
+          copyArea.css('visibility','hidden');
+          // 获取元素焦点，不然无法粘贴（keydown问题）
+          n.designTarget.focus();
+          console.log('copyJson success');
+        } catch(e){
+          flag = false;
+          console.log('copyJson error',e);
+        }
+        return flag;
+      }, BasePrintElement.prototype.clone = function (t) {
+        var n = this;
+        let newObj = n.printElementType.createPrintElement();
+        Object.keys(n.options).forEach(function (key) {
+          newObj.options[key] = n.options[key];
+        })
+        return newObj;
       }, BasePrintElement.prototype.getFormatter = function () {
         var formatter = void 0;
         if (this.printElementType.formatter && (formatter = this.printElementType.formatter), this.options.formatter) try {
@@ -7245,7 +7292,45 @@ var hiprint = function (t) {
               e.panelPaperRule = t.panelPaperRule, e.panelPageRule = t.panelPageRule, e.firstPaperFooter = t.firstPaperFooter, e.evenPaperFooter = t.evenPaperFooter, e.oddPaperFooter = t.oddPaperFooter, e.lastPaperFooter = t.lastPaperFooter, e.leftOffset = t.leftOffset, e.topOffset = t.topOffset, e.fontFamily = t.fontFamily, e.orient = t.orient, e.paperNumberDisabled = e.designPaper.paperNumberDisabled = !!t.paperNumberDisabled || void 0, e.paperNumberFormat = t.paperNumberFormat, e.designPaper.setOffset(e.leftOffset, e.topOffset), e.css(e.target), e.designPaper.resetPaperNumber(e.designPaper.paperNumberTarget), e.designPaper.triggerOnPaperBaseInfoChanged();
             }
           });
-        }), this.bindBatchMoveElement();
+        }), this.bingPasteEvent(); this.bindBatchMoveElement();
+      }, t.prototype.bingPasteEvent = function () {
+        var n = this;
+        n.designPaper.target.attr("tabindex", "1");
+        n.designPaper.target.keydown(function (e) {
+          // ctrl + v / command + v
+          if ((e.ctrlKey || e.metaKey ) && 86 == e.keyCode) {
+            n.pasteJson(e);
+            e.preventDefault();
+          }
+        });
+      }, t.prototype.pasteJson = function (e) {
+        var copyArea = $('#copyArea');
+        if (!copyArea.length) return;
+        try {
+          var json = copyArea.text();
+          var obj = JSON.parse(json);
+          if (!obj.printElementType && !obj.templateId) return;
+          // 复制使用当前模板内的元素 进行克隆
+          // todo: 使用参数创建
+          var n = this, r = obj.options, ele = n.getElementById(obj.id);
+          if (!ele) return;
+          var a = ele.clone(obj);
+          if (!a) return;
+          // 判断是否是在元素上进行paste
+          var useMouse = e.currentTarget.className != e.target.className;
+          var left = (!useMouse && n.mouseOffsetX && o.a.px.toPt(n.mouseOffsetX)) || (r.left += 10);
+          var top = (!useMouse &&n.mouseOffsetY && o.a.px.toPt(n.mouseOffsetY)) || (r.top += 10);
+          a.options.setLeft(left);
+          a.options.setTop(top);
+          a.setTemplateId(n.templateId), a.setPanel(n);
+          n.appendDesignPrintElement(n.designPaper, a, !1);
+          n.printElements.push(a), a.design(void 0, n.designPaper);
+          console.log('pasteJson success');
+          // 点击克隆出来的元素
+          a.designTarget.children('.resize-panel').trigger($.Event('click'));
+        } catch (e) {
+          console.error('pasteJson error', e);
+        }
       }, t.prototype.css = function (t) {
         this.fontFamily && t.css("fontFamily", this.fontFamily);
       }, t.prototype.getHtml = function (t, e, n, i, o) {
@@ -7343,7 +7428,9 @@ var hiprint = function (t) {
           onDrop: function onDrop(n, i) {
             var r = s.a.instance.getDragingPrintElement(),
               a = r.printElement;
-            a.updateSizeAndPositionOptions(e.mathroundToporleft(r.left - o.a.px.toPt(e.target.offset().left)), e.mathroundToporleft(r.top - o.a.px.toPt(e.target.offset().top))), a.setTemplateId(e.templateId), a.setPanel(e), e.appendDesignPrintElement(e.designPaper, a, !0), e.printElements.push(a), a.design(void 0, t);
+            a.updateSizeAndPositionOptions(e.mathroundToporleft(r.left - o.a.px.toPt(e.target.offset().left)), e.mathroundToporleft(r.top - o.a.px.toPt(e.target.offset().top)));
+            a.setTemplateId(e.templateId), a.setPanel(e), e.appendDesignPrintElement(e.designPaper, a, !0);
+            e.printElements.push(a), a.design(void 0, t);
           }
         });
       }, t.prototype.initPrintElements = function (t) {
@@ -7439,6 +7526,10 @@ var hiprint = function (t) {
         }).map(function (t, e) {
           return t;
         });
+      }, t.prototype.getElementById = function (t) {
+        return this.printElements.find(function (e) {
+          return e.id === t;
+        });
       }, t.prototype.getFieldsInPanel = function () {
         var t = [];
         return this.printElements.forEach(function (e) {
@@ -7447,6 +7538,11 @@ var hiprint = function (t) {
       }, t.prototype.bindBatchMoveElement = function () {
         var t = this;
         this.designPaper.getTarget().on("mousemove", function (e) {
+          if (e.currentTarget.className == t.designPaper.target[0].className) {
+            t.mouseOffsetX = e.offsetX, t.mouseOffsetY = e.offsetY;
+          } else {
+            t.mouseOffsetX = t.mouseOffsetY = void 0;
+          }
           s.a.instance.draging || 1 === e.buttons && (t.mouseRect && (t.mouseRect.updateRect(e.pageX, e.pageY), t.updateRectPanel(t.mouseRect)));
         }).on("mousedown", function (e) {
           s.a.instance.draging || (t.mouseRect && t.mouseRect.target && t.mouseRect.target.remove(), 1 === e.buttons && (t.mouseRect = new at(e.pageX, e.pageY, s.a.instance.dragLengthCNum(e.pageX - t.designPaper.getTarget().offset().left, p.a.instance.movingDistance), s.a.instance.dragLengthCNum(e.pageY - t.designPaper.getTarget().offset().top, p.a.instance.movingDistance))));
