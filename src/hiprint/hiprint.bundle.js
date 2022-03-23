@@ -1257,7 +1257,7 @@ var hiprint = function (t) {
         })), r = t.paperHeader, i++ , a = t.getPaperFooter(i)));
         var p = this.getData(e),
           s = this.createTarget(this.getTitle(), p);
-        this.updatePanelHeight(r + this.options.getHeight(),t);
+        if ("none" == t.panelPageRule && (r + this.options.getHeight()) > a) this.updatePanelHeight(r + this.options.getHeight(),t);
         return this.updateTargetSize(s), this.css(s, p), s.css("position", "absolute"), s.css("left", this.options.displayLeft()), s.css("top", r + "pt"), o.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_3__.a({
           target: s,
           printLine: r + this.options.getHeight(),
