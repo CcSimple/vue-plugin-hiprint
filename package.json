@@ -1,7 +1,7 @@
 {
   "name": "vue-plugin-hiprint",
   "description": "hiprint for vue2.0",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "author": "CcSimple",
   "license": "MIT",
   "main": "dist/vue-plugin-hiprint.js",

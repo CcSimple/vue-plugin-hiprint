@@ -203,7 +203,7 @@ hiprint.setConfig({
 
 ## 状态/调整/优化
 - [x] `vue 插件` 发布npm包,方便直接使用
-- [x] `Ant Design Vue` 默认demo
+- [x] `Ant Design Vue demo` 默认拖拽设计、自定义设计、队列打印
 - [x] `优化删除元素功能` 支持 backSpace/delete 按键删除
 - [x] `优化拖动功能` fix 元素拖出窗口外的问题
 - [x] `优化框选功能` fix 原只能从上往下框选问题
@@ -212,6 +212,11 @@ hiprint.setConfig({
 - [x] `table/tableCustom优化调整` 支持设置options.fields 双击选择字段,
 - [x] `table优化调整` 支持设置isEnableInsertColumn/isEnableDeleteColumn等参数，支持插入/删除列
 - [x] `table/tableCustom优化调整` 支持设置options.tableHeaderRepeat/tableFooterRepeat 表头/表脚显示模式
+- [x] `table优化调整` 支持设置 不显示表头
+- [x] `条形码优化调整` fix 条码格式错误的问题（EAN-13、ITF、UPC等）
+- [x] `字段名优化调整` 元素的字段名(field) 支持嵌套（eg: a.b.c.d）
+- [x] `新增支持不分页(小票打印)` 可设置不分页 table、longText处理
+- [x] `新增支持复制/粘贴` 支持 基本元素的ctrl+c/v(复制/粘贴)
 
 ### 咳咳..
 第一次写插件(webpack打包这些都不太了解)，不合理的地方欢迎指正<a href="https://github.com/CcSimple/vue-plugin-hiprint/issues">issues</a>。
