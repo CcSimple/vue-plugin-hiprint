@@ -92,7 +92,7 @@
 
 import printPreview from './preview'
 
-import {hiprint} from '../../index'
+import {hiprint} from 'vue-plugin-hiprint'
 import TaskRunner from 'concurrent-tasks';
 import panel from './panel'
 import provider from './providers'

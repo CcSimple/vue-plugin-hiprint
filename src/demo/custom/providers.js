@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {hiprint} from '../../index'
+import {hiprint} from 'vue-plugin-hiprint'
 
 // 自定义设计元素1
 export const aProvider = function (ops) {

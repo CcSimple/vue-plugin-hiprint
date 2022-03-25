@@ -97,7 +97,7 @@
 
 import printPreview from './preview'
 
-import {hiprint} from '../../index'
+import {hiprint} from 'vue-plugin-hiprint'
 import providers from './providers'
 import printData from './print-data'
 

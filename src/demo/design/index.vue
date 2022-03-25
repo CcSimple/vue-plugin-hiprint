@@ -129,7 +129,7 @@
 </template>
 
 <script>
-import {hiprint, defaultElementTypeProvider} from '../../index'
+import {hiprint, defaultElementTypeProvider} from 'vue-plugin-hiprint'
 
 let hiprintTemplate;
 import panel from './panel'

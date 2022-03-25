@@ -26,7 +26,9 @@
     "build-demo": "vue-cli-service build",
     "build": "cross-env NODE_ENV=production webpack --progress"
   },
-  "dependencies": {},
+  "dependencies": {
+    "vue-plugin-hiprint": "^0.0.16"
+  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
