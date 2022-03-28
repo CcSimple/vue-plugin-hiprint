@@ -14,6 +14,9 @@
       <a-button type="primary" icon="printer" @click="print">
         直接打印
       </a-button>
+	  <a-button type="primary" icon="printer" @click="onlyPrint">
+	    单独打印
+	  </a-button>
       <a-popconfirm
         title="是否确认清空?"
         okType="danger"
@@ -129,8 +132,9 @@
 </template>
 
 <script>
-import {hiprint, defaultElementTypeProvider} from '../../index'
-
+import Vue from 'vue'
+import {hiprint, defaultElementTypeProvider,hiPrintPlugin} from '../../index'
+Vue.use(hiPrintPlugin)//引入插件
 let hiprintTemplate;
 import panel from './panel'
 import printData from './print-data'
@@ -189,6 +193,7 @@ export default {
     }
   },
   mounted() {
+	  console.log(this.$print)
     hiprint.init({
       providers: [new defaultElementTypeProvider()]
     });
@@ -242,6 +247,9 @@ export default {
     preView() {
       this.$refs.preView.show(hiprintTemplate, printData)
     },
+	onlyPrint(){
+		this.$print(panel,printData)
+	},
     print() {
       if (window.hiwebSocket.opened) {
         const printerList = hiprintTemplate.getPrinterList();
