@@ -7884,6 +7884,8 @@ var hiprint = function (t) {
   }
 
   function mt(t) {
+	  //清空历史初始化记录
+	 a.instance.allElementTypes = []
     p.a.instance.init(t), p.a.instance.providers.forEach(function (t) {
       t.addElementTypes(a.instance);
     });
