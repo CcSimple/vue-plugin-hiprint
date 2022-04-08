@@ -728,8 +728,18 @@
                     name: 'vAlign',
                     hidden: false
                 },
-
-
+				{
+                    name: 'tableTextType',
+                    hidden: false
+                },
+                {
+                    name: 'tableBarcodeMode',
+                    hidden: false
+                },
+                {
+                    name: 'tableColumnHeight',
+                    hidden: false
+                },
                 {
                     name: 'paddingLeft',
                     hidden: false

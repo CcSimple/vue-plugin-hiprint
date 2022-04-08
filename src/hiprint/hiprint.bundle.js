@@ -898,7 +898,16 @@ var hiprint = function (t) {
           }, {
             name: "styler2",
             hidden: !1
-          }],
+          },{
+			name: 'tableTextType',
+			hidden: !1
+		  },{
+			name: 'tableBarcodeMode',
+			hidden: !1
+		  },{
+			name: 'tableColumnHeight',
+			hidden: !1
+		  }],
           default: {
             height: 90,
             width: 90
@@ -1582,7 +1591,7 @@ var hiprint = function (t) {
     }(),
     u = function () {
       return function (t) {
-        this.title = t.title, this.field = t.field, this.width = t.width, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.colspan = t.colspan, this.rowspan = t.rowspan, this.checked = t.checked, this.columnId = t.columnId, this.formatter2 = t.formatter2, this.styler2 = t.styler2;
+        this.title = t.title, this.field = t.field, this.width = t.width, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.colspan = t.colspan, this.rowspan = t.rowspan, this.checked = t.checked, this.columnId = t.columnId, this.formatter2 = t.formatter2, this.styler2 = t.styler2,this.tableColumnHeight = t.tableColumnHeight,this.tableTextType = t.tableTextType,this.tableBarcodeMode = t.tableBarcodeMode;
       };
     }(),
     d = function () {
@@ -1683,7 +1692,7 @@ var hiprint = function (t) {
     f = function (t) {
       function e(e) {
         var n = this;
-        return e = e || {}, (n = t.call(this) || this).width = e.width ? parseFloat(e.width.toString()) : 100, n.title = e.title, n.descTitle = e.descTitle, n.field = e.field, n.fixed = e.fixed, n.rowspan = e.rowspan ? parseInt(e.rowspan) : 1, n.colspan = e.colspan ? parseInt(e.colspan) : 1, n.align = e.align, n.halign = e.halign, n.vAlign = e.vAlign, n.formatter = e.formatter, n.styler = e.styler, n.formatter2 = e.formatter2, n.styler2 = e.styler2, n.checkbox = e.checkbox, n.checked = 0 != e.checked, n.columnId = e.columnId || e.field, n;
+        return e = e || {}, (n = t.call(this) || this).width = e.width ? parseFloat(e.width.toString()) : 100, n.title = e.title, n.descTitle = e.descTitle, n.field = e.field, n.fixed = e.fixed, n.rowspan = e.rowspan ? parseInt(e.rowspan) : 1, n.colspan = e.colspan ? parseInt(e.colspan) : 1, n.align = e.align, n.halign = e.halign, n.vAlign = e.vAlign, n.formatter = e.formatter, n.styler = e.styler, n.formatter2 = e.formatter2, n.styler2 = e.styler2, n.checkbox = e.checkbox, n.checked = 0 != e.checked, n.columnId = e.columnId || e.field,n.tableColumnHeight = e.tableColumnHeight||30,n.tableTextType = e.tableTextType||'text',n.tableBarcodeMode = e.tableBarcodeMode||'CODE128A', n;
       }
 
       return h(e, t), e.prototype.css = function (t) {
@@ -1767,7 +1776,61 @@ var hiprint = function (t) {
           }
           var a = TableExcelHelper.getColumnFormatter(t),
             p = a ? a(e[t.field], e, i, n) : e[t.field];
-          r.html(p);
+			//表格内容插入二维码等
+			if ("text" == t.tableTextType) r.html(p);
+			else {
+				if ("barcode" == t.tableTextType) {
+					r.html(
+						'<svg width="100%" display="block" height="100%" class="hibarcode_imgcode" preserveAspectRatio="none slice"></svg ><div class="hibarcode_displayValue"></div>'
+					);
+					try {
+						p ? (JsBarcode(r.find(".hibarcode_imgcode")[0], p, {
+								format: t.tableBarcodeMode,
+								width: 1,
+								textMargin: -1,
+								lineColor:"#000000",
+								margin: 0,
+								height: parseInt(10),
+								displayValue: !1
+							}), r.find(".hibarcode_imgcode").attr("height", t.tableColumnHeight+'pt'),r.find(".hibarcode_imgcode").css("margin",'5pt 10pt'), r.find(".hibarcode_imgcode").attr("width", "calc(100% - 20pt)")) : r.html("");
+							// this.options.hideTitle || r.find(".hibarcode_displayValue").html(n)
+					} catch (t) {
+						console.log(t), r.html("此格式不支持该文本");
+					}
+				}
+				if("image" ==t.tableTextType){
+					r.html('')
+					if(p){
+					
+						var imagebox = $('<div><img style = "max-width:100%;max-height:100%"/></div>')
+						imagebox.find('img').attr('src',p)
+						console.log(imagebox.find('img').css('width'))
+						r.html(imagebox)	
+					}
+					
+				}
+				if ("qrcode" == t.tableTextType) {
+					r.html("");
+					try {
+						var qrcodebox = $('<div></div>')
+						
+						if (p) {
+							var l = parseInt(t.width||t.targetWidth || 20),
+								u = parseInt(t.tableColumnHeight || 20);
+								qrcodebox.css('height',(l>u?u:l)+'pt')
+							new QRCode(qrcodebox[0], {
+								width: l>u?u:l,
+								height: l>u?u:l,
+								colorDark:"#000000",
+								useSVG: !0
+							}).makeCode(p);
+							r.html(qrcodebox)
+						}
+					} catch (t) {
+						console.log(t), r.html("二维码生成失败");
+					}
+				}
+			}
           var s = TableExcelHelper.getColumnStyler(t);
 
           if (s) {
@@ -3162,6 +3225,60 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
+	tablept = function() {
+		function t() {
+			this.name = "tableTextType";
+		}
+
+		return t.prototype.createTarget = function() {
+			return this.target = $(
+				' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        字段类型\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="text" >文本</option>\n        <option value="barcode" >条形码</option>\n        <option value="qrcode" >二维码</option>\n    <option value="image" >图片</option>\n        </select>\n        </div>\n    </div>'
+			), this.target;
+		}, t.prototype.getValue = function() {
+			var t = this.target.find("select").val();
+			if (t) return t;
+		}, t.prototype.setValue = function(t) {
+			this.target.find("select").val(t);
+		}, t.prototype.destroy = function() {
+			this.target.remove();
+		}, t;
+	}(),
+	tableE = function() {
+		function t() {
+			this.name = "tableBarcodeMode";
+		}
+
+		return t.prototype.createTarget = function() {
+			return this.target = $(
+				' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        条形码格式\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n         <option value="CODE128A" >CODE128A</option>\n        <option value="CODE128B" >CODE128B</option>\n        <option value="CODE128C" >CODE128C</option>\n        <option value="CODE39" >CODE39</option>\n        <option value="EAN-13" >EAN-13</option>\n        <option value="EAN-8" >EAN-8</option>\n        <option value="EAN-5" >EAN-5</option>\n        <option value="EAN-2" >EAN-2</option>\n        <option value="UPC（A）" >UPC（A）</option>\n        <option value="ITF" >ITF</option>\n        <option value="ITF-14" >ITF-14</option>\n        <option value="MSI" >MSI</option>\n            <option value="MSI10" >MSI10</option>\n            <option value="MSI11" >MSI11</option>\n            <option value="MSI1010" >MSI1010</option>\n            <option value="MSI1110" >MSI1110</option>\n            <option value="Pharmacode" >Pharmacode</option>\n        </select>\n        </div>\n    </div>'
+			), this.target;
+		}, t.prototype.getValue = function() {
+			var t = this.target.find("select").val();
+			return t || void 0;
+		}, t.prototype.setValue = function(t) {
+			this.target.find("select").val(t);
+		}, t.prototype.destroy = function() {
+			this.target.remove();
+		}, t;
+	}(),
+	tableColumnH = function() {
+		function t() {
+			this.name = "tableColumnHeight";
+		}
+
+		return t.prototype.createTarget = function() {
+			return this.target = $(
+				' <div class="hiprint-option-item ">\n        <div class="hiprint-option-item-label">\n        单元格高度\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="text" placeholder="条形码、二维码以及图片有效" class="auto-submit" >\n        </div>\n    </div>'
+			), this.target;
+		}, t.prototype.getValue = function() {
+			var t = this.target.find("input").val();
+			if (t) return t.toString();
+		}, t.prototype.setValue = function(t) {
+			this.target.find("input").val(t);
+		}, t.prototype.destroy = function() {
+			this.target.remove();
+		}, t;
+	}(),
     st = function () {
       function t() {
         this.name = "topOffset";
@@ -3535,7 +3652,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new C(), new O(), new H(), new D(), new I(), new R(), new M(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new it(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt()], t;
+    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new C(), new O(), new H(), new D(), new I(), new R(), new M(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new it(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -4690,7 +4807,7 @@ var hiprint = function (t) {
     r = (function () {
     }(), function () {
       return function (t) {
-        this.width = t.width, this.title = t.title, this.field = t.field, this.columnId = t.columnId, this.fixed = !1, this.rowspan = t.rowspan || 1, this.colspan = t.colspan || 1, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.formatter2 = t.formatter2, this.styler2 = t.styler2;
+        this.width = t.width, this.title = t.title, this.field = t.field, this.columnId = t.columnId, this.fixed = !1, this.rowspan = t.rowspan || 1, this.colspan = t.colspan || 1, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.formatter2 = t.formatter2, this.styler2 = t.styler2,this.tableColumnHeight = t.tableColumnHeight||30,this.tableTextType = t.tableTextType||'text',this.tableBarcodeMode = t.tableBarcodeMode||'CODE128A';
       };
     }()),
     a = n(5);
