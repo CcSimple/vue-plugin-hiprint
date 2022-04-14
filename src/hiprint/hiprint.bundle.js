@@ -7415,6 +7415,7 @@ var hiprint = function (t) {
         n.designPaper.target.attr("tabindex", "1");
         n.designPaper.target.keydown(function (e) {
           // ctrl + v / command + v
+          if ('INPUT' == e.target.tagName) return;
           if ((e.ctrlKey || e.metaKey ) && 86 == e.keyCode) {
             n.pasteJson(e);
             e.preventDefault();
