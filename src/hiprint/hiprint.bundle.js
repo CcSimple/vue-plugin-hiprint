@@ -5516,23 +5516,46 @@ var hiprint = function (t) {
       this.stop()
       this.start()
     },
-    start: function start() {
-      var _this = this;
-
-      var t = this;
-      window.WebSocket ? this.socket || (this.socket = io(this.host, {
-        reconnectionAttempts: 5
-      }), this.socket.on("connect", function (e) {
-        t.opened = !0, console.log("Websocket opened."), _this.socket.on("successs", function (t) {
-          hinnn.event.trigger("printSuccess_" + t.templateId, t);
-        }), _this.socket.on("error", function (t) {
-          hinnn.event.trigger("printError_" + t.templateId, t);
-        }), _this.socket.on("printerList", function (e) {
-          t.printerList = e;
-        }), t.state = n;
-      }), this.socket.on("disconnect", function () {
-        t.opened = !1;
-      })) : console.log("WebSocket start fail");
+    start: function start(success,error) {
+		var _this = this;
+		var t = this;
+		if(window.WebSocket){
+			if(!this.socket){
+				this.socket = io(this.host, {
+				  reconnectionAttempts: 5
+				});
+				this.socket.on("connect", function (e) {
+				   t.opened = !0, console.log("Websocket opened.");
+					   _this.socket.on("successs", function (t) {
+						   hinnn.event.trigger("printSuccess_" + t.templateId, t);
+					   });
+					   _this.socket.on("error", function (t) {
+						   hinnn.event.trigger("printError_" + t.templateId, t);
+					   })
+					   _this.socket.on("printerList", function (e) {
+						   t.printerList = e;
+						   
+						   success&&success();
+					   });
+					t.state = n;
+				 });
+				 this.socket.on("disconnect", function () {
+					  t.opened = !1;
+				 })
+				 //客户端未开启或未安装执行回调触发错误
+				 setTimeout(() => {
+					 if(!t.opened){
+						console.log("WebSocket connect error"); 
+						error?(error()):(success&&success())
+					 }
+				 },1500)
+			}else{
+				success&&success();
+			}
+		}else{
+		   console.log("WebSocket start fail"); 
+		}
+        
     },
     reconnect: function reconnect() {
       this.state !== n && this.state !== i || (this.stop(), this.ensureReconnectingState() && (console.log("Websocket reconnecting."), this.start()));
@@ -8000,12 +8023,14 @@ var hiprint = function (t) {
     }), e;
   }
 
-  function mt(t) {
-	  //清空历史初始化记录
-	 a.instance.allElementTypes = []
-    p.a.instance.init(t), p.a.instance.providers.forEach(function (t) {
-      t.addElementTypes(a.instance);
-    });
+  function mt(t,status) {
+	//添加是否默认请求状态
+	window.disSocketRequest = status||false
+	//清空历史初始化记录
+	a.instance.allElementTypes = []
+	p.a.instance.init(t), p.a.instance.providers.forEach(function (t) {
+		t.addElementTypes(a.instance);
+	});
   }
 
   function cig(t) {
@@ -8033,6 +8058,8 @@ var hiprint = function (t) {
     return mt;
   }), n.d(e, "setConfig", function () {
     return cig;
+  }), n.d(e, "connectSocket", function () {
+    return hiwebSocket
   }), n.d(e, "PrintElementTypeManager", function () {
     return it;
   }), n.d(e, "PrintElementTypeGroup", function () {
@@ -8046,7 +8073,9 @@ var hiprint = function (t) {
   }), n.d(e, "getHtml", function () {
     return gt;
   }), $(document).ready(function () {
-    hiwebSocket.hasIo() && hiwebSocket.start();
+		if(hiwebSocket.hasIo()&&!window.disSocketRequest){
+			hiwebSocket.start();
+		}
   });
 }]);
 
@@ -8054,8 +8083,8 @@ var hiprint = function (t) {
 import defaultTypeProvider from './etypes/default-etyps-provider'
 
 var defaultElementTypeProvider = defaultTypeProvider(hiprint)
-
+var connectSocket = hiwebSocket.start
 export {
   hiprint,
-  defaultElementTypeProvider
+  defaultElementTypeProvider,
 }

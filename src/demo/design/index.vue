@@ -193,10 +193,22 @@ export default {
     }
   },
   mounted() {
-	  console.log(this.$print)
-    hiprint.init({
-      providers: [new defaultElementTypeProvider()]
-    });
+	/*默认自动发起socket请求*/
+	hiprint.init({
+	  providers: [new defaultElementTypeProvider()]
+	});
+	/*手动发起socket连接start*/
+	// hiprint.init({
+	//   providers: [new defaultElementTypeProvider()]
+	// },true);
+	// hiprint.connectSocket.start(function(){
+	// 	//连接成功的的内容
+	// },function(){
+	// 	// 连接失败执行的内容 如果失败1.5s后执行
+	// 	//如果不传，则失败时默认执行成功的回调
+	// })
+	/*手动发起socket连接end*/
+	
     // 还原配置
     hiprint.setConfig()
     // 替换配置
