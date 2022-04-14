@@ -14,6 +14,12 @@
       <a-button type="primary" icon="printer" @click="print">
         直接打印
       </a-button>
+      <a-button type="primary" @click="onlyPrint">
+        Api单独打印
+      </a-button>
+      <a-button type="primary" @click="onlyPrint2">
+        Api单独直接打印
+      </a-button>
       <a-popconfirm
         title="是否确认清空?"
         okType="danger"
@@ -197,7 +203,7 @@ export default {
     // 替换配置
     hiprint.setConfig({
       movingDistance: 2.5,
-      text:{
+      text: {
         supportOptions: [
           {
             name: 'styler',
@@ -241,6 +247,38 @@ export default {
 
     preView() {
       this.$refs.preView.show(hiprintTemplate, printData)
+    },
+    onlyPrint() {
+      let hiprintTemplate = this.$print(undefined, panel, printData, {}, {
+        styleHandler: () => {
+          let css = '<link href="http://hiprint.io/Content/hiprint/css/print-lock.css" media="print" rel="stylesheet">';
+          return css
+        }
+      })
+      console.log(hiprintTemplate);
+    },
+    onlyPrint2() {
+      let that = this;
+      if (window.hiwebSocket.opened) {
+        let hiprintTemplate = this.$print2(undefined, panel, printData, {
+          printer: '', title: 'Api单独打印',
+          styleHandler: () => {
+            let css = '<link href="http://hiprint.io/Content/hiprint/css/print-lock.css" media="print" rel="stylesheet">';
+            return css
+          }
+        })
+        let key = 'Api单独直接打印';
+        hiprintTemplate.on('printSuccess', function () {
+          that.$notification.success({
+            key: key,
+            placement: 'topRight',
+            message: key + ' 打印成功',
+            description: 'Api单独直接打印回调',
+          });
+        });
+        return;
+      }
+      this.$message.error('客户端未连接,无法直接打印')
     },
     print() {
       if (window.hiwebSocket.opened) {

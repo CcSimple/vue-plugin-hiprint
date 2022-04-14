@@ -29,6 +29,39 @@ initJquery()
 let hiPrintPlugin = {
   install: function (Vue, name = '$hiPrint') {
     Object.defineProperty(Vue.prototype, name, {value: hiprint});
+	// Vue.component(HiPrint.name, HiPrint) // printPanel.name 组件的name属性
+	/**
+   * 预览打印，调起系统打印预览
+	 * provider 左侧拖拽元素
+	 * template 模版json字符串
+	 * args 打印数据data, options,
+	 */
+	 Vue.prototype.$print = function (provider = defaultElementTypeProvider, template, ...args) {
+		 hiprint.init({
+			providers: [new provider()]
+		});
+		var hiprintTemplate = new hiprint.PrintTemplate({
+			template: template,
+		});
+		hiprintTemplate.print(...args);
+		return hiprintTemplate;
+	 }
+	 /**
+    * 单模版直接打印， 需客户端支持
+	  * provider 左侧拖拽项对象
+	  * template 模版json字符串
+	  * args 打印数据data, options,
+	  */
+	 Vue.prototype.$print2 = function (provider = defaultElementTypeProvider, template, ...args) {
+		 hiprint.init({
+			providers: [new provider()]
+		});
+		var hiprintTemplate = new hiprint.PrintTemplate({
+			template: template,
+		});
+		hiprintTemplate.print2(...args);
+		return hiprintTemplate;
+	 }
   }
 }
 
