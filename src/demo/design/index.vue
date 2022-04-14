@@ -198,6 +198,17 @@ export default {
     hiprint.init({
       providers: [new defaultElementTypeProvider()]
     });
+	//手动连接socket
+	// hiprint.init({
+	//   providers: [new defaultElementTypeProvider()]
+	// },true);
+	// hiprint.connectSocket.start(function(){
+	// 	//成功回调
+	// 	//获取打印机列表 直接打印等操作需在成功回调内执行
+	// },function(){
+	// 	//失败回调
+	// 	//若无失败回调则默认执行成功回调
+	// })
     // 还原配置
     hiprint.setConfig()
     // 替换配置
