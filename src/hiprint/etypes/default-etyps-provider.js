@@ -1,6 +1,7 @@
 export default function (hiprint) {
   return function (options) {
     var addElementTypes = function (context) {
+      context.removePrintElementTypes("defaultModule");
       context.addPrintElementTypes("defaultModule", [
         new hiprint.PrintElementTypeGroup("常规", [
           {

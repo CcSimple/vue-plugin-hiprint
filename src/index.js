@@ -31,38 +31,37 @@ let hiPrintPlugin = {
     Object.defineProperty(Vue.prototype, name, {value: hiprint});
 	// Vue.component(HiPrint.name, HiPrint) // printPanel.name 组件的name属性
 	/**
-	 * temp 模版json字符串
-	 * data 打印数据
-	 * provider 左侧拖拽项对象
+   * 预览打印，调起系统打印预览
+	 * provider 左侧拖拽元素
+	 * template 模版json字符串
+	 * args 打印数据data, options,
 	 */
-	 Vue.prototype.$print = function (temp,data,provider=defaultElementTypeProvider){//预览打印，调起系统打印预览
+	 Vue.prototype.$print = function (provider = defaultElementTypeProvider, template, ...args) {
 		 hiprint.init({
 			providers: [new provider()]
 		});
 		var hiprintTemplate = new hiprint.PrintTemplate({
-			template: temp,
+			template: template,
 		});
-		hiprintTemplate.print(data);
-	 } 
+		hiprintTemplate.print(...args);
+		return hiprintTemplate;
+	 }
 	 /**
-	  * temp 模版json字符串
-	  * data 打印数据
+    * 单模版直接打印， 需客户端支持
 	  * provider 左侧拖拽项对象
-	  * printInfo 打印相关配置项 如 打印机名称 等
-	  * cb 打印成功回调
+	  * template 模版json字符串
+	  * args 打印数据data, options,
 	  */
-	 Vue.prototype.$print2 = function (temp,data,provider=defaultElementTypeProvider,printInfo={},cb){
+	 Vue.prototype.$print2 = function (provider = defaultElementTypeProvider, template, ...args) {
 		 hiprint.init({
 			providers: [new provider()]
 		});
 		var hiprintTemplate = new hiprint.PrintTemplate({
-			template: temp,
+			template: template,
 		});
-		hiprintTemplate.print2(printData,printInfo)
-		hiprintTemplate.on('printSuccess', function (data) {
-			cb(data)
-		})
-	 } //单模版直接打印， 需客户端支持
+		hiprintTemplate.print2(...args);
+		return hiprintTemplate;
+	 }
   }
 }
 

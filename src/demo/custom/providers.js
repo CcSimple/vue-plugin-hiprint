@@ -165,10 +165,10 @@ export const aProvider = function (ops) {
               [
                 {title: '名称', align: 'center', field: 'NAME', width: 150},
                 {title: '数量', align: 'center', field: 'SL', width: 80},
-                {title: '规格', align: 'center', field: 'GG', width: 80},
-                {title: '条码', align: 'center', field: 'TM', width: 100},
+                {title: '规格', align: 'center', field: 'GG', width: 80, checked: false},
+                {title: '条码', align: 'center', field: 'TM', width: 100, checked: false},
                 {title: '单价', align: 'center', field: 'DJ', width: 100},
-                {title: '金额', align: 'center', field: 'JE', width: 100},
+                {title: '金额', align: 'center', field: 'JE', width: 100, checked: false},
               ],
             ],
             footerFormatter: function (options, rows, data, currentPageGridRowsData) {
@@ -178,7 +178,14 @@ export const aProvider = function (ops) {
               return '<td style="padding:0 10px" colspan="100">应收金额大写: </td>'
             },
           },
-          {tid: 'aProviderModule.customText', title: '文本', customText: '自定义文本', custom: true, type: 'text'}
+          {tid: 'aProviderModule.customText', title: '文本', customText: '自定义文本', custom: true, type: 'text'},
+          {
+            tid: 'aProviderModule.longText', title: '长文本', type: 'longText', options: {
+              field: 'test.longText',
+              width: 200,
+              testData: '长文本分页/不分页测试'
+            },
+          }
         ]),
         new hiprint.PrintElementTypeGroup("辅助", [
           {
@@ -369,7 +376,14 @@ export const bProvider = function (ops) {
               return '<td style="padding:0 10px" colspan="100">应收金额大写: </td>'
             },
           },
-          {tid: 'bProviderModule.customText', title: '文本', customText: '自定义文本', custom: true, type: 'text'}
+          {tid: 'bProviderModule.customText', title: '文本', customText: '自定义文本', custom: true, type: 'text'},
+          {
+            tid: 'bProviderModule.longText', title: '长文本', type: 'longText', options: {
+              field: 'test.longText',
+              width: 200,
+              testData: '长文本分页/不分页测试'
+            },
+          }
         ]),
         new hiprint.PrintElementTypeGroup("辅助", [
           {

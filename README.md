@@ -12,10 +12,18 @@
 ![image](https://badgen.net/packagephobia/publish/vue-plugin-hiprint)
 ![image](https://badgen.net/packagephobia/install/vue-plugin-hiprint)
 
-# vue-plugin-hiprint
+# vue-plugin-hiprint <a href="http://hiprint.io/docs/start">hiprint官方文档</a>
 > hiprint for vue2.0
 
-## 参与/预览
+## 配套直接打印客户端(win/mac/linux)
+### <a href="https://gitee.com/CcSimple/electron-hiprint">gitee</a> <a href="https://gitee.com/CcSimple/electron-hiprint"> github</a>
+<div align="center">
+
+![image](./res/tool.jpeg)
+
+</div>
+
+## 参与/预览 <a href="https://ccsimple.gitee.io/vue-plugin-hiprint/">demo</a>
 ```console
 git clone https://github.com/CcSimple/vue-plugin-hiprint.git
 // or
@@ -27,6 +35,19 @@ npm i
 npm run serve
 // 打包
 npm run build
+```
+## demo调试（显示打印iframe）
+```javascript
+// 快速显示/隐藏 打印iframe  方便调试 ￣□￣｜｜
+// 在浏览器控制台输入：
+// 显示打印页面
+$('#app').css('display','block');
+$('#hiwprint_iframe').css('visibility','hidden');
+$('#hiwprint_iframe').css('width','100%');
+$('#hiwprint_iframe').css('height','251.09mm'); // 这里替换个实际高度才能显示完
+// 显示vue页面
+$('#app').css('display','block');
+$('#hiwprint_iframe').css('visibility','hidden');
 ```
 
 ## 安装
@@ -182,7 +203,7 @@ hiprint.setConfig({
 
 ## 状态/调整/优化
 - [x] `vue 插件` 发布npm包,方便直接使用
-- [x] `Ant Design Vue` 默认demo
+- [x] `Ant Design Vue demo` 默认拖拽设计、自定义设计、队列打印
 - [x] `优化删除元素功能` 支持 backSpace/delete 按键删除
 - [x] `优化拖动功能` fix 元素拖出窗口外的问题
 - [x] `优化框选功能` fix 原只能从上往下框选问题
@@ -191,6 +212,11 @@ hiprint.setConfig({
 - [x] `table/tableCustom优化调整` 支持设置options.fields 双击选择字段,
 - [x] `table优化调整` 支持设置isEnableInsertColumn/isEnableDeleteColumn等参数，支持插入/删除列
 - [x] `table/tableCustom优化调整` 支持设置options.tableHeaderRepeat/tableFooterRepeat 表头/表脚显示模式
+- [x] `table优化调整` 支持设置 不显示表头
+- [x] `条形码优化调整` fix 条码格式错误的问题（EAN-13、ITF、UPC等）
+- [x] `字段名优化调整` 元素的字段名(field) 支持嵌套（eg: a.b.c.d）
+- [x] `新增支持不分页(小票打印)` 可设置不分页 table、longText处理
+- [x] `新增支持复制/粘贴` 支持 基本元素的ctrl+c/v(复制/粘贴)
 
 ### 咳咳..
 第一次写插件(webpack打包这些都不太了解)，不合理的地方欢迎指正<a href="https://github.com/CcSimple/vue-plugin-hiprint/issues">issues</a>。
