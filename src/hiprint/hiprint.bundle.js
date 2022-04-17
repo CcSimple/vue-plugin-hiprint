@@ -6684,14 +6684,22 @@ var hiprint = function (t) {
 
             try {
               if (n) {
-                var l = parseInt(o.a.pt.toPx(this.options.getWidth() || 20)),
-                  u = parseInt(o.a.pt.toPx(this.options.getHeight() || 20));
-                new QRCode(a[0], {
-                  width: l,
-                  height: u,
-                  colorDark: this.options.color || "#000000",
-                  useSVG: !0
+				//去除行高对高度的影响
+				t.css('line-height',0)
+				//默认二维码永远居中
+				a.css('text-align','center')
+                // var l = parseInt(o.a.pt.toPx(this.options.getWidth() || 20)),
+                // 	u = parseInt(o.a.pt.toPx(this.options.getHeight() || 20)),
+				var lpt = this.options.getWidth() || 20,
+					upt = this.options.getHeight() || 20
+                var box = $('<div></div>').css({"width":(lpt>upt?upt:lpt)+'pt',"height":(lpt>upt?upt:lpt)+'pt','display':'inline-block'})
+                new QRCode(box[0], {
+                	width: "100%",
+                	height: "100%",
+                	colorDark: this.options.color || "#000000",
+                	useSVG: !0
                 }).makeCode(n);
+                a.html(box)
               }
             } catch (t) {
               console.log(t), a.html("二维码生成失败");
@@ -7914,7 +7922,7 @@ var hiprint = function (t) {
       }, t;
     }(),
     ct = function () {
-      function t(t) {
+      function t(t,startcb) {
         var e = this;
         this.tempimageBase64 = {}, this.id = s.a.instance.guid(), s.a.instance.setPrintTemplateById(this.id, this);
         var n = t || {};
@@ -7923,6 +7931,7 @@ var hiprint = function (t) {
         n.template && i.panels.forEach(function (t) {
           e.printPanels.push(new pt(t, e.id));
         }), n.fields && (this.fields = n.fields), n.settingContainer && new ut(this, n.settingContainer), n.paginationContainer && (this.printPaginationCreator = new dt(n.paginationContainer, this), this.printPaginationCreator.buildPagination()), this.initAutoSave();
+		startcb&&startcb();
       }
 
       return t.prototype.design = function (t, e) {
@@ -8218,14 +8227,16 @@ var hiprint = function (t) {
   }
 
 
-  function mt(t,status) {
-	//添加是否默认请求状态
-	window.disSocketRequest = status||false
+  function mt(t,cb) {
 	//清空历史初始化记录
 	a.instance.allElementTypes = []
 	p.a.instance.init(t), p.a.instance.providers.forEach(function (t) {
 		t.addElementTypes(a.instance);
 	});
+	//status true: 手动请求 false:自动请求 function:自动请求时 直接打印回调(打印操作放入回调正常打印)
+	if(hiwebSocket.hasIo()){
+		hiwebSocket.start(cb);
+	}
 
   }
 
@@ -8269,9 +8280,9 @@ var hiprint = function (t) {
   }), n.d(e, "getHtml", function () {
     return gt;
   }), $(document).ready(function () {
-		if(hiwebSocket.hasIo()&&!window.disSocketRequest){
-			hiwebSocket.start();
-		}
+		// if(hiwebSocket.hasIo()&&!window.disSocketRequest){
+		// 	hiwebSocket.start();
+		// }
   });
 }]);
 
