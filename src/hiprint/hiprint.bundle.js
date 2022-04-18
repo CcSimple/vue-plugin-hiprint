@@ -6661,14 +6661,22 @@ var hiprint = function (t) {
 
             try {
               if (n) {
-                var l = parseInt(o.a.pt.toPx(this.options.getWidth() || 20)),
-                  u = parseInt(o.a.pt.toPx(this.options.getHeight() || 20));
-                new QRCode(a[0], {
-                  width: l,
-                  height: u,
+                //去除行高对高度的影响
+                t.css('line-height',0)
+                //默认二维码永远居中
+                a.css('text-align','center')
+                // var l = parseInt(o.a.pt.toPx(this.options.getWidth() || 20)),
+                // 	u = parseInt(o.a.pt.toPx(this.options.getHeight() || 20)),
+                var lpt = this.options.getWidth() || 20,
+                  upt = this.options.getHeight() || 20
+                var box = $('<div></div>').css({"width":(lpt>upt?upt:lpt)+'pt',"height":(lpt>upt?upt:lpt)+'pt','display':'inline-block'})
+                new QRCode(box[0], {
+                  width: "100%",
+                  height: "100%",
                   colorDark: this.options.color || "#000000",
                   useSVG: !0
                 }).makeCode(n);
+                a.html(box)
               }
             } catch (t) {
               console.log(t), a.html("二维码生成失败");
