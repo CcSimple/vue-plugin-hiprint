@@ -135,7 +135,8 @@
 </template>
 
 <script>
-import {hiprint, defaultElementTypeProvider} from '../../index'
+import {disAutoConnect, hiprint, defaultElementTypeProvider} from '../../index'
+// disAutoConnect();
 
 let hiprintTemplate;
 import panel from './panel'

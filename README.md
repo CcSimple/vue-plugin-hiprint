@@ -13,10 +13,10 @@
 ![image](https://badgen.net/packagephobia/install/vue-plugin-hiprint)
 
 # vue-plugin-hiprint <a href="http://hiprint.io/docs/start">hiprint官方文档</a>
-> hiprint for vue2.0
+> hiprint for vue2.x
 
 ## 配套直接打印客户端(win/mac/linux)
-### <a href="https://gitee.com/CcSimple/electron-hiprint">gitee</a> <a href="https://gitee.com/CcSimple/electron-hiprint"> github</a>
+### <a href="https://gitee.com/CcSimple/electron-hiprint">gitee</a> <a href="https://github.com/CcSimple/electron-hiprint"> github</a>
 <div align="center">
 
 ![image](./res/tool.jpeg)
@@ -184,6 +184,27 @@ hiprint.setConfig({
   }
 })
 ```
+> 取消自动socket连接 / socket连接报错问题
+```javascript
+/**
+ * 取消自动连接
+ */
+// 在main.js中设置
+import {hiPrintPlugin} from 'vue-plugin-hiprint'
+Vue.use(hiPrintPlugin,'$hiprint', false);
+// hiPrintPlugin 同时提供了 disAutoConnect 方法
+hiPrintPlugin.disAutoConnect();
+// 在组件中使用 见： demo/design/index.vue
+import {disAutoConnect, hiprint} from 'vue-plugin-hiprint'
+disAutoConnect();
+// 同时 export了 autoConnect，disAutoConnect 方法
+/**
+ * socket连接报错？
+ * 由于npm包更新到socket.io 3.x版本，官网提供的客户端，npm包是无法连接的
+ * 请使用gitee提供的客户端, 同时gitee客户端可传更多的参数， 如是否打印颜色/打印份数/DPI等
+ * 详情electron见：https://www.electronjs.org/zh/docs/latest/api/web-contents
+ */
+```
 
 ## 交流群
 <div align="center">
@@ -199,6 +220,8 @@ hiprint.setConfig({
 ![image](./res/img.png)
 
 ![image](./res/img_1.png)
+
+![image](./res/img_2.png)
 </div>
 
 ## 状态/调整/优化
@@ -217,6 +240,7 @@ hiprint.setConfig({
 - [x] `字段名优化调整` 元素的字段名(field) 支持嵌套（eg: a.b.c.d）
 - [x] `新增支持不分页(小票打印)` 可设置不分页 table、longText处理
 - [x] `新增支持复制/粘贴` 支持 基本元素的ctrl+c/v(复制/粘贴)
+- [x] `新增支持设置是否自动连接客户端` 支持 不自动连接'直接打印'客户端
 
 ### 咳咳..
 第一次写插件(webpack打包这些都不太了解)，不合理的地方欢迎指正<a href="https://github.com/CcSimple/vue-plugin-hiprint/issues">issues</a>。

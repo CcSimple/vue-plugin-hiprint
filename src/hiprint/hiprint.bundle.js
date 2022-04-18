@@ -8233,6 +8233,8 @@ var hiprint = function (t) {
     return mt;
   }), n.d(e, "setConfig", function () {
     return cig;
+  }), n.d(e, "hiwebSocket", function () {
+    return hiwebSocket
   }), n.d(e, "PrintElementTypeManager", function () {
     return it;
   }), n.d(e, "PrintElementTypeGroup", function () {
@@ -8246,7 +8248,11 @@ var hiprint = function (t) {
   }), n.d(e, "getHtml", function () {
     return gt;
   }), $(document).ready(function () {
-    hiwebSocket.hasIo() && hiwebSocket.start();
+    console.log('document ready');
+    console.log(window.autoConnect);
+		if (hiwebSocket.hasIo() && window.autoConnect){
+			hiwebSocket.start();
+		}
   });
 }]);
 
