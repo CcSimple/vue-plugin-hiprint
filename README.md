@@ -195,9 +195,17 @@ Vue.use(hiPrintPlugin,'$hiprint', false);
 // hiPrintPlugin 同时提供了 disAutoConnect 方法
 hiPrintPlugin.disAutoConnect();
 // 在组件中使用 见： demo/design/index.vue
-import {disAutoConnect, hiprint} from 'vue-plugin-hiprint'
+import {disAutoConnect, autoConnect, hiprint} from 'vue-plugin-hiprint'
 disAutoConnect();
 // 同时 export了 autoConnect，disAutoConnect 方法
+/**
+ * 连接回调及打印
+ */
+autoConnect((status,msg) => {
+  if (status) {
+    hiprintTemplate.print2(printData, {printer: '', title: 'hiprint测试打印'});
+  }
+});
 /**
  * socket连接报错？
  * 由于npm包更新到socket.io 3.x版本，官网提供的客户端，npm包是无法连接的

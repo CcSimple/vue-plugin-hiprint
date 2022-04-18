@@ -29,11 +29,15 @@ initJquery()
 
 /**
  * 自动连接 / 连接
+ * cb: 连接回调， (status, msg) {
+ *   // status: true/false
+ *   // msg: status == true 时 返回socket.connect回调 e
+ * }
  */
-let autoConnect = function() {
+let autoConnect = function(cb) {
   console.log('autoConnect');
   window.autoConnect = true;
-  window.hiwebSocket && window.hiwebSocket.hasIo() && window.hiwebSocket.start();
+  window.hiwebSocket && window.hiwebSocket.hasIo() && window.hiwebSocket.start(cb);
 };
 
 /**

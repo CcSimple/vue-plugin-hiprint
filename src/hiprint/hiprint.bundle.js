@@ -5628,7 +5628,7 @@ var hiprint = function (t) {
       this.stop()
       this.start()
     },
-    start: function start() {
+    start: function start(cb) {
       var _this = this;
 
       var t = this;
@@ -5642,9 +5642,11 @@ var hiprint = function (t) {
         }), _this.socket.on("printerList", function (e) {
           t.printerList = e;
         }), t.state = n;
+        cb && cb(true, e);
       }), this.socket.on("disconnect", function () {
         t.opened = !1;
-      })) : console.log("WebSocket start fail");
+        cb && cb(false);
+      })) : console.log("WebSocket start fail"), cb && cb(false);
     },
     reconnect: function reconnect() {
       this.state !== n && this.state !== i || (this.stop(), this.ensureReconnectingState() && (console.log("Websocket reconnecting."), this.start()));
