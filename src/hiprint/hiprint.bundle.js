@@ -1488,6 +1488,12 @@ var hiprint = function (t) {
               if (isEditing) return
             }
           }
+          // 处理按住 ctrl / command 多选元素
+          var els = n.panel.printElements.filter(function (t) {
+            return 'block' == t.designTarget.children().last().css('display') && !t.printElementType.type.includes('table');
+          });
+          var isMultiple = els.length > 1;
+          var movingDistance = _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.movingDistance;
           switch (r.keyCode) {
             // BackSpace/Delete 删除元素
             case 8:
@@ -1497,19 +1503,51 @@ var hiprint = function (t) {
               _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("clearSettingContainer")
               break
             case 37:
-              i = n.options.getLeft(), n.updateSizeAndPositionOptions(i - _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.movingDistance), t.css("left", n.options.displayLeft()), n.createLineOfPosition(e), r.preventDefault();
+              i = n.options.getLeft();
+              if (isMultiple) {
+                els.forEach(function (t) {
+                  t.updatePositionByMultipleSelect(0 - movingDistance, 0);
+                })
+              } else {
+                n.updateSizeAndPositionOptions(i - movingDistance), t.css("left", n.options.displayLeft()), n.createLineOfPosition(e);
+              }
+              r.preventDefault();
               break;
 
             case 38:
-              o = n.options.getTop(), n.updateSizeAndPositionOptions(void 0, o - _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.movingDistance), t.css("top", n.options.displayTop()), n.createLineOfPosition(e), r.preventDefault();
+              o = n.options.getTop();
+              if (isMultiple) {
+                els.forEach(function (t) {
+                  t.updatePositionByMultipleSelect(0, 0 - movingDistance);
+                })
+              } else {
+                n.updateSizeAndPositionOptions(void 0, o - movingDistance), t.css("top", n.options.displayTop()), n.createLineOfPosition(e);
+              }
+              r.preventDefault();
               break;
 
             case 39:
-              i = n.options.getLeft(), n.updateSizeAndPositionOptions(i + _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.movingDistance), t.css("left", n.options.displayLeft()), n.createLineOfPosition(e), r.preventDefault();
+              i = n.options.getLeft();
+              if (isMultiple) {
+                els.forEach(function (t) {
+                  t.updatePositionByMultipleSelect(movingDistance, 0);
+                })
+              } else {
+                n.updateSizeAndPositionOptions(i + movingDistance), t.css("left", n.options.displayLeft()), n.createLineOfPosition(e);
+              }
+              r.preventDefault();
               break;
 
             case 40:
-              o = n.options.getTop(), n.updateSizeAndPositionOptions(void 0, o + _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.movingDistance), t.css("top", n.options.displayTop()), n.createLineOfPosition(e), r.preventDefault();
+              o = n.options.getTop();
+              if (isMultiple) {
+                els.forEach(function (t) {
+                  t.updatePositionByMultipleSelect(0, movingDistance);
+                })
+              } else {
+                n.updateSizeAndPositionOptions(void 0, o + movingDistance), t.css("top", n.options.displayTop()), n.createLineOfPosition(e);
+              }
+              r.preventDefault();
           }
         });
       }, BasePrintElement.prototype.inRect = function (t) {
@@ -5440,10 +5478,14 @@ var hiprint = function (t) {
         e.append(t[n]);
       }
     },
-    triggerResize: function triggerResize(t) {
-      t.siblings().children("div[panelindex]").css({
-        display: "none"
-      }), t.children("div[panelindex]").css({
+    triggerResize: function triggerResize(t, n) {
+      // 处理按住 ctrl / command 点击元素 多选
+      if (!(n.ctrlKey || n.metaKey)) {
+        t.siblings().children("div[panelindex]").css({
+          display: "none"
+        })
+      }
+      t.children("div[panelindex]").css({
         display: "block"
       });
     },
@@ -5555,7 +5597,7 @@ var hiprint = function (t) {
     bindTrigger: function bindTrigger(t) {
       var e = this;
       t.on("click", function (n) {
-        n.stopPropagation(), e.triggerResize(t);
+        n.stopPropagation(), e.triggerResize(t, n);
       });
     },
     bindHidePanel: function bindHidePanel(t) {
