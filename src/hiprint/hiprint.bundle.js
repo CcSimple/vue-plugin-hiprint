@@ -4486,12 +4486,12 @@ var hiprint = function (t) {
                 },
                 onStopDrag: function onStopDrag(n) {
                   g.a.instance.draging = !1;
-                  var i = parseFloat(e.dragingGrip.target.css("left").replace("px", "")),
-                    o = r.a.px.toPt(i - e.dragingGrip.left);
-                  if(s.cell.width + o < 20){
-                    o = 20 - s.cell.width
-                  }else if(s.nextGrip.cell.width - o < 20){
-                    o = s.nextGrip.cell.width - 20
+                  var i = parseFloat(e.dragingGrip.target.css("left").replace("px", "")),o = r.a.px.toPt(i - e.dragingGrip.left);\
+                  //表格列宽限制 最小宽度为10pt
+                  if(s.cell.width + o < 10){
+                    o = 10 - s.cell.width
+                  }else if(s.nextGrip.cell.width - o < 10){
+                    o = s.nextGrip.cell.width - 10
                   }
                   s.cell.width = s.cell.width + o;
                   s.nextGrip.cell.width = s.nextGrip.cell.width - o;
