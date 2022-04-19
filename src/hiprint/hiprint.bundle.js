@@ -4488,7 +4488,14 @@ var hiprint = function (t) {
                   g.a.instance.draging = !1;
                   var i = parseFloat(e.dragingGrip.target.css("left").replace("px", "")),
                     o = r.a.px.toPt(i - e.dragingGrip.left);
-                  s.cell.width = s.cell.width + o, s.nextGrip.cell.width = s.nextGrip.cell.width - o, t.resizeTableCellWidth(), s.target.removeClass("columngripDraging"), e.updateColumnGrips();
+                  if(s.cell.width + o < 20){
+                    o = 20 - s.cell.width
+                  }else if(s.nextGrip.cell.width - o < 20){
+                    o = s.nextGrip.cell.width - 20
+                  }
+                  s.cell.width = s.cell.width + o;
+                  s.nextGrip.cell.width = s.nextGrip.cell.width - o;
+                   t.resizeTableCellWidth(), s.target.removeClass("columngripDraging"), e.updateColumnGrips();
                 }
               });
             }
