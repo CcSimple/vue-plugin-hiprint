@@ -1196,7 +1196,18 @@ var hiprint = function (t) {
         this.designTarget.hidraggable({
           axis: n.options.axis && t && t.axisEnabled ? n.options.axis : void 0,
           onDrag: function onDrag(t, i, o) {
-            n.updateSizeAndPositionOptions(i, o), n.createLineOfPosition(e);
+            // 处理按住 ctrl / command 多选元素
+            var els = n.panel.printElements.filter(function (t) {
+              return 'block' == t.designTarget.children().last().css('display') && !t.printElementType.type.includes('table');
+            });
+            var isMultiple = els.length > 1;
+            if (isMultiple) {
+              els.forEach(function (t) {
+                t.updatePositionByMultipleSelect(i - n.options.left, o - n.options.top);
+              })
+            } else {
+              n.updateSizeAndPositionOptions(i, o), n.createLineOfPosition(e);
+            }
           },
           moveUnit: "pt",
           minMove: _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.movingDistance,
