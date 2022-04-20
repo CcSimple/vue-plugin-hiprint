@@ -5205,9 +5205,19 @@ var hiprint = function (t) {
           var n = t.data(e.data.target, "hidraggable"),
             i = n.handle,
             o = t(i).offset(),
-            r = t(i).outerWidth(),
-            a = t(i).outerHeight(),
-            p = e.pageY - o.top,
+            tr = t(i)[0].style.transform && parseInt(t(i)[0].style.transform.slice(7,-1)),
+            r = t(i).outerWidth();
+          var a = t(i).outerHeight();
+          if (tr) {
+            var rad = tr * Math.PI / 180,
+              width = t(i).outerWidth(),
+              height = t(i).outerHeight(),
+              sin = Math.sin(rad),
+              cos = Math.cos(rad);
+            r = Math.abs(width * cos) + Math.abs(height * sin),
+            a = Math.abs(width * sin) + Math.abs(height * cos)
+          }
+          var p = e.pageY - o.top,
             s = o.left + r - e.pageX,
             l = o.top + a - e.pageY,
             u = e.pageX - o.left;
