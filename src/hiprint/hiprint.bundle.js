@@ -1881,6 +1881,7 @@ var hiprint = function (t) {
         return r;
       }, TableExcelHelper.createRowTarget = function (t, e, n, i) {
         var o = $("<tr></tr>");
+		console.log(t)
         o.data("rowData", e), t.rowColumns.forEach(function (t, i) {
           var r = $("<td></td>");
           if ("first" == n.tableHeaderRepeat || "none" == n.tableHeaderRepeat) {
@@ -4486,7 +4487,7 @@ var hiprint = function (t) {
                 },
                 onStopDrag: function onStopDrag(n) {
                   g.a.instance.draging = !1;
-                  var i = parseFloat(e.dragingGrip.target.css("left").replace("px", "")),o = r.a.px.toPt(i - e.dragingGrip.left);\
+                  var i = parseFloat(e.dragingGrip.target.css("left").replace("px", "")),o = r.a.px.toPt(i - e.dragingGrip.left);
                   //表格列宽限制 最小宽度为10pt
                   if(s.cell.width + o < 10){
                     o = 10 - s.cell.width
