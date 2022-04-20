@@ -1068,9 +1068,24 @@ var hiprint = function (t) {
       this.width || this.setWidth(this.defaultOptions.width), this.height || this.setHeight(this.defaultOptions.height);
     }, t.prototype.initSizeByHtml = function (t, e) {
       this.width || this.setWidth(t), this.height || this.setHeight(e);
+    }, t.prototype.getRectInfo = function () {
+      var d = { w: 0, h:0, diffW: 0, diffH: 0 };
+      if (this.transform) {
+        var rad = this.transform * Math.PI / 180,
+          width = this.width, height = this.height,
+          sin = Math.sin(rad), cos = Math.cos(rad),
+          w = Math.abs(width * cos) + Math.abs(height * sin),
+          h = Math.abs(width * sin) + Math.abs(height * cos),
+          diffW = (width - w) / 2, diffH = (height - h) / 2;
+          d.w = w, d.h = h, d.diffW = diffW, d.diffH = diffH;
+      }
+      return d;
     }, t.prototype.getLeft = function () {
       return this.left;
     }, t.prototype.displayLeft = function () {
+      if (this.transform) {
+        return this.left + this.getRectInfo().diffW + "pt";
+      }
       return this.left + "pt";
     }, t.prototype.setLeft = function (t) {
       null != t && (this.left = t);
@@ -1079,18 +1094,29 @@ var hiprint = function (t) {
     }, t.prototype.getTopInDesign = function () {
       return this.topInDesign;
     }, t.prototype.displayTop = function () {
+      if (this.transform) {
+        return this.top + this.getRectInfo().diffH + "pt";
+      }
       return this.top + "pt";
     }, t.prototype.setTop = function (t) {
       null != t && (this.top = t);
     }, t.prototype.copyDesignTopFromTop = function () {
       this.topInDesign = this.top;
     }, t.prototype.getHeight = function () {
+      if (this.transform) {
+        var i = this.getRectInfo();
+        return i.h + i.diffH;
+      }
       return this.height;
     }, t.prototype.displayHeight = function () {
       return this.height + "pt";
     }, t.prototype.setHeight = function (t) {
       null != t && (this.height = t);
     }, t.prototype.getWidth = function () {
+      if (this.transform) {
+        var i = this.getRectInfo();
+        return i.w + i.diffW;
+      }
       return this.width;
     }, t.prototype.displayWidth = function () {
       return this.width + "pt";
