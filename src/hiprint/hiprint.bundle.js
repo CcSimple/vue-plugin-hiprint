@@ -5258,6 +5258,18 @@ var hiprint = function (t) {
                 target: e.data.target,
                 parent: t(e.data.target).parent()[0]
               };
+            var tr = p.target.style.transform && parseInt(p.target.style.transform.slice(7,-1));
+            if (tr) {
+              var rad = tr * Math.PI / 180,
+                width = t(e.data.target).outerWidth(),
+                height = t(e.data.target).outerHeight(),
+                sin = Math.sin(rad),
+                cos = Math.cos(rad);
+              var w = Math.abs(width * cos) + Math.abs(height * sin),
+                h = Math.abs(width * sin) + Math.abs(height * cos);
+              var diffW = (w - width) / 2, diffH = (h - height) / 2;
+              p.left += diffW, p.top += diffH, p.startLeft += diffW, p.startTop += diffH;
+            }
             t.extend(e.data, p), 0 != t.data(e.data.target, "hidraggable").options.onBeforeDrag.call(e.data.target, e) && (t(document).bind("mousedown.hidraggable", e.data, i), t(document).bind("mousemove.hidraggable", e.data, o), t(document).bind("mouseup.hidraggable", e.data, r));
           }
         });
