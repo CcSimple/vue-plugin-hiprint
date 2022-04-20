@@ -1059,7 +1059,7 @@ var hiprint = function (t) {
 
   var o = function () {
     function t(t) {
-      t = t || {}, this.left = t.left, this.top = t.top, this.topInDesign = this.top, this.height = t.height, this.width = t.width, this.init(t);
+      t = t || {}, this.left = t.left, this.top = t.top, this.topInDesign = this.top, this.height = t.height, this.width = t.width, this.transform = t.transform, this.init(t);
     }
 
     return t.prototype.setDefault = function (t) {
@@ -1082,6 +1082,8 @@ var hiprint = function (t) {
       return d;
     }, t.prototype.getLeft = function () {
       return this.left;
+    }, t.prototype.setRotate = function (t) {
+      null != t && (this.transform = t);
     }, t.prototype.displayLeft = function () {
       if (this.transform) {
         return this.left + this.getRectInfo().diffW + "pt";
@@ -1248,8 +1250,12 @@ var hiprint = function (t) {
           onBeforeResize: function onBeforeResize() {
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !0;
           },
-          onResize: function onResize(t, i, o, r, a) {
-            n.onResize(t, i, o, r, a), n.createLineOfPosition(e);
+          onResize: function onResize(t, i, o, r, a, rt) {
+            if (undefined != rt) {
+              n.onRotate(t, rt);
+            } else {
+              n.onResize(t, i, o, r, a), n.createLineOfPosition(e);
+            }
           },
           onStopResize: function onStopResize() {
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !1, n.removeLineOfPosition();
@@ -1266,7 +1272,9 @@ var hiprint = function (t) {
           }) : t.options[e.name] = n;
         }), this.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId);
       }, BasePrintElement.prototype.getReizeableShowPoints = function () {
-        return ["s", "e"];
+        return ["s", "e", "r"];
+      }, BasePrintElement.prototype.onRotate = function (t, r) {
+        this.options.setRotate(r), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId);
       }, BasePrintElement.prototype.onResize = function (t, e, n, i, o) {
         this.updateSizeAndPositionOptions(o, i, n, e);
       }, BasePrintElement.prototype.getOrderIndex = function () {
@@ -5302,7 +5310,12 @@ var hiprint = function (t) {
               var diffW = (w - width) / 2, diffH = (h - height) / 2;
               p.left += diffW, p.top += diffH, p.startLeft += diffW, p.startTop += diffH;
             }
-            t.extend(e.data, p), 0 != t.data(e.data.target, "hidraggable").options.onBeforeDrag.call(e.data.target, e) && (t(document).bind("mousedown.hidraggable", e.data, i), t(document).bind("mousemove.hidraggable", e.data, o), t(document).bind("mouseup.hidraggable", e.data, r));
+            t.extend(e.data, p);
+            // 旋转时不允许移动
+            if ('r resizebtn' == e.target.className) {
+              return;
+            }
+            0 != t.data(e.data.target, "hidraggable").options.onBeforeDrag.call(e.data.target, e) && (t(document).bind("mousedown.hidraggable", e.data, i), t(document).bind("mousemove.hidraggable", e.data, o), t(document).bind("mouseup.hidraggable", e.data, r));
           }
         });
       });
@@ -5510,6 +5523,10 @@ var hiprint = function (t) {
             name: "sw",
             target: n('<div class="sw resizebtn" style="cursor: sw-resize;bottom: -12px;left: -12px;"></div>')
           },
+          r = {
+            name: "r",
+            target: n('<div class="r resizebtn" style="cursor:url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAABvUExURUdwTP///9XV1R0dHf///3Nzc////////////////1ZWVq+vr/T09PX19QQEBP///////8XFxf///////////wYGBv///+jo6P///4aGhqioqMzMzP///2BgYP///////////zExMf///wAAAP///xLps0AAAAAjdFJOUwCxxOdixRDmzSDMv8/Z+tz5wWpXWPk3zALCv8KnyXZVMNuNPnv3CwAAAJ1JREFUKM/NkckOwyAMRFkDBMhC9qWr+//fWCIV1WlzrjoXS36yxmMT8hdqqKoUvRAjMtw22kvecem1GjTuK1vApmI+wQMBbQFy5li+QQRaX4AtRX+vbntAJeRl9HTTx4TiwESs61DXNUPmVQeujzVrQwh43TTxpeRBslVfMUhbiXKWyiAwvnIsMcdyJkfJYdpNvG/ltDm+bjP+8KFP8ggL+zQLGxwAAAAASUVORK5CYII=\') 14 14,alias;top: -16px;margin-left: -4px;left: 50%;"></div>')
+          },
           h = function h() {
             var t = [],
               i = e.options.showPoints;
@@ -5595,6 +5612,14 @@ var hiprint = function (t) {
       t.on("mousedown", ".sw", function (e) {
         o = e.pageX, r = e.pageY, a = t.width(), p = t.height(), y = !0, s = u.offset().left;
       });
+      var rt = !1;
+      t.on("mousedown", ".r", function (e) {
+        o = e.pageX, r = e.pageY, a = t.width(), p = t.height(), rt = !0, s = a/2 + u.offset().left, l = p/2 + u.offset().top;
+      });
+      t.on("dblclick", ".r", function (e) {
+        u.css({ transform: "rotate(" + 0 + "deg)" });
+        i.options.onResize(e, void 0, void 0, void 0, void 0, 0);
+      });
       var b = !1;
       t.on("mousedown", function (t) {
         i.options.onBeforeResize(), o = t.pageX, r = t.pageY, l = u.offset().top, s = u.offset().left, b = !1;
@@ -5613,6 +5638,24 @@ var hiprint = function (t) {
           }), u.css({
             height: i.numHandlerText(p + E)
           }), i.options.onResize(e, i.numHandler(p + E), void 0, void 0, void 0);
+        } else if (rt) {
+          t.css({ height: "100%" });
+          var eo = e.pageX, er = e.pageY;
+          var AB = {}, AC = {};
+          AB.X = o - s, AB.Y = r - l, AC.X = eo - s, AC.Y = er - l;
+          var direct = (AB.X * AC.Y) - (AB.Y * AC.X);
+          var lAB = Math.sqrt(Math.pow(s - o, 2) + Math.pow(l - r, 2)),
+              lAC = Math.sqrt(Math.pow(s - eo, 2) + Math.pow(l - er, 2)),
+              lBC = Math.sqrt(Math.pow(o - eo, 2) + Math.pow(r - er, 2));
+          var cosA = (Math.pow(lAB, 2) + Math.pow(lAC, 2) - Math.pow(lBC, 2)) / (2 * lAB * lAC);
+          var angle = Math.round(Math.acos(cosA) * 180 / Math.PI);
+          var lastAngle = (u[0].style.transform && parseInt(u[0].style.transform.slice(7,-1))) || 0;
+          var R = lastAngle + (direct > 0 ? angle : -angle);
+          if (Math.abs(R) > 360) {
+            R = R % 360
+          }
+          u.css({ transform: "rotate(" + R + "deg)" });
+          i.options.onResize(e, void 0, void 0, void 0, void 0, R);
         } else h ? (n = e.pageX - o, t.css({
           width: "100%"
         }), u.css({
@@ -5656,7 +5699,7 @@ var hiprint = function (t) {
           top: i.numHandlerText(i.options.noDrag ? void 0 : l + E)
         }), i.options.onResize(e, void 0, void 0, i.options.noDrag ? void 0 : i.numHandler(l + E), i.options.noDrag ? void 0 : i.numHandler(s + n)));
       }).on("mouseup", function (t) {
-        d = !1, c = !1, h = !1, f = !1, g = !1, m = !1, y = !1, v = !1, b = !1, i.options.onStopResize();
+        d = !1, c = !1, h = !1, f = !1, g = !1, m = !1, y = !1, v = !1, b = !1, rt = !1, i.options.onStopResize();
       });
     },
     bindTrigger: function bindTrigger(t) {
@@ -6277,7 +6320,7 @@ var hiprint = function (t) {
       }
 
       return m(e, t), e.prototype.getReizeableShowPoints = function () {
-        return ["se"];
+        return ["se", "r"];
       }, e.prototype.getData = function (t) {
         var e = "";
         t ? e = this.getField() ? e.split('.').reduce((a,c)=>a ? a[c] : t[c], !1) || "" : this.options.src || this.printElementType.getData() : e = this.options.src || this.printElementType.getData();
@@ -6922,7 +6965,7 @@ var hiprint = function (t) {
       }, e.prototype.createTarget = function (t, e) {
         return $('<div class="hiprint-printElement hiprint-printElement-vline" style="border-left:1px solid;position: absolute;"></div>');
       }, e.prototype.getReizeableShowPoints = function () {
-        return ["s"];
+        return ["s", "r"];
       }, e.prototype.getHtml = function (t, e, n) {
         return this.getHtml2(t, e, n);
       }, e;
@@ -6964,7 +7007,7 @@ var hiprint = function (t) {
       }, e.prototype.createTarget = function (t, e) {
         return $('<div class="hiprint-printElement hiprint-printElement-hline" style="border-top:1px solid;position: absolute;"></div>');
       }, e.prototype.getReizeableShowPoints = function () {
-        return ["e"];
+        return ["e", "r"];
       }, e;
     }(f.a),
     z = function () {
