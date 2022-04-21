@@ -23,6 +23,16 @@
 
 </div>
 
+## 演示/截个图咯~
+<div align="center">
+
+![image](./res/img.png)
+
+![image](./res/img_1.png)
+
+![image](./res/img_2.png)
+</div>
+
 ## 参与/预览 <a href="https://ccsimple.gitee.io/vue-plugin-hiprint/">demo</a>
 ```console
 git clone https://github.com/CcSimple/vue-plugin-hiprint.git
@@ -222,15 +232,6 @@ autoConnect((status,msg) => {
 </div>
 若过期 加我 备注加群
 
-## 演示/截个图咯~
-<div align="center">
-
-![image](./res/img.png)
-
-![image](./res/img_1.png)
-
-![image](./res/img_2.png)
-</div>
 
 ## 状态/调整/优化
 - [x] `vue 插件` 发布npm包,方便直接使用
@@ -249,6 +250,12 @@ autoConnect((status,msg) => {
 - [x] `新增支持不分页(小票打印)` 可设置不分页 table、longText处理
 - [x] `新增支持复制/粘贴` 支持 基本元素的ctrl+c/v(复制/粘贴)
 - [x] `新增支持设置是否自动连接客户端` 支持 不自动连接'直接打印'客户端
+- [x] `新增支持表格设置列显示类型` 支持 设置表格列显示图片、二维码、条形码
+- [x] `调整优化表格列拖拽列宽限制` fix 设置旋转角度后 拖拽、跳动、辅助线相关问题
+- [x] `npm包新增提供Api打印方法` 全局引入时，Vue原型添加print、print2Api，方便直接打印
+- [x] `新增支持多选功能` 按住ctrl/command 多选元素 键盘/鼠标拖动 移动
+- [x] `调整优化元素设置旋转角度问题` fix 设置旋转角度后 拖拽、跳动、辅助线相关问题
+- [x] `新增支持元素拖拽旋转` 基本元素上新增旋转控制点，拖拽旋转、双击还原
 
 ### 咳咳..
 第一次写插件(webpack打包这些都不太了解)，不合理的地方欢迎指正<a href="https://github.com/CcSimple/vue-plugin-hiprint/issues">issues</a>。

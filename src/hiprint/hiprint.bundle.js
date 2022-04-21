@@ -1059,7 +1059,7 @@ var hiprint = function (t) {
 
   var o = function () {
     function t(t) {
-      t = t || {}, this.left = t.left, this.top = t.top, this.topInDesign = this.top, this.height = t.height, this.width = t.width, this.init(t);
+      t = t || {}, this.left = t.left, this.top = t.top, this.topInDesign = this.top, this.height = t.height, this.width = t.width, this.transform = t.transform, this.init(t);
     }
 
     return t.prototype.setDefault = function (t) {
@@ -1068,9 +1068,26 @@ var hiprint = function (t) {
       this.width || this.setWidth(this.defaultOptions.width), this.height || this.setHeight(this.defaultOptions.height);
     }, t.prototype.initSizeByHtml = function (t, e) {
       this.width || this.setWidth(t), this.height || this.setHeight(e);
+    }, t.prototype.getRectInfo = function () {
+      var d = { w: 0, h:0, diffW: 0, diffH: 0 };
+      if (this.transform) {
+        var rad = this.transform * Math.PI / 180,
+          width = this.width, height = this.height,
+          sin = Math.sin(rad), cos = Math.cos(rad),
+          w = Math.abs(width * cos) + Math.abs(height * sin),
+          h = Math.abs(width * sin) + Math.abs(height * cos),
+          diffW = (width - w) / 2, diffH = (height - h) / 2;
+          d.w = w, d.h = h, d.diffW = diffW, d.diffH = diffH;
+      }
+      return d;
     }, t.prototype.getLeft = function () {
       return this.left;
+    }, t.prototype.setRotate = function (t) {
+      null != t && (this.transform = t);
     }, t.prototype.displayLeft = function () {
+      if (this.transform) {
+        return this.left + this.getRectInfo().diffW + "pt";
+      }
       return this.left + "pt";
     }, t.prototype.setLeft = function (t) {
       null != t && (this.left = t);
@@ -1079,18 +1096,29 @@ var hiprint = function (t) {
     }, t.prototype.getTopInDesign = function () {
       return this.topInDesign;
     }, t.prototype.displayTop = function () {
+      if (this.transform) {
+        return this.top + this.getRectInfo().diffH + "pt";
+      }
       return this.top + "pt";
     }, t.prototype.setTop = function (t) {
       null != t && (this.top = t);
     }, t.prototype.copyDesignTopFromTop = function () {
       this.topInDesign = this.top;
     }, t.prototype.getHeight = function () {
+      if (this.transform) {
+        var i = this.getRectInfo();
+        return i.h + i.diffH;
+      }
       return this.height;
     }, t.prototype.displayHeight = function () {
       return this.height + "pt";
     }, t.prototype.setHeight = function (t) {
       null != t && (this.height = t);
     }, t.prototype.getWidth = function () {
+      if (this.transform) {
+        var i = this.getRectInfo();
+        return i.w + i.diffW;
+      }
       return this.width;
     }, t.prototype.displayWidth = function () {
       return this.width + "pt";
@@ -1222,8 +1250,12 @@ var hiprint = function (t) {
           onBeforeResize: function onBeforeResize() {
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !0;
           },
-          onResize: function onResize(t, i, o, r, a) {
-            n.onResize(t, i, o, r, a), n.createLineOfPosition(e);
+          onResize: function onResize(t, i, o, r, a, rt) {
+            if (undefined != rt) {
+              n.onRotate(t, rt);
+            } else {
+              n.onResize(t, i, o, r, a), n.createLineOfPosition(e);
+            }
           },
           onStopResize: function onStopResize() {
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !1, n.removeLineOfPosition();
@@ -1240,7 +1272,9 @@ var hiprint = function (t) {
           }) : t.options[e.name] = n;
         }), this.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId);
       }, BasePrintElement.prototype.getReizeableShowPoints = function () {
-        return ["s", "e"];
+        return ["s", "e", "r"];
+      }, BasePrintElement.prototype.onRotate = function (t, r) {
+        this.options.setRotate(r), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId);
       }, BasePrintElement.prototype.onResize = function (t, e, n, i, o) {
         this.updateSizeAndPositionOptions(o, i, n, e);
       }, BasePrintElement.prototype.getOrderIndex = function () {
@@ -1881,7 +1915,6 @@ var hiprint = function (t) {
         return r;
       }, TableExcelHelper.createRowTarget = function (t, e, n, i) {
         var o = $("<tr></tr>");
-		console.log(t)
         o.data("rowData", e), t.rowColumns.forEach(function (t, i) {
           var r = $("<td></td>");
           if ("first" == n.tableHeaderRepeat || "none" == n.tableHeaderRepeat) {
@@ -4487,16 +4520,15 @@ var hiprint = function (t) {
                 },
                 onStopDrag: function onStopDrag(n) {
                   g.a.instance.draging = !1;
-                  var i = parseFloat(e.dragingGrip.target.css("left").replace("px", "")),o = r.a.px.toPt(i - e.dragingGrip.left);
-                  //表格列宽限制 最小宽度为10pt
-                  if(s.cell.width + o < 10){
+                  var i = parseFloat(e.dragingGrip.target.css("left").replace("px", "")),
+                    o = r.a.px.toPt(i - e.dragingGrip.left);
+                  // 表格列宽限制 最小宽度为10pt
+                  if (s.cell.width + o < 10) {
                     o = 10 - s.cell.width
-                  }else if(s.nextGrip.cell.width - o < 10){
+                  } else if (s.nextGrip.cell.width - o < 10) {
                     o = s.nextGrip.cell.width - 10
                   }
-                  s.cell.width = s.cell.width + o;
-                  s.nextGrip.cell.width = s.nextGrip.cell.width - o;
-                   t.resizeTableCellWidth(), s.target.removeClass("columngripDraging"), e.updateColumnGrips();
+                  s.cell.width = s.cell.width + o, s.nextGrip.cell.width = s.nextGrip.cell.width - o, t.resizeTableCellWidth(), s.target.removeClass("columngripDraging"), e.updateColumnGrips();
                 }
               });
             }
@@ -5213,9 +5245,23 @@ var hiprint = function (t) {
           var n = t.data(e.data.target, "hidraggable"),
             i = n.handle,
             o = t(i).offset(),
-            r = t(i).outerWidth(),
-            a = t(i).outerHeight(),
-            p = e.pageY - o.top,
+            tr = t(i)[0].style.transform && parseInt(t(i)[0].style.transform.slice(7,-1)),
+            ptr = t('.hiprint-printPaper')[0].style.transform && parseFloat(t('.hiprint-printPaper')[0].style.transform.slice(6,-1)),
+            r = t(i).outerWidth();
+          var a = t(i).outerHeight();
+          if (tr) {
+            var rad = tr * Math.PI / 180,
+              width = t(i).outerWidth(),
+              height = t(i).outerHeight(),
+              sin = Math.sin(rad),
+              cos = Math.cos(rad);
+            r = Math.abs(width * cos) + Math.abs(height * sin),
+            a = Math.abs(width * sin) + Math.abs(height * cos)
+          }
+          if (ptr) {
+            r *= ptr, a *= ptr;
+          }
+          var p = e.pageY - o.top,
             s = o.left + r - e.pageX,
             l = o.top + a - e.pageY,
             u = e.pageX - o.left;
@@ -5256,7 +5302,28 @@ var hiprint = function (t) {
                 target: e.data.target,
                 parent: t(e.data.target).parent()[0]
               };
-            t.extend(e.data, p), 0 != t.data(e.data.target, "hidraggable").options.onBeforeDrag.call(e.data.target, e) && (t(document).bind("mousedown.hidraggable", e.data, i), t(document).bind("mousemove.hidraggable", e.data, o), t(document).bind("mouseup.hidraggable", e.data, r));
+            var tr = p.target.style.transform && parseInt(p.target.style.transform.slice(7,-1));
+            if (tr) {
+              var rad = tr * Math.PI / 180,
+                width = t(e.data.target).outerWidth(),
+                height = t(e.data.target).outerHeight(),
+                sin = Math.sin(rad),
+                cos = Math.cos(rad);
+              var w = Math.abs(width * cos) + Math.abs(height * sin),
+                h = Math.abs(width * sin) + Math.abs(height * cos);
+              var diffW = (w - width) / 2, diffH = (h - height) / 2;
+              p.left += diffW, p.top += diffH, p.startLeft += diffW, p.startTop += diffH;
+            }
+            var ptr = t('.hiprint-printPaper')[0].style.transform && parseFloat(t('.hiprint-printPaper')[0].style.transform.slice(6,-1));
+            if (ptr) {
+              p.left /= ptr, p.top /= ptr, p.startLeft /= ptr, p.startTop /= ptr;
+            }
+            t.extend(e.data, p);
+            // 旋转时不允许移动
+            if ('r resizebtn' == e.target.className) {
+              return;
+            }
+            0 != t.data(e.data.target, "hidraggable").options.onBeforeDrag.call(e.data.target, e) && (t(document).bind("mousedown.hidraggable", e.data, i), t(document).bind("mousemove.hidraggable", e.data, o), t(document).bind("mouseup.hidraggable", e.data, r));
           }
         });
       });
@@ -5464,6 +5531,10 @@ var hiprint = function (t) {
             name: "sw",
             target: n('<div class="sw resizebtn" style="cursor: sw-resize;bottom: -12px;left: -12px;"></div>')
           },
+          r = {
+            name: "r",
+            target: n('<div class="r resizebtn" style="cursor:url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAABvUExURUdwTP///9XV1R0dHf///3Nzc////////////////1ZWVq+vr/T09PX19QQEBP///////8XFxf///////////wYGBv///+jo6P///4aGhqioqMzMzP///2BgYP///////////zExMf///wAAAP///xLps0AAAAAjdFJOUwCxxOdixRDmzSDMv8/Z+tz5wWpXWPk3zALCv8KnyXZVMNuNPnv3CwAAAJ1JREFUKM/NkckOwyAMRFkDBMhC9qWr+//fWCIV1WlzrjoXS36yxmMT8hdqqKoUvRAjMtw22kvecem1GjTuK1vApmI+wQMBbQFy5li+QQRaX4AtRX+vbntAJeRl9HTTx4TiwESs61DXNUPmVQeujzVrQwh43TTxpeRBslVfMUhbiXKWyiAwvnIsMcdyJkfJYdpNvG/ltDm+bjP+8KFP8ggL+zQLGxwAAAAASUVORK5CYII=\') 14 14,alias;top: -16px;margin-left: -4px;left: 50%;"></div>')
+          },
           h = function h() {
             var t = [],
               i = e.options.showPoints;
@@ -5549,6 +5620,14 @@ var hiprint = function (t) {
       t.on("mousedown", ".sw", function (e) {
         o = e.pageX, r = e.pageY, a = t.width(), p = t.height(), y = !0, s = u.offset().left;
       });
+      var rt = !1;
+      t.on("mousedown", ".r", function (e) {
+        o = e.pageX, r = e.pageY, a = t.width(), p = t.height(), rt = !0, s = a/2 + u.offset().left, l = p/2 + u.offset().top;
+      });
+      t.on("dblclick", ".r", function (e) {
+        u.css({ transform: "rotate(" + 0 + "deg)" });
+        i.options.onResize(e, void 0, void 0, void 0, void 0, 0);
+      });
       var b = !1;
       t.on("mousedown", function (t) {
         i.options.onBeforeResize(), o = t.pageX, r = t.pageY, l = u.offset().top, s = u.offset().left, b = !1;
@@ -5567,6 +5646,24 @@ var hiprint = function (t) {
           }), u.css({
             height: i.numHandlerText(p + E)
           }), i.options.onResize(e, i.numHandler(p + E), void 0, void 0, void 0);
+        } else if (rt) {
+          t.css({ height: "100%" });
+          var eo = e.pageX, er = e.pageY;
+          var AB = {}, AC = {};
+          AB.X = o - s, AB.Y = r - l, AC.X = eo - s, AC.Y = er - l;
+          var direct = (AB.X * AC.Y) - (AB.Y * AC.X);
+          var lAB = Math.sqrt(Math.pow(s - o, 2) + Math.pow(l - r, 2)),
+              lAC = Math.sqrt(Math.pow(s - eo, 2) + Math.pow(l - er, 2)),
+              lBC = Math.sqrt(Math.pow(o - eo, 2) + Math.pow(r - er, 2));
+          var cosA = (Math.pow(lAB, 2) + Math.pow(lAC, 2) - Math.pow(lBC, 2)) / (2 * lAB * lAC);
+          var angle = Math.round(Math.acos(cosA) * 180 / Math.PI);
+          var lastAngle = (u[0].style.transform && parseInt(u[0].style.transform.slice(7,-1))) || 0;
+          var R = lastAngle + (direct > 0 ? angle : -angle);
+          if (Math.abs(R) > 360) {
+            R = R % 360
+          }
+          u.css({ transform: "rotate(" + R + "deg)" });
+          i.options.onResize(e, void 0, void 0, void 0, void 0, R);
         } else h ? (n = e.pageX - o, t.css({
           width: "100%"
         }), u.css({
@@ -5610,7 +5707,7 @@ var hiprint = function (t) {
           top: i.numHandlerText(i.options.noDrag ? void 0 : l + E)
         }), i.options.onResize(e, void 0, void 0, i.options.noDrag ? void 0 : i.numHandler(l + E), i.options.noDrag ? void 0 : i.numHandler(s + n)));
       }).on("mouseup", function (t) {
-        d = !1, c = !1, h = !1, f = !1, g = !1, m = !1, y = !1, v = !1, b = !1, i.options.onStopResize();
+        d = !1, c = !1, h = !1, f = !1, g = !1, m = !1, y = !1, v = !1, b = !1, rt = !1, i.options.onStopResize();
       });
     },
     bindTrigger: function bindTrigger(t) {
@@ -6231,7 +6328,7 @@ var hiprint = function (t) {
       }
 
       return m(e, t), e.prototype.getReizeableShowPoints = function () {
-        return ["se"];
+        return ["se", "r"];
       }, e.prototype.getData = function (t) {
         var e = "";
         t ? e = this.getField() ? e.split('.').reduce((a,c)=>a ? a[c] : t[c], !1) || "" : this.options.src || this.printElementType.getData() : e = this.options.src || this.printElementType.getData();
@@ -6288,8 +6385,8 @@ var hiprint = function (t) {
     }(g.a),
     E = n(8),
     T = function () {
-      function t(t, pr, e, n, i, r, a, p, s, l, u, d) {
-        this.panelPageRule = pr,
+      function t(t, pr, scl, e, n, i, r, a, p, s, l, u, d) {
+        this.panelPageRule = pr, this.scale = scl,
         this.defaultPaperNumberFormat = "paperNo-paperCount", this.printLine = 0, this.templateId = t, this.width = o.a.mm.toPt(e), this.height = o.a.mm.toPt(n), this.mmwidth = e, this.mmheight = n, this.paperHeader = i, this.paperFooter = r, this.contentHeight = r - i, this.createTarget(), this.index = u, this.paperNumberLeft = a || parseInt((this.width - 30).toString()), this.paperNumberTop = p || parseInt((this.height - 22).toString()), this.paperNumberDisabled = s, this.paperNumberFormat = l, this.referenceElement = d ? $.extend({}, d) : new E.a({
           top: 0,
           left: 0,
@@ -6307,6 +6404,7 @@ var hiprint = function (t) {
       }, t.prototype.triggerOnPaperBaseInfoChanged = function () {
         this.onPaperBaseInfoChanged && this.onPaperBaseInfoChanged({
           panelPageRule: this.panelPageRule,
+          scale: this.scale,
           paperHeader: this.paperHeader,
           paperFooter: this.paperFooter,
           paperNumberLeft: this.paperNumberLeft,
@@ -6323,7 +6421,7 @@ var hiprint = function (t) {
       }, t.prototype.setTopOffset = function (t) {
         t ? this.paperContentTarget.css("top", t + "pt") : this.paperContentTarget[0].style.top = "";
       }, t.prototype.createTarget = function () {
-        this.target = $('<div class="hiprint-printPaper"><div class="hiprint-printPaper-content"></div></div>'), this.paperContentTarget = this.target.find(".hiprint-printPaper-content"), this.target.css("width", this.mmwidth + "mm"), this.target.css("height", this.mmheight - p.a.instance.paperHeightTrim + "mm"), this.target.attr("original-height", this.mmheight);
+        this.target = $('<div class="hiprint-printPaper"><div class="hiprint-printPaper-content"></div></div>'), this.paperContentTarget = this.target.find(".hiprint-printPaper-content"), this.target.css("width", this.mmwidth + "mm"), this.target.css("height", this.mmheight - p.a.instance.paperHeightTrim + "mm"), this.target.attr("original-height", this.mmheight), this.zoom(this.scale);
       }, t.prototype.createHeaderLine = function () {
         var t = this;
         this.headerLinetarget = $('<div class="hiprint-headerLine"  style="position: absolute;width: 100%;border-top: 1px dashed #c9bebe;height: 7pt;"></div>'), this.headerLinetarget.css("top", (this.paperHeader || -1) + "pt"), 0 == this.paperHeader && this.headerLinetarget.addClass("hideheaderLinetarget"), this.paperContentTarget.append(this.headerLinetarget), this.dragHeadLineOrFootLine(this.headerLinetarget, function (e, n) {
@@ -6390,6 +6488,16 @@ var hiprint = function (t) {
         });
       }, t.prototype.resize = function (t, e) {
         this.width = o.a.mm.toPt(t), this.height = o.a.mm.toPt(e), this.mmwidth = t, this.mmheight = e, this.target.css("width", t + "mm"), this.target.css("height", e - p.a.instance.paperHeightTrim + "mm"), this.target.attr("original-height", this.mmheight), this.paperFooter = this.height, this.footerLinetarget.css("top", this.height + "pt"), this.contentHeight = this.paperFooter - this.paperHeader, this.paperNumberLeft = parseInt((this.width - 30).toString()), this.paperNumberTop = parseInt((this.height - 22).toString()), this.paperNumberTarget.css("top", this.paperNumberTop + "pt"), this.paperNumberTarget.css("left", this.paperNumberLeft + "pt"), this.triggerOnPaperBaseInfoChanged();
+      }, t.prototype.zoom = function (s) {
+        if (s) {
+          this.scale = s, this.target.css("transform", "scale(" + s + ")");
+          if (s > 1) {
+            this.target.css("transform-origin", "-" + s + "% -" + s + "%");
+          } else {
+            this.target.css("transform-origin", "0 0");
+          }
+        }
+        this.triggerOnPaperBaseInfoChanged();
       }, t.prototype.getPaperFooter = function (t) {
         var e = this.index + t;
         return 0 == e ? this.firstPaperFooter ? this.firstPaperFooter : this.oddPaperFooter ? this.oddPaperFooter : this.paperFooter : e % 2 == 0 ? this.oddPaperFooter ? this.oddPaperFooter : this.paperFooter : e % 2 == 1 ? this.evenPaperFooter ? this.evenPaperFooter : this.paperFooter : void 0;
@@ -6472,7 +6580,7 @@ var hiprint = function (t) {
         return this.removeTempContainer(), n;
       }, e.prototype.getHeightByData = function (t) {
         this.createTempContainer();
-        var e = this.getPaperHtmlResult(new T("", "", 1e3, 1e3, 0, 25e3, 0, 0, !0, void 0, 0, void 0), {}, t);
+        var e = this.getPaperHtmlResult(new T("", "", void 0, 1e3, 1e3, 0, 25e3, 0, 0, !0, void 0, 0, void 0), {}, t);
         return this.removeTempContainer(), e[0].referenceElement.bottomInLastPaper - e[0].referenceElement.printTopInPaper;
       }, e.prototype.getLongTextIndent = function () {
         return this.options.longTextIndent ? '<span class="long-text-indent" style="margin-left:' + this.options.longTextIndent + 'pt"></span>' : '<span class="long-text-indent"></span>';
@@ -6876,7 +6984,7 @@ var hiprint = function (t) {
       }, e.prototype.createTarget = function (t, e) {
         return $('<div class="hiprint-printElement hiprint-printElement-vline" style="border-left:1px solid;position: absolute;"></div>');
       }, e.prototype.getReizeableShowPoints = function () {
-        return ["s"];
+        return ["s", "r"];
       }, e.prototype.getHtml = function (t, e, n) {
         return this.getHtml2(t, e, n);
       }, e;
@@ -6918,7 +7026,7 @@ var hiprint = function (t) {
       }, e.prototype.createTarget = function (t, e) {
         return $('<div class="hiprint-printElement hiprint-printElement-hline" style="border-top:1px solid;position: absolute;"></div>');
       }, e.prototype.getReizeableShowPoints = function () {
-        return ["e"];
+        return ["e", "r"];
       }, e;
     }(f.a),
     z = function () {
@@ -7432,7 +7540,7 @@ var hiprint = function (t) {
           t.height ? (this.height = t.height, this.width = t.width) : (this.height = e.height, this.width = e.width);
         } else this.height = t.height, this.width = t.width;
 
-        this.paperHeader = t.paperHeader || 0, this.paperFooter = t.paperFooter || o.a.mm.toPt(this.height), this.printElements = t.printElements || [], this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat, this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.rotate = t.rotate || void 0, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter, this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.fontFamily = t.fontFamily, this.leftOffset = t.leftOffset, this.orient = t.orient;
+        this.paperHeader = t.paperHeader || 0, this.paperFooter = t.paperFooter || o.a.mm.toPt(this.height), this.printElements = t.printElements || [], this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat, this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.rotate = t.rotate || void 0, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter, this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.fontFamily = t.fontFamily, this.leftOffset = t.leftOffset, this.orient = t.orient, this.scale = t.scale;
       };
     }(),
     at = function () {
@@ -7451,7 +7559,7 @@ var hiprint = function (t) {
     }(),
     pt = function () {
       function t(t, e) {
-        this.templateId = e, this.index = t.index, this.width = t.width, this.height = t.height, this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter, this.initPrintElements(t.printElements), this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat, this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter, this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.leftOffset = t.leftOffset, this.fontFamily = t.fontFamily, this.orient = t.orient, this.target = this.createTarget(), this.rotate = t.rotate;
+        this.templateId = e, this.index = t.index, this.width = t.width, this.height = t.height, this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter, this.initPrintElements(t.printElements), this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat, this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter, this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.leftOffset = t.leftOffset, this.fontFamily = t.fontFamily, this.orient = t.orient, this.target = this.createTarget(), this.rotate = t.rotate, this.scale = t.scale;
       }
 
       return t.prototype.design = function (t) {
@@ -7573,6 +7681,8 @@ var hiprint = function (t) {
         this.width = e, this.height = n, this.paperType = t, this.rotate = i, this.designPaper.resize(e, n);
       }, t.prototype.rotatePaper = function () {
         null == this.rotate && (this.rotate = !1), this.rotate = !this.rotate, this.resize(this.paperType, this.height, this.width, this.rotate);
+      }, t.prototype.zoom = function (s, p) {
+        if (p) { this.scale = s } else { this.scale = void 0 } this.designPaper.zoom(s);
       }, t.prototype.getTarget = function () {
         return this.target;
       }, t.prototype.enable = function () {
@@ -7605,6 +7715,7 @@ var hiprint = function (t) {
           topOffset: this.topOffset,
           fontFamily: this.fontFamily,
           orient: this.orient,
+          scale: this.scale,
           leftOffset: this.leftOffset
         });
       }, t.prototype.createTarget = function () {
@@ -7640,7 +7751,7 @@ var hiprint = function (t) {
         var i = e.getDesignTarget(t);
         i.addClass("design"), n && e.initSizeByHtml(i), t.append(i);
       }, t.prototype.createNewPage = function (t, e) {
-        var n = new T(this.templateId, this.panelPageRule, this.width, this.height, this.paperHeader, this.paperFooter, this.paperNumberLeft, this.paperNumberTop, this.paperNumberDisabled, this.paperNumberFormat, t, e);
+        var n = new T(this.templateId, this.panelPageRule, this.scale, this.width, this.height, this.paperHeader, this.paperFooter, this.paperNumberLeft, this.paperNumberTop, this.paperNumberDisabled, this.paperNumberFormat, t, e);
         return n.setFooter(this.firstPaperFooter, this.evenPaperFooter, this.oddPaperFooter, this.lastPaperFooter), n.setOffset(this.leftOffset, this.topOffset), n;
       }, t.prototype.orderPrintElements = function () {
         this.printElements = o.a.orderBy(this.printElements, function (t) {
@@ -8013,6 +8124,8 @@ var hiprint = function (t) {
         }
       }, t.prototype.rotatePaper = function () {
         this.editingPanel.rotatePaper();
+      }, t.prototype.zoom = function (s, p) {
+        this.editingPanel.zoom(s, p);
       }, t.prototype.addPrintPanel = function (t, e) {
         var n = t ? new pt(new rt(t), this.id) : this.createDefaultPanel();
         return t && (t.index = this.printPanels.length), e && (this.container.append(n.getTarget()), n.design()), this.printPanels.push(n), e && this.selectPanel(n.index), n;
