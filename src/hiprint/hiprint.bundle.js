@@ -1596,10 +1596,11 @@ var hiprint = function (t) {
           }
         });
       }, BasePrintElement.prototype.inRect = function (t) {
+        var ptr = (this.designPaper.target[0].style.transform && parseFloat(this.designPaper.target[0].style.transform.slice(6,-1))) || 1;
         var x1 = this.designTarget[0].offsetLeft,
           y1 = this.designTarget[0].offsetTop, h = this.designTarget[0].offsetHeight, w = this.designTarget[0].offsetWidth,
         x2 = x1 + w, y2 = y1 + h,
-        ex1 = $(t.target[0]).position().left, ey1 = $(t.target[0]).position().top, eh = t.target[0].offsetHeight, ew = t.target[0].offsetWidth,
+        ex1 = $(t.target[0]).position().left/ptr, ey1 = $(t.target[0]).position().top/ptr, eh = t.target[0].offsetHeight, ew = t.target[0].offsetWidth,
         ex2 = ex1 + ew, ey2 = ey1 + eh;
         return ex1 < x2 && ex2 > x1 && y1 < ey2 && y2 > ey1;
       }, BasePrintElement.prototype.multipleSelect = function (t) {
@@ -7855,15 +7856,16 @@ var hiprint = function (t) {
       }, t.prototype.updateRectPanel = function (t) {
         var e = this,
           n = this.designPaper.getTarget();
+        var ptr = (n[0].style.transform && parseFloat(n[0].style.transform.slice(6,-1))) || 1;
         this.mouseRect.target || (this.mouseRect.target = $('<div tabindex="1" style="z-index:2;position: absolute;opacity:0.2;border: 1px dashed #000;background-color:#31676f;"><span></span></div>'), n.find(".hiprint-printPaper-content").append(this.mouseRect.target), this.bingKeyboardMoveEvent(this.mouseRect.target), this.mouseRect.target.hidraggable({
           onDrag: function onDrag(t, n, i) {
             e.mouseRect.target.css({
               transform: 'unset'
             }),
-            e.mouseRect.lastLeft = e.mouseRect.lastLeft ? o.a.px.toPt(e.mouseRect.target[0].offsetLeft) : n, e.mouseRect.lastTop = e.mouseRect.lastTop ? o.a.px.toPt(e.mouseRect.target[0].offsetTop) : i
+            e.mouseRect.lastLeft = e.mouseRect.lastLeft ? o.a.px.toPt(e.mouseRect.target[0].offsetLeft) : n/ptr, e.mouseRect.lastTop = e.mouseRect.lastTop ? o.a.px.toPt(e.mouseRect.target[0].offsetTop) : i/ptr
               , (e.mouseRect.mouseRectSelectedElement || []).forEach(function (t) {
                t.updatePositionByMultipleSelect(n - e.mouseRect.lastLeft, i - e.mouseRect.lastTop);
-            }), e.mouseRect.lastLeft = n, e.mouseRect.lastTop = i;
+            }), e.mouseRect.lastLeft = n/ptr, e.mouseRect.lastTop = i/ptr;
           },
           moveUnit: "pt",
           minMove: p.a.instance.movingDistance,
@@ -7878,16 +7880,16 @@ var hiprint = function (t) {
           this.mouseRect.target.css({
             height: t.maxY - t.minY + "px",
             width: t.maxX - t.minX + "px",
-            left: t.lastLeft + "pt",
-            top: t.lastTop + "pt",
+            left: t.lastLeft/ptr + "pt",
+            top: t.lastTop/ptr + "pt",
             transform: 'unset',
           });
         } else if (t.ex < t.bx && t.ey < t.by) {
             this.mouseRect.target.css({
               height: t.maxY - t.minY + "px",
               width: t.maxX - t.minX + "px",
-              left: t.lastLeft + "pt",
-              top: t.lastTop + "pt",
+              left: t.lastLeft/ptr + "pt",
+              top: t.lastTop/ptr + "pt",
               transform: 'rotate(180deg)',
               'transform-origin': '0 0'
             });
@@ -7901,8 +7903,8 @@ var hiprint = function (t) {
           this.mouseRect.target.css({
             height: t.maxY - t.minY + "px",
             width: t.maxX - t.minX + "px",
-            left: t.lastLeft + "pt",
-            top: t.lastTop + "pt",
+            left: t.lastLeft/ptr + "pt",
+            top: t.lastTop/ptr + "pt",
             transform: f,
             'transform-origin': r
           });
