@@ -8,6 +8,18 @@
           </a-button>
         </template>
       </a-button-group>
+      <a-button type="text" icon="zoom-out" @click="changeScale(false)"></a-button>
+      <a-input-number
+        :value="scaleValue"
+        :min="scaleMin"
+        :max="scaleMax"
+        :step="0.1"
+        disabled
+        style="width: 70px;"
+        :formatter="value => `${(value * 100).toFixed(0)}%`"
+        :parser="value => value.replace('%', '')"
+      />
+      <a-button type="text" icon="zoom-in" @click="changeScale(true)"></a-button>
       <a-button type="primary" icon="eye" @click="preView">
         预览
       </a-button>
@@ -178,7 +190,10 @@ export default {
           width: 250,
           height: 175.6
         }
-      }
+      },
+      scaleValue: 1,
+      scaleMax: 5,
+      scaleMin: 0.5
     }
   },
   computed: {
@@ -225,6 +240,9 @@ export default {
       paginationContainer: '.hiprint-printPagination'
     });
     hiprintTemplate.design('#hiprint-printTemplate');
+    console.log(hiprintTemplate);
+    // 获取当前放大比例, 当zoom时传true 才会有
+    this.scaleValue = hiprintTemplate.editingPanel.scale || 1;
   },
   methods: {
     /**
@@ -245,7 +263,21 @@ export default {
         this.$message.error(`操作失败: ${error}`)
       }
     },
-
+    changeScale(big) {
+      let scaleValue = this.scaleValue;
+      if (big) {
+        scaleValue += 0.1;
+        if (scaleValue > this.scaleMax) scaleValue = 5;
+      } else {
+        scaleValue -= 0.1;
+        if (scaleValue < this.scaleMin) scaleValue = 0.5;
+      }
+      if (hiprintTemplate) {
+        // scaleValue: 放大缩小值, false: 不保存(不传也一样), 如果传 true, 打印时也会放大
+        hiprintTemplate.zoom(scaleValue);
+        this.scaleValue = scaleValue;
+      }
+    },
     preView() {
       this.$refs.preView.show(hiprintTemplate, printData)
     },
