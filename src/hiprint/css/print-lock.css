@@ -14,7 +14,7 @@
     box-sizing: border-box;
     -moz-box-sizing: border-box; /* Firefox */
     -webkit-box-sizing: border-box; /* Safari */
-
+    image-rendering: -webkit-optimize-contrast; /* 让图片/标尺稍微清楚一点 */
 }
 
     .hiprint-printPaper *:focus {
