@@ -13,14 +13,24 @@
 ![image](https://badgen.net/packagephobia/install/vue-plugin-hiprint)
 
 # vue-plugin-hiprint <a href="http://hiprint.io/docs/start">hiprint官方文档</a>
-> hiprint for vue2.0
+> hiprint for vue2.x
 
 ## 配套直接打印客户端(win/mac/linux)
-### <a href="https://gitee.com/CcSimple/electron-hiprint">gitee</a> <a href="https://gitee.com/CcSimple/electron-hiprint"> github</a>
+### <a href="https://gitee.com/CcSimple/electron-hiprint">gitee</a> <a href="https://github.com/CcSimple/electron-hiprint"> github</a>
 <div align="center">
 
 ![image](./res/tool.jpeg)
 
+</div>
+
+## 演示/截个图咯~
+<div align="center">
+
+![image](./res/img.png)
+
+![image](./res/img_1.png)
+
+![image](./res/img_2.png)
 </div>
 
 ## 参与/预览 <a href="https://ccsimple.gitee.io/vue-plugin-hiprint/">demo</a>
@@ -184,6 +194,35 @@ hiprint.setConfig({
   }
 })
 ```
+> 取消自动socket连接 / socket连接报错问题
+```javascript
+/**
+ * 取消自动连接
+ */
+// 在main.js中设置
+import {hiPrintPlugin} from 'vue-plugin-hiprint'
+Vue.use(hiPrintPlugin,'$hiprint', false);
+// hiPrintPlugin 同时提供了 disAutoConnect 方法
+hiPrintPlugin.disAutoConnect();
+// 在组件中使用 见： demo/design/index.vue
+import {disAutoConnect, autoConnect, hiprint} from 'vue-plugin-hiprint'
+disAutoConnect();
+// 同时 export了 autoConnect，disAutoConnect 方法
+/**
+ * 连接回调及打印
+ */
+autoConnect((status,msg) => {
+  if (status) {
+    hiprintTemplate.print2(printData, {printer: '', title: 'hiprint测试打印'});
+  }
+});
+/**
+ * socket连接报错？
+ * 由于npm包更新到socket.io 3.x版本，官网提供的客户端，npm包是无法连接的
+ * 请使用gitee提供的客户端, 同时gitee客户端可传更多的参数， 如是否打印颜色/打印份数/DPI等
+ * 详情electron见：https://www.electronjs.org/zh/docs/latest/api/web-contents
+ */
+```
 
 ## 交流群
 <div align="center">
@@ -193,13 +232,6 @@ hiprint.setConfig({
 </div>
 若过期 加我 备注加群
 
-## 演示/截个图咯~
-<div align="center">
-
-![image](./res/img.png)
-
-![image](./res/img_1.png)
-</div>
 
 ## 状态/调整/优化
 - [x] `vue 插件` 发布npm包,方便直接使用
@@ -217,6 +249,13 @@ hiprint.setConfig({
 - [x] `字段名优化调整` 元素的字段名(field) 支持嵌套（eg: a.b.c.d）
 - [x] `新增支持不分页(小票打印)` 可设置不分页 table、longText处理
 - [x] `新增支持复制/粘贴` 支持 基本元素的ctrl+c/v(复制/粘贴)
+- [x] `新增支持设置是否自动连接客户端` 支持 不自动连接'直接打印'客户端
+- [x] `新增支持表格设置列显示类型` 支持 设置表格列显示图片、二维码、条形码
+- [x] `调整优化表格列拖拽列宽限制` fix 设置旋转角度后 拖拽、跳动、辅助线相关问题
+- [x] `npm包新增提供Api打印方法` 全局引入时，Vue原型添加print、print2Api，方便直接打印
+- [x] `新增支持多选功能` 按住ctrl/command 多选元素 键盘/鼠标拖动 移动
+- [x] `调整优化元素设置旋转角度问题` fix 设置旋转角度后 拖拽、跳动、辅助线相关问题
+- [x] `新增支持元素拖拽旋转` 基本元素上新增旋转控制点，拖拽旋转、双击还原
 
 ### 咳咳..
 第一次写插件(webpack打包这些都不太了解)，不合理的地方欢迎指正<a href="https://github.com/CcSimple/vue-plugin-hiprint/issues">issues</a>。

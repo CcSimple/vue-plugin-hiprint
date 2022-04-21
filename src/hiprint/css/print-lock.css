@@ -14,7 +14,7 @@
     box-sizing: border-box;
     -moz-box-sizing: border-box; /* Firefox */
     -webkit-box-sizing: border-box; /* Safari */
-
+    image-rendering: -webkit-optimize-contrast; /* 让图片/标尺稍微清楚一点 */
 }
 
     .hiprint-printPaper *:focus {
@@ -29,6 +29,9 @@
     position: relative;
     padding: 0 0 0 0;
     page-break-after: always;
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -moz-user-select: none; /* Firefox */
+    user-select: none;
     overflow-x: hidden;
     overflow: hidden;
 }

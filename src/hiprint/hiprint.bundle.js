@@ -18,6 +18,7 @@ function _instanceof(left, right) {
     return left instanceof right;
   }
 }
+
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function _typeof(obj) {
@@ -49,8 +50,7 @@ import './plugins/JsBarcode.all.min.js'
 import './plugins/qrcode.js'
 // 直接打印需要
 import io from './plugins/socket.io'
-import lline from './css/image/l_img.svg'
-import vline from './css/image/v_img.svg'
+
 window.io = io;
 // pdf
 import jsPDF from './plugins/jspdf/jspdf.min.js'
@@ -1059,7 +1059,7 @@ var hiprint = function (t) {
 
   var o = function () {
     function t(t) {
-      t = t || {}, this.left = t.left, this.top = t.top, this.topInDesign = this.top, this.height = t.height, this.width = t.width, this.init(t);
+      t = t || {}, this.left = t.left, this.top = t.top, this.topInDesign = this.top, this.height = t.height, this.width = t.width, this.transform = t.transform, this.init(t);
     }
 
     return t.prototype.setDefault = function (t) {
@@ -1068,9 +1068,26 @@ var hiprint = function (t) {
       this.width || this.setWidth(this.defaultOptions.width), this.height || this.setHeight(this.defaultOptions.height);
     }, t.prototype.initSizeByHtml = function (t, e) {
       this.width || this.setWidth(t), this.height || this.setHeight(e);
+    }, t.prototype.getRectInfo = function () {
+      var d = { w: 0, h:0, diffW: 0, diffH: 0 };
+      if (this.transform) {
+        var rad = this.transform * Math.PI / 180,
+          width = this.width, height = this.height,
+          sin = Math.sin(rad), cos = Math.cos(rad),
+          w = Math.abs(width * cos) + Math.abs(height * sin),
+          h = Math.abs(width * sin) + Math.abs(height * cos),
+          diffW = (width - w) / 2, diffH = (height - h) / 2;
+          d.w = w, d.h = h, d.diffW = diffW, d.diffH = diffH;
+      }
+      return d;
     }, t.prototype.getLeft = function () {
       return this.left;
+    }, t.prototype.setRotate = function (t) {
+      null != t && (this.transform = t);
     }, t.prototype.displayLeft = function () {
+      if (this.transform) {
+        return this.left + this.getRectInfo().diffW + "pt";
+      }
       return this.left + "pt";
     }, t.prototype.setLeft = function (t) {
       null != t && (this.left = t);
@@ -1079,18 +1096,29 @@ var hiprint = function (t) {
     }, t.prototype.getTopInDesign = function () {
       return this.topInDesign;
     }, t.prototype.displayTop = function () {
+      if (this.transform) {
+        return this.top + this.getRectInfo().diffH + "pt";
+      }
       return this.top + "pt";
     }, t.prototype.setTop = function (t) {
       null != t && (this.top = t);
     }, t.prototype.copyDesignTopFromTop = function () {
       this.topInDesign = this.top;
     }, t.prototype.getHeight = function () {
+      if (this.transform) {
+        var i = this.getRectInfo();
+        return i.h + i.diffH;
+      }
       return this.height;
     }, t.prototype.displayHeight = function () {
       return this.height + "pt";
     }, t.prototype.setHeight = function (t) {
       null != t && (this.height = t);
     }, t.prototype.getWidth = function () {
+      if (this.transform) {
+        var i = this.getRectInfo();
+        return i.w + i.diffW;
+      }
       return this.width;
     }, t.prototype.displayWidth = function () {
       return this.width + "pt";
@@ -1196,7 +1224,18 @@ var hiprint = function (t) {
         this.designTarget.hidraggable({
           axis: n.options.axis && t && t.axisEnabled ? n.options.axis : void 0,
           onDrag: function onDrag(t, i, o) {
-            n.updateSizeAndPositionOptions(i, o), n.createLineOfPosition(e);
+            // 处理按住 ctrl / command 多选元素
+            var els = n.panel.printElements.filter(function (t) {
+              return 'block' == t.designTarget.children().last().css('display') && !t.printElementType.type.includes('table');
+            });
+            var isMultiple = els.length > 1;
+            if (isMultiple) {
+              els.forEach(function (t) {
+                t.updatePositionByMultipleSelect(i - n.options.left, o - n.options.top);
+              })
+            } else {
+              n.updateSizeAndPositionOptions(i, o), n.createLineOfPosition(e);
+            }
           },
           moveUnit: "pt",
           minMove: _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.movingDistance,
@@ -1211,8 +1250,12 @@ var hiprint = function (t) {
           onBeforeResize: function onBeforeResize() {
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !0;
           },
-          onResize: function onResize(t, i, o, r, a) {
-            n.onResize(t, i, o, r, a), n.createLineOfPosition(e);
+          onResize: function onResize(t, i, o, r, a, rt) {
+            if (undefined != rt) {
+              n.onRotate(t, rt);
+            } else {
+              n.onResize(t, i, o, r, a), n.createLineOfPosition(e);
+            }
           },
           onStopResize: function onStopResize() {
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !1, n.removeLineOfPosition();
@@ -1229,7 +1272,9 @@ var hiprint = function (t) {
           }) : t.options[e.name] = n;
         }), this.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId);
       }, BasePrintElement.prototype.getReizeableShowPoints = function () {
-        return ["s", "e", "rotate"];
+        return ["s", "e", "r"];
+      }, BasePrintElement.prototype.onRotate = function (t, r) {
+        this.options.setRotate(r), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId);
       }, BasePrintElement.prototype.onResize = function (t, e, n, i, o) {
         this.updateSizeAndPositionOptions(o, i, n, e);
       }, BasePrintElement.prototype.getOrderIndex = function () {
@@ -1488,6 +1533,12 @@ var hiprint = function (t) {
               if (isEditing) return
             }
           }
+          // 处理按住 ctrl / command 多选元素
+          var els = n.panel.printElements.filter(function (t) {
+            return 'block' == t.designTarget.children().last().css('display') && !t.printElementType.type.includes('table');
+          });
+          var isMultiple = els.length > 1;
+          var movingDistance = _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.movingDistance;
           switch (r.keyCode) {
             // BackSpace/Delete 删除元素
             case 8:
@@ -1497,19 +1548,51 @@ var hiprint = function (t) {
               _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("clearSettingContainer")
               break
             case 37:
-              i = n.options.getLeft(), n.updateSizeAndPositionOptions(i - _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.movingDistance), t.css("left", n.options.displayLeft()), n.createLineOfPosition(e), r.preventDefault();
+              i = n.options.getLeft();
+              if (isMultiple) {
+                els.forEach(function (t) {
+                  t.updatePositionByMultipleSelect(0 - movingDistance, 0);
+                })
+              } else {
+                n.updateSizeAndPositionOptions(i - movingDistance), t.css("left", n.options.displayLeft()), n.createLineOfPosition(e);
+              }
+              r.preventDefault();
               break;
 
             case 38:
-              o = n.options.getTop(), n.updateSizeAndPositionOptions(void 0, o - _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.movingDistance), t.css("top", n.options.displayTop()), n.createLineOfPosition(e), r.preventDefault();
+              o = n.options.getTop();
+              if (isMultiple) {
+                els.forEach(function (t) {
+                  t.updatePositionByMultipleSelect(0, 0 - movingDistance);
+                })
+              } else {
+                n.updateSizeAndPositionOptions(void 0, o - movingDistance), t.css("top", n.options.displayTop()), n.createLineOfPosition(e);
+              }
+              r.preventDefault();
               break;
 
             case 39:
-              i = n.options.getLeft(), n.updateSizeAndPositionOptions(i + _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.movingDistance), t.css("left", n.options.displayLeft()), n.createLineOfPosition(e), r.preventDefault();
+              i = n.options.getLeft();
+              if (isMultiple) {
+                els.forEach(function (t) {
+                  t.updatePositionByMultipleSelect(movingDistance, 0);
+                })
+              } else {
+                n.updateSizeAndPositionOptions(i + movingDistance), t.css("left", n.options.displayLeft()), n.createLineOfPosition(e);
+              }
+              r.preventDefault();
               break;
 
             case 40:
-              o = n.options.getTop(), n.updateSizeAndPositionOptions(void 0, o + _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.movingDistance), t.css("top", n.options.displayTop()), n.createLineOfPosition(e), r.preventDefault();
+              o = n.options.getTop();
+              if (isMultiple) {
+                els.forEach(function (t) {
+                  t.updatePositionByMultipleSelect(0, movingDistance);
+                })
+              } else {
+                n.updateSizeAndPositionOptions(void 0, o + movingDistance), t.css("top", n.options.displayTop()), n.createLineOfPosition(e);
+              }
+              r.preventDefault();
           }
         });
       }, BasePrintElement.prototype.inRect = function (t) {
@@ -4439,12 +4522,12 @@ var hiprint = function (t) {
                   g.a.instance.draging = !1;
                   var i = parseFloat(e.dragingGrip.target.css("left").replace("px", "")),
                     o = r.a.px.toPt(i - e.dragingGrip.left);
-					//表格列宽限制 最小宽度为10pt
-					if(s.cell.width + o < 10){
-					  o = 10 - s.cell.width
-					}else if(s.nextGrip.cell.width - o < 10){
-					  o = s.nextGrip.cell.width - 10
-					}
+                  // 表格列宽限制 最小宽度为10pt
+                  if (s.cell.width + o < 10) {
+                    o = 10 - s.cell.width
+                  } else if (s.nextGrip.cell.width - o < 10) {
+                    o = s.nextGrip.cell.width - 10
+                  }
                   s.cell.width = s.cell.width + o, s.nextGrip.cell.width = s.nextGrip.cell.width - o, t.resizeTableCellWidth(), s.target.removeClass("columngripDraging"), e.updateColumnGrips();
                 }
               });
@@ -5162,9 +5245,23 @@ var hiprint = function (t) {
           var n = t.data(e.data.target, "hidraggable"),
             i = n.handle,
             o = t(i).offset(),
-            r = t(i).outerWidth(),
-            a = t(i).outerHeight(),
-            p = e.pageY - o.top,
+            tr = t(i)[0].style.transform && parseInt(t(i)[0].style.transform.slice(7,-1)),
+            ptr = t('.hiprint-printPaper')[0].style.transform && parseFloat(t('.hiprint-printPaper')[0].style.transform.slice(6,-1)),
+            r = t(i).outerWidth();
+          var a = t(i).outerHeight();
+          if (tr) {
+            var rad = tr * Math.PI / 180,
+              width = t(i).outerWidth(),
+              height = t(i).outerHeight(),
+              sin = Math.sin(rad),
+              cos = Math.cos(rad);
+            r = Math.abs(width * cos) + Math.abs(height * sin),
+            a = Math.abs(width * sin) + Math.abs(height * cos)
+          }
+          if (ptr) {
+            r *= ptr, a *= ptr;
+          }
+          var p = e.pageY - o.top,
             s = o.left + r - e.pageX,
             l = o.top + a - e.pageY,
             u = e.pageX - o.left;
@@ -5205,7 +5302,28 @@ var hiprint = function (t) {
                 target: e.data.target,
                 parent: t(e.data.target).parent()[0]
               };
-            t.extend(e.data, p), 0 != t.data(e.data.target, "hidraggable").options.onBeforeDrag.call(e.data.target, e) && (t(document).bind("mousedown.hidraggable", e.data, i), t(document).bind("mousemove.hidraggable", e.data, o), t(document).bind("mouseup.hidraggable", e.data, r));
+            var tr = p.target.style.transform && parseInt(p.target.style.transform.slice(7,-1));
+            if (tr) {
+              var rad = tr * Math.PI / 180,
+                width = t(e.data.target).outerWidth(),
+                height = t(e.data.target).outerHeight(),
+                sin = Math.sin(rad),
+                cos = Math.cos(rad);
+              var w = Math.abs(width * cos) + Math.abs(height * sin),
+                h = Math.abs(width * sin) + Math.abs(height * cos);
+              var diffW = (w - width) / 2, diffH = (h - height) / 2;
+              p.left += diffW, p.top += diffH, p.startLeft += diffW, p.startTop += diffH;
+            }
+            var ptr = t('.hiprint-printPaper')[0].style.transform && parseFloat(t('.hiprint-printPaper')[0].style.transform.slice(6,-1));
+            if (ptr) {
+              p.left /= ptr, p.top /= ptr, p.startLeft /= ptr, p.startTop /= ptr;
+            }
+            t.extend(e.data, p);
+            // 旋转时不允许移动
+            if ('r resizebtn' == e.target.className) {
+              return;
+            }
+            0 != t.data(e.data.target, "hidraggable").options.onBeforeDrag.call(e.data.target, e) && (t(document).bind("mousedown.hidraggable", e.data, i), t(document).bind("mousemove.hidraggable", e.data, o), t(document).bind("mouseup.hidraggable", e.data, r));
           }
         });
       });
@@ -5413,14 +5531,14 @@ var hiprint = function (t) {
             name: "sw",
             target: n('<div class="sw resizebtn" style="cursor: sw-resize;bottom: -12px;left: -12px;"></div>')
           },
-		  k = {
-		    name: "rotate",
-		    target: n('<div class="rotate resizebtn" style="cursor: move;top: -12px;margin-left: -4px;left: 50%;"></div>')
-		  },
+          r = {
+            name: "r",
+            target: n('<div class="r resizebtn" style="cursor:url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAABvUExURUdwTP///9XV1R0dHf///3Nzc////////////////1ZWVq+vr/T09PX19QQEBP///////8XFxf///////////wYGBv///+jo6P///4aGhqioqMzMzP///2BgYP///////////zExMf///wAAAP///xLps0AAAAAjdFJOUwCxxOdixRDmzSDMv8/Z+tz5wWpXWPk3zALCv8KnyXZVMNuNPnv3CwAAAJ1JREFUKM/NkckOwyAMRFkDBMhC9qWr+//fWCIV1WlzrjoXS36yxmMT8hdqqKoUvRAjMtw22kvecem1GjTuK1vApmI+wQMBbQFy5li+QQRaX4AtRX+vbntAJeRl9HTTx4TiwESs61DXNUPmVQeujzVrQwh43TTxpeRBslVfMUhbiXKWyiAwvnIsMcdyJkfJYdpNvG/ltDm+bjP+8KFP8ggL+zQLGxwAAAAASUVORK5CYII=\') 14 14,alias;top: -16px;margin-left: -4px;left: 50%;"></div>')
+          },
           h = function h() {
             var t = [],
               i = e.options.showPoints;
-            return n.each([r, a, p, s, l, u, d, c, k], function (e, o) {
+            return n.each([r, a, p, s, l, u, d, c], function (e, o) {
               n.inArray(o.name, i) > -1 && t.push(o.target);
             }), t;
           };
@@ -5450,10 +5568,14 @@ var hiprint = function (t) {
         e.append(t[n]);
       }
     },
-    triggerResize: function triggerResize(t) {
-      t.siblings().children("div[panelindex]").css({
-        display: "none"
-      }), t.children("div[panelindex]").css({
+    triggerResize: function triggerResize(t, n) {
+      // 处理按住 ctrl / command 点击元素 多选
+      if (!(n.ctrlKey || n.metaKey)) {
+        t.siblings().children("div[panelindex]").css({
+          display: "none"
+        })
+      }
+      t.children("div[panelindex]").css({
         display: "block"
       });
     },
@@ -5461,7 +5583,6 @@ var hiprint = function (t) {
       var i = this,
         o = 0,
         r = 0,
-		du = 0,
         a = t.width(),
         p = t.height(),
         s = t.offset().left,
@@ -5499,17 +5620,19 @@ var hiprint = function (t) {
       t.on("mousedown", ".sw", function (e) {
         o = e.pageX, r = e.pageY, a = t.width(), p = t.height(), y = !0, s = u.offset().left;
       });
-	  var rotate = !1;
-	  t.on("mousedown", ".rotate", function (e) {
-	    o = e.pageX, du = 0,rotate = !0;
-	  });
+      var rt = !1;
+      t.on("mousedown", ".r", function (e) {
+        o = e.pageX, r = e.pageY, a = t.width(), p = t.height(), rt = !0, s = a/2 + u.offset().left, l = p/2 + u.offset().top;
+      });
+      t.on("dblclick", ".r", function (e) {
+        u.css({ transform: "rotate(" + 0 + "deg)" });
+        i.options.onResize(e, void 0, void 0, void 0, void 0, 0);
+      });
       var b = !1;
       t.on("mousedown", function (t) {
         i.options.onBeforeResize(), o = t.pageX, r = t.pageY, l = u.offset().top, s = u.offset().left, b = !1;
       }), n(i.options.stage).on("mousemove", function (e) {
-        if (rotate) {//旋转时移动事件
-			var n = e.pageX - o;
-		} else if (d) {
+        if (d) {
           var n = e.pageX - o;
           t.css({
             width: "100%"
@@ -5523,6 +5646,24 @@ var hiprint = function (t) {
           }), u.css({
             height: i.numHandlerText(p + E)
           }), i.options.onResize(e, i.numHandler(p + E), void 0, void 0, void 0);
+        } else if (rt) {
+          t.css({ height: "100%" });
+          var eo = e.pageX, er = e.pageY;
+          var AB = {}, AC = {};
+          AB.X = o - s, AB.Y = r - l, AC.X = eo - s, AC.Y = er - l;
+          var direct = (AB.X * AC.Y) - (AB.Y * AC.X);
+          var lAB = Math.sqrt(Math.pow(s - o, 2) + Math.pow(l - r, 2)),
+              lAC = Math.sqrt(Math.pow(s - eo, 2) + Math.pow(l - er, 2)),
+              lBC = Math.sqrt(Math.pow(o - eo, 2) + Math.pow(r - er, 2));
+          var cosA = (Math.pow(lAB, 2) + Math.pow(lAC, 2) - Math.pow(lBC, 2)) / (2 * lAB * lAC);
+          var angle = Math.round(Math.acos(cosA) * 180 / Math.PI);
+          var lastAngle = (u[0].style.transform && parseInt(u[0].style.transform.slice(7,-1))) || 0;
+          var R = lastAngle + (direct > 0 ? angle : -angle);
+          if (Math.abs(R) > 360) {
+            R = R % 360
+          }
+          u.css({ transform: "rotate(" + R + "deg)" });
+          i.options.onResize(e, void 0, void 0, void 0, void 0, R);
         } else h ? (n = e.pageX - o, t.css({
           width: "100%"
         }), u.css({
@@ -5566,13 +5707,13 @@ var hiprint = function (t) {
           top: i.numHandlerText(i.options.noDrag ? void 0 : l + E)
         }), i.options.onResize(e, void 0, void 0, i.options.noDrag ? void 0 : i.numHandler(l + E), i.options.noDrag ? void 0 : i.numHandler(s + n)));
       }).on("mouseup", function (t) {
-        d = !1, c = !1, h = !1, f = !1, g = !1, m = !1, y = !1, v = !1, b = !1, i.options.onStopResize();
+        d = !1, c = !1, h = !1, f = !1, g = !1, m = !1, y = !1, v = !1, b = !1, rt = !1, i.options.onStopResize();
       });
     },
     bindTrigger: function bindTrigger(t) {
       var e = this;
       t.on("click", function (n) {
-        n.stopPropagation(), e.triggerResize(t);
+        n.stopPropagation(), e.triggerResize(t, n);
       });
     },
     bindHidePanel: function bindHidePanel(t) {
@@ -5645,46 +5786,25 @@ var hiprint = function (t) {
       this.stop()
       this.start()
     },
-    start: function start(success,error) {
-		var _this = this;
-		var t = this;
-		if(window.WebSocket){
-			if(!this.socket){
-				this.socket = io(this.host, {
-				  reconnectionAttempts: 5
-				});
-				this.socket.on("connect", function (e) {
-				   t.opened = !0, console.log("Websocket opened.");
-					   _this.socket.on("successs", function (t) {
-						   hinnn.event.trigger("printSuccess_" + t.templateId, t);
-					   });
-					   _this.socket.on("error", function (t) {
-						   hinnn.event.trigger("printError_" + t.templateId, t);
-					   })
-					   _this.socket.on("printerList", function (e) {
-						   t.printerList = e;
-						   
-						   success&&success();
-					   });
-					t.state = n;
-				 });
-				 this.socket.on("disconnect", function () {
-					  t.opened = !1;
-				 })
-				 //客户端未开启或未安装执行回调触发错误
-				 setTimeout(() => {
-					 if(!t.opened){
-						console.log("WebSocket connect error"); 
-						error?(error()):(success&&success())
-					 }
-				 },1500)
-			}else{
-				success&&success();
-			}
-		}else{
-		   console.log("WebSocket start fail"); 
-		}
-        
+    start: function start(cb) {
+      var _this = this;
+
+      var t = this;
+      window.WebSocket ? this.socket || (this.socket = io(this.host, {
+        reconnectionAttempts: 5
+      }), this.socket.on("connect", function (e) {
+        t.opened = !0, console.log("Websocket opened."), _this.socket.on("successs", function (t) {
+          hinnn.event.trigger("printSuccess_" + t.templateId, t);
+        }), _this.socket.on("error", function (t) {
+          hinnn.event.trigger("printError_" + t.templateId, t);
+        }), _this.socket.on("printerList", function (e) {
+          t.printerList = e;
+        }), t.state = n;
+        cb && cb(true, e);
+      }), this.socket.on("disconnect", function () {
+        t.opened = !1;
+        cb && cb(false);
+      })) : console.log("WebSocket start fail"), cb && cb(false);
     },
     reconnect: function reconnect() {
       this.state !== n && this.state !== i || (this.stop(), this.ensureReconnectingState() && (console.log("Websocket reconnecting."), this.start()));
@@ -6208,7 +6328,7 @@ var hiprint = function (t) {
       }
 
       return m(e, t), e.prototype.getReizeableShowPoints = function () {
-        return ["se"];
+        return ["se", "r"];
       }, e.prototype.getData = function (t) {
         var e = "";
         t ? e = this.getField() ? e.split('.').reduce((a,c)=>a ? a[c] : t[c], !1) || "" : this.options.src || this.printElementType.getData() : e = this.options.src || this.printElementType.getData();
@@ -6265,8 +6385,8 @@ var hiprint = function (t) {
     }(g.a),
     E = n(8),
     T = function () {
-      function t(t, pr, e, n, i, r, a, p, s, l, u, d) {
-        this.panelPageRule = pr,
+      function t(t, pr, scl, e, n, i, r, a, p, s, l, u, d) {
+        this.panelPageRule = pr, this.scale = scl,
         this.defaultPaperNumberFormat = "paperNo-paperCount", this.printLine = 0, this.templateId = t, this.width = o.a.mm.toPt(e), this.height = o.a.mm.toPt(n), this.mmwidth = e, this.mmheight = n, this.paperHeader = i, this.paperFooter = r, this.contentHeight = r - i, this.createTarget(), this.index = u, this.paperNumberLeft = a || parseInt((this.width - 30).toString()), this.paperNumberTop = p || parseInt((this.height - 22).toString()), this.paperNumberDisabled = s, this.paperNumberFormat = l, this.referenceElement = d ? $.extend({}, d) : new E.a({
           top: 0,
           left: 0,
@@ -6284,6 +6404,7 @@ var hiprint = function (t) {
       }, t.prototype.triggerOnPaperBaseInfoChanged = function () {
         this.onPaperBaseInfoChanged && this.onPaperBaseInfoChanged({
           panelPageRule: this.panelPageRule,
+          scale: this.scale,
           paperHeader: this.paperHeader,
           paperFooter: this.paperFooter,
           paperNumberLeft: this.paperNumberLeft,
@@ -6300,7 +6421,7 @@ var hiprint = function (t) {
       }, t.prototype.setTopOffset = function (t) {
         t ? this.paperContentTarget.css("top", t + "pt") : this.paperContentTarget[0].style.top = "";
       }, t.prototype.createTarget = function () {
-        this.target = $('<div class="hiprint-printPaper"><div class="hiprint-printPaper-content"></div></div>'), this.paperContentTarget = this.target.find(".hiprint-printPaper-content"), this.target.css("width", this.mmwidth + "mm"), this.target.css("height", this.mmheight - p.a.instance.paperHeightTrim + "mm"), this.target.attr("original-height", this.mmheight);
+        this.target = $('<div class="hiprint-printPaper"><div class="hiprint-printPaper-content"></div></div>'), this.paperContentTarget = this.target.find(".hiprint-printPaper-content"), this.target.css("width", this.mmwidth + "mm"), this.target.css("height", this.mmheight - p.a.instance.paperHeightTrim + "mm"), this.target.attr("original-height", this.mmheight), this.zoom(this.scale);
       }, t.prototype.createHeaderLine = function () {
         var t = this;
         this.headerLinetarget = $('<div class="hiprint-headerLine"  style="position: absolute;width: 100%;border-top: 1px dashed #c9bebe;height: 7pt;"></div>'), this.headerLinetarget.css("top", (this.paperHeader || -1) + "pt"), 0 == this.paperHeader && this.headerLinetarget.addClass("hideheaderLinetarget"), this.paperContentTarget.append(this.headerLinetarget), this.dragHeadLineOrFootLine(this.headerLinetarget, function (e, n) {
@@ -6367,13 +6488,23 @@ var hiprint = function (t) {
         });
       }, t.prototype.resize = function (t, e) {
         this.width = o.a.mm.toPt(t), this.height = o.a.mm.toPt(e), this.mmwidth = t, this.mmheight = e, this.target.css("width", t + "mm"), this.target.css("height", e - p.a.instance.paperHeightTrim + "mm"), this.target.attr("original-height", this.mmheight), this.paperFooter = this.height, this.footerLinetarget.css("top", this.height + "pt"), this.contentHeight = this.paperFooter - this.paperHeader, this.paperNumberLeft = parseInt((this.width - 30).toString()), this.paperNumberTop = parseInt((this.height - 22).toString()), this.paperNumberTarget.css("top", this.paperNumberTop + "pt"), this.paperNumberTarget.css("left", this.paperNumberLeft + "pt"), this.triggerOnPaperBaseInfoChanged();
+      }, t.prototype.zoom = function (s) {
+        if (s) {
+          this.scale = s, this.target.css("transform", "scale(" + s + ")");
+          if (s > 1) {
+            this.target.css("transform-origin", "-" + s + "% -" + s + "%");
+          } else {
+            this.target.css("transform-origin", "0 0");
+          }
+        }
+        this.triggerOnPaperBaseInfoChanged();
       }, t.prototype.getPaperFooter = function (t) {
         var e = this.index + t;
         return 0 == e ? this.firstPaperFooter ? this.firstPaperFooter : this.oddPaperFooter ? this.oddPaperFooter : this.paperFooter : e % 2 == 0 ? this.oddPaperFooter ? this.oddPaperFooter : this.paperFooter : e % 2 == 1 ? this.evenPaperFooter ? this.evenPaperFooter : this.paperFooter : void 0;
       }, t.prototype.getContentHeight = function (t) {
         return this.getPaperFooter(t) - this.paperHeader;
       }, t.prototype.createRuler = function () {
-        this.target.append('<div class="hiprint_rul_wrapper">\n                     <img class="h_img"  src="'+lline+'" />\n                     <img class="v_img" src="'+vline+'" />\n                    </div>');
+        this.target.append('<div class="hiprint_rul_wrapper">\n                     <img class="h_img" src="data:image/png;base64,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" />\n                     <img class="v_img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAB9AAAAAPCAYAAAC891QNAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAiHSURBVHhe7Z29q21HGYevplLTKSL4UQQkwUYQG1EUtBGba5qkyEeX+NGI9irof2ClvTaCtoqgoEkISAIpTZMiJBCCQsCvSq7vc88emExm7XO2++Tc+S2fB17WmnftzZ3ffWf2b601a+9za8Kdw7bHnDkwZw7MmQNz5sCcOTBnDsyZA3PmwJw5MGcOzJkDc+bAnDkwZw7MmYPlc+897IiIiIiIiIiIiIiIiIiIiPxf4wK6iIiIiIiIiIiIiIiIiIhI4QK6iIiIiIiIiIiIiIiIiIhI4QK6iIiIiIiIiIiIiIiIiIhI4QK6iIiIiIiIiIiIiIiIiIhIkbCA/vmKOxW/rfggieKxCvJJzHTQJl6qeJBEADMd7JOjLinMdDxd8b6L3Rj2XI+96IDbFSlzHPZcj59WkGO74nynT62P7f96poNj5FeGMY+/EQ363I+h1XXM6tHmAvF9EkWiDrZp42prfox9th43w551AP1/6mL3LtbjZtia57SJ1vdkHX09mq5VrwdnOug7/sexRqIO6tD63fw8UQdb2unjivkxzulEHXupx150AP3v/TxRx17q0XyQaPM9WUdfD/b716zGTAd9H/08UUfrM9H8PFEHW9rp42rm59bjZtizDqD/vZ9bj5tha57TJtp8T9bR1+Md64OzBfT3HLY99yr3/oovV3yo4scVX62YvW7GdfflnNyWDuKhit9VvFox45x/97pzMx2PH/Y59kBFG2wjN9G/q+a2dPys4l8V/aQZuYn+XTW393qwz+s/XLF1IXXdfTknN9PRXoeGv17sTrnuvpyTu2xcfboitR5fqHimgtd/s+LfFTOuuy+n5D5TQR/pP3P4YxVb4+oyzu3LyKm5r1U8eojvkRiYvXfGdfSl55TcWA/q0Grwg4o/HPavwin/7si5uVHHJw9b2knjaqaDmyTPVrST4Nl7Z5zbl5FTcnuuR9PxnYonK2bvnXFuX0ZOyc3mObB982J3+t4Z5/Zl5JTcZePq2xWz9844ty8jp+RGHb0Pcvy5w/YqnPLvjpybO6ajn+fEyteDW/Ojh9cRaTpmfk4k6djyDyJNx8zPCevxdt6N3DEdvZ8TafMc2PZ+TiSPq+bnRJKOLT8nUnW0eZ5wH25rfvSk6hj9PFHHzD9SdYx+bj1uLndMR/Pz1HkObJuf72Fc4eeJOmZ+nq6Dvrd5/o71wdW/gY6gNyr+VsHiE4tQiWzpwEi+W/HDiq2FnJU4Vg/6z2Dj2OrMdPy64hsVH6/4VUWqjkZ6PRLZ0tFMI6EWcFk9/l5BfnVmOjBFThg5kW9PJq8GfXyhgjn8jwoMPXF+8LTePyu4CUK/7z/k0hjrQZs5zYkUF+ecKCYw6uhPZtHwi4vd5Rl13FeB1/FwzNcrOJbAXuvR60hi1EEbuJn7l4vdCC6rxyuH7eqMOvDBj1b8vmLVb6fNmOmY+fnq14Nb82MkUcfMz9N0bPlHmo4tP7ceN8MxHT2J8xxGP0+vR/PzNB1bfp6oY+v6nNeseh9ua37MSNMx83NI0rHlH5Ck49j1ufV49zmmYyRJB22YXZ8n16O/Pk/Scez6PE3H6OfT9UH/Bvq9g8FFYY59CzIBBtYTFasuRp3KFyv+dLEbCSeN1IIFQn6WInHBCnodKTdKt+DEMXlMASeLPJX1fMUvK1Y0wqvAIu6PKnjyDLNMH1tyb+AhDJ7e7S/O03irghsMzOk9zANOhDmnevluKw/qwcUTT7nie+NP3qXQ6/gJiWC4uE0eU0A98GzmOR7e3/hJ4/WKz1Xwiyb8usle2Mv1YKqO0c8Tdcz8PHlc9X6eWo/Rz9N1ND9PHVejn6fWY/Tz1HqMfp6qY2Qv90VTdYx+nqhj5ufJ46r389R6jH6erqP5eeq4Gv08tR6jn6fWY/TzVB1bvG19cPUFdCb4RyqYJHz4tp9pAH4OJKUoMx2frfhzBfD3Gzi2OjMdn6j4TQVPl6SwNa74KQcW1lJuls50sLDJT07QfrEi4SJkqx4PV/AtYj6UeRJodWY62O8NPoGZDk4WOZnHHB+p4NjqbI0r4MESFtNXHFf0CX9ofXytYkvHyj7IZ88HKvAI+s0DC+3z6OcV/QM+K+sY6/Gfw5Zv1nNhe7uikaSD9qcqvlIxfj6l6YBvVXDC3pOmg4snzkF4Ur/pgiQdzHMegEMHDyulfF7N6rH18FtaPb5UgXfj4XzDq5Gko39oL8kHRx0zP+f46teDs/kBnBu2m7yJOmZ+nlqP0c9TdUDv56k6Rj9P1DHz89R6jH6eWo/RzxN1zPw8UcfMzxPui87mB/R+nqhj5uep9Rj9PHlc9X6eqmP080QdMz9Prcfo56n1GP08UcfMzxN1bN1vT1sfvAtmztM+TPh2MsUAI9/g+OqMOgj2ybUbWok6GHTtD/C3BZFUHdyAa2MMEnW0NpE8rjjx5WdA0nXQd9pE+1mTRB0E++TajepEHf3n1arjatbHUQdwjHxjNR3Q5nH/kz70uemC1XXM6sE2rR7HxhXR+p6qo+030nT07fRxhUek66Df9J820XwvsR5safefw4k66C/tvXzuNh39WGuvSdBBv5kXHINUHWxpp9ejjSuC/WQdbR8SdfTt9HE1+nmijr7PBJpS68GWdvPzVB178cFRR/8atrQTdND33s9TdbClnV6P0c+TdbR9SNTRt9PH1ejniTrod/MKon1upekAtrSbn6fq2IsPznS088XGajr+Z/YiRB1roY61UMdaqGMt1LEW6lgLdayFOtZCHWuhjrVQx1qoYy3UsRbqWAt1rIU61kIda6GOtVDHWtzxb6CLiIiIiIiIiIiIiIiIiIgU9x22e+CPh2066lgLdayFOtZCHWuhjrVQx1qoYy3UsRbqWAt1rIU61kIda6GOtVDHWqhjLdSxFupYC3WshTqW4dat/wKB2hwSL8nDjQAAAABJRU5ErkJggg==" />\n                    </div>');
       }, t.prototype.displayHeight = function () {
         return this.mmheight - p.a.instance.paperHeightTrim + "mm";
       }, t.prototype.displayWidth = function () {
@@ -6449,7 +6580,7 @@ var hiprint = function (t) {
         return this.removeTempContainer(), n;
       }, e.prototype.getHeightByData = function (t) {
         this.createTempContainer();
-        var e = this.getPaperHtmlResult(new T("", "", 1e3, 1e3, 0, 25e3, 0, 0, !0, void 0, 0, void 0), {}, t);
+        var e = this.getPaperHtmlResult(new T("", "", void 0, 1e3, 1e3, 0, 25e3, 0, 0, !0, void 0, 0, void 0), {}, t);
         return this.removeTempContainer(), e[0].referenceElement.bottomInLastPaper - e[0].referenceElement.printTopInPaper;
       }, e.prototype.getLongTextIndent = function () {
         return this.options.longTextIndent ? '<span class="long-text-indent" style="margin-left:' + this.options.longTextIndent + 'pt"></span>' : '<span class="long-text-indent"></span>';
@@ -6701,20 +6832,20 @@ var hiprint = function (t) {
 
             try {
               if (n) {
-				//去除行高对高度的影响
-				t.css('line-height',0)
-				//默认二维码永远居中
-				a.css('text-align','center')
+                //去除行高对高度的影响
+                t.css('line-height',0)
+                //默认二维码永远居中
+                a.css('text-align','center')
                 // var l = parseInt(o.a.pt.toPx(this.options.getWidth() || 20)),
                 // 	u = parseInt(o.a.pt.toPx(this.options.getHeight() || 20)),
-				var lpt = this.options.getWidth() || 20,
-					upt = this.options.getHeight() || 20
+                var lpt = this.options.getWidth() || 20,
+                  upt = this.options.getHeight() || 20
                 var box = $('<div></div>').css({"width":(lpt>upt?upt:lpt)+'pt',"height":(lpt>upt?upt:lpt)+'pt','display':'inline-block'})
                 new QRCode(box[0], {
-                	width: "100%",
-                	height: "100%",
-                	colorDark: this.options.color || "#000000",
-                	useSVG: !0
+                  width: "100%",
+                  height: "100%",
+                  colorDark: this.options.color || "#000000",
+                  useSVG: !0
                 }).makeCode(n);
                 a.html(box)
               }
@@ -6853,7 +6984,7 @@ var hiprint = function (t) {
       }, e.prototype.createTarget = function (t, e) {
         return $('<div class="hiprint-printElement hiprint-printElement-vline" style="border-left:1px solid;position: absolute;"></div>');
       }, e.prototype.getReizeableShowPoints = function () {
-        return ["s"];
+        return ["s", "r"];
       }, e.prototype.getHtml = function (t, e, n) {
         return this.getHtml2(t, e, n);
       }, e;
@@ -6895,7 +7026,7 @@ var hiprint = function (t) {
       }, e.prototype.createTarget = function (t, e) {
         return $('<div class="hiprint-printElement hiprint-printElement-hline" style="border-top:1px solid;position: absolute;"></div>');
       }, e.prototype.getReizeableShowPoints = function () {
-        return ["e"];
+        return ["e", "r"];
       }, e;
     }(f.a),
     z = function () {
@@ -7409,7 +7540,7 @@ var hiprint = function (t) {
           t.height ? (this.height = t.height, this.width = t.width) : (this.height = e.height, this.width = e.width);
         } else this.height = t.height, this.width = t.width;
 
-        this.paperHeader = t.paperHeader || 0, this.paperFooter = t.paperFooter || o.a.mm.toPt(this.height), this.printElements = t.printElements || [], this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat, this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.rotate = t.rotate || void 0, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter, this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.fontFamily = t.fontFamily, this.leftOffset = t.leftOffset, this.orient = t.orient;
+        this.paperHeader = t.paperHeader || 0, this.paperFooter = t.paperFooter || o.a.mm.toPt(this.height), this.printElements = t.printElements || [], this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat, this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.rotate = t.rotate || void 0, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter, this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.fontFamily = t.fontFamily, this.leftOffset = t.leftOffset, this.orient = t.orient, this.scale = t.scale;
       };
     }(),
     at = function () {
@@ -7428,7 +7559,7 @@ var hiprint = function (t) {
     }(),
     pt = function () {
       function t(t, e) {
-        this.templateId = e, this.index = t.index, this.width = t.width, this.height = t.height, this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter, this.initPrintElements(t.printElements), this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat, this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter, this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.leftOffset = t.leftOffset, this.fontFamily = t.fontFamily, this.orient = t.orient, this.target = this.createTarget(), this.rotate = t.rotate;
+        this.templateId = e, this.index = t.index, this.width = t.width, this.height = t.height, this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter, this.initPrintElements(t.printElements), this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat, this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter, this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.leftOffset = t.leftOffset, this.fontFamily = t.fontFamily, this.orient = t.orient, this.target = this.createTarget(), this.rotate = t.rotate, this.scale = t.scale;
       }
 
       return t.prototype.design = function (t) {
@@ -7550,6 +7681,8 @@ var hiprint = function (t) {
         this.width = e, this.height = n, this.paperType = t, this.rotate = i, this.designPaper.resize(e, n);
       }, t.prototype.rotatePaper = function () {
         null == this.rotate && (this.rotate = !1), this.rotate = !this.rotate, this.resize(this.paperType, this.height, this.width, this.rotate);
+      }, t.prototype.zoom = function (s, p) {
+        if (p) { this.scale = s } else { this.scale = void 0 } this.designPaper.zoom(s);
       }, t.prototype.getTarget = function () {
         return this.target;
       }, t.prototype.enable = function () {
@@ -7582,6 +7715,7 @@ var hiprint = function (t) {
           topOffset: this.topOffset,
           fontFamily: this.fontFamily,
           orient: this.orient,
+          scale: this.scale,
           leftOffset: this.leftOffset
         });
       }, t.prototype.createTarget = function () {
@@ -7617,7 +7751,7 @@ var hiprint = function (t) {
         var i = e.getDesignTarget(t);
         i.addClass("design"), n && e.initSizeByHtml(i), t.append(i);
       }, t.prototype.createNewPage = function (t, e) {
-        var n = new T(this.templateId, this.panelPageRule, this.width, this.height, this.paperHeader, this.paperFooter, this.paperNumberLeft, this.paperNumberTop, this.paperNumberDisabled, this.paperNumberFormat, t, e);
+        var n = new T(this.templateId, this.panelPageRule, this.scale, this.width, this.height, this.paperHeader, this.paperFooter, this.paperNumberLeft, this.paperNumberTop, this.paperNumberDisabled, this.paperNumberFormat, t, e);
         return n.setFooter(this.firstPaperFooter, this.evenPaperFooter, this.oddPaperFooter, this.lastPaperFooter), n.setOffset(this.leftOffset, this.topOffset), n;
       }, t.prototype.orderPrintElements = function () {
         this.printElements = o.a.orderBy(this.printElements, function (t) {
@@ -7939,7 +8073,7 @@ var hiprint = function (t) {
       }, t;
     }(),
     ct = function () {
-      function t(t,startcb) {
+      function t(t) {
         var e = this;
         this.tempimageBase64 = {}, this.id = s.a.instance.guid(), s.a.instance.setPrintTemplateById(this.id, this);
         var n = t || {};
@@ -7948,7 +8082,6 @@ var hiprint = function (t) {
         n.template && i.panels.forEach(function (t) {
           e.printPanels.push(new pt(t, e.id));
         }), n.fields && (this.fields = n.fields), n.settingContainer && new ut(this, n.settingContainer), n.paginationContainer && (this.printPaginationCreator = new dt(n.paginationContainer, this), this.printPaginationCreator.buildPagination()), this.initAutoSave();
-		startcb&&startcb();
       }
 
       return t.prototype.design = function (t, e) {
@@ -7991,6 +8124,8 @@ var hiprint = function (t) {
         }
       }, t.prototype.rotatePaper = function () {
         this.editingPanel.rotatePaper();
+      }, t.prototype.zoom = function (s, p) {
+        this.editingPanel.zoom(s, p);
       }, t.prototype.addPrintPanel = function (t, e) {
         var n = t ? new pt(new rt(t), this.id) : this.createDefaultPanel();
         return t && (t.index = this.printPanels.length), e && (this.container.append(n.getTarget()), n.design()), this.printPanels.push(n), e && this.selectPanel(n.index), n;
@@ -8243,18 +8378,10 @@ var hiprint = function (t) {
     }), e;
   }
 
-
-  function mt(t,cb) {
-	//清空历史初始化记录
-	a.instance.allElementTypes = []
-	p.a.instance.init(t), p.a.instance.providers.forEach(function (t) {
-		t.addElementTypes(a.instance);
-	});
-	//status true: 手动请求 false:自动请求 function:自动请求时 直接打印回调(打印操作放入回调正常打印)
-	if(hiwebSocket.hasIo()){
-		hiwebSocket.start(cb);
-	}
-
+  function mt(t) {
+    p.a.instance.init(t), p.a.instance.providers.forEach(function (t) {
+      t.addElementTypes(a.instance);
+    });
   }
 
   function cig(t) {
@@ -8282,7 +8409,7 @@ var hiprint = function (t) {
     return mt;
   }), n.d(e, "setConfig", function () {
     return cig;
-  }), n.d(e, "connectSocket", function () {
+  }), n.d(e, "hiwebSocket", function () {
     return hiwebSocket
   }), n.d(e, "PrintElementTypeManager", function () {
     return it;
@@ -8297,9 +8424,11 @@ var hiprint = function (t) {
   }), n.d(e, "getHtml", function () {
     return gt;
   }), $(document).ready(function () {
-		// if(hiwebSocket.hasIo()&&!window.disSocketRequest){
-		// 	hiwebSocket.start();
-		// }
+    console.log('document ready');
+    console.log(window.autoConnect);
+		if (hiwebSocket.hasIo() && window.autoConnect){
+			hiwebSocket.start();
+		}
   });
 }]);
 
@@ -8307,8 +8436,8 @@ var hiprint = function (t) {
 import defaultTypeProvider from './etypes/default-etyps-provider'
 
 var defaultElementTypeProvider = defaultTypeProvider(hiprint)
-var connectSocket = hiwebSocket.start
+
 export {
   hiprint,
-  defaultElementTypeProvider,
+  defaultElementTypeProvider
 }
