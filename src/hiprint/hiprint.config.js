@@ -3,7 +3,7 @@
         //optionItems: [hiprintCustomOptionItem],//自定义选项
         movingDistance: 1.5, //鼠标拖动一次移动的距离,默认1.5pt
         paperHeightTrim: 1, //纸张html 的高度等于真实高度-1
-        text: any = {
+        text: {
             supportOptions: [
                 // {
                 //     name: 'hiprintCustomOptionItem',
@@ -157,7 +157,7 @@
                 height: 9.75,
             }
         },
-        image: any = {
+        image: {
             supportOptions: [{
                 name: 'field',
                 hidden: false
@@ -195,7 +195,7 @@
 
             }
         },
-        longText: any = {
+        longText: {
             supportOptions: [{
                 name: 'title',
                 hidden: false
@@ -338,7 +338,7 @@
                 width: 550
             }
         },
-        table: any = {
+        table: {
             supportOptions: [{
                 name: 'field',
                 hidden: false
@@ -464,7 +464,7 @@
                 width: 550
             }
         },
-        tableCustom: any = {
+        tableCustom: {
             supportOptions: [{
                 name: 'field',
                 hidden: false
@@ -546,7 +546,7 @@
         },
 
 
-        hline: any = {
+        hline: {
             supportOptions: [{
                 name: 'borderColor',
                 hidden: false
@@ -581,7 +581,7 @@
                 width: 90
             }
         },
-        vline: any = {
+        vline: {
             supportOptions: [{
                 name: 'borderColor',
                 hidden: false
@@ -615,7 +615,7 @@
                 width: 9
             }
         },
-        rect: any = {
+        rect: {
             supportOptions: [{
                 name: 'borderColor',
                 hidden: false
@@ -649,7 +649,7 @@
                 width: 90
             }
         },
-        oval: any = {
+        oval: {
             supportOptions: [{
                 name: 'borderColor',
                 hidden: false
@@ -682,7 +682,7 @@
                 width: 90
             }
         },
-        html: any = {
+        html: {
             supportOptions: [{
                 name: 'showInPage',
                 hidden: false
@@ -710,7 +710,7 @@
                 width: 90
             }
         },
-        tableColumn: any = {
+        tableColumn: {
             supportOptions: [
                 {
                     name: 'title',
