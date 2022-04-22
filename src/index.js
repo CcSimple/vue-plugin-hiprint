@@ -55,15 +55,15 @@ let hiPrintPlugin = {
     if (!autoConnect) {
       disAutoConnect();
     }
-    Object.defineProperty(Vue.prototype, name, {value: hiprint});
-	// Vue.component(HiPrint.name, HiPrint) // printPanel.name 组件的name属性
-	/**
+    let globalVue = Vue.prototype || Vue.config.globalProperties;
+    globalVue[name] = hiprint;
+    /**
    * 预览打印，调起系统打印预览
 	 * provider 左侧拖拽元素
 	 * template 模版json字符串
 	 * args 打印数据data, options,
 	 */
-	 Vue.prototype.$print = function (provider = defaultElementTypeProvider, template, ...args) {
+	 globalVue.$print = function (provider = defaultElementTypeProvider, template, ...args) {
 		 hiprint.init({
 			providers: [new provider()]
 		});
@@ -79,7 +79,7 @@ let hiPrintPlugin = {
 	  * template 模版json字符串
 	  * args 打印数据data, options,
 	  */
-	 Vue.prototype.$print2 = function (provider = defaultElementTypeProvider, template, ...args) {
+	 globalVue.$print2 = function (provider = defaultElementTypeProvider, template, ...args) {
 		 hiprint.init({
 			providers: [new provider()]
 		});
