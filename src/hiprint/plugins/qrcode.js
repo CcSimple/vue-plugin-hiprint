@@ -218,7 +218,7 @@ window.QRCode;
 				this._el.removeChild(this._el.lastChild);
 		};
 		return Drawing;
-	})();
+	})(window);
 
 	var useSVG = document.documentElement.tagName.toLowerCase() === "svg";
 
@@ -273,7 +273,7 @@ window.QRCode;
 		};
 
 		return Drawing;
-	})() : (function () { // Drawing in Canvas
+	})(window) : (function () { // Drawing in Canvas
 		function _onMakeImage() {
 			this._elImage.src = this._elCanvas.toDataURL("image/png");
 			this._elImage.style.display = "block";
@@ -282,7 +282,7 @@ window.QRCode;
 
 		// Android 2.1 bug workaround
 		// http://code.google.com/p/android/issues/detail?id=5141
-		if (this._android && this._android <= 2.1) {
+		if (this && this._android && this._android <= 2.1) {
 	    	var factor = 1 / window.devicePixelRatio;
 	        var drawImage = CanvasRenderingContext2D.prototype.drawImage;
 	    	CanvasRenderingContext2D.prototype.drawImage = function (image, sx, sy, sw, sh, dx, dy, dw, dh) {
@@ -457,7 +457,7 @@ window.QRCode;
 		};
 
 		return Drawing;
-	})();
+	})(window);
 
 	/**
 	 * Get the type by string length
@@ -533,7 +533,7 @@ window.QRCode;
 	 * @param {String} [vOption.colorLight="#ffffff"]
 	 * @param {QRCode.CorrectLevel} [vOption.correctLevel=QRCode.CorrectLevel.H] [L|M|Q|H]
 	 */
-	QRCode = function (el, vOption) {
+	var QRCode = function (el, vOption) {
 		this._htOption = {
 			width : 256,
 			height : 256,
@@ -612,4 +612,6 @@ window.QRCode;
 	 * @name QRCode.CorrectLevel
 	 */
 	QRCode.CorrectLevel = QRErrorCorrectLevel;
-})();
+
+	window.QRCode = QRCode;
+})(window);
