@@ -2751,6 +2751,11 @@ concat-stream@^1.5.0:
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
 
+concurrent-tasks@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.npmmirror.com/concurrent-tasks/-/concurrent-tasks-1.0.7.tgz#fb3f11bc80ea5bc12f3055c25cb7c679459a77a0"
+  integrity sha512-2FJzuFm0eK8jmPIazy/Un9r6eo+bBeSC36ONvopgNBEL3NB0ck44I9kLu+NJgyuuLjwwtaAreujTKOBCmfCgDg==
+
 connect-history-api-fallback@^1.6.0:
   version "1.6.0"
   resolved "https://registry.npmmirror.com/connect-history-api-fallback/-/connect-history-api-fallback-1.6.0.tgz#8b32089359308d111115d81cad3fceab888f97bc"
