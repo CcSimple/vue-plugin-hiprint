@@ -669,7 +669,9 @@ font-weight: normal;*/
     border-top: 1px solid rgb(201, 190, 190);
     border-left: 1px solid rgb(201, 190, 190);
     padding-left: 15px;
-    margin: -16px
+	padding-top:15px;
+    margin: -16px;
+	box-sizing: content-box!important;
 }
 
     .hiprint_rul_wrapper .h_img {
