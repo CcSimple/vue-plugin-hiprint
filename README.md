@@ -13,7 +13,14 @@
 ![image](https://badgen.net/packagephobia/install/vue-plugin-hiprint)
 
 # vue-plugin-hiprint <a href="http://hiprint.io/docs/start">hiprint官方文档</a>
-> hiprint for vue2.x
+> hiprint for Vue2.x / Vue3.x
+
+### 分支说明
+> main： vue2.x + ant1.7.x融合版 及 npm包源代码
+
+> npm_demo： vue2.x + ant1.7.x + npm包使用 示例
+
+> npm_demo_v3： vue3.x + vite + npm包(0.0.18)使用 示例
 
 ## 配套直接打印客户端(win/mac/linux)
 ### <a href="https://gitee.com/CcSimple/electron-hiprint">gitee</a> <a href="https://github.com/CcSimple/electron-hiprint"> github</a>
@@ -52,7 +59,7 @@ npm run build
 // 在浏览器控制台输入：
 // 显示打印页面
 $('#app').css('display','block');
-$('#hiwprint_iframe').css('visibility','hidden');
+$('#hiwprint_iframe').css('visibility','visible');
 $('#hiwprint_iframe').css('width','100%');
 $('#hiwprint_iframe').css('height','251.09mm'); // 这里替换个实际高度才能显示完
 // 显示vue页面
@@ -158,7 +165,9 @@ hiprintTemplate.on('printError', function (data) {
 // 自0.0.13起， 可自定义样式处理
 hiprintTemplate.print(this.printData, {}, {
   styleHandler: () => {
-    let css = ''
+    // 这里拼接成放html->head标签内的css/style
+    // 例如：使用hiprin官网的样式
+    let css = '<link href="http://hiprint.io/Content/hiprint/css/print-lock.css" media="print" rel="stylesheet">'
     // xxxxx
     return css
   }
@@ -166,7 +175,9 @@ hiprintTemplate.print(this.printData, {}, {
 // 直接打印
 hiprintTemplate.print2(this.printData, {
   styleHandler: () => {
-    let css = ''
+    // 这里拼接成放html->head标签内的css/style
+    // 例如：使用hiprin官网的样式
+    let css = '<link href="http://hiprint.io/Content/hiprint/css/print-lock.css" media="print" rel="stylesheet">'
     // xxxxx
     return css
   }
@@ -256,6 +267,9 @@ autoConnect((status,msg) => {
 - [x] `新增支持多选功能` 按住ctrl/command 多选元素 键盘/鼠标拖动 移动
 - [x] `调整优化元素设置旋转角度问题` fix 设置旋转角度后 拖拽、跳动、辅助线相关问题
 - [x] `新增支持元素拖拽旋转` 基本元素上新增旋转控制点，拖拽旋转、双击还原
+- [x] `调整优化标尺` 使用svg替换原图片标尺，让标尺更清晰
+- [x] `新增支持放大缩小功能` 提供模板新增zoom方法(transform：scale)，放大缩小拖动不乱跳
+- [x] `调整优化以支持Vue3.x` 调整qrcode.js fix vite项目报错问题
 
 ### 咳咳..
 第一次写插件(webpack打包这些都不太了解)，不合理的地方欢迎指正<a href="https://github.com/CcSimple/vue-plugin-hiprint/issues">issues</a>。
@@ -263,7 +277,7 @@ autoConnect((status,msg) => {
 #### 详见源码<a href="https://github.com/CcSimple/vue-plugin-hiprint">vue-plugin-hiprint</a>
 
 #### 呃呃.. 记录一下处理过程
-> webpack 配置
+> webpack 配置， 注意：这里是npm包处理过程, 如果想自己融合，请看vue.config.js, 对比hiprint.bundle.js
 ```javascript
 {
   // 引用本地资源, 一些源码中 require('xxx') 需要处理
