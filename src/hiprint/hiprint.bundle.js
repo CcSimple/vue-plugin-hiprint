@@ -6660,8 +6660,8 @@ var hiprint = function (t) {
           } else {
             this.target.css("transform-origin", "0 0");
           }
+          this.triggerOnPaperBaseInfoChanged("缩放");
         }
-        this.triggerOnPaperBaseInfoChanged("缩放");
       }, t.prototype.getPaperFooter = function (t) {
         var e = this.index + t;
         return 0 == e ? this.firstPaperFooter ? this.firstPaperFooter : this.oddPaperFooter ? this.oddPaperFooter : this.paperFooter : e % 2 == 0 ? this.oddPaperFooter ? this.oddPaperFooter : this.paperFooter : e % 2 == 1 ? this.evenPaperFooter ? this.evenPaperFooter : this.paperFooter : void 0;
