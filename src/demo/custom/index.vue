@@ -14,13 +14,12 @@
         <a-space>
           <!-- 纸张设置 -->
           <a-button-group>
-            <template v-for="(value,type) in paperTypes">
-              <a-button :type="curPaperType === type ? 'primary' : 'info'" @click="setPaper(type,value)" :key="type">
-                {{ type }}
-              </a-button>
-            </template>
+            <a-button v-for="(value,type) in paperTypes" :type="curPaperType === type ? 'primary' : 'info'"
+                      @click="setPaper(type,value)" :key="type">
+              {{ type }}
+            </a-button>
             <a-popover v-model="paperPopVisible" title="设置纸张宽高(mm)" trigger="click">
-              <div slot="content">
+              <template #content>
                 <a-input-group compact style="margin: 10px 10px">
                   <a-input type="number" v-model="paperWidth" style=" width: 100px; text-align: center"
                            placeholder="宽(mm)"/>
@@ -31,11 +30,15 @@
                            placeholder="高(mm)"/>
                 </a-input-group>
                 <a-button type="primary" style="width: 100%" @click="otherPaper">确定</a-button>
-              </div>
+              </template>
               <a-button :type="'other'==curPaperType?'primary':''">自定义纸张</a-button>
             </a-popover>
           </a-button-group>
-          <a-button type="text" icon="zoom-out" @click="changeScale(false)"></a-button>
+          <a-button type="text" @click="changeScale(false)">
+            <template #icon>
+              <ZoomOutOutlined/>
+            </template>
+          </a-button>
           <a-input-number
             :value="scaleValue"
             :min="scaleMin"
@@ -46,20 +49,33 @@
             :formatter="value => `${(value * 100).toFixed(0)}%`"
             :parser="value => value.replace('%', '')"
           />
-          <a-button type="text" icon="zoom-in" @click="changeScale(true)"></a-button>
+          <a-button type="text" @click="changeScale(true)">
+            <template #icon>
+              <ZoomInOutlined/>
+            </template>
+          </a-button>
           <!-- 预览/打印 -->
           <a-button-group>
-            <a-button type="primary" icon="eye" @click="preView">
+            <a-button type="primary" @click="preView">
+              <template #icon>
+                <EyeOutlined/>
+              </template>
               预览
             </a-button>
             <a-button type="primary" @click="print">
+              <template #icon>
+                <PrinterOutlined/>
+              </template>
               直接打印
               <a-icon type="printer"/>
             </a-button>
           </a-button-group>
           <!-- 保存/清空 -->
           <a-button-group>
-            <a-button type="primary" icon="save" @click="save">
+            <a-button type="primary" @click="save">
+              <template #icon>
+                <SaveOutlined/>
+              </template>
               保存
             </a-button>
             <a-popconfirm
@@ -68,10 +84,14 @@
               okText="确定清空"
               @confirm="clearPaper"
             >
-              <a-icon slot="icon" type="question-circle-o" style="color: red"/>
+              <template #icon>
+                <QuestionCircleOutlined style="color: red"/>
+              </template>
               <a-button type="danger">
                 清空
-                <a-icon type="close"/>
+                <template #icon>
+                  <CloseOutlined/>
+                </template>
               </a-button>
             </a-popconfirm>
           </a-button-group>
@@ -107,16 +127,35 @@
 
 <script>
 
-import printPreview from './preview'
+import printPreview from './preview.vue'
 
 import {hiprint} from 'vue-plugin-hiprint'
-import providers from './providers'
-import printData from './print-data'
+import providers from './providers.js'
+import printData from './print-data.js'
+import {
+  ZoomOutOutlined,
+  ZoomInOutlined,
+  EyeOutlined,
+  PrinterOutlined,
+  SaveOutlined,
+  QuestionCircleOutlined,
+  CloseOutlined
+} from '@ant-design/icons-vue';
+import {message} from 'ant-design-vue';
 
 let hiprintTemplate;
 export default {
   name: "printCustom",
-  components: {printPreview},
+  components: {
+    printPreview,
+    ZoomOutOutlined,
+    ZoomInOutlined,
+    EyeOutlined,
+    PrinterOutlined,
+    SaveOutlined,
+    QuestionCircleOutlined,
+    CloseOutlined
+  },
   data() {
     return {
       // 模板选择
@@ -225,7 +264,7 @@ export default {
           hiprintTemplate.setPaper(value.width, value.height)
         }
       } catch (error) {
-        this.$message.error(`操作失败: ${error}`)
+        message.error(`操作失败: ${error}`)
       }
     },
     changeScale(big) {
@@ -261,7 +300,7 @@ export default {
         hiprintTemplate.print2(printData, {printer: '', title: 'hiprint测试打印'});
         return
       }
-      this.$message.error('客户端未连接,无法直接打印')
+      message.error('客户端未连接,无法直接打印')
     },
     save() {
       let {mode} = this
@@ -276,13 +315,13 @@ export default {
       console.log(payload.json)
       templates[payload.name] = payload.json
       this.$ls.set('KEY_TEMPLATES', templates)
-      this.$message.info('保存成功')
+      message.info('保存成功')
     },
     clearPaper() {
       try {
         hiprintTemplate.clear();
       } catch (error) {
-        this.$message.error(`操作失败: ${error}`);
+        message.error(`操作失败: ${error}`);
       }
     }
   }
@@ -291,7 +330,7 @@ export default {
 
 <style lang="less" scoped>
 // build 拖拽
-/deep/ .hiprint-printElement-type > li > ul > li > a {
+:deep(.hiprint-printElement-type > li > ul > li > a) {
   padding: 4px 4px;
   color: #1296db;
   line-height: 1;
@@ -300,7 +339,7 @@ export default {
 }
 
 // 默认图片
-/deep/ .hiprint-printElement-image-content {
+:deep(.hiprint-printElement-image-content) {
   img {
     content: url("~@/assets/logo.png");
   }

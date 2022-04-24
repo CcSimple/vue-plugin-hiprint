@@ -22,16 +22,16 @@
     "dist"
   ],
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build-demo": "vue-cli-service build"
+    "serve": "vite",
+    "build-demo": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "ant-design-vue": "^1.7.8",
-    "core-js": "^3.6.5",
-    "vue": "^2.5.11",
+    "ant-design-vue": "^3.2.0",
     "concurrent-tasks": "^1.0.7",
+    "vue": "^3.2.25",
     "vue-ls": "^4.0.0",
-    "vue-plugin-hiprint": "^0.0.17"
+    "vue-plugin-hiprint": "^0.0.18"
   },
   "browserslist": [
     "> 1%",
@@ -39,11 +39,10 @@
     "not ie <= 8"
   ],
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.5.15",
-    "@vue/cli-service": "^4.5.15",
+    "@originjs/vite-plugin-commonjs": "^1.0.3",
+    "@vitejs/plugin-vue": "^2.2.0",
+    "cjs2esmodule": "^1.1.1",
     "less-loader": "^6.1.1",
-    "uglifyjs-webpack-plugin": "^2.2.0",
-    "vue-template-compiler": "^2.6.11",
-    "webpack-cli": "^4.9.1"
+    "vite": "^2.8.0"
   }
 }

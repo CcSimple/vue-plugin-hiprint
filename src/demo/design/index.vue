@@ -2,13 +2,17 @@
   <a-card>
     <a-space style="margin-bottom: 10px">
       <a-button-group>
-        <template v-for="(value,type) in paperTypes">
-          <a-button :type="curPaperType === type ? 'primary' : 'info'" @click="setPaper(type,value)" :key="type">
-            {{ type }}
-          </a-button>
-        </template>
+        <a-button v-for="(value,type) in paperTypes"
+                  :type="curPaperType === type ? 'primary' : 'info'"
+                  @click="setPaper(type,value)" :key="type">
+          {{ type }}
+        </a-button>
       </a-button-group>
-      <a-button type="text" icon="zoom-out" @click="changeScale(false)"></a-button>
+      <a-button type="text" @click="changeScale(false)">
+        <template #icon>
+          <ZoomOutOutlined/>
+        </template>
+      </a-button>
       <a-input-number
         :value="scaleValue"
         :min="scaleMin"
@@ -19,11 +23,21 @@
         :formatter="value => `${(value * 100).toFixed(0)}%`"
         :parser="value => value.replace('%', '')"
       />
-      <a-button type="text" icon="zoom-in" @click="changeScale(true)"></a-button>
-      <a-button type="primary" icon="eye" @click="preView">
+      <a-button type="text" @click="changeScale(true)">
+        <template #icon>
+          <ZoomInOutlined/>
+        </template>
+      </a-button>
+      <a-button type="primary" @click="preView">
+        <template #icon>
+          <EyeOutlined/>
+        </template>
         预览
       </a-button>
-      <a-button type="primary" icon="printer" @click="print">
+      <a-button type="primary" @click="print">
+        <template #icon>
+          <PrinterOutlined/>
+        </template>
         直接打印
       </a-button>
       <a-button type="primary" @click="onlyPrint">
@@ -38,10 +52,14 @@
         okText="确定清空"
         @confirm="clearPaper"
       >
-        <a-icon slot="icon" type="question-circle-o" style="color: red"/>
+        <template #icon>
+          <QuestionCircleOutlined style="color: red"/>
+        </template>
         <a-button type="danger">
           清空
-          <a-icon type="close"/>
+          <template #icon>
+            <CloseOutlined/>
+          </template>
         </a-button>
       </a-popconfirm>
     </a-space>
@@ -151,13 +169,30 @@ import {disAutoConnect, hiprint, defaultElementTypeProvider} from 'vue-plugin-hi
 // disAutoConnect();
 
 let hiprintTemplate;
-import panel from './panel'
-import printData from './print-data'
-import printPreview from './preview'
+import panel from './panel.js'
+import printData from './print-data.js'
+import printPreview from './preview.vue'
+import {
+  ZoomOutOutlined,
+  ZoomInOutlined,
+  EyeOutlined,
+  PrinterOutlined,
+  QuestionCircleOutlined,
+  CloseOutlined
+} from '@ant-design/icons-vue';
+import {message} from 'ant-design-vue';
 
 export default {
   name: "printDesign",
-  components: {printPreview},
+  components: {
+    printPreview,
+    ZoomOutOutlined,
+    ZoomInOutlined,
+    EyeOutlined,
+    PrinterOutlined,
+    QuestionCircleOutlined,
+    CloseOutlined
+  },
   data() {
     return {
       curPaper: {
@@ -260,7 +295,7 @@ export default {
           hiprintTemplate.setPaper(value.width, value.height)
         }
       } catch (error) {
-        this.$message.error(`操作失败: ${error}`)
+        message.error(`操作失败: ${error}`)
       }
     },
     changeScale(big) {
@@ -311,7 +346,7 @@ export default {
         });
         return;
       }
-      this.$message.error('客户端未连接,无法直接打印')
+      message.error('客户端未连接,无法直接打印')
     },
     print() {
       if (window.hiwebSocket.opened) {
@@ -320,13 +355,13 @@ export default {
         hiprintTemplate.print2(printData, {printer: '', title: 'hiprint测试打印'});
         return
       }
-      this.$message.error('客户端未连接,无法直接打印')
+      message.error('客户端未连接,无法直接打印')
     },
     clearPaper() {
       try {
         hiprintTemplate.clear();
       } catch (error) {
-        this.$message.error(`操作失败: ${error}`);
+        message.error(`操作失败: ${error}`);
       }
     }
   }
@@ -369,7 +404,7 @@ export default {
 }
 
 // 默认图片
-/deep/ .hiprint-printElement-image-content {
+:deep(.hiprint-printElement-image-content) {
   img {
     content: url("~@/assets/logo.png");
   }

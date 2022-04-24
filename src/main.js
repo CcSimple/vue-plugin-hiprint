@@ -1,9 +1,14 @@
-import Vue from 'vue'
+import { createApp } from 'vue';
 import App from './App.vue'
+const app = createApp(App);
 
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
-Vue.use(Antd);
+app.use(Antd)
+
+import {hiPrintPlugin} from 'vue-plugin-hiprint'
+app.use(hiPrintPlugin);
+// hiPrintPlugin.disAutoConnect();
 
 import Storage from 'vue-ls'
 let options = {
@@ -11,10 +16,8 @@ let options = {
   name: 'ls',
   storage: 'local',
 };
-Vue.use(Storage, options);
+app.use(Storage, options);
 
-Vue.config.productionTip = false
+app.config.productionTip = false
 
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
+app.mount('#app')

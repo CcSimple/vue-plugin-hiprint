@@ -5,13 +5,12 @@
         <a-space>
           <!-- 纸张设置 -->
           <a-button-group>
-            <template v-for="(value,type) in paperTypes">
-              <a-button :type="curPaperType === type ? 'primary' : 'info'" @click="setPaper(type,value)" :key="type">
-                {{ type }}
-              </a-button>
-            </template>
+            <a-button v-for="(value,type) in paperTypes" :type="curPaperType === type ? 'primary' : 'info'"
+                      @click="setPaper(type,value)" :key="type">
+              {{ type }}
+            </a-button>
             <a-popover v-model="paperPopVisible" title="设置纸张宽高(mm)" trigger="click">
-              <div slot="content">
+              <template #content>
                 <a-input-group compact style="margin: 10px 10px">
                   <a-input type="number" v-model="paperWidth" style=" width: 100px; text-align: center"
                            placeholder="宽(mm)"/>
@@ -22,27 +21,35 @@
                            placeholder="高(mm)"/>
                 </a-input-group>
                 <a-button type="primary" style="width: 100%" @click="otherPaper">确定</a-button>
-              </div>
+              </template>
               <a-button :type="'other'==curPaperType?'primary':''">自定义纸张</a-button>
             </a-popover>
           </a-button-group>
           <!-- 打印数量 -->
           打印数量：
-          <a-slider v-model="count" style="width: 200px" :min="1" :max="10000"/>
+          <a-slider v-model="count" :min="1" :max="10000"/>
           <a-input-number v-model="count" :min="1" :max="10000" style="margin-left: 16px"/>
           <!-- 预览/打印 -->
           <a-button-group>
-            <a-button type="primary" icon="eye" @click="preView">
+            <a-button type="primary" @click="preView">
+              <template #icon>
+                <EyeOutlined/>
+              </template>
               预览
             </a-button>
             <a-button type="primary" @click="print">
               直接打印
-              <a-icon type="printer"/>
+              <template #icon>
+                <PrinterOutlined/>
+              </template>
             </a-button>
           </a-button-group>
           <!-- 保存/清空 -->
           <a-button-group>
-            <a-button type="primary" icon="save" @click="save">
+            <a-button type="primary" @click="save">
+              <template #icon>
+                <SaveOutlined/>
+              </template>
               保存
             </a-button>
             <a-popconfirm
@@ -51,10 +58,14 @@
               okText="确定清空"
               @confirm="clearPaper"
             >
-              <a-icon slot="icon" type="question-circle-o" style="color: red"/>
+              <template #icon>
+                <QuestionCircleOutlined style="color: red"/>
+              </template>
               <a-button type="danger">
                 清空
-                <a-icon type="close"/>
+                <template #icon>
+                  <CloseOutlined/>
+                </template>
               </a-button>
             </a-popconfirm>
           </a-button-group>
@@ -90,18 +101,34 @@
 
 <script>
 
-import printPreview from './preview'
+import printPreview from './preview.vue'
 
 import {hiprint} from 'vue-plugin-hiprint'
 import TaskRunner from 'concurrent-tasks';
-import panel from './panel'
-import provider from './providers'
-import printData from './print-data'
+import panel from './panel.js'
+import provider from './providers.js'
+import printData from './print-data.js'
+import {
+  CloseOutlined,
+  EyeOutlined,
+  PrinterOutlined,
+  QuestionCircleOutlined,
+  SaveOutlined,
+} from "@ant-design/icons-vue";
+import {notification, message, Button} from 'ant-design-vue';
+import {h} from 'vue';
 
 let hiprintTemplate;
 export default {
   name: "printCustom",
-  components: {printPreview},
+  components: {
+    printPreview,
+    EyeOutlined,
+    PrinterOutlined,
+    SaveOutlined,
+    QuestionCircleOutlined,
+    CloseOutlined
+  },
   data() {
     return {
       // 打印数量
@@ -194,7 +221,7 @@ export default {
           hiprintTemplate.setPaper(value.width, value.height)
         }
       } catch (error) {
-        this.$message.error(`操作失败: ${error}`)
+        message.error(`操作失败: ${error}`)
       }
     },
     otherPaper() {
@@ -215,7 +242,7 @@ export default {
         this.tasksPrint()
         return
       }
-      this.$message.error('客户端未连接,无法直接打印')
+      message.error('客户端未连接,无法直接打印')
     },
     // 队列打印
     tasksPrint() {
@@ -238,7 +265,7 @@ export default {
     },
     realPrint(runner, done, key, i, printData, tasksKey) {
       let that = this
-      that.$notification.info({
+      notification.info({
         key: key,
         placement: 'topRight',
         duration: null,
@@ -252,7 +279,7 @@ export default {
       hiprintTemplate.print2(printData, {printer: '', title: key});
       hiprintTemplate.on('printSuccess', function () {
         let info = runner.tasks.list.length > 1 ? '准备打印下一张' : '已完成打印'
-        that.$notification.success({
+        notification.success({
           key: key,
           placement: 'topRight',
           message: key + ' 打印成功',
@@ -260,42 +287,37 @@ export default {
         });
         done()
         if (!runner.isBusy()) {
-          that.$notification.close(tasksKey)
+          notification.close(tasksKey)
         }
       })
       hiprintTemplate.on('printError', function () {
-        that.$notification.close(key)
+        notification.close(key)
         done()
-        that.$message.error('打印失败，已加入重试队列中')
+        notification.error('打印失败，已加入重试队列中')
         runner.add(that.realPrint(runner, done, key, i, printData))
       })
     },
     openNotification(runner, tasksKey) {
       let that = this;
-      that.$notification.open({
+      notification.open({
         key: tasksKey,
         message: '队列运行中...',
         duration: 0,
         placement: 'topLeft',
         description: '点击关闭所有任务',
-        btn: h => {
-          return h(
-            'a-button',
-            {
-              props: {
-                type: 'danger',
-                size: 'small',
+        btn: () => {
+          return h(Button, {
+              type: 'danger',
+              size: 'small',
+              click: () => {
+                notification.close(tasksKey);
+                // 详情请查阅文档
+                runner.removeAll();
+                that.$message.info('已移除所有任务');
               },
-              on: {
-                click: () => {
-                  that.$notification.close(tasksKey);
-                  // 详情请查阅文档
-                  runner.removeAll();
-                  that.$message.info('已移除所有任务');
-                },
-              },
-            },
-            '关闭任务',
+            }, {
+              default: () => '关闭任务',
+            }
           );
         },
       });
@@ -306,13 +328,13 @@ export default {
       console.log(json)
       console.log(JSON.stringify(json))
       this.$ls.set('KEY_TEMPLATE_TASKS', template)
-      this.$message.info('保存成功')
+      message.info('保存成功')
     },
     clearPaper() {
       try {
         hiprintTemplate.clear();
       } catch (error) {
-        this.$message.error(`操作失败: ${error}`);
+        message.error(`操作失败: ${error}`);
       }
     }
   }
@@ -320,8 +342,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
+:deep(.ant-slider) {
+  width: 200px;
+}
+
 // build 拖拽
-/deep/ .hiprint-printElement-type > li > ul > li > a {
+:deep(.hiprint-printElement-type > li > ul > li > a) {
   padding: 4px 4px;
   color: #1296db;
   line-height: 1;
@@ -330,7 +356,7 @@ export default {
 }
 
 // 默认图片
-/deep/ .hiprint-printElement-image-content {
+:deep(.hiprint-printElement-image-content) {
   img {
     content: url("~@/assets/logo.png");
   }

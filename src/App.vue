@@ -7,11 +7,10 @@
     </a-space>
     <a-row type="flex" class="menus">
       <a-button-group>
-        <template v-for="demo in demoList">
-          <a-button :type="demo.name === curDemo ? 'primary' : 'info'" @click="curDemo = demo.name" :key="demo.name">
-            {{ demo.title }}
-          </a-button>
-        </template>
+        <a-button v-for="demo in demoList" :type="demo.name === curDemo ? 'primary' : 'info'"
+                  @click="curDemo = demo.name" :key="demo.name">
+          {{ demo.title }}
+        </a-button>
       </a-button-group>
     </a-row>
     <!-- 动态渲染组件，懒得去弄路由了 -->
@@ -23,9 +22,9 @@
 
 <script>
 
-import printDesign from '@/demo/design/index'
-import printCustom from '@/demo/custom/index'
-import printTasks from '@/demo/tasks/index'
+import printDesign from '@/demo/design/index.vue'
+import printCustom from '@/demo/custom/index.vue'
+import printTasks from '@/demo/tasks/index.vue'
 
 export default {
   name: 'App',
