@@ -5152,7 +5152,7 @@ var hiprint = function (t) {
     function o(i) {
       var o = t.data(i.data.target, "hidraggable");
       e(i);
-      if (i.data.target.className.startsWith('resize-panel') || i.data.target.className.startsWith('hiprint-printElement')) {
+      if (i.data.target.className.startsWith('resize-panel') || "2" == i.data.target.style.zIndex || i.data.target.className.startsWith('hiprint-printElement')) {
         var data = i.data
         // 当前纸张宽高
         var parent = data.parent.className.endsWith('design') ? data.parent : data.parent.offsetParent;
