@@ -6490,7 +6490,17 @@ var hiprint = function (t) {
           }
         });
       }, t.prototype.resize = function (t, e) {
-        this.width = o.a.mm.toPt(t), this.height = o.a.mm.toPt(e), this.mmwidth = t, this.mmheight = e, this.target.css("width", t + "mm"), this.target.css("height", e - p.a.instance.paperHeightTrim + "mm"), this.target.attr("original-height", this.mmheight), this.paperFooter = this.height, this.footerLinetarget.css("top", this.height + "pt"), this.contentHeight = this.paperFooter - this.paperHeader, this.paperNumberLeft = parseInt((this.width - 30).toString()), this.paperNumberTop = parseInt((this.height - 22).toString()), this.paperNumberTarget.css("top", this.paperNumberTop + "pt"), this.paperNumberTarget.css("left", this.paperNumberLeft + "pt"), this.triggerOnPaperBaseInfoChanged();
+        this.width = o.a.mm.toPt(t), this.height = o.a.mm.toPt(e), this.mmwidth = t, this.mmheight = e, this.target.css("width", t + "mm"), this.target.css("height", e - p.a.instance.paperHeightTrim + "mm"), this.target.attr("original-height", this.mmheight);
+        // 设置纸张后, 页脚线重置问题
+        var paperFooter = this.paperFooter > this.height ? this.height : this.paperFooter;
+        this.paperFooter = paperFooter || this.height, this.footerLinetarget.css("top", paperFooter + "pt"),
+        this.contentHeight = this.paperFooter - this.paperHeader,
+        // 设置纸张后, 页码位置重置问题
+        this.paperNumberLeft = this.paperNumberLeft > this.width ? parseInt((this.width - 30).toString()) : this.paperNumberLeft;
+        this.paperNumberTop = this.paperNumberTop > this.height ? this.paperNumberTop = parseInt((this.height - 22).toString()) : this.paperNumberTop;
+        this.paperNumberTarget.css("top", this.paperNumberTop + "pt"),
+        this.paperNumberTarget.css("left", this.paperNumberLeft + "pt"),
+        this.triggerOnPaperBaseInfoChanged();
       }, t.prototype.zoom = function (s) {
         if (s) {
           this.scale = s, this.target.css("transform", "scale(" + s + ")");
