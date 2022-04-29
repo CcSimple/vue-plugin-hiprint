@@ -1253,6 +1253,9 @@ var hiprint = function (t) {
           }
         }), this.designTarget.hireizeable({
           showPoints: n.getReizeableShowPoints(),
+          getScale: function getScale () {
+            return n.designPaper.scale || 1
+          },
           onBeforeResize: function onBeforeResize() {
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !0;
           },
@@ -4313,6 +4316,9 @@ var hiprint = function (t) {
           onBeforeResize: function onBeforeResize() {
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_9__.a.instance.draging = !0;
           },
+          getScale: function getScale () {
+            return n.designPaper.scale || 1
+          },
           onResize: function onResize(t, i, o, r, a) {
             n.onResize(t, i, o, r, a), n.hitable && n.hitable.updateColumnGrips(), n.createLineOfPosition(e);
           },
@@ -5648,14 +5654,14 @@ var hiprint = function (t) {
         i.options.onBeforeResize(), o = t.pageX, r = t.pageY, l = u.offset().top, s = u.offset().left, b = !1;
       }), n(i.options.stage).on("mousemove", function (e) {
         if (d) {
-          var n = e.pageX - o;
+          var n = (e.pageX - o) / i.options.getScale();
           t.css({
             width: "100%"
           }), u.css({
             width: i.numHandlerText(a + n)
           }), i.options.onResize(e, void 0, i.numHandler(a + n), void 0, void 0);
         } else if (c) {
-          var E = e.pageY - r;
+          var E = (e.pageY - r) / i.options.getScale();
           t.css({
             height: "100%"
           }), u.css({
@@ -5673,24 +5679,24 @@ var hiprint = function (t) {
           }
           u.css({ transform: "rotate(" + R + "deg)" });
           i.options.onResize(e, void 0, void 0, void 0, void 0, R);
-        } else h ? (n = e.pageX - o, t.css({
+        } else h ? (n = (e.pageX - o) / i.options.getScale(), t.css({
           width: "100%"
         }), u.css({
           width: i.numHandlerText(a - n),
           left: i.numHandlerText(i.options.noDrag ? void 0 : i.numHandler(s + n))
-        }), i.options.onResize(e, void 0, i.numHandler(a - n), void 0, i.options.noDrag ? void 0 : i.numHandler(s + n))) : f ? (E = e.pageY - r, t.css({
+        }), i.options.onResize(e, void 0, i.numHandler(a - n), void 0, i.options.noDrag ? void 0 : i.numHandler(s + n))) : f ? (E = (e.pageY - r) / i.options.getScale(), t.css({
           height: "100%"
         }), u.css({
           height: i.numHandlerText(p - E),
           top: i.numHandlerText(i.options.noDrag ? void 0 : l + E)
-        }), i.options.onResize(e, i.numHandler(p - E), void 0, i.options.noDrag ? void 0 : i.numHandler(l + E), void 0)) : g ? (n = e.pageX - o, E = e.pageY - r, t.css({
+        }), i.options.onResize(e, i.numHandler(p - E), void 0, i.options.noDrag ? void 0 : i.numHandler(l + E), void 0)) : g ? (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), t.css({
           height: "100%",
           width: "100%"
         }), u.css({
           height: i.numHandlerText(p - E),
           top: i.numHandlerText(i.options.noDrag ? void 0 : l + E),
           width: i.numHandlerText(a + n)
-        }), i.options.onResize(e, i.numHandler(p - E), i.numHandler(a + n), i.options.noDrag ? void 0 : i.numHandler(l + E), void 0)) : m ? (n = e.pageX - o, E = e.pageY - r, t.css({
+        }), i.options.onResize(e, i.numHandler(p - E), i.numHandler(a + n), i.options.noDrag ? void 0 : i.numHandler(l + E), void 0)) : m ? (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), t.css({
           height: "100%",
           width: "100%"
         }), u.css({
@@ -5698,20 +5704,20 @@ var hiprint = function (t) {
           top: i.numHandlerText(i.options.noDrag ? void 0 : l + E),
           width: i.numHandlerText(a - n),
           left: i.numHandlerText(i.options.noDrag ? void 0 : s + n)
-        }), i.options.onResize(e, i.numHandler(p - E), i.numHandler(a - n), i.options.noDrag ? void 0 : i.numHandler(l + E), i.options.noDrag ? void 0 : i.numHandler(s + n))) : v ? (n = e.pageX - o, E = e.pageY - r, t.css({
+        }), i.options.onResize(e, i.numHandler(p - E), i.numHandler(a - n), i.options.noDrag ? void 0 : i.numHandler(l + E), i.options.noDrag ? void 0 : i.numHandler(s + n))) : v ? (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), t.css({
           width: "100%",
           height: "100%"
         }), u.css({
           width: i.numHandlerText(a + n),
           height: i.numHandlerText(p + E)
-        }), i.options.onResize(e, i.numHandler(p + E), i.numHandler(a + n), void 0, void 0)) : y ? (n = e.pageX - o, E = e.pageY - r, t.css({
+        }), i.options.onResize(e, i.numHandler(p + E), i.numHandler(a + n), void 0, void 0)) : y ? (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), t.css({
           width: "100%",
           height: "100%"
         }), u.css({
           width: i.numHandlerText(a - n),
           left: i.numHandlerText(i.options.noDrag ? void 0 : s + n),
           height: i.numHandlerText(p + E)
-        }), i.options.onResize(e, i.numHandler(p + E), i.numHandler(a - n), i.numHandler(otundefinedop), i.options.noDrag ? void 0 : i.numHandler(s + n))) : b && (n = e.pageX - o, E = e.pageY - r, u.css({
+        }), i.options.onResize(e, i.numHandler(p + E), i.numHandler(a - n), i.numHandler(otundefinedop), i.options.noDrag ? void 0 : i.numHandler(s + n))) : b && (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), u.css({
           left: i.numHandlerText(i.options.noDrag ? void 0 : s + n),
           top: i.numHandlerText(i.options.noDrag ? void 0 : l + E)
         }), i.options.onResize(e, void 0, void 0, i.options.noDrag ? void 0 : i.numHandler(l + E), i.options.noDrag ? void 0 : i.numHandler(s + n)));
@@ -7393,6 +7399,9 @@ var hiprint = function (t) {
           noContainer: !0,
           onBeforeResize: function onBeforeResize() {
             s.a.instance.draging = !0;
+          },
+          getScale: function getScale () {
+            return n.designPaper.scale || 1
           },
           onResize: function onResize(t, i, o, r, a) {
             n.onResize(t, i, o, r, a), n.hitable.updateColumnGrips(), n.createLineOfPosition(e);
