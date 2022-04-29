@@ -31,14 +31,20 @@
 </div>
 
 ## 演示/截个图咯~
-<div align="center">
-
-![image](./res/img.png)
-
-![image](./res/img_1.png)
-
-![image](./res/img_2.png)
-</div>
+<table>
+    <tr>
+        <td><img src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/img_0.png"/></td>
+        <td><img src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/img_1.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/img_2.png"/></td>
+        <td><img src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/img_3.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/gif00.gif"/></td>
+        <td><img src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/gif01.gif"/></td>
+    </tr>
+</table>
 
 ## 参与/预览 <a href="https://ccsimple.gitee.io/vue-plugin-hiprint/">demo</a>
 ```console
