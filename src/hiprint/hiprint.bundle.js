@@ -1244,7 +1244,11 @@ var hiprint = function (t) {
           onBeforeDrag: function onBeforeDrag(t) {
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !0, n.designTarget.focus(), n.createLineOfPosition(e);
           },
+          getScale: function getScale () {
+            return n.designPaper.scale || 1;
+          },
           onStopDrag: function onStopDrag(t) {
+			      // 普通元素拖动结束事件history
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !1, n.removeLineOfPosition();
           }
         }), this.designTarget.hireizeable({
@@ -1266,6 +1270,7 @@ var hiprint = function (t) {
       }, BasePrintElement.prototype.getPrintElementEntity = function (t) {
         return t ? new _entity_PrintElementEntity__WEBPACK_IMPORTED_MODULE_0__.a(void 0, this.options.getPrintElementOptionEntity(), this.printElementType.getPrintElementTypeEntity()) : new _entity_PrintElementEntity__WEBPACK_IMPORTED_MODULE_0__.a(this.printElementType.tid, this.options.getPrintElementOptionEntity());
       }, BasePrintElement.prototype.submitOption = function () {
+		    // 右侧选项修改模版数据触发history
         var t = this;
         this.getPrintElementOptionItems().forEach(function (e) {
           var n = e.getValue();
@@ -1598,7 +1603,7 @@ var hiprint = function (t) {
           }
         });
       }, BasePrintElement.prototype.inRect = function (t) {
-        var ptr = (this.designPaper.target[0].style.transform && parseFloat(this.designPaper.target[0].style.transform.slice(6,-1))) || 1;
+        var ptr = this.designPaper.scale || 1;
         var x1 = this.designTarget[0].offsetLeft,
           y1 = this.designTarget[0].offsetTop, h = this.designTarget[0].offsetHeight, w = this.designTarget[0].offsetWidth,
         x2 = x1 + w, y2 = y1 + h,
@@ -1711,8 +1716,6 @@ var hiprint = function (t) {
         return this.title;
       }, t.prototype.beginEdit = function (t) {
         var e = this;
-        console.log(t)
-        console.log(e)
         if (e.tableOptions.options.fields && e.tableOptions.options.fields.length) {
           this.editor = r.Instance.createSelect("select"), t.getTarget().html(""), this.editor.init(e.tableOptions.options.fields, t), this.editor.setValue(this.field || ""), $(this.editor.target).keydown(function (n) {
             13 == n.keyCode && e.endEdit(t);
@@ -4298,6 +4301,9 @@ var hiprint = function (t) {
           onBeforeDrag: function onBeforeDrag(t) {
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_9__.a.instance.draging = !0, n.createLineOfPosition(e);
           },
+          getScale: function getScale () {
+            return n.designPaper.scale || 1;
+          },
           onStopDrag: function onStopDrag(t) {
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_9__.a.instance.draging = !1, n.removeLineOfPosition();
           }
@@ -4517,6 +4523,9 @@ var hiprint = function (t) {
                 },
                 moveUnit: "pt",
                 minMove: 1,
+                getScale: function getScale () {
+                  return ($('.hiprint-printPaper')[0].style.transform && parseFloat($('.hiprint-printPaper')[0].style.transform.slice(6,-1))) || 1;
+                },
                 onBeforeDrag: function onBeforeDrag(t) {
                   if (g.a.instance.draging = !0, !s.nextGrip) return !1;
                   e.dragingGrip = s, e.dragingGrip.left = parseFloat(e.dragingGrip.target.css("left").replace("px", "")), s.target.addClass("columngripDraging");
@@ -5117,8 +5126,8 @@ var hiprint = function (t) {
         i = n.options,
         o = n.proxy,
         r = e.data,
-        a = r.startLeft + e.pageX - r.startX,
-        p = r.startTop + e.pageY - r.startY;
+		a = r.startLeft + (e.pageX   - r.startX) / n.options.getScale() ,
+        p = r.startTop  + (e.pageY  - r.startY) / n.options.getScale() ;
       o && (o.parent()[0] == document.body ? (a = null != i.deltaX && null != i.deltaX ? e.pageX + i.deltaX : e.pageX - e.data.offsetWidth, p = null != i.deltaY && null != i.deltaY ? e.pageY + i.deltaY : e.pageY - e.data.offsetHeight) : (null != i.deltaX && null != i.deltaX && (a += e.data.offsetWidth + i.deltaX), null != i.deltaY && null != i.deltaY && (p += e.data.offsetHeight + i.deltaY))), e.data.parent != document.body && (a += t(e.data.parent).scrollLeft(), p += t(e.data.parent).scrollTop()), "h" == i.axis ? r.left = a : "v" == i.axis ? r.top = p : (r.left = a, r.top = p);
     }
 
@@ -5150,6 +5159,7 @@ var hiprint = function (t) {
     }
 
     function o(i) {
+		  // 移动开始动作
       var o = t.data(i.data.target, "hidraggable");
       e(i);
       if (i.data.target.className.startsWith('resize-panel') || "2" == i.data.target.style.zIndex || i.data.target.className.startsWith('hiprint-printElement')) {
@@ -5249,7 +5259,7 @@ var hiprint = function (t) {
             i = n.handle,
             o = t(i).offset(),
             tr = t(i)[0].style.transform && parseInt(t(i)[0].style.transform.slice(7,-1)),
-            ptr = t('.hiprint-printPaper')[0].style.transform && parseFloat(t('.hiprint-printPaper')[0].style.transform.slice(6,-1)),
+            ptr = n.options.getScale(),
             r = t(i).outerWidth();
           var a = t(i).outerHeight();
           if (tr) {
@@ -5317,7 +5327,8 @@ var hiprint = function (t) {
               var diffW = (w - width) / 2, diffH = (h - height) / 2;
               p.left += diffW, p.top += diffH, p.startLeft += diffW, p.startTop += diffH;
             }
-            var ptr = t('.hiprint-printPaper')[0].style.transform && parseFloat(t('.hiprint-printPaper')[0].style.transform.slice(6,-1));
+            var ops = t.data(e.data.target, "hidraggable");
+            var ptr = ops.options.getScale()
             if (ptr) {
               p.left /= ptr, p.top /= ptr, p.startLeft /= ptr, p.startTop /= ptr;
             }
@@ -5371,6 +5382,7 @@ var hiprint = function (t) {
       disabled: !1,
       edge: 0,
       axis: null,
+	    getScale: function getScale(t) {},
       onBeforeDrag: function onBeforeDrag(t) {
       },
       onStartDrag: function onStartDrag(t) {
@@ -5652,16 +5664,10 @@ var hiprint = function (t) {
         } else if (rt) {
           t.css({ height: "100%" });
           var eo = e.pageX, er = e.pageY;
-          var AB = {}, AC = {};
-          AB.X = o - s, AB.Y = r - l, AC.X = eo - s, AC.Y = er - l;
-          var direct = (AB.X * AC.Y) - (AB.Y * AC.X);
-          var lAB = Math.sqrt(Math.pow(s - o, 2) + Math.pow(l - r, 2)),
-              lAC = Math.sqrt(Math.pow(s - eo, 2) + Math.pow(l - er, 2)),
-              lBC = Math.sqrt(Math.pow(o - eo, 2) + Math.pow(r - er, 2));
-          var cosA = (Math.pow(lAB, 2) + Math.pow(lAC, 2) - Math.pow(lBC, 2)) / (2 * lAB * lAC);
-          var angle = Math.round(Math.acos(cosA) * 180 / Math.PI);
+		      var direct = (eo - o) * 360 / 100;
+		      o = e.pageX
           var lastAngle = (u[0].style.transform && parseInt(u[0].style.transform.slice(7,-1))) || 0;
-          var R = lastAngle + (direct > 0 ? angle : -angle);
+          var R = lastAngle + direct ;
           if (Math.abs(R) > 360) {
             R = R % 360
           }
@@ -6484,6 +6490,9 @@ var hiprint = function (t) {
           minMove: p.a.instance.movingDistance,
           onBeforeDrag: function onBeforeDrag(t) {
             s.a.instance.draging = !0;
+          },
+          getScale: function getScale () {
+            return i.scale || 1;
           },
           onStopDrag: function onStopDrag(t) {
             s.a.instance.draging = !1, i.footerLinetarget.removeClass("hidefooterLinetarget"), i.headerLinetarget.removeClass("hideheaderLinetarget");
@@ -7868,7 +7877,7 @@ var hiprint = function (t) {
       }, t.prototype.updateRectPanel = function (t) {
         var e = this,
           n = this.designPaper.getTarget();
-        var ptr = (n[0].style.transform && parseFloat(n[0].style.transform.slice(6,-1))) || 1;
+        var ptr = this.designPaper.scale || 1;
         this.mouseRect.target || (this.mouseRect.target = $('<div tabindex="1" style="z-index:2;position: absolute;opacity:0.2;border: 1px dashed #000;background-color:#31676f;"><span></span></div>'), n.find(".hiprint-printPaper-content").append(this.mouseRect.target), this.bingKeyboardMoveEvent(this.mouseRect.target), this.mouseRect.target.hidraggable({
           onDrag: function onDrag(t, n, i) {
             e.mouseRect.target.css({
@@ -7883,6 +7892,9 @@ var hiprint = function (t) {
           minMove: p.a.instance.movingDistance,
           onBeforeDrag: function onBeforeDrag(t) {
             e.mouseRect.target.focus(), s.a.instance.draging = !0, e.mouseRect.mouseRectSelectedElement || (e.mouseRect.mouseRectSelectedElement = e.getElementInRect(e.mouseRect));
+          },
+          getScale: function getScale () {
+            return e.designPaper.scale || 1;
           },
           onStopDrag: function onStopDrag(t) {
             s.a.instance.draging = !1;
