@@ -58,7 +58,7 @@ npm run build
 // 快速显示/隐藏 打印iframe  方便调试 ￣□￣｜｜
 // 在浏览器控制台输入：
 // 显示打印页面
-$('#app').css('display','block');
+$('#app').css('display','none');
 $('#hiwprint_iframe').css('visibility','visible');
 $('#hiwprint_iframe').css('width','100%');
 $('#hiwprint_iframe').css('height','251.09mm'); // 这里替换个实际高度才能显示完
@@ -236,12 +236,14 @@ autoConnect((status,msg) => {
 ```
 
 ## 交流群
-<div align="center">
+<table>
+    <tr>
+        <td><img src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/group.png"/></td>
+        <td><img src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/wechat.png"/></td>
+    </tr>
+</table>
 
-![image](res/wechat.png "微信群")
-
-</div>
-若过期 加我 备注加群
+> 若过期 加我 备注加群
 
 
 ## 状态/调整/优化
