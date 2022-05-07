@@ -6345,8 +6345,8 @@ var hiprint = function (t) {
       return m(e, t), e.prototype.getReizeableShowPoints = function () {
         return ["se", "r"];
       }, e.prototype.getData = function (t) {
-        var e = "";
-        t ? e = this.getField() ? e.split('.').reduce((a,c)=>a ? a[c] : t[c], !1) || "" : this.options.src || this.printElementType.getData() : e = this.options.src || this.printElementType.getData();
+        var e = "", f = this.getField();
+        t ? e = f ? f.split('.').reduce((a,c)=>a ? a[c] : t[c], !1) || "" : this.options.src || this.printElementType.getData() : e = this.options.src || this.printElementType.getData();
         var n = this.getFormatter();
         return n && (e = n(e, this.options, this._currenttemplateData)), e || "";
       }, e.prototype.createTarget = function (t, e) {
