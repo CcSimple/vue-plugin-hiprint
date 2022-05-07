@@ -1,5 +1,6 @@
 export default {
   totalCap: '壹佰元整',
+  logoTest: 'https://portrait.gitee.com/uploads/avatars/user/1800/5400665_CcSimple_1591166830.png!avatar60',
   test: {
     a: '111',
     b: '222',
