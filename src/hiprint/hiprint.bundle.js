@@ -5168,7 +5168,7 @@ var hiprint = function (t) {
 		  // 移动开始动作
       var o = t.data(i.data.target, "hidraggable");
       e(i);
-      if (i.data.target.className.startsWith('resize-panel') || "2" == i.data.target.style.zIndex || i.data.target.className.startsWith('hiprint-printElement')) {
+      if (!(i.ctrlKey || i.metaKey) && (i.data.target.className.startsWith('resize-panel') || "2" == i.data.target.style.zIndex || i.data.target.className.startsWith('hiprint-printElement'))) {
         var data = i.data
         // 当前纸张宽高
         var parent = data.parent.className.endsWith('design') ? data.parent : data.parent.offsetParent;

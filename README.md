@@ -256,7 +256,7 @@ autoConnect((status,msg) => {
 - [x] `vue 插件` 发布npm包,方便直接使用
 - [x] `Ant Design Vue demo` 默认拖拽设计、自定义设计、队列打印
 - [x] `优化删除元素功能` 支持 backSpace/delete 按键删除
-- [x] `优化拖动功能` fix 元素拖出窗口外的问题
+- [x] `优化拖动功能` 调整优化 不允许元素拖出窗口 按住ctrl/command允许脱出窗口外
 - [x] `优化框选功能` fix 原只能从上往下框选问题
 - [x] `支持修改默认直接打印主机` window.hiwebSocket.setHost("xxx:17521")
 - [x] `print优化调整` 支持设置callback 见demo的preview.vue
