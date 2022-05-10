@@ -1224,6 +1224,8 @@ var hiprint = function (t) {
       }, BasePrintElement.prototype.design = function (t, e) {
         var n = this;
         this.designTarget.hidraggable({
+          // 添加 draggable 属性
+          draggable: n.options.draggable,
           axis: n.options.axis && t && t.axisEnabled ? n.options.axis : void 0,
           onDrag: function onDrag(t, i, o) {
             // 处理按住 ctrl / command 多选元素
@@ -5339,6 +5341,10 @@ var hiprint = function (t) {
               p.left /= ptr, p.top /= ptr, p.startLeft /= ptr, p.startTop /= ptr;
             }
             t.extend(e.data, p);
+            // item禁止移动
+            if (ops.options.draggable === false) {
+              return;
+            }
             // 旋转时不允许移动
             if ('r resizebtn' == e.target.className) {
               return;
@@ -7880,7 +7886,9 @@ var hiprint = function (t) {
         });
       }, t.prototype.getElementInRect = function (t) {
         var e = [];
-        return this.printElements.forEach(function (n) {
+        return this.printElements.filter(function(n) {
+          return n.options.draggable !== false;
+        }).forEach(function (n) {
           n.inRect(t) && e.push(n);
         }), e;
       }, t.prototype.updateRectPanel = function (t) {

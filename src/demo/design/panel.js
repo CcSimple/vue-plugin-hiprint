@@ -15,7 +15,8 @@ export default {
         "fontSize": 19,
         "fontWeight": "600",
         "textAlign": "center",
-        "lineHeight": 26
+        "lineHeight": 26,
+        "draggable": false,
       }, "printElementType": {"title": "自定义文本", "type": "text"}
     }, {
       "options": {"left": 60, "top": 27, "height": 13, "width": 52, "title": "页眉线", "textAlign": "center"},
