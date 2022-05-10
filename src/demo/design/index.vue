@@ -160,6 +160,7 @@ export default {
   components: {printPreview},
   data() {
     return {
+      deactivated: false,
       curPaper: {
         type: 'A4',
         width: 210,
@@ -210,52 +211,53 @@ export default {
       return type
     }
   },
+  activated() {
+    if (this.deactivated) {
+      this.init();
+      this.deactivated = false;
+    }
+  },
+  deactivated() {
+    this.deactivated = true;
+  },
   mounted() {
-    hiprint.init({
-      providers: [new defaultElementTypeProvider()]
-    });
-	//手动连接socket
-	// hiprint.init({
-	//   providers: [new defaultElementTypeProvider()]
-	// },true);
-	// hiprint.connectSocket.start(function(){
-	// 	//成功回调
-	// 	//获取打印机列表 直接打印等操作需在成功回调内执行
-	// },function(){
-	// 	//失败回调
-	// 	//若无失败回调则默认执行成功回调
-	// })
-    // 还原配置
-    hiprint.setConfig()
-    // 替换配置
-    hiprint.setConfig({
-      movingDistance: 2.5,
-      text: {
-        supportOptions: [
-          {
-            name: 'styler',
-            hidden: true
-          },
-          {
-            name: 'formatter',
-            hidden: true
-          },
-        ]
-      }
-    })
-    // eslint-disable-next-line no-undef
-    hiprint.PrintElementTypeManager.buildByHtml($('.ep-draggable-item'));
-    hiprintTemplate = new hiprint.PrintTemplate({
-      template: panel,
-      settingContainer: '#PrintElementOptionSetting',
-      paginationContainer: '.hiprint-printPagination'
-    });
-    hiprintTemplate.design('#hiprint-printTemplate');
-    console.log(hiprintTemplate);
-    // 获取当前放大比例, 当zoom时传true 才会有
-    this.scaleValue = hiprintTemplate.editingPanel.scale || 1;
+    this.init()
   },
   methods: {
+    init() {
+      hiprint.init({
+        providers: [new defaultElementTypeProvider()]
+      });
+      // 还原配置
+      hiprint.setConfig()
+      // 替换配置
+      hiprint.setConfig({
+        movingDistance: 2.5,
+        text: {
+          supportOptions: [
+            {
+              name: 'styler',
+              hidden: true
+            },
+            {
+              name: 'formatter',
+              hidden: true
+            },
+          ]
+        }
+      })
+      // eslint-disable-next-line no-undef
+      hiprint.PrintElementTypeManager.buildByHtml($('.ep-draggable-item'));
+      hiprintTemplate = new hiprint.PrintTemplate({
+        template: panel,
+        settingContainer: '#PrintElementOptionSetting',
+        paginationContainer: '.hiprint-printPagination'
+      });
+      hiprintTemplate.design('#hiprint-printTemplate');
+      console.log(hiprintTemplate);
+      // 获取当前放大比例, 当zoom时传true 才会有
+      this.scaleValue = hiprintTemplate.editingPanel.scale || 1;
+    },
     /**
      * 设置纸张大小
      * @param type [A3, A4, A5, B3, B4, B5, other]

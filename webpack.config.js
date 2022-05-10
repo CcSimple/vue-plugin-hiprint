@@ -1,6 +1,7 @@
-var path = require('path')
-var webpack = require('webpack')
-var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const path = require('path')
+const webpack = require('webpack')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: {
@@ -20,6 +21,9 @@ module.exports = {
       jQuery: "jquery",
       $: "jquery"
     }),
+    new MiniCssExtractPlugin({
+      filename: "print-lock.css",
+    })
   ],
   optimization:{
     minimizer:[
@@ -41,7 +45,14 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /print-lock.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader"
+        ]
+      },
+      {
+        test: /hiprint.css$/,
         use: [
           'vue-style-loader',
           'css-loader'
@@ -60,13 +71,6 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/,
       },
-      // {
-      //   test: /\.(png|jpg|gif|svg)$/,
-      //   loader: 'file-loader',
-      //   options: {
-      //     name: '[name].[ext]?[hash]'
-      //   }
-      // },
       {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'url-loader',
@@ -97,7 +101,7 @@ module.exports = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = 'cheap-module-source-map' // 
+  module.exports.devtool = 'cheap-module-source-map' //
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({

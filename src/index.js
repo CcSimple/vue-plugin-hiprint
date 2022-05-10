@@ -1,6 +1,8 @@
 import {hiprint, defaultElementTypeProvider} from './hiprint/hiprint.bundle.js'
 require('./hiprint/hiprint.config')
-
+// 样式
+import "./hiprint/css/hiprint.css"
+import "./hiprint/css/print-lock.css"
 /**
  * 使用 hiprint 提供的 jq-3.31
  * 见webpack.config
