@@ -35,9 +35,6 @@ function _typeof(obj) {
 /**
  * import 相关资源
  */
-// 样式
-import "./css/hiprint.css"
-import "./css/print-lock.css"
 // 调用浏览器打印js
 import './plugins/jquery.hiwprint.js'
 // js打印
