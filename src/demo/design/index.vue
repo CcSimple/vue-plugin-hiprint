@@ -327,7 +327,8 @@ export default {
         let hiprintTemplate = this.$print2(undefined, panel, printData, {
           printer: '', title: 'Api单独打印',
           styleHandler: () => {
-            let css = '<link href="http://hiprint.io/Content/hiprint/css/print-lock.css" media="print" rel="stylesheet">';
+            // let css = '<link href="http://hiprint.io/Content/hiprint/css/print-lock.css" media="print" rel="stylesheet">';
+            let css = '<style>.hiprint-printElement-text{color:red !important;}</style>'
             return css
           }
         })

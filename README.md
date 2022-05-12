@@ -167,14 +167,22 @@ hiprintTemplate.on('printError', function (data) {
 ```
 > 打印重叠 / 样式问题
 ```javascript
-// 开发时默认用的Ant Design Vue， 所有其他ui框架没有测试过
-// 自0.0.13起， 可自定义样式处理
+/**
+ * 从 0.0.19 起, 在index.html添加:
+ * <link rel="stylesheet" type="text/css" media="print" href="https://cdn.jsdelivr.net/npm/vue-plugin-hiprint@latest/dist/print-lock.css">
+ * 以处理打印所需css, 当然你也可以自行处理
+ * 比如： index.html目录下放一个print-lock.css, 然后在index.html添加:
+ * <link rel="stylesheet" type="text/css" media="print" href="/print-lock.css">
+ */
+
+// 添加自定义样式
 hiprintTemplate.print(this.printData, {}, {
   styleHandler: () => {
     // 这里拼接成放html->head标签内的css/style
-    // 例如：使用hiprin官网的样式
+    // 1.例如：使用hiprin官网的样式
     let css = '<link href="http://hiprint.io/Content/hiprint/css/print-lock.css" media="print" rel="stylesheet">'
-    // xxxxx
+    // 2.重写样式：所有文本红色
+    css += '<style>.hiprint-printElement-text{color:red !important;}</style>'
     return css
   }
 })
@@ -182,9 +190,10 @@ hiprintTemplate.print(this.printData, {}, {
 hiprintTemplate.print2(this.printData, {
   styleHandler: () => {
     // 这里拼接成放html->head标签内的css/style
-    // 例如：使用hiprin官网的样式
+    // 1.例如：使用hiprin官网的样式
     let css = '<link href="http://hiprint.io/Content/hiprint/css/print-lock.css" media="print" rel="stylesheet">'
-    // xxxxx
+    // 2.重写样式：所有文本红色
+    css += '<style>.hiprint-printElement-text{color:red !important;}</style>'
     return css
   }
 })

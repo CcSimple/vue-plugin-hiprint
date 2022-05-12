@@ -9,32 +9,21 @@
     if (opt.importCss) {
       if (opt.styleHandler) {
         css += opt.styleHandler()
-      } else {
-        // vue模式 处理打印时的样式问题
-        if (!window.__VUE_HOT_MAP__) { // production 环境
-          var linkList = $("link").toArray().filter((e) => {
-            return e.href.includes("css/app") && e.rel === "stylesheet"
-          })
-          linkList.forEach((e) => {
-            css += e.outerHTML
-          })
-        }
-        var styleList = $("style").toArray().filter((e) => e.innerHTML.includes(".hiprint"))
-        styleList.forEach((e) => {
-          css += e.outerHTML
-        })
       }
-      // 原js模式
-      // if ($("link[media=print]").length > 0) {
-      //     $("link[media=print]").each(function () {
-      //         css += '<link rel="stylesheet" type="text/css" media="print" href="' + $(this).attr("href") + '">';
-      //     });
-      // }
-      // else {
-      //     $("link").each(function () {
-      //         css += '<link rel="stylesheet" type="text/css" media="print" href="' + $(this).attr("href") + '">';
-      //     });
-      // }
+      if ($("link[media=print]").length > 0) {
+        $("link[media=print]").each(function () {
+          if ($(this).attr("href").indexOf('print-lock.css') >= 0) {
+            css += '<link rel="stylesheet" type="text/css" media="print" href="' + $(this).attr("href") + '">';
+            // ↑若加上media="print",仅对浏览器打印时有效 所以查看iframe页面时样式无效
+            css += '<link rel="stylesheet" type="text/css" href="' + $(this).attr("href") + '">';
+          }
+        });
+      } else {
+        $("link").each(function () {
+          css += '<link rel="stylesheet" type="text/css" media="print" href="' + $(this).attr("href") + '">';
+          css += '<link rel="stylesheet" type="text/css" href="' + $(this).attr("href") + '">';
+        });
+      }
     }
     $iframe[0].srcdoc = '<!DOCTYPE html><html><head><title></title><meta charset="UTF-8">' + css + '</head><body></body></html>';
 
