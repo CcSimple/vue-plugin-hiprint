@@ -7394,6 +7394,9 @@ var hiprint = function (t) {
           onBeforeDrag: function onBeforeDrag(t) {
             s.a.instance.draging = !0, n.createLineOfPosition(e);
           },
+          getScale: function getScale () {
+            return n.designPaper.scale || 1;
+          },
           onStopDrag: function onStopDrag(t) {
             s.a.instance.draging = !1, n.removeLineOfPosition();
           }
