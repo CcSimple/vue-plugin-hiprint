@@ -87,6 +87,24 @@
                   </div>
                 </a-col>
               </a-row>
+              <a-row style="height: 100px;">
+                <a-col :span="12" class="drag_item_box" tid="defaultModule.text">
+                  <div>
+                    <a class="ep-draggable-item" tid="defaultModule.html" style="">
+                      <span class="glyphicon glyphicon-header" aria-hidden="true"></span>
+                      <p class="glyphicon-class">html</p>
+                    </a>
+                  </div>
+                </a-col>
+                <a-col :span="12" class="drag_item_box" tid="defaultModule.text">
+                  <div>
+                    <a class="ep-draggable-item" tid="defaultModule.customText" style>
+                      <span class="glyphicon glyphicon-text-width" aria-hidden="true"></span>
+                      <p class="glyphicon-class">自定义</p>
+                    </a>
+                  </div>
+                </a-col>
+              </a-row>
               <a-row class="drag_item_title">辅助</a-row>
               <a-row style="height: 100px;">
                 <a-col :span="12" class="drag_item_box" tid="defaultModule.text">

@@ -69,23 +69,23 @@ export default function (hiprint) {
             title: "表格",
             type: "tableCustom"
           },
-          // {
-          //   tid: "defaultModule.html",
-          //   title: "html",
-          //   formatter: function (data, options) {
-          //     return $(
-          //       'div style="height:50pt;width:50pt;background:red;border-radius: 50%;"></div>'
-          //     );
-          //   },
-          //   type: "html"
-          // },
-          // {
-          //   tid: "defaultModule.customText",
-          //   title: "自定义文本",
-          //   customText: "自定义文本",
-          //   custom: true,
-          //   type: "text"
-          // }
+          {
+            tid: "defaultModule.html",
+            title: "html",
+            formatter: function (data, options) {
+              return $(
+                '<div style="height:50pt;width:50pt;background:red;border-radius: 50%;"></div>'
+              );
+            },
+            type: "html"
+          },
+          {
+            tid: "defaultModule.customText",
+            title: "自定义文本",
+            customText: "自定义文本",
+            custom: true,
+            type: "text"
+          }
         ]),
         new hiprint.PrintElementTypeGroup("辅助", [
           {
