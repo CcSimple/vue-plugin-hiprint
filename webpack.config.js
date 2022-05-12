@@ -1,7 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -21,9 +21,9 @@ module.exports = {
       jQuery: "jquery",
       $: "jquery"
     }),
-    new MiniCssExtractPlugin({
-      filename: "print-lock.css",
-    })
+    new CopyPlugin([
+      { from: './src/hiprint/css/print-lock.css', to: '' },
+    ]),
   ],
   optimization:{
     minimizer:[
@@ -45,14 +45,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /print-lock.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader"
-        ]
-      },
-      {
-        test: /hiprint.css$/,
+        test: /\.css$/,
         use: [
           'vue-style-loader',
           'css-loader'
