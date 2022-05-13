@@ -73,9 +73,7 @@ export default function (hiprint) {
             tid: "defaultModule.html",
             title: "html",
             formatter: function (data, options) {
-              return $(
-                '<div style="height:50pt;width:50pt;background:red;border-radius: 50%;"></div>'
-              );
+              return '<div style="height:50pt;width:50pt;background:red;border-radius: 50%;"></div>';
             },
             type: "html"
           },
