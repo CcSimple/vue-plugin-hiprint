@@ -7843,9 +7843,9 @@ var hiprint = function (t) {
         var e;
         return (e = t.tid ? a.instance.getElementType(t.tid) : nt.createPrintElementType(t.printElementType)) || console.log("miss " + JSON.stringify(t)), e;
       }, t.prototype.getPrintStyle = function () {
-        return " <style printStyle>\n@media print {\n   @page {\n      width: "+ this.width + "mm;\n      height: "+ this.height + "mm;\n      border:0;\n      padding:0cm;\n      margin:0cm;\n      " + this.getPrintSizeStyle() + "\n   }\n}        </style>\n        ";
+        return " <style printStyle>\n        @page\n        {\n             border:0;\n             padding:0cm;\n             margin:0cm;\n             " + this.getPrintSizeStyle() + "\n        }\n        </style>\n";
       }, t.prototype.getPrintSizeStyle = function () {
-        return this.paperType ? "size:" + this.paperType + " " + (this.height > this.width ? "portrait" : "landscape") + ";" : "size: " + this.width + "mm " + this.height + "mm " + (this.orient ? 1 == this.orient ? "portrait" : "landscape" : "portrait") + ";";
+        return this.paperType ? "size:" + this.paperType + " " + (this.height > this.width ? "portrait" : "landscape") + ";" : "size: " + this.width + "mm " + this.height + "mm " + (this.orient ? 1 == this.orient ? "portrait" : "landscape" : "") + ";";
       }, t.prototype.deletePrintElement = function (t) {
         var e = this;
         this.printElements.filter(function (n, i) {
