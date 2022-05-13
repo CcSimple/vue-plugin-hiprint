@@ -1198,7 +1198,7 @@ var hiprint = function (t) {
       }, BasePrintElement.prototype.getTitle = function () {
         return this.printElementType.title;
       }, BasePrintElement.prototype.updateSizeAndPositionOptions = function (t, e, n, i) {
-        this.options.setLeft(t), this.options.setTop(e), this.options.copyDesignTopFromTop(), this.options.setWidth(n), this.options.setHeight(i), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId);
+        this.options.setLeft(t), this.options.setTop(e), this.options.copyDesignTopFromTop(), this.options.setWidth(n), this.options.setHeight(i);
       }, BasePrintElement.prototype.initSizeByHtml = function (t) {
         if (t && t.length) {
           this.createTempContainer();
@@ -1237,6 +1237,7 @@ var hiprint = function (t) {
             } else {
               n.updateSizeAndPositionOptions(i, o), n.createLineOfPosition(e);
             }
+            _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.changed = !0;
           },
           moveUnit: "pt",
           minMove: _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.movingDistance,
@@ -1248,7 +1249,10 @@ var hiprint = function (t) {
           },
           onStopDrag: function onStopDrag(t) {
 			      // 普通元素拖动结束事件history
-            _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !1, n.removeLineOfPosition();
+            if (_HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.changed) _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "移动");
+            _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !1,
+              _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.changed = !1,
+              n.removeLineOfPosition();
           }
         }), this.designTarget.hireizeable({
           showPoints: n.getReizeableShowPoints(),
@@ -1265,7 +1269,8 @@ var hiprint = function (t) {
               n.onResize(t, i, o, r, a), n.createLineOfPosition(e);
             }
           },
-          onStopResize: function onStopResize() {
+          onStopResize: function onStopResize(r) {
+            _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, r ? "旋转" : "大小");
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !1, n.removeLineOfPosition();
           }
         }), this.bingCopyEvent(this.designTarget), this.bingKeyboardMoveEvent(this.designTarget, e);
@@ -1279,11 +1284,11 @@ var hiprint = function (t) {
           n && "object" == _typeof(n) ? Object.keys(n).forEach(function (e) {
             t.options[e] = n[e];
           }) : t.options[e.name] = n;
-        }), this.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId);
+        }), this.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "修改");
       }, BasePrintElement.prototype.getReizeableShowPoints = function () {
         return ["s", "e", "r"];
       }, BasePrintElement.prototype.onRotate = function (t, r) {
-        this.options.setRotate(r), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId);
+        this.options.setRotate(r);
       }, BasePrintElement.prototype.onResize = function (t, e, n, i, o) {
         this.updateSizeAndPositionOptions(o, i, n, e);
       }, BasePrintElement.prototype.getOrderIndex = function () {
@@ -1554,6 +1559,7 @@ var hiprint = function (t) {
             case 46:
               var templete = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(n.templateId)
               templete.deletePrintElement(n)
+              _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "删除");
               _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("clearSettingContainer")
               break
             case 37:
@@ -1602,6 +1608,9 @@ var hiprint = function (t) {
                 n.updateSizeAndPositionOptions(void 0, o + movingDistance), t.css("top", n.options.displayTop()), n.createLineOfPosition(e);
               }
               r.preventDefault();
+          }
+          if ([37,38,39,40].includes(r.keyCode)) {
+            _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "键盘移动");
           }
         });
       }, BasePrintElement.prototype.inRect = function (t) {
@@ -4297,6 +4306,7 @@ var hiprint = function (t) {
           axis: n.options.axis && t && t.axisEnabled ? n.options.axis : void 0,
           onDrag: function onDrag(t, i, o) {
             n.updateSizeAndPositionOptions(i, o), n.createLineOfPosition(e);
+            _HiPrintlib__WEBPACK_IMPORTED_MODULE_9__.a.instance.changed = !0;
           },
           moveUnit: "pt",
           minMove: _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.movingDistance,
@@ -4307,7 +4317,10 @@ var hiprint = function (t) {
             return n.designPaper.scale || 1;
           },
           onStopDrag: function onStopDrag(t) {
-            _HiPrintlib__WEBPACK_IMPORTED_MODULE_9__.a.instance.draging = !1, n.removeLineOfPosition();
+            if (_HiPrintlib__WEBPACK_IMPORTED_MODULE_9__.a.instance.changed) _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "移动");
+            _HiPrintlib__WEBPACK_IMPORTED_MODULE_9__.a.instance.draging = !1,
+              _HiPrintlib__WEBPACK_IMPORTED_MODULE_9__.a.instance.changed = !1,
+              n.removeLineOfPosition();
           }
         }), this.printElementType.editable && this.setHitable(), this.setColumnsOptions(), this.designTarget.hireizeable({
           showPoints: n.getReizeableShowPoints(),
@@ -4321,7 +4334,8 @@ var hiprint = function (t) {
           onResize: function onResize(t, i, o, r, a) {
             n.onResize(t, i, o, r, a), n.hitable && n.hitable.updateColumnGrips(), n.createLineOfPosition(e);
           },
-          onStopResize: function onStopResize() {
+          onStopResize: function onStopResize(r) {
+            _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, r ? "旋转" : "大小");
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_9__.a.instance.draging = !1, n.removeLineOfPosition();
           }
         }), this.bingKeyboardMoveEvent(this.designTarget, e);
@@ -5201,7 +5215,8 @@ var hiprint = function (t) {
     }
 
     function r(e) {
-      t.fn.hidraggable.isDragging = !1, o(e);
+      // 这里原 mouseup时, 回调了 o(e) ==> onDrag
+      t.fn.hidraggable.isDragging = !1;
       var n,
         i,
         r = t.data(e.data.target, "hidraggable"),
@@ -5571,6 +5586,9 @@ var hiprint = function (t) {
         var f = n(this);
         n(o).on("mousedown", ".resizebtn", function () {
           f.addClass("resizeing");
+        }).on("mouseup", ".resizebtn", function(t) {
+          var isRotate = t.target.className == 'r resizebtn';
+          e.options.onStopResize(isRotate);
         }), n(".easyui-droppable").on("mouseup", function () {
           f.removeClass("resizeing");
         }), e.bindTrigger(n(this));
@@ -5725,7 +5743,8 @@ var hiprint = function (t) {
           top: i.numHandlerText(i.options.noDrag ? void 0 : l + E)
         }), i.options.onResize(e, void 0, void 0, i.options.noDrag ? void 0 : i.numHandler(l + E), i.options.noDrag ? void 0 : i.numHandler(s + n)));
       }).on("mouseup", function (t) {
-        d = !1, c = !1, h = !1, f = !1, g = !1, m = !1, y = !1, v = !1, b = !1, rt = !1, i.options.onStopResize();
+        // i.options.onStopResize(rt);
+        d = !1, c = !1, h = !1, f = !1, g = !1, m = !1, y = !1, v = !1, b = !1, rt = !1;
       });
     },
     bindTrigger: function bindTrigger(t) {
@@ -7388,6 +7407,7 @@ var hiprint = function (t) {
           axis: n.options.axis && t && t.axisEnabled ? n.options.axis : void 0,
           onDrag: function onDrag(t, i, o) {
             n.updateSizeAndPositionOptions(i, o), n.createLineOfPosition(e);
+            s.a.instance.changed = !0;
           },
           moveUnit: "pt",
           minMove: p.a.instance.movingDistance,
@@ -7398,7 +7418,8 @@ var hiprint = function (t) {
             return n.designPaper.scale || 1;
           },
           onStopDrag: function onStopDrag(t) {
-            s.a.instance.draging = !1, n.removeLineOfPosition();
+            if (s.a.instance.changed) o.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "移动");
+            s.a.instance.draging = !1, s.a.instance.changed = !1, n.removeLineOfPosition();
           }
         }), this.setHiReizeable(), this.designTarget.hireizeable({
           showPoints: n.getReizeableShowPoints(),
@@ -7412,7 +7433,8 @@ var hiprint = function (t) {
           onResize: function onResize(t, i, o, r, a) {
             n.onResize(t, i, o, r, a), n.hitable.updateColumnGrips(), n.createLineOfPosition(e);
           },
-          onStopResize: function onStopResize() {
+          onStopResize: function onStopResize(r) {
+            o.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, r ? "旋转" : "大小");
             s.a.instance.draging = !1, n.removeLineOfPosition();
           }
         }), this.bingKeyboardMoveEvent(this.designTarget, e);
@@ -7660,6 +7682,7 @@ var hiprint = function (t) {
           n.appendDesignPrintElement(n.designPaper, a, !1);
           n.printElements.push(a), a.design(void 0, n.designPaper);
           console.log('pasteJson success');
+          o.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "复制");
           // 点击克隆出来的元素
           a.designTarget.children('.resize-panel').trigger($.Event('click'));
         } catch (e) {
@@ -7768,6 +7791,8 @@ var hiprint = function (t) {
             a.updateSizeAndPositionOptions(e.mathroundToporleft(r.left - o.a.px.toPt(e.target.offset().left)), e.mathroundToporleft(r.top - o.a.px.toPt(e.target.offset().top)));
             a.setTemplateId(e.templateId), a.setPanel(e), e.appendDesignPrintElement(e.designPaper, a, !0);
             e.printElements.push(a), a.design(void 0, t);
+            debugger;
+            o.a.event.trigger("hiprintTemplateDataChanged_" + e.templateId, "新增");
           }
         });
       }, t.prototype.initPrintElements = function (t) {
@@ -8121,6 +8146,9 @@ var hiprint = function (t) {
         this.tempimageBase64 = {}, this.id = s.a.instance.guid(), s.a.instance.setPrintTemplateById(this.id, this);
         var n = t || {};
         this.printPanels = [];
+        this.dataMode = n.dataMode || 1;
+        this.onDataChanged = n.onDataChanged;
+        this.lastJson = n.template || {};
         var i = new st(n.template || []);
         n.template && i.panels.forEach(function (t) {
           e.printPanels.push(new pt(t, e.id));
@@ -8381,10 +8409,28 @@ var hiprint = function (t) {
         return this.printPanels.forEach(function (e) {
           t = t.concat(e.getFieldsInPanel());
         }), t;
+      }, t.prototype.update = function (t) {
+        var e = this;
+        try {
+          if (t && "object" == _typeof(t)) {
+            e.deletePanel(0);
+            var i = new st(t || []);
+            i.panels.forEach(function (t) {
+              e.printPanels.push(new pt(t, e.id));
+            }), e.printPanels.forEach(function (t, i) {
+              e.container.append(t.getTarget()), i > 0 && t.disable(), t.design(e);
+            }), e.selectPanel(0);
+          }
+        } catch (e) {
+          console.log(e);
+          e.update(e.lastJson);
+        }
       }, t.prototype.initAutoSave = function () {
         var t = this;
-        this.autoSave && o.a.event.on("hiprintTemplateDataChanged_" + this.id, function () {
-          hiLocalStorage.saveLocalData(t.autoSaveKey || "hiprintAutoSave", JSON.stringify(1 == t.autoSaveMode ? t.getJson() : t.getJsonTid()));
+        o.a.event.on("hiprintTemplateDataChanged_" + this.id, function (type) {
+          var j = 1 == t.dataMode ? t.getJson() : t.getJsonTid()
+          t.lastJson = j;
+          t.onDataChanged && t.onDataChanged(type, j);
         });
       }, t;
     }();

@@ -163,6 +163,7 @@ export default {
       paperPopVisible: false,
       paperWidth: '220',
       paperHeight: '80',
+      lastjson: '',
     }
   },
   computed: {
@@ -213,6 +214,13 @@ export default {
       let template = templates[provider.value] ? templates[provider.value] : {}
       hiprintTemplate = new hiprint.PrintTemplate({
         template: template,
+        dataMode: 1, // 1:getJson 其他：getJsonTid 默认1
+        onDataChanged: (type, json) => {
+          console.log(type); // 新增、移动、删除、修改(参数调整)、大小、旋转
+          console.log(json); // 返回 template
+          // 更新模板
+          // hiprintTemplate.update(json)
+        },
         settingContainer: '#PrintElementOptionSetting',
         paginationContainer: '.hiprint-printPagination'
       });
