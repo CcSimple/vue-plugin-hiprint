@@ -5757,9 +5757,12 @@ var hiprint = function (t) {
       if (i.maxPanelIndex < 2) {
         var e = this.options.stage;
         n(e).bind("click", function (t) {
-          t.stopPropagation(), n("div[panelindex]").css({
-            display: "none"
-          });
+          // 仅点击设计面板时清除多选元素
+          if (t.target.className.includes("design")) {
+            t.stopPropagation(), n("div[panelindex]").css({
+              display: "none"
+            });
+          }
         });
       }
     }
@@ -8424,6 +8427,93 @@ var hiprint = function (t) {
         } catch (e) {
           console.log(e);
           e.update(e.lastJson);
+        }
+      }, t.prototype.setElsAlign = function (e) { // 设置框选、多选元素对齐api
+        var t = this;
+        var elements = [];
+        // 获取选区元素
+        if (t.editingPanel.mouseRect && t.editingPanel.mouseRect.target) {
+          elements = t.editingPanel.getElementInRect(t.editingPanel.mouseRect);
+        } else { // 获取多选元素
+          elements = t.editingPanel.printElements.filter(function (el) {
+            return "block" == el.designTarget.children().last().css("display") && !el.printElementType.type.includes("table");
+          })
+        }
+        if (elements.length) {
+          var minLeft = Math.min.apply(null, elements.map(function (el) {return el.options.left}));
+          var maxRight = Math.max.apply(null, elements.map(function (el) {return el.options.left + el.options.width}));
+          var minTop = Math.min.apply(null, elements.map(function (el) {return el.options.top}));
+          var maxBottom = Math.max.apply(null, elements.map(function (el) {return el.options.top + el.options.height}));
+          switch (e) {
+            case "left": // 左对齐
+              elements.forEach(function (el) {
+                el.updateSizeAndPositionOptions(minLeft);
+                el.designTarget.css("left", el.options.displayLeft());
+              })
+              break;
+            case "vertical": // 居中
+              var vertical = minLeft + (maxRight - minLeft) / 2;
+              elements.forEach(function (el) {
+                el.updateSizeAndPositionOptions(vertical - el.options.width / 2);
+                el.designTarget.css("left", el.options.displayLeft());
+              })
+              break;
+            case "right": // 右对齐
+              elements.forEach(function (el) {
+                el.updateSizeAndPositionOptions(maxRight - el.options.width);
+                el.designTarget.css("left", el.options.displayLeft())
+              })
+              break;
+            case "top": // 顶部对齐
+              elements.forEach(function (el) {
+                el.updateSizeAndPositionOptions(undefined, minTop);
+                el.designTarget.css("top", el.options.displayTop());
+              })
+              break;
+            case "horizontal": // 垂直居中
+              var horizontal = minTop + (maxBottom - minTop) / 2;
+              elements.forEach(function (el) {
+                el.updateSizeAndPositionOptions(undefined, horizontal - el.options.height / 2);
+                el.designTarget.css("top", el.options.displayTop());
+              })
+              break;
+            case "bottom": //底部对齐
+              elements.forEach(function (el) {
+                el.updateSizeAndPositionOptions(undefined, maxBottom - el.options.height);
+                el.designTarget.css("top", el.options.displayTop());
+              })
+              break;
+            case "distributeHor": // 横向分散
+              var sumWidth = [].reduce.call(elements, function (total, el) {
+                return total + el.options.width;
+              }, 0)
+              var distributeHor = ((maxRight - minLeft) - sumWidth) / (elements.length - 1);
+              elements.sort(function (prev, curr) {
+                return prev.options.left - curr.options.left;
+              })
+              elements.forEach(function (el, index) {
+                if(![0, elements.length - 1].includes(index)) {
+                  el.updateSizeAndPositionOptions(elements[index-1].options.left + elements[index-1].options.width + distributeHor);
+                  el.designTarget.css("left", el.options.displayLeft());
+                }
+              })
+              break;
+            case "distributeVer": // 纵向分散
+              var sumHeight = [].reduce.call(elements, function (total, el) {
+                return total + el.options.height;
+              }, 0)
+              var distributeVer = ((maxBottom - minTop) - sumHeight) / (elements.length - 1);
+              elements.sort(function (prev, curr) {
+                return prev.options.top - curr.options.top;
+              })
+              elements.forEach(function (el, index) {
+                if(![0, elements.length - 1].includes(index)) {
+                  el.updateSizeAndPositionOptions(undefined, elements[index-1].options.top + elements[index-1].options.height + distributeVer);
+                  el.designTarget.css("top", el.options.displayTop());
+                }
+              })
+              break;
+          }
         }
       }, t.prototype.initAutoSave = function () {
         var t = this;
