@@ -7647,7 +7647,7 @@ var hiprint = function (t) {
               e.panelPaperRule = t.panelPaperRule, e.panelPageRule = t.panelPageRule, e.firstPaperFooter = t.firstPaperFooter, e.evenPaperFooter = t.evenPaperFooter, e.oddPaperFooter = t.oddPaperFooter, e.lastPaperFooter = t.lastPaperFooter, e.leftOffset = t.leftOffset, e.topOffset = t.topOffset, e.fontFamily = t.fontFamily, e.orient = t.orient, e.paperNumberDisabled = e.designPaper.paperNumberDisabled = !!t.paperNumberDisabled || void 0, e.paperNumberFormat = t.paperNumberFormat, e.designPaper.paperNumberFormat = t.paperNumberFormat, (t.paperNumberFormat && (e.designPaper.paperNumberTarget = e.designPaper.createPaperNumber(e.designPaper.formatPaperNumber(1, 1)))), e.designPaper.setOffset(e.leftOffset, e.topOffset), e.css(e.target), e.designPaper.resetPaperNumber(e.designPaper.paperNumberTarget), e.designPaper.triggerOnPaperBaseInfoChanged();
             }
           });
-        }), this.bingPasteEvent(); this.bindBatchMoveElement();
+        }), this.bindShortcutKeyEvent(); this.bingPasteEvent(); this.bindBatchMoveElement();
       }, t.prototype.update = function (t) {
         var e = this;
         this.index = t.index, this.width = t.width, this.height = t.height, this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter;
@@ -7658,7 +7658,21 @@ var hiprint = function (t) {
         this.printElements.forEach(function (n) {
           e.appendDesignPrintElement(e.designPaper, n), n.design(t, e.designPaper);
         })
-      },, t.prototype.bingPasteEvent = function () {
+      }, t.prototype.bindShortcutKeyEvent = function () {
+        var n = this;
+        $(document).keydown(function (e) {
+          if ('INPUT' == e.target.tagName) return;
+          // ctrl/command + z 撤销 / ctrl/command + shift + z 重做
+          if ((e.ctrlKey || e.metaKey ) && 90 == e.keyCode) {
+            if (e.shiftKey) {
+              o.a.event.trigger("hiprintTemplateDataShortcutKey_" + n.templateId, "redo");
+            } else {
+              o.a.event.trigger("hiprintTemplateDataShortcutKey_" + n.templateId, "undo");
+            }
+            e.preventDefault();
+          }
+        });
+      }, t.prototype.bingPasteEvent = function () {
         var n = this;
         n.designPaper.target.attr("tabindex", "1");
         n.designPaper.target.keydown(function (e) {
@@ -8158,6 +8172,8 @@ var hiprint = function (t) {
         this.dataMode = n.dataMode || 1;
         this.onDataChanged = n.onDataChanged;
         this.lastJson = n.template || {};
+        this.historyList = [{ id: s.a.instance.guid(), type: '初始', json: this.lastJson }];
+        this.historyPos = 0;
         var i = new st(n.template || []);
         n.template && i.panels.forEach(function (t) {
           e.printPanels.push(new pt(t, e.id));
@@ -8239,6 +8255,10 @@ var hiprint = function (t) {
         }), new st({
           panels: t
         });
+      }, t.prototype.undo = function (t) {
+        o.a.event.trigger("hiprintTemplateDataShortcutKey_" + this.id, "undo");
+      }, t.prototype.redo = function (t) {
+        o.a.event.trigger("hiprintTemplateDataShortcutKey_" + this.id, "redo");
       }, t.prototype.getPrintElementSelectEventKey = function () {
         return "PrintElementSelectEventKey_" + this.id;
       }, t.prototype.getBuildCustomOptionSettingEventKey = function () {
@@ -8431,9 +8451,36 @@ var hiprint = function (t) {
         }
       }, t.prototype.initAutoSave = function () {
         var t = this;
+        o.a.event.on("hiprintTemplateDataShortcutKey_" + this.id, function (key) {
+          switch (key) {
+            case "undo":
+              if (t.historyPos > 0) {
+                t.historyPos -= 1;
+              }
+              var cur = t.historyList[t.historyPos];
+              t.update(cur.json);
+              break;
+            case "redo":
+              if (t.historyPos < t.historyList.length - 1) {
+                t.historyPos += 1;
+              }
+              var cur = t.historyList[t.historyPos];
+              t.update(cur.json);
+              break;
+          }
+        });
         o.a.event.on("hiprintTemplateDataChanged_" + this.id, function (type) {
           var j = 1 == t.dataMode ? t.getJson() : t.getJsonTid()
           t.lastJson = j;
+          if (t.historyPos < t.historyList.length - 1) {
+            t.historyList = t.historyList.slice(0, t.historyPos + 1);
+          }
+          t.historyList.push({ id: s.a.instance.guid(), type: type, json: j });
+          if (t.historyList.length > 50) {
+            t.historyList = t.historyList.slice(0, 1).concat(t.historyList.slice(1,50));
+          } else {
+            t.historyPos += 1;
+          }
           t.onDataChanged && t.onDataChanged(type, j);
         });
       }, t;

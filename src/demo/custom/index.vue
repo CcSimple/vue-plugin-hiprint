@@ -220,6 +220,7 @@ export default {
           console.log(json); // 返回 template
           // 更新模板
           // hiprintTemplate.update(json)
+          // console.log(hiprintTemplate.historyList)
         },
         settingContainer: '#PrintElementOptionSetting',
         paginationContainer: '.hiprint-printPagination'
