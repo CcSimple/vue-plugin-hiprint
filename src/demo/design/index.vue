@@ -44,6 +44,32 @@
           <a-icon type="close"/>
         </a-button>
       </a-popconfirm>
+      <a-radio-group>
+        <a-radio-button @click="setElsAlign('left')" title="左对齐">
+          <span class="glyphicon glyphicon-object-align-left"></span>
+        </a-radio-button>
+        <a-radio-button @click="setElsAlign('vertical')" title="居中">
+          <span class="glyphicon glyphicon-object-align-vertical"></span>
+        </a-radio-button>
+        <a-radio-button @click="setElsAlign('right')" title="右对齐">
+          <span class="glyphicon glyphicon-object-align-right"></span>
+        </a-radio-button>
+        <a-radio-button @click="setElsAlign('top')" title="顶部对齐">
+          <span class="glyphicon glyphicon-object-align-top"></span>
+        </a-radio-button>
+        <a-radio-button @click="setElsAlign('horizontal')" title="垂直居中">
+          <span class="glyphicon glyphicon-object-align-horizontal"></span>
+        </a-radio-button>
+        <a-radio-button @click="setElsAlign('bottom')" title="底部对齐">
+          <span class="glyphicon glyphicon-object-align-bottom"></span>
+        </a-radio-button>
+        <a-radio-button @click="setElsAlign('distributeHor')" title="横向分散">
+          <span class="glyphicon glyphicon-resize-horizontal"></span>
+        </a-radio-button>
+        <a-radio-button @click="setElsAlign('distributeVer')" title="纵向分散">
+          <span class="glyphicon glyphicon-resize-vertical"></span>
+        </a-radio-button>
+      </a-radio-group>
     </a-space>
     <a-row :gutter="[8,0]">
       <a-col :span="4">
@@ -360,6 +386,9 @@ export default {
       } catch (error) {
         this.$message.error(`操作失败: ${error}`);
       }
+    },
+    setElsAlign(e) {
+      hiprintTemplate.setElsAlign(e)
     }
   }
 }
