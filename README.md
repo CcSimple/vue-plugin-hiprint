@@ -287,6 +287,19 @@ autoConnect((status,msg) => {
 - [x] `调整优化标尺` 使用svg替换原图片标尺，让标尺更清晰
 - [x] `新增支持放大缩小功能` 提供模板新增zoom方法(transform：scale)，放大缩小拖动不乱跳
 - [x] `调整优化以支持Vue3.x` 调整qrcode.js fix vite项目报错问题
+- [x] `元素添加禁止拖拽` panels[n]printElements[m]options.draggable true、false
+- [x] `添加对齐api` hiprintTemplate.setElsAlign
+
+|setElsAlign 参数说明|说明|
+|---|---|
+|left|左对齐|
+|vertical|居中|
+|right|右对齐|
+|top|顶部对齐|
+|horizontal|垂直居中|
+|bottom|底部对齐|
+|distributeHor|横向分散|
+|distributeVer|纵向分散|
 
 ### 咳咳..
 第一次写插件(webpack打包这些都不太了解)，不合理的地方欢迎指正<a href="https://github.com/CcSimple/vue-plugin-hiprint/issues">issues</a>。
