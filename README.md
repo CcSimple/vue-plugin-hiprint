@@ -73,9 +73,12 @@ $('#app').css('display','block');
 $('#hiwprint_iframe').css('visibility','hidden');
 ```
 
-## 安装
+## 安装使用
 ```console
+// 控制台中输入 以安装npm包
 npm install vue-plugin-hiprint
+// 在index.html 文件中添加打印所需样式: 当然你也可以调整成 相对链接/自有链接
+<link rel="stylesheet" type="text/css" media="print" href="https://cdn.jsdelivr.net/npm/vue-plugin-hiprint@latest/dist/print-lock.css">
 ```
 ## 全局使用
 ```javascript
