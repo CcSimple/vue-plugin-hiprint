@@ -7648,7 +7648,17 @@ var hiprint = function (t) {
             }
           });
         }), this.bingPasteEvent(); this.bindBatchMoveElement();
-      }, t.prototype.bingPasteEvent = function () {
+      }, t.prototype.update = function (t) {
+        var e = this;
+        this.index = t.index, this.width = t.width, this.height = t.height, this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter;
+        this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat;
+        this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter, this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.leftOffset = t.leftOffset, this.fontFamily = t.fontFamily, this.orient = t.orient, this.rotate = t.rotate, this.scale = t.scale;
+        e.clear();
+        this.initPrintElements(t.printElements);
+        this.printElements.forEach(function (n) {
+          e.appendDesignPrintElement(e.designPaper, n), n.design(t, e.designPaper);
+        })
+      },, t.prototype.bingPasteEvent = function () {
         var n = this;
         n.designPaper.target.attr("tabindex", "1");
         n.designPaper.target.keydown(function (e) {
@@ -7791,7 +7801,6 @@ var hiprint = function (t) {
             a.updateSizeAndPositionOptions(e.mathroundToporleft(r.left - o.a.px.toPt(e.target.offset().left)), e.mathroundToporleft(r.top - o.a.px.toPt(e.target.offset().top)));
             a.setTemplateId(e.templateId), a.setPanel(e), e.appendDesignPrintElement(e.designPaper, a, !0);
             e.printElements.push(a), a.design(void 0, t);
-            debugger;
             o.a.event.trigger("hiprintTemplateDataChanged_" + e.templateId, "新增");
           }
         });
@@ -8413,16 +8422,11 @@ var hiprint = function (t) {
         var e = this;
         try {
           if (t && "object" == _typeof(t)) {
-            e.deletePanel(0);
-            var i = new st(t || []);
-            i.panels.forEach(function (t) {
-              e.printPanels.push(new pt(t, e.id));
-            }), e.printPanels.forEach(function (t, i) {
-              e.container.append(t.getTarget()), i > 0 && t.disable(), t.design(e);
-            }), e.selectPanel(0);
+            var temp = new rt(t.panels[0])
+            e.editingPanel.update(temp);
           }
-        } catch (e) {
-          console.log(e);
+        } catch (er) {
+          console.log(er);
           e.update(e.lastJson);
         }
       }, t.prototype.initAutoSave = function () {
