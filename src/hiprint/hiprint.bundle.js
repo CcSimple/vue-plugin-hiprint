@@ -5798,7 +5798,7 @@ var hiprint = function (t) {
         var e = this.options.stage;
         n(e).bind("click", function (t) {
           // 仅点击设计面板时清除多选元素
-          if (t.target.className.includes("design")) {
+          if (t.target.className && _typeof(t.target.className) == "string" && t.target.className.includes("design")) {
             t.stopPropagation(), n("div[panelindex]").css({
               display: "none"
             });
