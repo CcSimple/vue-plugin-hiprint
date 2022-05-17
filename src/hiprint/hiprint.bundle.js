@@ -652,6 +652,10 @@ var hiprint = function (t) {
             name: "footerFormatter",
             hidden: !1
           }, {
+            name: "rowsColumnsMerge",
+            hidden: !1
+          },
+          {
             name: "gridColumnsFooterFormatter",
             hidden: !1
           }],
@@ -1931,11 +1935,31 @@ var hiprint = function (t) {
         });
         return r;
       }, TableExcelHelper.createRowTarget = function (t, e, n, i) {
-        var o = $("<tr></tr>");
-        o.data("rowData", e), t.rowColumns.forEach(function (t, i) {
-          var r = $("<td></td>");
+          var o = $("<tr></tr>");
+          var columns = t.rowColumns
+            o.data("rowData", e), t.rowColumns.forEach(function (t, i) {
+          var rowsColumnsMerge =''
+          if (n.rowsColumnsMerge) {
+            eval('rowsColumnsMerge=' + n.rowsColumnsMerge)
+            var rowsColumnsArr = rowsColumnsMerge(e,t,i) || [1,1]
+            var r = $(`<td style = 'display:${!(rowsColumnsArr[0] && rowsColumnsArr[1])?"none":""}' rowspan = '${rowsColumnsArr[0]}' colspan = '${rowsColumnsArr[1]}'></td>`);
+          } else {
+            var r = $("<td></td>");
+          }
           if ("first" == n.tableHeaderRepeat || "none" == n.tableHeaderRepeat) {
-            t.field && r.attr("field", t.field), t.align && r.css("text-align", t.align), t.vAlign && r.css("vertical-align", t.vAlign), r.css("width", t.width + "pt");
+            t.field && r.attr("field", t.field), t.align && r.css("text-align", t.align), t.vAlign && r.css("vertical-align", t.vAlign);
+            // 无表头时跨行无效，需根据所跨行数重新计算宽度
+            if (n.rowsColumnsMerge) {
+              if (rowsColumnsArr[1] > 1) {
+                var width = 0;
+                columns.forEach((item,index) => {
+                  if(index >= i && (index < i + rowsColumnsArr[1])){
+                    width += item.width
+                  }
+                })
+              }
+            }
+			      r.css("width", (width||t.width) + "pt");
           } else {
             t.field && r.attr("field", t.field), t.align && r.css("text-align", t.align), t.vAlign && r.css("vertical-align", t.vAlign);
           }
@@ -3656,6 +3680,22 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
+    rowcolumns = function () {
+      function t() {
+        this.name = "rowsColumnsMerge";
+      }
+
+      return t.prototype.createTarget = function () {
+        return this.target = $(' <div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        行/列合并函数\n        </div>\n        <div class="hiprint-option-item-field">\n        <textarea style="height:80px;" placeholder="function(options,rows,data){ return [1,1] }; }" class="auto-submit"></textarea>\n        </div>\n    </div>'), this.target;
+      }, t.prototype.getValue = function () {
+        var t = this.target.find("textarea").val();
+        if (t) return t;
+      }, t.prototype.setValue = function (t) {
+        this.target.find("textarea").val(t?t.toString():null);
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
     mt = function () {
       function t() {
         this.name = "footerFormatter";
@@ -3833,7 +3873,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new C(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new it(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept()], t;
+    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new C(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new it(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -6285,7 +6325,7 @@ var hiprint = function (t) {
         var e = this;
         this.text = t.text, this.field = t.field, this.fields = t.fields, this.title = t.title, this.tid = t.tid, this.data = t.data, this.styler = t.styler, this.formatter = t.formatter, this.type = t.type, this.options = t.options, this.editable = t.editable, this.columnDisplayEditable = t.columnDisplayEditable, this.columnDisplayIndexEditable = t.columnDisplayIndexEditable, this.columnTitleEditable = t.columnTitleEditable, this.columnResizable = t.columnResizable, this.columnAlignEditable = t.columnAlignEditable, this.columns = [], (t.columns || []).forEach(function (t, n) {
           e.columns.push(e.createTableColumnArray(t));
-        }), this.rowStyler = t.rowStyler, this.striped = t.striped, this.groupFields = t.groupFields || [], this.groupFormatter = t.groupFormatter, this.groupFooterFormatter = t.groupFooterFormatter, this.footerFormatter = t.footerFormatter, this.gridColumnsFooterFormatter = t.gridColumnsFooterFormatter,
+        }), this.rowStyler = t.rowStyler, this.striped = t.striped, this.groupFields = t.groupFields || [], this.groupFormatter = t.groupFormatter, this.groupFooterFormatter = t.groupFooterFormatter, this.footerFormatter = t.footerFormatter, this.rowsColumnsMerge = t.rowsColumnsMerge, this.gridColumnsFooterFormatter = t.gridColumnsFooterFormatter,
           this.isEnableEditField = t.isEnableEditField, this.isEnableContextMenu = t.isEnableContextMenu, this.isEnableInsertRow = t.isEnableInsertRow, this.isEnableDeleteRow = t.isEnableDeleteRow, this.isEnableInsertColumn = t.isEnableInsertColumn, this.isEnableDeleteColumn = t.isEnableDeleteColumn, this.isEnableMergeCell = t.isEnableMergeCell, this.columnObj = this.makeColumnObj();
       }
 

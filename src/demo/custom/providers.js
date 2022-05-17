@@ -171,6 +171,16 @@ export const aProvider = function (ops) {
                 {title: '金额', align: 'center', field: 'JE', width: 100, checked: false},
               ],
             ],
+            rowsColumnsMerge: function (data, row, index) {
+              // 返回一个数组,参数一为列合并数,参数二为行合并数, 被合并的行或者列值设为0
+              if (index == 0) {
+                return [1, data.INDEX % 2 == 1 ? 2 : 1]
+              } else if (index > 0 && index < 2) {
+                return [data.INDEX % 2 == 1 ? 0 : 1, 1]
+              } else {
+                return [data.INDEX % 2 == 1 ? 2 : 0, 1]
+              }
+            },
             footerFormatter: function (options, rows, data, currentPageGridRowsData) {
               if (data && data['totalCap']) {
                 return `<td style="padding:0 10px" colspan="100">${'应收金额大写: ' + data['totalCap']}</td>`

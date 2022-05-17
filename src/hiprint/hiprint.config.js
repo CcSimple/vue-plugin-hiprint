@@ -452,6 +452,11 @@
                 hidden: false
             },
             {
+
+                name: 'rowsColumnsMerge',
+                hidden: false
+            },
+            {
                 name: 'gridColumnsFooterFormatter',
                 hidden: false
 
