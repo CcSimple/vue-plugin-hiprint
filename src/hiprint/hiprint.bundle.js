@@ -1288,7 +1288,7 @@ var hiprint = function (t) {
           n && "object" == _typeof(n) ? Object.keys(n).forEach(function (e) {
             t.options[e] = n[e];
           }) : t.options[e.name] = n;
-        }), this.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "修改");
+        }), this.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "元素修改");
       }, BasePrintElement.prototype.getReizeableShowPoints = function () {
         return ["s", "e", "r"];
       }, BasePrintElement.prototype.onRotate = function (t, r) {
@@ -6492,6 +6492,7 @@ var hiprint = function (t) {
           paperNumberDisabled: this.paperNumberDisabled,
           paperNumberFormat: this.paperNumberFormat
         });
+        o.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "模板调整");
       }, t.prototype.setFooter = function (t, e, n, i) {
         this.firstPaperFooter = t, this.evenPaperFooter = e, this.oddPaperFooter = n, this.lastPaperFooter = i;
       }, t.prototype.setOffset = function (t, e) {
@@ -7696,7 +7697,9 @@ var hiprint = function (t) {
         this.index = t.index, this.width = t.width, this.height = t.height, this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter;
         this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat;
         this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter, this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.leftOffset = t.leftOffset, this.fontFamily = t.fontFamily, this.orient = t.orient, this.rotate = t.rotate, this.scale = t.scale;
-        e.clear();
+        this.printElements.forEach(function (t) {
+          t.designTarget && t.designTarget.length && t.designTarget.remove();
+        }), this.printElements = [];
         this.initPrintElements(t.printElements);
         this.printElements.forEach(function (n) {
           e.appendDesignPrintElement(e.designPaper, n), n.design(t, e.designPaper);
@@ -7900,6 +7903,7 @@ var hiprint = function (t) {
         this.printElements.forEach(function (t) {
           t.designTarget && t.designTarget.length && t.designTarget.remove();
         }), this.printElements = [];
+        o.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "清空");
       }, t.prototype.insertPrintElementToPanel = function (t) {
         var e = this.getPrintElementTypeByEntity(t);
 
@@ -7995,6 +7999,7 @@ var hiprint = function (t) {
               , (e.mouseRect.mouseRectSelectedElement || []).forEach(function (t) {
                t.updatePositionByMultipleSelect(n - e.mouseRect.lastLeft, i - e.mouseRect.lastTop);
             }), e.mouseRect.lastLeft = n/ptr, e.mouseRect.lastTop = i/ptr;
+            s.a.instance.changed = !0;
           },
           moveUnit: "pt",
           minMove: p.a.instance.movingDistance,
@@ -8005,7 +8010,8 @@ var hiprint = function (t) {
             return e.designPaper.scale || 1;
           },
           onStopDrag: function onStopDrag(t) {
-            s.a.instance.draging = !1;
+            if (s.a.instance.changed) o.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "框选移动");
+            s.a.instance.draging = !1; s.a.instance.changed = !1;
           }
         }))
         if (t.ex >= t.bx && t.ey >= t.by) {// 终点大于起点
@@ -8071,6 +8077,9 @@ var hiprint = function (t) {
               e.mouseRect.updatePositionByMultipleSelect(0, p.a.instance.movingDistance), n.forEach(function (t) {
                 t.updatePositionByMultipleSelect(0, p.a.instance.movingDistance);
               }), t.preventDefault();
+          }
+          if ([37,38,39,40].includes(t.keyCode)) {
+            o.a.event.trigger("hiprintTemplateDataChanged_" + e.templateId, "框选移动");
           }
         });
       }, t;
