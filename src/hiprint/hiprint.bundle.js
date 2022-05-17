@@ -1087,8 +1087,8 @@ var hiprint = function (t) {
       return this.left;
     }, t.prototype.setRotate = function (t) {
       null != t && (this.transform = t);
-    }, t.prototype.displayLeft = function () {
-      if (this.transform) {
+    }, t.prototype.displayLeft = function (t) {
+      if (this.transform && t) {
         return this.left + this.getRectInfo().diffW + "pt";
       }
       return this.left + "pt";
@@ -1098,8 +1098,8 @@ var hiprint = function (t) {
       return this.top;
     }, t.prototype.getTopInDesign = function () {
       return this.topInDesign;
-    }, t.prototype.displayTop = function () {
-      if (this.transform) {
+    }, t.prototype.displayTop = function (t) {
+      if (this.transform && t) {
         return this.top + this.getRectInfo().diffH + "pt";
       }
       return this.top + "pt";
@@ -1270,14 +1270,20 @@ var hiprint = function (t) {
             if (undefined != rt) {
               n.onRotate(t, rt);
             } else {
-              n.onResize(t, i, o, r, a), n.createLineOfPosition(e);
+              n.onResize(t, i, o, r, a)
             }
+            n.createLineOfPosition(e);
           },
           onStopResize: function onStopResize(r) {
             _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, r ? "旋转" : "大小");
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !1, n.removeLineOfPosition();
           }
-        }), this.bingCopyEvent(this.designTarget), this.bingKeyboardMoveEvent(this.designTarget, e);
+        }), this.bindDocMouseUpEvent(this.designTarget), this.bingCopyEvent(this.designTarget), this.bingKeyboardMoveEvent(this.designTarget, e);
+      }, BasePrintElement.prototype.bindDocMouseUpEvent = function (t) {
+        var n = this;
+        _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.on("hiprintTemplate_doc_mouseup", function(target) {
+          n.removeLineOfPosition();
+        })
       }, BasePrintElement.prototype.getPrintElementEntity = function (t) {
         return t ? new _entity_PrintElementEntity__WEBPACK_IMPORTED_MODULE_0__.a(void 0, this.options.getPrintElementOptionEntity(), this.printElementType.getPrintElementTypeEntity()) : new _entity_PrintElementEntity__WEBPACK_IMPORTED_MODULE_0__.a(this.printElementType.tid, this.options.getPrintElementOptionEntity());
       }, BasePrintElement.prototype.submitOption = function () {
@@ -1452,9 +1458,9 @@ var hiprint = function (t) {
           n = $(".leftlineOfPosition" + this.id),
           i = $(".rightlineOfPosition" + this.id),
           o = $(".bottomlineOfPosition" + this.id);
-        if (e.length ? e.css("top", this.options.displayTop()) : ((e = $('<div class="toplineOfPosition' + this.id + '" style="border:0;border-top:1px dashed  rgb(169, 169, 169);position: absolute; width: 100%;"></div>')).css("top", this.options.displayTop()), e.css("width", t.displayWidth()), this.designTarget.parents(".hiprint-printPaper-content").append(e)), n.length) n.css("left", this.options.displayLeft()); else {
+        if (e.length ? e.css("top", this.options.displayTop(true)) : ((e = $('<div class="toplineOfPosition' + this.id + '" style="border:0;border-top:1px dashed  rgb(169, 169, 169);position: absolute; width: 100%;"></div>')).css("top", this.options.displayTop(true)), e.css("width", t.displayWidth()), this.designTarget.parents(".hiprint-printPaper-content").append(e)), n.length) n.css("left", this.options.displayLeft(true)); else {
           var r = $('<div class="leftlineOfPosition' + this.id + '" style="border:0;border-left:1px dashed  rgb(169, 169, 169);position: absolute;height: 100%;"></div>');
-          r.css("left", this.options.displayLeft()), r.css("height", t.displayHeight()), this.designTarget.parents(".hiprint-printPaper-content").append(r);
+          r.css("left", this.options.displayLeft(true)), r.css("height", t.displayHeight()), this.designTarget.parents(".hiprint-printPaper-content").append(r);
         }
         if (i.length) i.css("left", this.options.getLeft() + this.options.getWidth() + "pt"); else {
           var a = $('<div class="rightlineOfPosition' + this.id + '" style="border:0;border-left:1px dashed  rgb(169, 169, 169);position: absolute;height: 100%;"></div>');
@@ -5784,6 +5790,7 @@ var hiprint = function (t) {
         }), i.options.onResize(e, void 0, void 0, i.options.noDrag ? void 0 : i.numHandler(l + E), i.options.noDrag ? void 0 : i.numHandler(s + n)));
       }).on("mouseup", function (t) {
         // i.options.onStopResize(rt);
+        hinnn.event.trigger('hiprintTemplate_doc_mouseup', u);
         d = !1, c = !1, h = !1, f = !1, g = !1, m = !1, y = !1, v = !1, b = !1, rt = !1;
       });
     },
