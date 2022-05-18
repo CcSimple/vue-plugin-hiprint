@@ -8229,6 +8229,7 @@ var hiprint = function (t) {
         var n = t || {};
         this.printPanels = [];
         this.dataMode = n.dataMode || 1;
+        this.history = n.history != void 0 ? n.history : !0;
         this.onDataChanged = n.onDataChanged;
         this.lastJson = n.template || {};
         this.historyList = [{ id: s.a.instance.guid(), type: '初始', json: this.lastJson }];
@@ -8598,6 +8599,7 @@ var hiprint = function (t) {
       }, t.prototype.initAutoSave = function () {
         var t = this;
         o.a.event.on("hiprintTemplateDataShortcutKey_" + this.id, function (key) {
+          if (!t.history) return;
           switch (key) {
             case "undo":
               if (t.historyPos > 0) {
@@ -8616,18 +8618,20 @@ var hiprint = function (t) {
           }
         });
         o.a.event.on("hiprintTemplateDataChanged_" + this.id, function (type) {
-          var j = 1 == t.dataMode ? t.getJson() : t.getJsonTid()
-          t.lastJson = j;
-          if (t.historyPos < t.historyList.length - 1) {
-            t.historyList = t.historyList.slice(0, t.historyPos + 1);
+          if (t.history) {
+            var j = 1 == t.dataMode ? t.getJson() : t.getJsonTid()
+            t.lastJson = j;
+            if (t.historyPos < t.historyList.length - 1) {
+              t.historyList = t.historyList.slice(0, t.historyPos + 1);
+            }
+            t.historyList.push({ id: s.a.instance.guid(), type: type, json: j });
+            if (t.historyList.length > 50) {
+              t.historyList = t.historyList.slice(0, 1).concat(t.historyList.slice(1,50));
+            } else {
+              t.historyPos += 1;
+            }
+            t.onDataChanged && t.onDataChanged(type, j);
           }
-          t.historyList.push({ id: s.a.instance.guid(), type: type, json: j });
-          if (t.historyList.length > 50) {
-            t.historyList = t.historyList.slice(0, 1).concat(t.historyList.slice(1,50));
-          } else {
-            t.historyPos += 1;
-          }
-          t.onDataChanged && t.onDataChanged(type, j);
         });
       }, t;
     }();
