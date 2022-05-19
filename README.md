@@ -292,6 +292,7 @@ autoConnect((status,msg) => {
 - [x] `调整优化以支持Vue3.x` 调整qrcode.js fix vite项目报错问题
 - [x] `元素添加禁止拖拽` panels[n]printElements[m]options.draggable true、false
 - [x] `添加对齐api` hiprintTemplate.setElsAlign
+- [x] `表格字段添加聚合功能` 表格字段配置 options.columns[n]tableSummary
 
 |setElsAlign 参数说明|说明|
 |---|---|
@@ -303,6 +304,15 @@ autoConnect((status,msg) => {
 |bottom|底部对齐|
 |distributeHor|横向分散|
 |distributeVer|纵向分散|
+
+|tableSummary 参数说明|说明|
+|---|---|
+|-(缺省或不匹配)|不聚合|
+|count|计数|
+|sum|合计|
+|avg|平均值|
+|min|最小值|
+|max|最大值|
 
 ### 咳咳..
 第一次写插件(webpack打包这些都不太了解)，不合理的地方欢迎指正<a href="https://github.com/CcSimple/vue-plugin-hiprint/issues">issues</a>。
