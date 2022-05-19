@@ -729,9 +729,6 @@ var hiprint = function (t) {
             name: "autoCompletion",
             hidden: !1
           }, {
-            name: 'tableSummary',
-            hidden: !1
-          }, {
             name: "tableFooterRepeat",
             hidden: !1
           }],
@@ -906,6 +903,9 @@ var hiprint = function (t) {
             hidden: !1
           }, {
             name: "formatter2",
+            hidden: !1
+          }, {
+            name: "tableSummary",
             hidden: !1
           }, {
             name: "styler2",
@@ -1769,7 +1769,7 @@ var hiprint = function (t) {
     }(),
     u = function () {
       return function (t) {
-        this.title = t.title, this.field = t.field, this.width = t.width, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.colspan = t.colspan, this.rowspan = t.rowspan, this.checked = t.checked, this.columnId = t.columnId, this.formatter2 = t.formatter2, this.styler2 = t.styler2,this.tableColumnHeight = t.tableColumnHeight,this.tableTextType = t.tableTextType,this.tableBarcodeMode = t.tableBarcodeMode;
+        this.title = t.title, this.field = t.field, this.width = t.width, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.colspan = t.colspan, this.rowspan = t.rowspan, this.checked = t.checked, this.columnId = t.columnId, this.tableSummary = t.tableSummary, this.formatter2 = t.formatter2, this.styler2 = t.styler2,this.tableColumnHeight = t.tableColumnHeight,this.tableTextType = t.tableTextType,this.tableBarcodeMode = t.tableBarcodeMode;
       };
     }(),
     d = function () {
@@ -1925,7 +1925,6 @@ var hiprint = function (t) {
             }).map(function (row) {
               return new RegExp("^-?(0|[1-9]\\d*)(\\.\\d+)?").test(row[column.field]) ? Number(row[column.field]) : 0;
             });
-            console.log(fieldData);
             switch (column.tableSummary) {
               case "count":
                 tableFooter.append(`<td style="text-align: center">计数:${tSumData.length || 0}</td>`);
@@ -3943,7 +3942,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new C(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new it(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept()], t;
+    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new C(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new it(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept(), new tableSummary()], t;
   }();
 }, function (t, e, n) {
   "use strict";
