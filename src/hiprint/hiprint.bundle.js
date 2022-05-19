@@ -4367,6 +4367,7 @@ var hiprint = function (t) {
                   d.find("tbody").length && d.find("tbody").append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, this.getData(t), this.options, this.printElementType, t, h).html());
                 }
               }
+              break;
             }
           }
         }
