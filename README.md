@@ -80,7 +80,7 @@ npm install vue-plugin-hiprint
 // 在index.html 文件中添加打印所需样式: 当然你也可以调整成 相对链接/自有链接
 <link rel="stylesheet" type="text/css" media="print" href="https://cdn.jsdelivr.net/npm/vue-plugin-hiprint@latest/dist/print-lock.css">
 ```
-## 全局使用
+## 使用示例
 ```javascript
 // main.js中 引入安装
 import {hiPrintPlugin} from 'vue-plugin-hiprint'
@@ -283,7 +283,7 @@ autoConnect((status,msg) => {
 - [x] `新增支持设置是否自动连接客户端` 支持 不自动连接'直接打印'客户端
 - [x] `新增支持表格设置列显示类型` 支持 设置表格列显示图片、二维码、条形码
 - [x] `调整优化表格列拖拽列宽限制` fix 设置旋转角度后 拖拽、跳动、辅助线相关问题
-- [x] `npm包新增提供Api打印方法` 全局引入时，Vue原型添加print、print2Api，方便直接打印
+- [x] `npm包新增提供Api打印方法` main.js引入时，Vue原型添加print、print2Api，方便直接打印
 - [x] `新增支持多选功能` 按住ctrl/command 多选元素 键盘/鼠标拖动 移动
 - [x] `调整优化元素设置旋转角度问题` fix 设置旋转角度后 拖拽、跳动、辅助线相关问题
 - [x] `新增支持元素拖拽旋转` 基本元素上新增旋转控制点，拖拽旋转、双击还原
@@ -320,42 +320,10 @@ autoConnect((status,msg) => {
 简单的修改了下`hiprint.bundle.js`引入了相关资源,然后`export hiprint,defaultElementTypeProvider`
 #### 详见源码<a href="https://github.com/CcSimple/vue-plugin-hiprint">vue-plugin-hiprint</a>
 
-#### 呃呃.. 记录一下处理过程
-> webpack 配置， 注意：这里是npm包处理过程, 如果想自己融合，请看vue.config.js, 对比hiprint.bundle.js
-```javascript
-{
-  // 引用本地资源, 一些源码中 require('xxx') 需要处理
-  resolve: {
-    alias: {
-      'vue$': 'vue/dist/vue.esm.js',
-      'jquery$': path.resolve(__dirname, "./src/hiprint/plugins/jq-3.31.js"),
-      // 这两个资源在 plugins/jspdf/canvg.min.js 中的需要
-      'rgbcolor$': path.resolve(__dirname, "./src/hiprint/plugins/jspdf/rgbcolor.js"),
-      'stackblur-canvas$': path.resolve(__dirname, "./src/hiprint/plugins/jspdf/stackblur-canvas.js"),
-    }
-  },
-  // 全局jQuery问题
-  plugins: [
-    new webpack.ProvidePlugin({
-      jQuery: "jquery",
-      $: "jquery"
-    }),
-  ],
-  // 资源处理
-  module: {
-    rules: [
-      // url-loader 处理 jquery.minicolors.png， 转成base64
-      {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'url-loader',
-        options: {
-          name: '[name].[ext]'
-        }
-      }
-    ]
-  }
-}
-```
+### 关于如何融合处理
+> 自己融合请查看 vue.config.js 对比 hiprint.bundle.js
+
+> webpack.config.js，是npm打包需要处理的
 
 
 [npm]: https://img.shields.io/npm/v/vue-plugin-hiprint.svg
