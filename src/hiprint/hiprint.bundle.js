@@ -4258,7 +4258,7 @@ var hiprint = function (t) {
         if (!this.getField() && this.options.content) return (n = $("<div></div>")).append(this.options.content), (i = n.find("table")).addClass("hiprint-printElement-tableTarget"), i;
         if (this.printElementType.formatter) return (n = $("<div></div>")).append(this.printElementType.formatter(t)), (i = n.find("table")).addClass("hiprint-printElement-tableTarget"), i;
         var o = $('<table class="hiprint-printElement-tableTarget" style="border-collapse: collapse;"></table>');
-        return o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableHead(this.getColumns(), this.options.getWidth() / this.options.getGridColumns())), o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableRow(this.getColumns(), t, this.options, this.printElementType)), o;
+        return o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableHead(this.getColumns(), this.options.getWidth() / this.options.getGridColumns())), o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableRow(this.getColumns(), t, this.options, this.printElementType)),"no" == this.options.tableFooterRepeat || ("last" == this.options.tableFooterRepeat ? o.find("tbody").append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, t, this.options, this.printElementType, e, t).html()) : o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, t, this.options, this.printElementType, e, []))), o;
       }, TablePrintElement.prototype.getEmptyRowTarget = function () {
         return _table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createEmptyRowTarget(this.getColumns());
       }, TablePrintElement.prototype.getHtml = function (t, e) {
@@ -4360,7 +4360,7 @@ var hiprint = function (t) {
 
             if (c) {
               // 这里是table 没有tfoot, 后面再看什么原因...
-              if ("last" == this.options.tableFooterRepeat && !c.isEnd) break;
+              if ("last" == this.options.tableFooterRepeat) break;
               if (this.options.tableFooterRepeat != "no") {
                 if (d.find("tfoot").length) {
                   d.find("tfoot").html(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, this.getData(t), this.options, this.printElementType, t, h).html());
@@ -4368,7 +4368,6 @@ var hiprint = function (t) {
                   d.find("tbody").length && d.find("tbody").append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, this.getData(t), this.options, this.printElementType, t, h).html());
                 }
               }
-              break;
             }
           }
         }
