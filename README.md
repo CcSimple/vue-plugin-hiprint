@@ -293,6 +293,7 @@ autoConnect((status,msg) => {
 - [x] `元素添加禁止拖拽` panels[n]printElements[m]options.draggable true、false
 - [x] `添加对齐api` hiprintTemplate.setElsAlign
 - [x] `表格字段添加聚合功能` 表格字段配置 options.columns[n]tableSummary
+- [x] `新增支持操作历史记录` 支持ctrl/command+(shift)+z 撤销重做, 并提供hiprintTemplate的undo,redo方法
 
 |setElsAlign 参数说明|说明|
 |---|---|
