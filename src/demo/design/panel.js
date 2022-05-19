@@ -143,9 +143,10 @@ export default {
       "options": {
         "left": 60,
         "top": 285,
-        "height": 44,
+        "height": 56,
         "width": 511.5,
         "field": "table",
+        "tableFooterRepeat": "",
         "fields": [{"text":'id',"field":'id'},{"text":'姓名',"field":'name'},{"text":'性别',"field":'gender'},{"text":'数量',"field":'count'}],
         "columns": [[{"width": 85.25, "colspan": 1, "rowspan": 1, "checked": true}, {
           "width": 85.25,
@@ -160,7 +161,17 @@ export default {
           "colspan": 1,
           "rowspan": 1,
           "checked": true,
-        }, {"width": 85.25, "colspan": 1, "rowspan": 1, "checked": true}, {
+          "tableSummary": "count"
+        }, {
+          "title": "数量",
+          "field": "count",
+          "width": 85.25,
+          "align": "center",
+          "colspan": 1,
+          "rowspan": 1,
+          "checked": true,
+          "tableSummary": "sum"
+		    }, {
           "width": 85.25,
           "colspan": 1,
           "rowspan": 1,
@@ -190,7 +201,7 @@ export default {
     }, {
       "options": {
         "left": 225,
-        "top": 349.5,
+        "top": 355,
         "height": 13,
         "width": 346.5,
         "title": "自定义模块：主要为开发人员设计，能够快速，简单，实现自己功能",

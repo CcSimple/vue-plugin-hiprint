@@ -412,7 +412,6 @@
                 name: 'tableBodyCellBorder',
                 hidden: false
             },
-
             {
                 name: 'axis',
                 hidden: false
@@ -461,8 +460,6 @@
                 hidden: false
 
             }
-
-
             ],
             default: {
 
@@ -538,8 +535,8 @@
             {
                 name: 'autoCompletion',
                 hidden: false
-            }, {
-
+            },
+            {
                 name: 'tableFooterRepeat',
                 hidden: false
             }
@@ -751,6 +748,10 @@
                 },
                 {
                     name: 'paddingRight',
+                    hidden: false
+                },
+                {
+                    name: 'tableSummary',
                     hidden: false
                 },
                 {
