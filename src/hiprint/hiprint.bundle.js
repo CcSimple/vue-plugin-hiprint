@@ -1914,7 +1914,7 @@ var hiprint = function (t) {
 
         return TableExcelHelper.syncTargetWidthToOption(t), i;
       }, TableExcelHelper.createTableFooter = function (t, e, n, i, o, r) {
-        // n=>options e=>表格所有数据 o=>所有打印数据 r=>表格每页数据 
+        // n=>options e=>表格所有数据 o=>所有打印数据 r=>表格每页数据
         var a = $("<tfoot></tfoot>"),p = this.getFooterFormatter(n, i);
         let tSumData = n.tableFooterRepeat == "last" ? e : r;
         if (n.tableFooterRepeat != 'no' && n.columns[0].columns.some(function (column) {return column.tableSummary})) {
@@ -6551,7 +6551,7 @@ var hiprint = function (t) {
 
       return t.prototype.subscribePaperBaseInfoChanged = function (t) {
         this.onPaperBaseInfoChanged = t;
-      }, t.prototype.triggerOnPaperBaseInfoChanged = function () {
+      }, t.prototype.triggerOnPaperBaseInfoChanged = function (t) {
         this.onPaperBaseInfoChanged && this.onPaperBaseInfoChanged({
           panelPageRule: this.panelPageRule,
           scale: this.scale,
@@ -6562,7 +6562,7 @@ var hiprint = function (t) {
           paperNumberDisabled: this.paperNumberDisabled,
           paperNumberFormat: this.paperNumberFormat
         });
-        o.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "模板调整");
+        o.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, t || "模板调整");
       }, t.prototype.setFooter = function (t, e, n, i) {
         this.firstPaperFooter = t, this.evenPaperFooter = e, this.oddPaperFooter = n, this.lastPaperFooter = i;
       }, t.prototype.setOffset = function (t, e) {
@@ -6602,7 +6602,7 @@ var hiprint = function (t) {
       }, t.prototype.design = function (t) {
         var e = this;
         this.createHeaderLine(), this.createFooterLine(), this.target.addClass("design"), this.paperNumberTarget = this.createPaperNumber(this.formatPaperNumber(1, 1)), this.createRuler(), this.resetPaperNumber(this.paperNumberTarget), $(this.paperNumberTarget).bind("dblclick.hiprint", function () {
-          null == e.paperNumberDisabled && (e.paperNumberDisabled = !1), e.paperNumberDisabled = !e.paperNumberDisabled, e.resetPaperNumber(e.paperNumberTarget), e.triggerOnPaperBaseInfoChanged();
+          null == e.paperNumberDisabled && (e.paperNumberDisabled = !1), e.paperNumberDisabled = !e.paperNumberDisabled, e.resetPaperNumber(e.paperNumberTarget), e.triggerOnPaperBaseInfoChanged("初始");
         }), $(this.paperNumberTarget).bind("click.hiprint", function () {
           o.a.event.trigger("BuildCustomOptionSettingEventKey_" + e.templateId, {
             options: {
@@ -6651,7 +6651,7 @@ var hiprint = function (t) {
         this.paperNumberTop = this.paperNumberTop > this.height ? this.paperNumberTop = parseInt((this.height - 22).toString()) : this.paperNumberTop;
         this.paperNumberTarget.css("top", this.paperNumberTop + "pt"),
         this.paperNumberTarget.css("left", this.paperNumberLeft + "pt"),
-        this.triggerOnPaperBaseInfoChanged();
+        this.triggerOnPaperBaseInfoChanged("调整大小");
       }, t.prototype.zoom = function (s) {
         if (s) {
           this.scale = s, this.target.css("transform", "scale(" + s + ")");
@@ -6661,7 +6661,7 @@ var hiprint = function (t) {
             this.target.css("transform-origin", "0 0");
           }
         }
-        this.triggerOnPaperBaseInfoChanged();
+        this.triggerOnPaperBaseInfoChanged("缩放");
       }, t.prototype.getPaperFooter = function (t) {
         var e = this.index + t;
         return 0 == e ? this.firstPaperFooter ? this.firstPaperFooter : this.oddPaperFooter ? this.oddPaperFooter : this.paperFooter : e % 2 == 0 ? this.oddPaperFooter ? this.oddPaperFooter : this.paperFooter : e % 2 == 1 ? this.evenPaperFooter ? this.evenPaperFooter : this.paperFooter : void 0;
@@ -8295,7 +8295,7 @@ var hiprint = function (t) {
         this.history = n.history != void 0 ? n.history : !0;
         this.onDataChanged = n.onDataChanged;
         this.lastJson = n.template || {};
-        this.historyList = [{ id: s.a.instance.guid(), type: '初始', json: this.lastJson }];
+        this.historyList = [];
         this.historyPos = 0;
         var i = new st(n.template || []);
         n.template && i.panels.forEach(function (t) {
