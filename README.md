@@ -80,11 +80,12 @@ npm install vue-plugin-hiprint
 // 在index.html 文件中添加打印所需样式: 当然你也可以调整成 相对链接/自有链接
 <link rel="stylesheet" type="text/css" media="print" href="https://cdn.jsdelivr.net/npm/vue-plugin-hiprint@latest/dist/print-lock.css">
 ```
-## 使用示例
+## 插件引入
 ```javascript
 // main.js中 引入安装
 import {hiPrintPlugin} from 'vue-plugin-hiprint'
 Vue.use(hiPrintPlugin, '$pluginName')
+hiPrintPlugin.disAutoConnect(); // 取消自动连接直接打印客户端
 // 然后使用
 this.$pluginName
 
@@ -115,6 +116,28 @@ hiprintTemplate.print({});
 //直接打印，需要安装客户端
 hiprintTemplate.print2({});
 ```
+
+## 组件引入
+```javascript
+import {autoConnect, disAutoConnect, hiprint, defaultElementTypeProvider} from 'vue-plugin-hiprint'
+// autoConnect(); // 默认 自动连接直接打印客户端
+disAutoConnect(); // 取消自动连接直接打印客户端
+
+hiprint.init();
+var hiprintTemplate = new hiprint.PrintTemplate();
+var panel = hiprintTemplate.addPrintPanel({ width: 100, height: 130, paperFooter: 340, paperHeader: 10 });
+//文本
+panel.addPrintText({ options: { width: 140, height: 15, top: 20, left: 20, title: 'hiprint插件手动添加text', textAlign: 'center' } });
+//条形码
+panel.addPrintText({ options: { width: 140, height: 35, top: 40, left: 20, title: '123456', textType: 'barcode' } });
+//二维码
+panel.addPrintText({ options: { width: 35, height: 35, top: 40, left: 165, title: '123456', textType: 'qrcode' } });
+//长文本
+panel.addPrintLongText({ options: { width: 180, height: 35, top: 90, left: 20, title: '长文本：hiprint是一个很好的webjs打印,浏览器在的地方他都可以运行' } });
+//打印
+hiprintTemplate.print({});
+```
+
 ## 自定义设计 （详情查看demo目录）
 ```javascript
 import {hiprint,defaultElementTypeProvider} from 'vue-plugin-hiprint'
