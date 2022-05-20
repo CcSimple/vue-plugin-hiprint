@@ -6346,7 +6346,7 @@ var hiprint = function (t) {
       }, t.prototype.removePrintElementTypes = function (t) {
         var n = this;
         delete n[t], n.allElementTypes = n.allElementTypes.filter(function (e) {
-          return e.tid.startsWith(t)
+          return !e.tid.startsWith(t)
         });
       }, t.prototype.getElementTypeGroups = function (t) {
         return this[this.formatterModule(t)] || [];
