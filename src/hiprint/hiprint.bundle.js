@@ -37,26 +37,23 @@ function _typeof(obj) {
  */
 // 调用浏览器打印js
 import './plugins/jquery.hiwprint.js'
-// js打印
-import './plugins/jquery.jqprint-0.3'
 // js颜色选择
-import './plugins/jquery.minicolors.min.js'
+import '@claviska/jquery-minicolors'
 // 条形码
-import './plugins/JsBarcode.all.min.js'
+import JsBarcode from 'jsbarcode'
 // 二维码
 import './plugins/qrcode.js'
 // 直接打印需要
-import io from './plugins/socket.io'
+import { io } from "socket.io-client";
+window.io = io;
 //引入标尺
 import lImg from './css/image/l_img.svg'
 import vImg from './css/image/v_img.svg'
-window.io = io;
 // pdf
-import jsPDF from './plugins/jspdf/jspdf.min.js'
-import html2canvas from './plugins/jspdf/html2canvas.min.js'
+import { jsPDF } from 'jspdf'
+import html2canvas from 'html2canvas'
 // 解析svg 到 canvas, 二维码条形码需要
-import './plugins/jspdf/canvas2image.js'
-import canvg from './plugins/jspdf/canvg.min.js'
+import { Canvg } from 'canvg'
 
 var hiprint = function (t) {
   var e = {};
@@ -8524,8 +8521,9 @@ var hiprint = function (t) {
         t.find("svg").each(function (t, e) {
           var n = e.parentNode,
             i = document.createElement("canvas"),
+            ctx = i.getContext('2d'),
             o = new XMLSerializer().serializeToString(e);
-          canvg(i, o), $(e).before(i), n.removeChild(e), $(i).css("width", "100%"), $(i).css("height", "100%");
+          Canvg.fromString(ctx, o).start(), $(e).before(i), n.removeChild(e), $(i).css("width", "100%"), $(i).css("height", "100%");
         });
       }, t.prototype.on = function (t, e) {
         o.a.event.on(t + "_" + this.id, e);

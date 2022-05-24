@@ -3,19 +3,7 @@ require('./hiprint/hiprint.config')
 // 样式
 import "./hiprint/css/hiprint.css"
 import "./hiprint/css/print-lock.css"
-/**
- * 使用 hiprint 提供的 jq-3.31
- * 见webpack.config
- * alias: {
- *     'jquery$': path.resolve(__dirname, "./src/hiprint/plugins/jq-3.31.js")
- *   },
- * plugins: [
- *    new webpack.ProvidePlugin({
- *     jQuery: "jquery",
- *     $: "jquery"
- *   }),
- * ]
- */
+
 function initJquery() {
   if (window !== undefined) {
     window.jQuery = window.$ = jQuery;

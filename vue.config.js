@@ -18,7 +18,14 @@ module.exports = {
           "core-js": "^3.6.5",
           "vue": "^2.5.11",
           "concurrent-tasks": "^1.0.7",
-          "vue-ls": "^4.0.0"
+          "vue-ls": "^4.0.0",
+          "@claviska/jquery-minicolors": "^2.3.6",
+          "canvg": "^4.0.0",
+          "html2canvas": "^1.4.1",
+          "jquery": "^3.6.0",
+          "jsbarcode": "^3.11.5",
+          "jspdf": "^2.5.1",
+          "socket.io-client": "^3.1.3"
         }
       }
       return args
@@ -33,9 +40,6 @@ module.exports = {
     ],
     resolve: {
       alias: {
-        'jquery$': path.resolve(__dirname, "./src/hiprint/plugins/jq-3.31.js"),
-        'rgbcolor$': path.resolve(__dirname, "./src/hiprint/plugins/jspdf/rgbcolor.js"),
-        'stackblur-canvas$': path.resolve(__dirname, "./src/hiprint/plugins/jspdf/stackblur-canvas.js"),
       },
       extensions: ['*', '.js', '.vue', '.json']
     },

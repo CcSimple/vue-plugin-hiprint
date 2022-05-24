@@ -76,9 +76,6 @@ module.exports = {
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      'jquery$': path.resolve(__dirname, "./src/hiprint/plugins/jq-3.31.js"),
-      'rgbcolor$': path.resolve(__dirname, "./src/hiprint/plugins/jspdf/rgbcolor.js"),
-      'stackblur-canvas$': path.resolve(__dirname, "./src/hiprint/plugins/jspdf/stackblur-canvas.js"),
     },
     extensions: ['*', '.js', '.vue', '.json']
   },
