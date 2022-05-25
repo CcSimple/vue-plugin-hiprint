@@ -625,6 +625,12 @@ var hiprint = function (t) {
             name: "tableBodyCellBorder",
             hidden: !1
           }, {
+            name: 'tableFooterBorder',
+            hidden: !1
+          }, {
+            name: 'tableFooterCellBorder',
+            hidden: !1
+          }, {
             name: "axis",
             hidden: !1
           }, {
@@ -668,6 +674,8 @@ var hiprint = function (t) {
             tableHeaderRowHeight: void 0,
             tableHeaderFontWeight: void 0,
             tableBodyCellBorder: void 0,
+            tableFooterBorder: void 0,
+            tableFooterCellBorder: void 0,
             tableBodyRowHeight: void 0,
             letterSpacing: "",
             lineHeight: void 0,
@@ -717,6 +725,12 @@ var hiprint = function (t) {
             name: "tableBodyCellBorder",
             hidden: !1
           }, {
+            name: 'tableFooterBorder',
+            hidden: !1
+          }, {
+            name: 'tableFooterCellBorder',
+            hidden: !1
+          }, {
             name: "axis",
             hidden: !1
           }, {
@@ -741,6 +755,8 @@ var hiprint = function (t) {
             tableHeaderRowHeight: void 0,
             tableHeaderFontWeight: void 0,
             tableBodyCellBorder: void 0,
+            tableFooterBorder: void 0,
+            tableFooterCellBorder: void 0,
             tableBodyRowHeight: void 0,
             letterSpacing: "",
             lineHeight: void 0,
@@ -2380,7 +2396,7 @@ var hiprint = function (t) {
 
       return t.prototype.css = function (t, e) {
         if (t.find("table").length) {
-          if ("border" == e) return t.find("table").css("border", "1px solid"), "border:1px solid";
+          if ("border" == e || void 0 == e) return t.find("table").css("border", "1px solid"), "border:1px solid";
           "noBorder" == e ? t.find("table").css("border", "0px solid") : t.find("table")[0].style.border = "";
         }
 
@@ -2403,7 +2419,7 @@ var hiprint = function (t) {
 
       return t.prototype.css = function (t, e) {
         if (t.find("thead tr").length) {
-          if ("border" == e) return t.find("thead tr").css("border", "1px solid"), "border:1pt solid";
+          if ("border" == e || void 0 == e) return t.find("thead tr").css("border", "1px solid"), "border:1pt solid";
           "noBorder" == e ? t.find("thead tr").css("border", "0px solid") : "topBorder" == e ? (t.find("thead tr").css("border", "0px solid"), t.find("thead tr").css("border-top", "1px solid")) : "bottomBorder" == e ? (t.find("thead tr").css("border", "0px solid"), t.find("thead tr").css("border-bottom", "1px solid")) : "topBottomBorder" == e ? (t.find("thead tr").css("border", "0px solid"), t.find("thead tr").css("border-top", "1px solid"), t.find("thead tr").css("border-bottom", "1px solid")) : t.find("thead tr").map(function (t, e) {
             e.style.border = "";
           });
@@ -2428,7 +2444,7 @@ var hiprint = function (t) {
 
       return t.prototype.css = function (t, e) {
         if (t.find("thead tr td").length) {
-          if ("border" == e) return t.find("thead tr td").css("border", "1px solid"), "border:1px solid";
+          if ("border" == e || void 0 == e) return t.find("thead tr td").css("border", "1px solid"), "border:1px solid";
           "noBorder" == e ? t.find("thead tr td").css("border", "0px solid") : t.find("thead tr td").map(function (t, e) {
             e.style.border = "";
           });
@@ -2437,6 +2453,56 @@ var hiprint = function (t) {
         return null;
       }, t.prototype.createTarget = function () {
         return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        表头单元格边框\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>    \n        <option value="border" >有边框</option>\n        <option value="noBorder" >无边框</option>\n      \n        </select>\n        </div>\n    </div>'), this.target;
+      }, t.prototype.getValue = function () {
+        var t = this.target.find("select").val();
+        if (t) return t.toString();
+      }, t.prototype.setValue = function (t) {
+        this.target.find("select").val(t);
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
+    d2 = function () {
+      function t() {
+        this.name = "tableFooterBorder";
+      }
+
+      return t.prototype.css = function (t, e) {
+        if (t.find("tfoot tr").length) {
+          if ("border" == e || void 0 == e) return t.find("tfoot tr").css("border", "1px solid"), "border:1pt solid";
+          "noBorder" == e ? t.find("tfoot tr").css("border", "0px solid") : "topBorder" == e ? (t.find("tfoot tr").css("border", "0px solid"), t.find("tfoot tr").css("border-top", "1px solid")) : "bottomBorder" == e ? (t.find("tfoot tr").css("border", "0px solid"), t.find("tfoot tr").css("border-bottom", "1px solid")) : "topBottomBorder" == e ? (t.find("tfoot tr").css("border", "0px solid"), t.find("tfoot tr").css("border-top", "1px solid"), t.find("tfoot tr").css("border-bottom", "1px solid")) : t.find("tfoot tr").map(function (t, e) {
+            e.style.border = "";
+          });
+        }
+
+        return null;
+      }, t.prototype.createTarget = function () {
+        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        表尾边框\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>    \n        <option value="border" >有边框</option>\n        <option value="noBorder" >无边框</option>\n        <option value="topBorder" >上边框</option>\n        <option value="bottomBorder" >下边框</option>\n        <option value="topBottomBorder" >上下边框</option>\n        </select>\n        </div>\n    </div>'), this.target;
+      }, t.prototype.getValue = function () {
+        var t = this.target.find("select").val();
+        if (t) return t.toString();
+      }, t.prototype.setValue = function (t) {
+        this.target.find("select").val(t);
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
+    c2 = function () {
+      function t() {
+        this.name = "tableFooterCellBorder";
+      }
+
+      return t.prototype.css = function (t, e) {
+        if (t.find("tfoot tr td").length) {
+          if ("border" == e || void 0 == e) return t.find("tfoot tr td").css("border", "1px solid"), "border:1px solid";
+          "noBorder" == e ? t.find("tfoot tr td").css("border", "0px solid") : t.find("tfoot tr td").map(function (t, e) {
+            e.style.border = "";
+          });
+        }
+
+        return null;
+      }, t.prototype.createTarget = function () {
+        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        表尾单元格边框\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>    \n        <option value="border" >有边框</option>\n        <option value="noBorder" >无边框</option>\n      \n        </select>\n        </div>\n    </div>'), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
         if (t) return t.toString();
@@ -2531,7 +2597,7 @@ var hiprint = function (t) {
 
       return t.prototype.css = function (t, e) {
         if (t.find("tbody tr td").length) {
-          if ("border" == e) return t.find("tbody tr td").css("border", "1px solid"), "border:1px solid";
+          if ("border" == e || void 0 == e) return t.find("tbody tr td").css("border", "1px solid"), "border:1px solid";
           "noBorder" == e ? t.find("tbody tr td").css("border", "0px solid") : t.find("tbody tr td").map(function (t, e) {
             e.style.border = "";
           });
@@ -2539,7 +2605,7 @@ var hiprint = function (t) {
 
         return null;
       }, t.prototype.createTarget = function () {
-        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n            表体单元格\n        </div>\n        <div class="hiprint-option-item-field">\n            <select class="auto-submit">\n            <option value="" >默认</option>\n            <option value="border" >有边框</option>\n            <option value="noBorder" >无边框</option>\n            </select>\n        </div>\n    </div>'), this.target;
+        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n            表体单元格边框\n        </div>\n        <div class="hiprint-option-item-field">\n            <select class="auto-submit">\n            <option value="" >默认</option>\n            <option value="border" >有边框</option>\n            <option value="noBorder" >无边框</option>\n            </select>\n        </div>\n    </div>'), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
         if (t) return t.toString();
@@ -3058,7 +3124,7 @@ var hiprint = function (t) {
 
       return t.prototype.css = function (t, e) {
         if (t.find("tbody tr").length) {
-          if ("border" == e) return t.find("tbody tr").css("border", "1px solid"), "border:1pt solid";
+          if ("border" == e || void 0 == e) return t.find("tbody tr").css("border", "1px solid"), "border:1pt solid";
           "noBorder" == e ? t.find("tbody tr").css("border", "0px solid") : "topBorder" == e ? (t.find("tbody tr").css("border", "0px solid"), t.find("tbody tr").css("border-top", "1px solid")) : "bottomBorder" == e ? (t.find("tbody tr").css("border", "0px solid"), t.find("tbody tr").css("border-bottom", "1px solid")) : "topBottomBorder" == e ? (t.find("tbody tr").css("border", "0px solid"), t.find("tbody tr").css("border-top", "1px solid"), t.find("tbody tr").css("border-bottom", "1px solid")) : t.find("tbody tr").map(function (t, e) {
             e.style.border = "";
           });
@@ -3939,7 +4005,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new C(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new it(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept(), new tableSummary()], t;
+    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new C(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new it(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept(), new tableSummary()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -4204,15 +4270,16 @@ var hiprint = function (t) {
         return this.options.getColumnByColumnId(t);
       }, TablePrintElement.prototype.updateDesignViewFromOptions = function () {
         if (this.designTarget) {
-          this.css(this.designTarget, this.getData());
           var t = this.designTarget.find(".hiprint-printElement-table-content"),
             e = this.getHtml(this.designPaper);
           t.html(""), t.append(e[0].target.find(".table-grid-row")), this.printElementType.editable && this.setHitable(), this.setColumnsOptions();
+          // 渲染完再处理样式 ==> fix 表脚边框参数设置问题
+          this.css(this.designTarget, this.getData());
         }
       }, TablePrintElement.prototype.css = function (t, e) {
         if ((this.getField() || !this.options.content) && !this.printElementType.formatter) return _super.prototype.css.call(this, t, e);
       }, TablePrintElement.prototype.getDesignTarget = function (t) {
-        return this.designTarget = this.getHtml(t)[0].target, this.designPaper = t, this.designTarget.find("td").hidroppable({
+        return this.designTarget = this.getHtml(t)[0].target, this.css(this.designTarget, this.getData()), this.designPaper = t, this.designTarget.find("td").hidroppable({
           accept: ".rn-draggable-item",
           onDrop: function onDrop(t, e) {
           },
@@ -7377,14 +7444,16 @@ var hiprint = function (t) {
 
       return Y(e, t), e.prototype.updateDesignViewFromOptions = function () {
         if (this.designTarget) {
-          this.css(this.designTarget, this.getData());
           var t = this.designTarget.find(".hiprint-printElement-table-content"),
             e = this.getHtml(this.designPaper);
-          t.html(""), t.append(e[0].target.find(".hiprint-printElement-tableTarget")), this.setHiReizeable();
+          t.html(""), t.append(e[0].target.find(".hiprint-printElement-tableTarget"));
+            // 渲染完再处理样式 ==> fix 表脚边框参数设置问题
+            this.css(this.designTarget, this.getData()),
+            this.setHiReizeable();
         }
       }, e.prototype.getDesignTarget = function (t) {
         var e = this;
-        return this.designTarget = this.getHtml(t)[0].target, this.designPaper = t, this.designTarget.click(function () {
+        return this.designTarget = this.getHtml(t)[0].target, this.css(this.designTarget, this.getData()), this.designPaper = t, this.designTarget.click(function () {
           o.a.event.trigger(e.getPrintElementSelectEventKey(), {
             printElement: e
           });
