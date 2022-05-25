@@ -8477,7 +8477,7 @@ var hiprint = function (t) {
           if (e.styleHandler) {
             css += e.styleHandler()
           }
-          r.each(function (p, a) {
+          r.each(function (a, p) {
             var s = new XMLHttpRequest();
             s.open("GET", $(p).attr("href")), s.onreadystatechange = function () {
               if (4 === s.readyState && 200 === s.status && (o[a + ""] = '<style rel="stylesheet" type="text/css">' + s.responseText + "</style>", ++i == r.length)) {
