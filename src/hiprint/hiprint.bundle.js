@@ -1372,6 +1372,7 @@ var hiprint = function (t) {
           // this.panel.resize(void 0, t.mmwidth, nmh, !1);
           // 这个会更新模板的高度...
           // this.panel.target.css("height", nmh + "mm"), this.panel.target.attr("original-height", nmh);
+          p.paperFooter = h;
           p.target.css("height", nmh + "mm"), p.target.attr("original-height", nmh);
         }
       }, BasePrintElement.prototype.getBeginPrintTopInPaperByReferenceElement = function (t) {
