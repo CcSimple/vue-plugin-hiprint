@@ -1279,6 +1279,8 @@ var hiprint = function (t) {
           }
         }), this.designTarget.hireizeable({
           showPoints: n.getReizeableShowPoints(),
+          // 是否显示宽高box
+          showSizeBox: _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.showSizeBox,
           getScale: function getScale () {
             return n.designPaper.scale || 1
           },
@@ -4652,6 +4654,8 @@ var hiprint = function (t) {
           }
         }), this.printElementType.editable && this.setHitable(), this.setColumnsOptions(), this.designTarget.hireizeable({
           showPoints: n.getReizeableShowPoints(),
+          // 是否显示宽高box
+          showSizeBox: _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.showSizeBox,
           noContainer: !0,
           onBeforeResize: function onBeforeResize() {
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_9__.a.instance.draging = !0;
@@ -5902,6 +5906,7 @@ var hiprint = function (t) {
             name: "r",
             target: n('<div class="r resizebtn" style="cursor:url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAABvUExURUdwTP///9XV1R0dHf///3Nzc////////////////1ZWVq+vr/T09PX19QQEBP///////8XFxf///////////wYGBv///+jo6P///4aGhqioqMzMzP///2BgYP///////////zExMf///wAAAP///xLps0AAAAAjdFJOUwCxxOdixRDmzSDMv8/Z+tz5wWpXWPk3zALCv8KnyXZVMNuNPnv3CwAAAJ1JREFUKM/NkckOwyAMRFkDBMhC9qWr+//fWCIV1WlzrjoXS36yxmMT8hdqqKoUvRAjMtw22kvecem1GjTuK1vApmI+wQMBbQFy5li+QQRaX4AtRX+vbntAJeRl9HTTx4TiwESs61DXNUPmVQeujzVrQwh43TTxpeRBslVfMUhbiXKWyiAwvnIsMcdyJkfJYdpNvG/ltDm+bjP+8KFP8ggL+zQLGxwAAAAASUVORK5CYII=\') 14 14,alias;top: -16px;margin-left: -4px;left: 50%;"></div>')
           },
+          sizeBox = n('<div class="size-box" style="position: absolute;left:-2px;"></div>'),
           h = function h() {
             var t = [],
               i = e.options.showPoints;
@@ -5909,7 +5914,7 @@ var hiprint = function (t) {
               n.inArray(o.name, i) > -1 && t.push(o.target);
             }), t;
           };
-
+        e.refreshSizeBox(void 0, sizeBox, o);
         e.addHandlerCss(h()), e.appendHandler(h(), o), e.bindResizeEvent(o, n(this));
         var f = n(this);
         n(o).on("mousedown", ".resizebtn", function () {
@@ -5938,6 +5943,21 @@ var hiprint = function (t) {
         e.append(t[n]);
       }
     },
+    refreshSizeBox: function refreshSizeBox(t, box, o) {
+      if (!this.options.showSizeBox) return;
+      if (box) {
+        o.append(box);
+      } else {
+        if (t && t.length) {
+          var style = t[0].style;
+          var sizeBox = t.children("div[panelindex]").find(".size-box");
+          if (sizeBox) {
+            sizeBox.text(style.width + ' x ' + style.height);
+            sizeBox.css('top', - (sizeBox.outerHeight()));
+          }
+        }
+      }
+    },
     triggerResize: function triggerResize(t, n) {
       // 处理按住 ctrl / command 点击元素 多选
       if (!(n.ctrlKey || n.metaKey)) {
@@ -5948,6 +5968,7 @@ var hiprint = function (t) {
       t.children("div[panelindex]").css({
         display: "block"
       });
+      this.refreshSizeBox(t)
     },
     bindResizeEvent: function bindResizeEvent(t, e) {
       var i = this,
@@ -6115,6 +6136,7 @@ var hiprint = function (t) {
     stage: document,
     reizeUnit: "pt",
     minResize: 1.5,
+    showSizeBox: !0,
     showPoints: ["s", "e"],
     noContainer: !1,
     onBeforeResize: function onBeforeResize(t, e, n, i, o) {
@@ -7758,6 +7780,8 @@ var hiprint = function (t) {
           }
         }), this.setHiReizeable(), this.designTarget.hireizeable({
           showPoints: n.getReizeableShowPoints(),
+          // 是否显示宽高box
+          showSizeBox: p.a.instance.showSizeBox,
           noContainer: !0,
           onBeforeResize: function onBeforeResize() {
             s.a.instance.draging = !0;

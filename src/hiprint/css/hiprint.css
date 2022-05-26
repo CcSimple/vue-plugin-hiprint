@@ -14,6 +14,17 @@
   padding: 0 2px;
 }
 
+/* 元素宽高 */
+.resize-panel .size-box {
+  border: 1px solid;
+  padding: 0px 4px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  border-radius: 6px 6px 0 0;
+  white-space: nowrap;
+}
+
 /* hiprint-pagination */
 .hiprint-pagination {
     display: inline-block;
