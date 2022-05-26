@@ -16,6 +16,7 @@ export default {
         "fontWeight": "600",
         "textAlign": "center",
         "lineHeight": 26,
+        "coordinateSync": true,
         "draggable": false,
       }, "printElementType": {"title": "自定义文本", "type": "text"}
     }, {

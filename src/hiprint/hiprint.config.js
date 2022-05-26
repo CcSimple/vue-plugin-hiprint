@@ -18,6 +18,10 @@
           hidden: false
         },
         {
+          name: 'coordinate',
+          hidden: false
+        },
+        {
           name: 'dataType',
           hidden: false
         },
@@ -162,6 +166,10 @@
           hidden: false
         },
         {
+          name: 'coordinate',
+          hidden: false
+        },
+        {
           name: 'showInPage',
           hidden: false
         },
@@ -200,6 +208,10 @@
         },
         {
           name: 'testData',
+          hidden: false
+        },
+        {
+          name: 'coordinate',
           hidden: false
         },
         {
@@ -335,6 +347,10 @@
           hidden: false
         },
         {
+          name: 'coordinate',
+          hidden: false
+        },
+        {
           name: 'fontFamily',
           hidden: false
         },
@@ -462,6 +478,10 @@
           hidden: false
         },
         {
+          name: 'coordinate',
+          hidden: false
+        },
+        {
           name: 'fontFamily',
           hidden: false
         },
@@ -545,6 +565,10 @@
     hline: {
       supportOptions: [
         {
+          name: 'coordinate',
+          hidden: false
+        },
+        {
           name: 'borderColor',
           hidden: false
         },
@@ -581,6 +605,10 @@
     },
     vline: {
       supportOptions: [
+        {
+          name: 'coordinate',
+          hidden: false
+        },
         {
           name: 'borderColor',
           hidden: false
@@ -619,6 +647,10 @@
     rect: {
       supportOptions: [
         {
+          name: 'coordinate',
+          hidden: false
+        },
+        {
           name: 'borderColor',
           hidden: false
         },
@@ -656,6 +688,10 @@
     oval: {
       supportOptions: [
         {
+          name: 'coordinate',
+          hidden: false
+        },
+        {
           name: 'borderColor',
           hidden: false
         },
@@ -692,6 +728,10 @@
     },
     html: {
       supportOptions: [
+        {
+          name: 'coordinate',
+          hidden: false
+        },
         {
           name: 'showInPage',
           hidden: false

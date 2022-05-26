@@ -322,6 +322,9 @@ var hiprint = function (t) {
             name: "testData",
             hidden: !1
           }, {
+            name: "coordinate",
+            hidden: !1
+          }, {
             name: "dataType",
             hidden: !1
           }, {
@@ -2820,6 +2823,68 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
+    coordinate = function () {
+      function t() {
+        this.name = "coordinate";
+      }
+      return t.prototype.createTarget = function (t, o) {
+        var n = this;
+        n.target = $('<div class="hiprint-option-item hiprint-option-item-row">' +
+          '<div class="hiprint-option-item-label">\n        位置坐标\n        </div>' +
+          '<div class="hiprint-option-item-field" style="display: flex;align-items: baseline;">\n        ' +
+          '<input type="number" style="width:45%" placeholder="X位置(左)" class="auto-submit" />\n        ' +
+          '<input type="number" style="width:45%" placeholder="Y位置(上)" class="auto-submit" />\n        ' +
+          '</div>\n' +
+          '</div>');
+        n.syncLock = o.coordinateSync || false;
+        n.createSyncLock(n.syncLock);
+        return n.target;
+      }, t.prototype.createSyncLock = function (t) {
+        var n = this;
+        n.lockTarget = n.syncLock ? $('<label style="margin:0 4px;width: 8%" title="同步">🔒</label>') : $('<label style="margin:0 4px;width: 8%" title="不同步">🔓</label>');
+        n.lockTarget.click(function() {
+          if (n.syncLock) {
+            n.lockTarget.text("🔓").attr("不同步");
+          } else {
+            n.lockTarget.text("🔒").attr("同步");
+          }
+          n.syncLock = !n.syncLock;
+        })
+        n.target.find("input:first").after(n.lockTarget);
+        // 同步编辑...
+        n.target.find("input:first").change(function () {
+          if (n.syncLock) {
+            n.target.find("input:last").val($(this).val())
+          }
+        });
+        n.target.find("input:last").change(function () {
+          if (n.syncLock) {
+            n.target.find("input:first").val($(this).val())
+          }
+        });
+        return n.lockTarget
+      }, t.prototype.css = function (t) {
+        if (t && t.length && this.target) {
+          var v = this.getValue();
+          return t.css("left", v.left + "pt").css("top",v.top + "pt");
+        }
+        return null;
+      }, t.prototype.getValue = function () {
+        var v = {
+          coordinateSync: this.syncLock,
+          left: 0,
+          top: 0,
+        }
+        v.left = this.target.find("input:first").val() || 0
+        v.top = this.target.find("input:last").val() || 0
+        return v;
+      }, t.prototype.setValue = function (t) {
+        this.target.find("input:first").val(t.left);
+        this.target.find("input:last").val(t.top);
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
     C = function () {
       function t() {
         this.name = "src";
@@ -4006,7 +4071,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new C(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new it(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept(), new tableSummary()], t;
+    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new C(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new it(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept(), new tableSummary()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -8269,8 +8334,13 @@ var hiprint = function (t) {
           if (['columns','dataType'].includes(t.name)) {
             t.setValue(i.options[t.name], i.options, i.printElementType);
           } else {
-            // options 没有就取 printElementType内的 (如 table 的 footerFormatter)
-            t.setValue(i.options[t.name] || i.printElementType[t.name])
+            // 传入所有参数
+            if (['coordinate','widthHeight'].includes(t.name)) {
+              t.setValue(i.options)
+            } else {
+              // options 没有就取 printElementType内的 (如 table 的 footerFormatter)
+              t.setValue(i.options[t.name] || i.printElementType[t.name])
+            }
           }
         });
         var a = $('<button class="hiprint-option-item-settingBtn hiprint-option-item-submitBtn"\n        type="button">确定</button>'),
