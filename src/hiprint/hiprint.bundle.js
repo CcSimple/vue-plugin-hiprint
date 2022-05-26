@@ -2885,6 +2885,68 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
+    widthHeight = function () {
+      function t() {
+        this.name = "widthHeight";
+      }
+      return t.prototype.createTarget = function (t, o) {
+        var n = this;
+        n.target = $('<div class="hiprint-option-item hiprint-option-item-row">' +
+          '<div class="hiprint-option-item-label">\n        宽高大小\n        </div>' +
+          '<div class="hiprint-option-item-field" style="display: flex;align-items: baseline;">\n        ' +
+          '<input type="number" style="width:45%" placeholder="宽" class="auto-submit" />\n        ' +
+          '<input type="number" style="width:45%" placeholder="高" class="auto-submit" />\n        ' +
+          '</div>\n' +
+          '</div>');
+        n.syncLock = o.widthHeightSync || false;
+        n.createSyncLock(n.syncLock);
+        return n.target;
+      }, t.prototype.createSyncLock = function (t) {
+        var n = this;
+        n.lockTarget = n.syncLock ? $('<label style="margin:0 4px;width: 8%" title="同步">🔒</label>') : $('<label style="margin:0 4px;width: 8%" title="不同步">🔓</label>');
+        n.lockTarget.click(function() {
+          if (n.syncLock) {
+            n.lockTarget.text("🔓").attr("不同步");
+          } else {
+            n.lockTarget.text("🔒").attr("同步");
+          }
+          n.syncLock = !n.syncLock;
+        })
+        n.target.find("input:first").after(n.lockTarget);
+        // 同步编辑...
+        n.target.find("input:first").change(function () {
+          if (n.syncLock) {
+            n.target.find("input:last").val($(this).val())
+          }
+        });
+        n.target.find("input:last").change(function () {
+          if (n.syncLock) {
+            n.target.find("input:first").val($(this).val())
+          }
+        });
+        return n.lockTarget
+      }, t.prototype.css = function (t) {
+        if (t && t.length && this.target) {
+          var v = this.getValue();
+          return t.css("width", v.width + "pt").css("height", v.height + "pt");
+        }
+        return null;
+      }, t.prototype.getValue = function () {
+        var v = {
+          widthHeightSync: this.syncLock,
+          width: 0,
+          height: 0,
+        }
+        v.width = this.target.find("input:first").val() || 0
+        v.height = this.target.find("input:last").val() || 0
+        return v;
+      }, t.prototype.setValue = function (t) {
+        this.target.find("input:first").val(t.width);
+        this.target.find("input:last").val(t.height);
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
     C = function () {
       function t() {
         this.name = "src";
@@ -4071,7 +4133,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new C(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new it(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept(), new tableSummary()], t;
+    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new it(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept(), new tableSummary()], t;
   }();
 }, function (t, e, n) {
   "use strict";

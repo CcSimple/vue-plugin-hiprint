@@ -22,6 +22,10 @@
           hidden: false
         },
         {
+          name: 'widthHeight',
+          hidden: false
+        },
+        {
           name: 'dataType',
           hidden: false
         },
@@ -170,6 +174,10 @@
           hidden: false
         },
         {
+          name: 'widthHeight',
+          hidden: false
+        },
+        {
           name: 'showInPage',
           hidden: false
         },
@@ -212,6 +220,10 @@
         },
         {
           name: 'coordinate',
+          hidden: false
+        },
+        {
+          name: 'widthHeight',
           hidden: false
         },
         {
@@ -351,6 +363,10 @@
           hidden: false
         },
         {
+          name: 'widthHeight',
+          hidden: false
+        },
+        {
           name: 'fontFamily',
           hidden: false
         },
@@ -482,6 +498,10 @@
           hidden: false
         },
         {
+          name: 'widthHeight',
+          hidden: false
+        },
+        {
           name: 'fontFamily',
           hidden: false
         },
@@ -569,6 +589,10 @@
           hidden: false
         },
         {
+          name: 'widthHeight',
+          hidden: false
+        },
+        {
           name: 'borderColor',
           hidden: false
         },
@@ -607,6 +631,10 @@
       supportOptions: [
         {
           name: 'coordinate',
+          hidden: false
+        },
+        {
+          name: 'widthHeight',
           hidden: false
         },
         {
@@ -651,6 +679,10 @@
           hidden: false
         },
         {
+          name: 'widthHeight',
+          hidden: false
+        },
+        {
           name: 'borderColor',
           hidden: false
         },
@@ -692,6 +724,10 @@
           hidden: false
         },
         {
+          name: 'widthHeight',
+          hidden: false
+        },
+        {
           name: 'borderColor',
           hidden: false
         },
@@ -730,6 +766,10 @@
       supportOptions: [
         {
           name: 'coordinate',
+          hidden: false
+        },
+        {
+          name: 'widthHeight',
           hidden: false
         },
         {
