@@ -3,6 +3,7 @@
     //optionItems: [hiprintCustomOptionItem],//自定义选项
     movingDistance: 1.5, //鼠标拖动一次移动的距离,默认1.5pt
     paperHeightTrim: 1, //纸张html 的高度等于真实高度-1
+    showPosition: true, //显示坐标位置
     text: {
       supportOptions: [
         {

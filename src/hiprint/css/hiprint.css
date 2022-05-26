@@ -1,3 +1,18 @@
+/* 拖拽时的坐标位置 */
+.topPosition {
+  background: red;
+  color: white;
+  border-radius: 10rem;
+  min-width: 10px;
+  padding: 0 2px;
+}
+.leftPosition {
+  background: red;
+  color: white;
+  border-radius: 10rem;
+  min-width: 10px;
+  padding: 0 2px;
+}
 
 /* hiprint-pagination */
 .hiprint-pagination {
