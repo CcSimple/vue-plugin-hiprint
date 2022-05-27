@@ -1104,6 +1104,10 @@ var hiprint = function (t) {
       return d;
     }, t.prototype.getLeft = function () {
       return this.left;
+    }, t.prototype.posLeft = function () {
+      var left = this.left;
+      if (this.transform) left += this.getRectInfo().diffW;
+      return Math.floor(left * 10) / 10;
     }, t.prototype.setRotate = function (t) {
       null != t && (this.transform = t);
     }, t.prototype.displayLeft = function (t) {
@@ -1115,6 +1119,10 @@ var hiprint = function (t) {
       null != t && (this.left = t);
     }, t.prototype.getTop = function () {
       return this.top;
+    }, t.prototype.posTop = function () {
+      var top = this.top;
+      if (this.transform) top += this.getRectInfo().diffH;
+      return Math.floor(top * 10) / 10;
     }, t.prototype.getTopInDesign = function () {
       return this.topInDesign;
     }, t.prototype.displayTop = function (t) {
@@ -1482,33 +1490,61 @@ var hiprint = function (t) {
           leftPos = $(".leftPosition.id" + this.id),
           i = $(".rightlineOfPosition" + this.id),
           o = $(".bottomlineOfPosition" + this.id);
+        var config = _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance;
         if (e.length) e.css("top", this.options.displayTop(true)); else {
           var e = $('<div class="toplineOfPosition' + this.id + '" style="border:0;border-top:1px dashed  rgb(169, 169, 169);position: absolute; width: 100%;"></div>');
           e.css("top", this.options.displayTop(true)), e.css("width", t.displayWidth()), this.designTarget.parents(".hiprint-printPaper-content").append(e);
         }
-        if (_HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.showPosition) {
+        if (config.showPosition) {
           if (topPos.length) {
-            topPos.css("top", this.options.getTop() - 20 + "pt"), topPos.css("left", this.options.getLeft() + 2 + "pt"),
-              topPos.text(this.options.getTop());
+            topPos.toggleClass("topPosition-lineMode", config.positionLineMode);
+            topPos.text(this.options.posTop() + (config.positionUnit ? 'pt' : ''));
+            topPos.css("top", (this.options.posTop() - topPos.height())  + "pt");
+            if (config.positionLineMode) {
+              topPos.css("left", (this.options.posLeft() - topPos.width()/2) + "pt");
+            } else {
+              topPos.css("left", this.options.posLeft() + 2 + "pt");
+            }
+            this.designTarget.find('.size-box')&&this.designTarget.find('.size-box').toggleClass('hide', true);
           } else {
             var topPos = $('<div class="topPosition id' + this.id + '" style="position: absolute;"></div>');
-            topPos.css("top", this.options.getTop() - 20 + "pt"), topPos.css("left", this.options.getLeft() + 2 + "pt"),
-              topPos.text(this.options.getTop()), this.designTarget.parents(".hiprint-printPaper-content").append(topPos);
+            topPos.toggleClass("topPosition-lineMode", config.positionLineMode);
+            topPos.text(this.options.posTop() + (config.positionUnit ? 'pt' : ''));
+            if (config.positionLineMode) {
+              topPos.css("left", (this.options.posLeft() - topPos.width()/2) + "pt");
+            } else {
+              topPos.css("left", this.options.posLeft() + 2 + "pt");
+            }
+            this.designTarget.find('.size-box')&&this.designTarget.find('.size-box').toggleClass('hide', true);
+            this.designTarget.parents(".hiprint-printPaper-content").append(topPos);
+            topPos.css("top", (this.options.posTop() - topPos.height())  + "pt");
           }
         }
         if (n.length) n.css("left", this.options.displayLeft(true)); else {
           var r = $('<div class="leftlineOfPosition' + this.id + '" style="border:0;border-left:1px dashed  rgb(169, 169, 169);position: absolute;height: 100%;"></div>');
           r.css("left", this.options.displayLeft(true)), r.css("height", t.displayHeight()), this.designTarget.parents(".hiprint-printPaper-content").append(r);
         }
-        if (_HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.showPosition) {
+        if (config.showPosition) {
           if (leftPos.length) {
-            leftPos.css("top", this.options.getTop() + 2 + "pt"), leftPos.text(this.options.getLeft());
-            leftPos.css("left", (this.options.getLeft() - leftPos.width() - 2) + "pt");
+            leftPos.text(this.options.posLeft() + (config.positionUnit ? 'pt' : ''));
+            leftPos.toggleClass("leftPosition-lineMode", config.positionLineMode);
+            leftPos.css("left", (this.options.posLeft() - leftPos.width()) + "pt");
+            if (config.positionLineMode) {
+              leftPos.css("top", this.options.posTop() - leftPos.height()/3  + "pt");
+            } else {
+              leftPos.css("top", this.options.posTop() + 2 + "pt");
+            }
           } else {
             var leftPos = $('<div class="leftPosition id' + this.id + '" style="position: absolute;"></div>');
-            leftPos.css("top", this.options.getTop() + 2 + "pt"), leftPos.text(this.options.getLeft());
-            leftPos.css("left", (this.options.getLeft() - leftPos.width() - 2) + "pt");
+            leftPos.text(this.options.posLeft() + (config.positionUnit ? 'pt' : ''));
+            leftPos.toggleClass("leftPosition-lineMode", config.positionLineMode);
+            if (config.positionLineMode) {
+              leftPos.css("top", this.options.posTop() - leftPos.height()/3  + "pt");
+            } else {
+              leftPos.css("top", this.options.posTop() + 2 + "pt");
+            }
             this.designTarget.parents(".hiprint-printPaper-content").append(leftPos);
+            leftPos.css("left", (this.options.posLeft() - leftPos.width()) + "pt");
           }
         }
         if (i.length) i.css("left", this.options.getLeft() + this.options.getWidth() + "pt"); else {
@@ -1520,7 +1556,7 @@ var hiprint = function (t) {
           p.css("top", this.options.getTop() + this.options.getHeight() + "pt"), p.css("width", t.displayWidth()), this.designTarget.parents(".hiprint-printPaper-content").append(p);
         }
       }, BasePrintElement.prototype.removeLineOfPosition = function () {
-        $(".toplineOfPosition" + this.id).remove(), $(".topPosition.id" + this.id).remove(), $(".leftlineOfPosition" + this.id).remove(), $(".leftPosition.id" + this.id).remove(), $(".rightlineOfPosition" + this.id).remove(), $(".bottomlineOfPosition" + this.id).remove();
+        $(".toplineOfPosition" + this.id).remove(), $(".topPosition.id" + this.id).remove(), this.designTarget.find('.size-box')&&this.designTarget.find('.size-box').toggleClass('hide', false), $(".leftlineOfPosition" + this.id).remove(), $(".leftPosition.id" + this.id).remove(), $(".rightlineOfPosition" + this.id).remove(), $(".bottomlineOfPosition" + this.id).remove();
       }, BasePrintElement.prototype.getFields = function () {
         var t = this.printElementType.getFields();
         return t || (t = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(this.templateId).getFields());

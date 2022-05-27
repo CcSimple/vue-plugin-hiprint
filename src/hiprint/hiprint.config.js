@@ -4,6 +4,8 @@
     movingDistance: 1.5, //鼠标拖动一次移动的距离,默认1.5pt
     paperHeightTrim: 1, //纸张html 的高度等于真实高度-1
     showPosition: true, //显示坐标位置
+    positionLineMode: false, //坐标显示在线上的
+    positionUnit: true, //显示坐标单位
     showSizeBox: true, //显示宽高box
     text: {
       supportOptions: [
