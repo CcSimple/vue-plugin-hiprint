@@ -8045,12 +8045,32 @@ var hiprint = function (t) {
         }), this.bindShortcutKeyEvent(); this.bingPasteEvent(); this.bindBatchMoveElement();
       }, t.prototype.update = function (t) {
         var e = this;
-        this.index = t.index, this.width = t.width, this.height = t.height, this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter;
+        this.index = t.index, this.width = o.a.mm.toPt(t.width), this.height = o.a.mm.toPt(t.height), this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter;
+        this.designPaper.width = this.width, this.designPaper.height = this.height, this.designPaper.paperType = this.paperType, this.designPaper.paperHeader = this.paperHeader, this.designPaper.paperFooter = this.paperFooter;
+        this.designPaper.mmheight = t.height, this.designPaper.mmwidth = t.width;
+        // 页眉线
+        this.designPaper.headerLinetarget.css("top", (this.paperHeader || -1) + "pt"),
+        0 == this.paperHeader && this.designPaper.headerLinetarget.addClass("hideheaderLinetarget");
+        // 页脚线
+        this.designPaper.footerLinetarget.css("top", parseInt(this.paperFooter.toString()) + "pt"),
+        this.paperFooter == this.height && (this.designPaper.footerLinetarget.css("top", t.height - p.a.instance.paperHeightTrim + "mm"));
+        // 页码
         this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat;
-        this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter, this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.leftOffset = t.leftOffset, this.fontFamily = t.fontFamily, this.orient = t.orient, this.rotate = t.rotate, this.scale = t.scale;
+        this.designPaper.paperNumberLeft = this.paperNumberLeft, this.designPaper.paperNumberTop = this.paperNumberTop, this.designPaper.paperNumberDisabled = this.paperNumberDisabled, this.designPaper.paperNumberFormat = this.paperNumberFormat;
+        this.designPaper.paperNumberTarget.css("top", this.paperNumberTop + "pt").css("left", this.paperNumberLeft + "pt"), this.designPaper.resetPaperNumber(this.designPaper.paperNumberTarget);
+        // 字体方向
+        this.fontFamily = t.fontFamily, this.orient = t.orient, this.rotate = t.rotate, this.scale = t.scale;
+        this.designPaper.fontFamily = this.fontFamily, this.designPaper.orient = this.orient, this.designPaper.scale = this.scale;
+        // 面板参数
+        this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter,
+          this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.leftOffset = t.leftOffset;
+        this.designPaper.setFooter(this.firstPaperFooter, this.evenPaperFooter, this.oddPaperFooter, this.lastPaperFooter),
+          this.designPaper.setOffset(this.leftOffset, this.topOffset);
+        // 清空面板
         this.printElements.forEach(function (t) {
           t.designTarget && t.designTarget.length && t.designTarget.remove();
         }), this.printElements = [];
+        // 更新面板
         this.initPrintElements(t.printElements);
         this.printElements.forEach(function (n) {
           e.appendDesignPrintElement(e.designPaper, n), n.design(t, e.designPaper);
