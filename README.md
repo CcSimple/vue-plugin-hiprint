@@ -24,6 +24,7 @@
 
 ## 配套直接打印客户端(win/mac/linux)
 ### <a href="https://gitee.com/CcSimple/electron-hiprint">gitee</a> <a href="https://github.com/CcSimple/electron-hiprint"> github</a>
+如果使用npm包或者本项目,请使用配套的直接打印客户端(兼容官网的js)
 <div align="center">
 
 ![image](./res/tool.jpeg)
@@ -317,6 +318,10 @@ autoConnect((status,msg) => {
 - [x] `添加对齐api` hiprintTemplate.setElsAlign
 - [x] `表格字段添加聚合功能` 表格字段配置 options.columns[n]tableSummary
 - [x] `新增支持操作历史记录` 支持ctrl/command+(shift)+z 撤销重做, 并提供hiprintTemplate的undo,redo方法
+- [x] `新增坐标位置参数设置` 参数面板新增坐标位置参数,支持同步设置XY坐标,并提供coordinateSync设置默认同步与否
+- [x] `新增宽高大小参数设置` 参数面板新增宽高大小参数,支持同步设置宽高,并提供widthHeightSync设置默认同步与否
+- [x] `新增显示元素坐标位置` 拖拽时显示XY坐标位置,并支持两种显示默认,设置positionLineMode,坐标显示在辅助线上
+- [x] `新增显示元素宽高大小` 点击元素时显示宽高大小,支持重新样式(.resize-panel .size-box)
 
 |setElsAlign 参数说明|说明|
 |---|---|
