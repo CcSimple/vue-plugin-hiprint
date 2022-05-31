@@ -2909,9 +2909,9 @@ var hiprint = function (t) {
         n.lockTarget = n.syncLock ? $('<label style="margin:0 4px;width: 8%" title="同步">🔒</label>') : $('<label style="margin:0 4px;width: 8%" title="不同步">🔓</label>');
         n.lockTarget.click(function() {
           if (n.syncLock) {
-            n.lockTarget.text("🔓").attr("不同步");
+            n.lockTarget.text("🔓").attr("title", "不同步");
           } else {
-            n.lockTarget.text("🔒").attr("同步");
+            n.lockTarget.text("🔗").attr("title", "同步");
           }
           n.syncLock = !n.syncLock;
         })
@@ -2974,9 +2974,9 @@ var hiprint = function (t) {
         n.lockTarget = n.syncLock ? $('<label style="margin:0 4px;width: 8%" title="同步">🔒</label>') : $('<label style="margin:0 4px;width: 8%" title="不同步">🔓</label>');
         n.lockTarget.click(function() {
           if (n.syncLock) {
-            n.lockTarget.text("🔓").attr("不同步");
+            n.lockTarget.text("🔓").attr("title", "不同步");
           } else {
-            n.lockTarget.text("🔒").attr("同步");
+            n.lockTarget.text("🔗").attr("title", "同步");
           }
           n.syncLock = !n.syncLock;
         })
