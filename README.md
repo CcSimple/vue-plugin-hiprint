@@ -322,6 +322,7 @@ autoConnect((status,msg) => {
 - [x] `新增宽高大小参数设置` 参数面板新增宽高大小参数,支持同步设置宽高,并提供widthHeightSync设置默认同步与否
 - [x] `新增显示元素坐标位置` 拖拽时显示XY坐标位置,并支持两种显示默认,设置positionLineMode,坐标显示在辅助线上
 - [x] `新增显示元素宽高大小` 点击元素时显示宽高大小,支持重新样式(.resize-panel .size-box)
+- [x] `新增设置元素距离api` 多选元素后设置每个元素的间隔(垂直/水平) hiprintTemplate.setElsSpace(10,true)
 
 |setElsAlign 参数说明|说明|
 |---|---|
@@ -342,6 +343,11 @@ autoConnect((status,msg) => {
 |avg|平均值|
 |min|最小值|
 |max|最大值|
+
+|setElsSpace 使用示例|说明|
+|---|---|
+|.setElsSpace(10)|垂直距离10(pt)|
+|.setElsSpace(10,true)|水平距离10(pt)|
 
 ### 咳咳..
 第一次写插件(webpack打包这些都不太了解)，不合理的地方欢迎指正<a href="https://github.com/CcSimple/vue-plugin-hiprint/issues">issues</a>。

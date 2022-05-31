@@ -8975,6 +8975,40 @@ var hiprint = function (t) {
               break;
           }
         }
+      }, t.prototype.setElsSpace = function (dis, isHor) {
+        var t = this;
+        var elements = [];
+        // 获取选区元素
+        if (t.editingPanel.mouseRect && t.editingPanel.mouseRect.target) {
+          elements = t.editingPanel.getElementInRect(t.editingPanel.mouseRect);
+        } else { // 获取多选元素
+          elements = t.editingPanel.printElements.filter(function (el) {
+            return "block" == el.designTarget.children().last().css("display") && !el.printElementType.type.includes("table");
+          })
+        }
+        if (elements.length) {
+          if (isHor) { // 水平距离 →
+            elements.sort(function (prev, curr) {
+              return prev.options.left - curr.options.left;
+            })
+            elements.forEach(function (el, index) {
+              if(index > 0) {
+                el.updateSizeAndPositionOptions(elements[index-1].options.left + elements[index-1].options.width + dis);
+                el.designTarget.css("left", el.options.displayLeft());
+              }
+            })
+          } else { // 垂直距离 ↓
+            elements.sort(function (prev, curr) {
+              return prev.options.top - curr.options.top;
+            })
+            elements.forEach(function (el, index) {
+              if (index > 0) {
+                el.updateSizeAndPositionOptions(undefined, elements[index-1].options.top + elements[index-1].options.height + dis);
+                el.designTarget.css("top", el.options.displayTop());
+              }
+            })
+          }
+        }
       }, t.prototype.initAutoSave = function () {
         var t = this;
         o.a.event.on("hiprintTemplateDataShortcutKey_" + this.id, function (key) {
