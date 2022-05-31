@@ -1262,8 +1262,11 @@ var hiprint = function (t) {
             });
             var isMultiple = els.length > 1;
             if (isMultiple) {
+              var left = i - n.options.left, top = o - n.options.top;
               els.forEach(function (t) {
-                t.updatePositionByMultipleSelect(i - n.options.left, o - n.options.top);
+                t.updateSizeAndPositionOptions(left + t.options.getLeft(), top + t.options.getTop()),
+                  t.designTarget.css("left", t.options.displayLeft()), t.designTarget.css("top", t.options.displayTop());
+                t.createLineOfPosition(e);
               })
             } else {
               n.updateSizeAndPositionOptions(i, o), n.createLineOfPosition(e);
