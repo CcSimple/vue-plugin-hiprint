@@ -2930,8 +2930,11 @@ var hiprint = function (t) {
         return n.lockTarget
       }, t.prototype.css = function (t) {
         if (t && t.length && this.target) {
-          var v = this.getValue();
-          return t.css("left", v.left + "pt").css("top",v.top + "pt");
+          // 仅当前元素被选中才更新坐标位置, 以避免冲突
+          if ('block' == t.find('.resize-panel').css('display')) {
+            var v = this.getValue();
+            return t.css("left", v.left + "pt").css("top", v.top + "pt");
+          }
         }
         return null;
       }, t.prototype.getValue = function () {
@@ -2940,8 +2943,8 @@ var hiprint = function (t) {
           left: 0,
           top: 0,
         }
-        v.left = this.target.find("input:first").val() || 0
-        v.top = this.target.find("input:last").val() || 0
+        v.left = parseFloat(this.target.find("input:first").val() || 0)
+        v.top = parseFloat(this.target.find("input:last").val() || 0)
         return v;
       }, t.prototype.setValue = function (t) {
         this.target.find("input:first").val(t.left);
@@ -2992,8 +2995,11 @@ var hiprint = function (t) {
         return n.lockTarget
       }, t.prototype.css = function (t) {
         if (t && t.length && this.target) {
-          var v = this.getValue();
-          return t.css("width", v.width + "pt").css("height", v.height + "pt");
+          // 仅当前元素被选中才更新宽高大小, 以避免冲突
+          if ('block' == t.find('.resize-panel').css('display')) {
+            var v = this.getValue();
+            return t.css("width", v.width + "pt").css("height", v.height + "pt");
+          }
         }
         return null;
       }, t.prototype.getValue = function () {
@@ -3002,8 +3008,8 @@ var hiprint = function (t) {
           width: 0,
           height: 0,
         }
-        v.width = this.target.find("input:first").val() || 0
-        v.height = this.target.find("input:last").val() || 0
+        v.width = parseFloat(this.target.find("input:first").val() || 0)
+        v.height = parseFloat(this.target.find("input:last").val() || 0)
         return v;
       }, t.prototype.setValue = function (t) {
         this.target.find("input:first").val(t.width);
