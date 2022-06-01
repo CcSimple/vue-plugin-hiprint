@@ -25,6 +25,15 @@ module.exports = {
       { from: './src/hiprint/css/print-lock.css', to: '' },
     ]),
   ],
+  externals: {
+    jQuery: 'jquery',
+    '@claviska/jquery-minicolors': '@claviska/jquery-minicolors',
+    jsbarcode: 'jsbarcode',
+    'socket.io-client': 'socket.io-client',
+    html2canvas: 'html2canvas',
+    canvg: 'canvg',
+    jspdf: 'jspdf',
+  },
   optimization:{
     minimizer:[
       new UglifyJsPlugin({

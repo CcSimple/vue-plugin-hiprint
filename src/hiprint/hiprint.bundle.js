@@ -38,7 +38,7 @@ function _typeof(obj) {
 // 调用浏览器打印js
 import './plugins/jquery.hiwprint.js'
 // js颜色选择
-import '@claviska/jquery-minicolors'
+import '@claviska/jquery-minicolors/jquery.minicolors.min'
 // 条形码
 import JsBarcode from 'jsbarcode'
 // 二维码
