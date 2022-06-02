@@ -6555,7 +6555,7 @@ var hiprint = function (t) {
         i = e;
 
       if (t && t.length) {
-        var o = $('<ul class="hicontextmenu" ></ul>');
+        var o = $('<ul class="hicontextmenu" style="z-index: 9999;"></ul>');
         i || (i = o).addClass("hicontextmenuroot"), $.each(t, function (t, e) {
           var i = !!e.disable && e.disable(),
             r = $('<li class="hicontextmenuitem"><a href="javascript:void(0);"><span>' + (e.text || "") + "</span></a></li>");
@@ -8790,7 +8790,8 @@ var hiprint = function (t) {
         });
       }, t.prototype.toPdf = function (t, e, n) {
         var i = this;
-
+        var dtd = $.Deferred();
+        var isDownload = true;
         if (this.printPanels.length) {
           var r = o.a.mm.toPt(this.printPanels[0].width),
             a = o.a.mm.toPt(this.printPanels[0].height),
@@ -8807,6 +8808,9 @@ var hiprint = function (t) {
               format: this.printPanels[0].paperType ? this.printPanels[0].paperType.toLocaleLowerCase() : [r, a]
             }),
             l = this.getHtml(t, n);
+          if(n.hasOwnProperty("isDownload")){
+            isDownload = n.isDownload
+          }
           this.createTempContainer();
           var u = this.getTempContainer();
           this.svg2canvas(l), u.html(l[0]);
@@ -8818,10 +8822,17 @@ var hiprint = function (t) {
             for (var o = t.toDataURL("image/jpeg"), p = 0; p < d; p++) {
               s.addImage(o, "JPEG", 0, 0 - p * a, r, d * a), p < d - 1 && s.addPage();
             }
-
-            i.removeTempContainer(), e.indexOf(".pdf") > -1 ? s.save(e) : s.save(e + ".pdf");
+            if(isDownload){
+              i.removeTempContainer(),e.indexOf(".pdf") > -1 ? s.save(e) : s.save(e + ".pdf");
+            } else{
+              i.removeTempContainer();
+              var pdfFile = s.output('blob');
+              //var file = new File([pdfFile], e.name.indexOf(".pdf") > -1 ? e.name : e.name + ".pdf", {type: 'application/pdf', lastModified: Date.now()});
+              dtd.resolve(pdfFile);
+            }
           });
         }
+        return dtd.promise();
       }, t.prototype.createTempContainer = function () {
         this.removeTempContainer(), $("body").prepend($('<div class="hiprint_temp_Container" style="overflow:hidden;height: 0px;box-sizing: border-box;"></div>'));
       }, t.prototype.removeTempContainer = function () {
