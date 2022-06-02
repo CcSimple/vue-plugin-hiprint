@@ -53,7 +53,7 @@ import vImg from './css/image/v_img.svg'
 import { jsPDF } from 'jspdf'
 import html2canvas from 'html2canvas'
 // 解析svg 到 canvas, 二维码条形码需要
-import { Canvg } from 'canvg'
+import { Canvg, Document } from 'canvg'
 
 var hiprint = function (t) {
   var e = {};
@@ -8829,13 +8829,26 @@ var hiprint = function (t) {
       }, t.prototype.getTempContainer = function () {
         return $(".hiprint_temp_Container");
       }, t.prototype.svg2canvas = function (t) {
+        var that = this;
         t.find("svg").each(function (t, e) {
-          var n = e.parentNode,
-            i = document.createElement("canvas"),
+          var n = e.parentNode, p = that.parentWidthHeight(n),
+            i = Document.createCanvas(p.width, p.height),
             ctx = i.getContext('2d'),
-            o = new XMLSerializer().serializeToString(e);
-          Canvg.fromString(ctx, o).start(), $(e).before(i), n.removeChild(e), $(i).css("width", "100%"), $(i).css("height", "100%");
+            str = new XMLSerializer().serializeToString(e);
+          Canvg.fromString(ctx, str).render(), $(e).before(i), n.removeChild(e);
         });
+      }, t.prototype.parentWidthHeight = function (t) {
+        if (t.style.width.endsWith('%') || t.style.height.endsWith('%')) {
+          if (t.className != 'hiprint-printPaper-content') {
+            return this.parentWidthHeight(t.parentNode);
+          }
+          return {width: 10, height: 10}
+        } else {
+          console.log(t)
+          console.log(t.style.width)
+          console.log(t.style.height)
+          return {width: o.a.pt.toPx(parseFloat(t.style.width)), height: o.a.pt.toPx(parseFloat(t.style.height))}
+        }
       }, t.prototype.on = function (t, e) {
         o.a.event.on(t + "_" + this.id, e);
       }, t.prototype.clientIsOpened = function () {
