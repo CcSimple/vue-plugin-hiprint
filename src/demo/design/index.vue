@@ -292,6 +292,7 @@ export default {
       })
       // eslint-disable-next-line no-undef
       hiprint.PrintElementTypeManager.buildByHtml($('.ep-draggable-item'));
+      $('#hiprint-printTemplate').empty()
       hiprintTemplate = new hiprint.PrintTemplate({
         template: panel,
         settingContainer: '#PrintElementOptionSetting',
