@@ -1634,16 +1634,9 @@ var hiprint = function (t) {
           i = void 0,
           o = void 0;
         t.attr("tabindex", "1"), t.keydown(function (r) {
-          // table处理
-          if (n.printElementType.type.includes('table')) {
-            // 拖拽出来的表格
-            if (n.columns && n.columns.length) {
-              var isEditing = n.columns[0].isHead && n.columns[0].columns.some((e) => e.isEditing == true)
-              if (isEditing) return
-            } else if (n.options.columns && n.options.columns.length) { // json生成的表格
-              var isEditing = n.options.columns[0].isHead && n.options.columns[0].columns.some((e) => e.isEditing == true)
-              if (isEditing) return
-            }
+          // 处理 table / input 输入时 删除元素问题
+          if ('INPUT' == r.target.tagName) {
+            return;
           }
           // 处理按住 ctrl / command 多选元素
           var els = n.panel.printElements.filter(function (t) {
