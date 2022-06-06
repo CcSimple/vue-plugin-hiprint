@@ -8067,37 +8067,58 @@ var hiprint = function (t) {
           });
         }), this.bindShortcutKeyEvent(); this.bingPasteEvent(); this.bindBatchMoveElement();
       }, t.prototype.update = function (t) {
-        var e = this;
-        this.index = t.index, this.width = o.a.mm.toPt(t.width), this.height = o.a.mm.toPt(t.height), this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter;
-        this.designPaper.width = this.width, this.designPaper.height = this.height, this.designPaper.paperType = this.paperType, this.designPaper.paperHeader = this.paperHeader, this.designPaper.paperFooter = this.paperFooter;
-        this.designPaper.mmheight = t.height, this.designPaper.mmwidth = t.width;
-        // 页眉线
-        this.designPaper.headerLinetarget.css("top", (this.paperHeader || -1) + "pt"),
-        0 == this.paperHeader && this.designPaper.headerLinetarget.addClass("hideheaderLinetarget");
-        // 页脚线
-        this.designPaper.footerLinetarget.css("top", parseInt(this.paperFooter.toString()) + "pt"),
-        this.paperFooter == this.height && (this.designPaper.footerLinetarget.css("top", t.height - p.a.instance.paperHeightTrim + "mm"));
-        // 页码
-        this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat;
-        this.designPaper.paperNumberLeft = this.paperNumberLeft, this.designPaper.paperNumberTop = this.paperNumberTop, this.designPaper.paperNumberDisabled = this.paperNumberDisabled, this.designPaper.paperNumberFormat = this.paperNumberFormat;
-        this.designPaper.paperNumberTarget.css("top", this.paperNumberTop + "pt").css("left", this.paperNumberLeft + "pt"), this.designPaper.resetPaperNumber(this.designPaper.paperNumberTarget);
-        // 字体方向
-        this.fontFamily = t.fontFamily, this.orient = t.orient, this.rotate = t.rotate, this.scale = t.scale;
-        this.designPaper.fontFamily = this.fontFamily, this.designPaper.orient = this.orient, this.designPaper.scale = this.scale;
-        // 面板参数
-        this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter,
-          this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.leftOffset = t.leftOffset;
-        this.designPaper.setFooter(this.firstPaperFooter, this.evenPaperFooter, this.oddPaperFooter, this.lastPaperFooter),
-          this.designPaper.setOffset(this.leftOffset, this.topOffset);
-        // 清空面板
-        this.printElements.forEach(function (t) {
-          t.designTarget && t.designTarget.length && t.designTarget.remove();
-        }), this.printElements = [];
-        // 更新面板
-        this.initPrintElements(t.printElements);
-        this.printElements.forEach(function (n) {
-          e.appendDesignPrintElement(e.designPaper, n), n.design(t, e.designPaper);
-        })
+        try {
+          console.log('update ------>')
+          console.log(t)
+          var start = Date.now();
+          console.log('start',start)
+          var e = this;
+          this.index = t.index, this.width = o.a.mm.toPt(t.width), this.height = o.a.mm.toPt(t.height), this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter;
+          this.designPaper.width = this.width, this.designPaper.height = this.height, this.designPaper.paperType = this.paperType, this.designPaper.paperHeader = this.paperHeader, this.designPaper.paperFooter = this.paperFooter;
+          this.designPaper.mmheight = t.height, this.designPaper.mmwidth = t.width;
+          // 页眉线
+          this.designPaper.headerLinetarget.css("top", (this.paperHeader || -1) + "pt"),
+          0 == this.paperHeader && this.designPaper.headerLinetarget.addClass("hideheaderLinetarget");
+          // 页脚线
+          this.designPaper.footerLinetarget.css("top", parseInt(this.paperFooter.toString()) + "pt"),
+          this.paperFooter == this.height && (this.designPaper.footerLinetarget.css("top", t.height - p.a.instance.paperHeightTrim + "mm"));
+          // 页码
+          this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat;
+          this.designPaper.paperNumberLeft = this.paperNumberLeft, this.designPaper.paperNumberTop = this.paperNumberTop, this.designPaper.paperNumberDisabled = this.paperNumberDisabled, this.designPaper.paperNumberFormat = this.paperNumberFormat;
+          this.designPaper.paperNumberTarget.css("top", this.paperNumberTop + "pt").css("left", this.paperNumberLeft + "pt"), this.designPaper.resetPaperNumber(this.designPaper.paperNumberTarget);
+          // 字体方向
+          this.fontFamily = t.fontFamily, this.orient = t.orient, this.rotate = t.rotate, this.scale = t.scale;
+          this.designPaper.fontFamily = this.fontFamily, this.designPaper.orient = this.orient, this.designPaper.scale = this.scale;
+          // 面板参数
+          this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter,
+            this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.leftOffset = t.leftOffset;
+          this.designPaper.setFooter(this.firstPaperFooter, this.evenPaperFooter, this.oddPaperFooter, this.lastPaperFooter),
+            this.designPaper.setOffset(this.leftOffset, this.topOffset);
+          var end = Date.now();
+          console.log('更新参数 end',end)
+          console.log('更新参数 time:',end-start)
+          // 清空面板
+          this.printElements.forEach(function (t) {
+            t.designTarget && t.designTarget.length && t.designTarget.remove();
+          }), this.printElements = [];
+          var end = Date.now();
+          console.log('清空面板 end',end)
+          console.log('清空面板 time:',end-start)
+          // 更新面板
+          this.initPrintElements(t.printElements);
+          var end = Date.now();
+          console.log('初始化元素 end',end)
+          console.log('初始化元素 time:',end-start)
+          this.printElements.forEach(function (n) {
+            e.appendDesignPrintElement(e.designPaper, n), n.design(t, e.designPaper);
+          })
+          var end = Date.now();
+          console.log('插入面板 end',end)
+          console.log('插入面板 time:',end-start)
+        } catch (e) {
+          console.log('???????')
+          console.log(e)
+        }
       }, t.prototype.bindShortcutKeyEvent = function () {
         var n = this;
         $(document).keydown(function (e) {
@@ -8623,8 +8644,9 @@ var hiprint = function (t) {
         this.dataMode = n.dataMode || 1;
         this.history = n.history != void 0 ? n.history : !0;
         this.onDataChanged = n.onDataChanged;
+        this.onUpdateError = n.onUpdateError;
         this.lastJson = n.template || {};
-        this.historyList = [];
+        this.historyList = [{ id: s.a.instance.guid(), type: '初始', json: this.lastJson }];
         this.historyPos = 0;
         var i = new st(n.template || []);
         n.template && i.panels.forEach(function (t) {
@@ -8876,9 +8898,6 @@ var hiprint = function (t) {
           }
           return {width: 10, height: 10}
         } else {
-          console.log(t)
-          console.log(t.style.width)
-          console.log(t.style.height)
           return {width: o.a.pt.toPx(parseFloat(t.style.width)), height: o.a.pt.toPx(parseFloat(t.style.height))}
         }
       }, t.prototype.on = function (t, e) {
@@ -8924,7 +8943,7 @@ var hiprint = function (t) {
           }
         } catch (er) {
           console.log(er);
-          e.update(e.lastJson);
+          e.onUpdateError && e.onUpdateError(er);
         }
       }, t.prototype.setElsAlign = function (e) { // 设置框选、多选元素对齐api
         var t = this;
@@ -9055,16 +9074,16 @@ var hiprint = function (t) {
             case "undo":
               if (t.historyPos > 0) {
                 t.historyPos -= 1;
+                var cur = t.historyList[t.historyPos];
+                t.update(cur.json, cur.type);
               }
-              var cur = t.historyList[t.historyPos];
-              t.update(cur.json);
               break;
             case "redo":
               if (t.historyPos < t.historyList.length - 1) {
                 t.historyPos += 1;
+                var cur = t.historyList[t.historyPos];
+                t.update(cur.json, cur.type);
               }
-              var cur = t.historyList[t.historyPos];
-              t.update(cur.json);
               break;
           }
         });
