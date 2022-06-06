@@ -337,6 +337,11 @@ export default {
       }
     },
     preView() {
+      // 测试, 点预览更新拖拽元素
+      hiprint.updateElementType('defaultModule.text', (type) => {
+        type.title = '这是更新后的元素';
+        return type
+      })
       this.$refs.preView.show(hiprintTemplate, printData)
     },
     onlyPrint() {

@@ -324,6 +324,8 @@ autoConnect((status,msg) => {
 - [x] `新增显示元素坐标位置` 拖拽时显示XY坐标位置,并支持两种显示默认,设置positionLineMode,坐标显示在辅助线上
 - [x] `新增显示元素宽高大小` 点击元素时显示宽高大小,支持重新样式(.resize-panel .size-box)
 - [x] `新增设置元素距离api` 多选元素后设置每个元素的间隔(垂直/水平) hiprintTemplate.setElsSpace(10,true)
+- [x] `调整优化table表头`  支持动态显示/隐藏表头列, getJson时也返回了所有设置的列
+- [x] `新增支持更新拖拽元素api` 通过tid获取拖拽元素/更新拖拽元素 hiprint.updateElementType(tid,(e)=>e)
 
 |setElsAlign 参数说明|说明|
 |---|---|

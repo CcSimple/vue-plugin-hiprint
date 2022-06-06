@@ -6642,6 +6642,19 @@ var hiprint = function (t) {
           return e.tid == t;
         });
         if (e.length > 0) return e[0];
+      }, t.prototype.updateElementType = function (t, c) {
+        var type = this.getElementType(t);
+        if (c) {
+          var newType = c(type);
+          var idx =  this.allElementTypes.findIndex(function (e) {
+            return e.tid = t;
+          })
+          if (idx >= 0) {
+            this.allElementTypes.splice(idx, 1, newType);
+            return newType;
+          }
+        }
+        return type;
       }, t.prototype.formatterModule = function (t) {
         return t || "_default";
       }, t;
@@ -9119,10 +9132,16 @@ var hiprint = function (t) {
     }
   }
 
+  function uep(t, c) {
+    return a.instance.updateElementType(t, c);
+  }
+
   n.d(e, "init", function () {
     return mt;
   }), n.d(e, "setConfig", function () {
     return cig;
+  }), n.d(e, "updateElementType", function () {
+    return uep;
   }), n.d(e, "hiwebSocket", function () {
     return hiwebSocket
   }), n.d(e, "PrintElementTypeManager", function () {
