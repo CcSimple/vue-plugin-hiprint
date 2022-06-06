@@ -90,7 +90,7 @@ hiPrintPlugin.disAutoConnect(); // 取消自动连接直接打印客户端
 // 然后使用
 this.$pluginName
 
-// 例如
+// 引入后使用示例
 this.$pluginName.init();
 var hiprintTemplate = new this.$pluginName.PrintTemplate();
 var panel = hiprintTemplate.addPrintPanel({ width: 100, height: 130, paperFooter: 340, paperHeader: 10 });
@@ -124,6 +124,7 @@ import {autoConnect, disAutoConnect, hiprint, defaultElementTypeProvider} from '
 // autoConnect(); // 默认 自动连接直接打印客户端
 disAutoConnect(); // 取消自动连接直接打印客户端
 
+// 引入后使用示例
 hiprint.init();
 var hiprintTemplate = new hiprint.PrintTemplate();
 var panel = hiprintTemplate.addPrintPanel({ width: 100, height: 130, paperFooter: 340, paperHeader: 10 });
@@ -359,6 +360,34 @@ autoConnect((status,msg) => {
 
 > webpack.config.js，是npm打包需要处理的
 
+### 开源使用说明
+> npm包是基于hiprint官网2.5.4版本基础做的调整及优化;<br/>
+> 本人对开源协议理解有限,如有侵权不合理的地方,请联系告知我;<br/>
+
+hiprint 开源协议如下:
+```
+/**
+ * jQuery Hiprint 2.5.4
+ *
+ * Copyright (c) 2016-2021 www.hinnn.com. All rights reserved.
+ *
+ * Licensed under the LGPL or commercial licenses
+ * To use it on other terms please contact us: hinnn.com@gmail.com
+ *
+ */
+```
+
+### 关于LGPL协议
+
+LGPL是GPL的一个为主要为类库使用设计的开源协议。和GPL要求任何使用/修改/衍生之GPL类库的的软件必须采用GPL协议不同。
+
+LGPL允许商业软件通过类库引用(link)方式使用LGPL类库而不需要开源商业软件的代码。这使得采用LGPL协议的开源代码可以被商业软件作为类库引用并发布和销售。
+
+但是如果修改LGPL协议的代码或者衍生，则所有修改的代码，涉及修改部分的额外代码和衍生的代码都必须采用LGPL协议。
+
+因此LGPL协议的开源代码很适合作为第三方类库被商业软件引用，但不适合希望以LGPL协议代码为基础，通过修改和衍生的方式做二次开发的商业软件采用。
+
+GPL/LGPL都保障原作者的知识产权，避免有人利用开源代码复制并开发类似的产品。
 
 [npm]: https://img.shields.io/npm/v/vue-plugin-hiprint.svg
 [npm-url]: https://npmjs.com/package/vue-plugin-hiprint
