@@ -1982,7 +1982,10 @@ var hiprint = function (t) {
       return TableExcelHelper.createTableHead = function (t, e) {
         for (var n = TableExcelHelper.reconsitutionTableColumnTree(t), i = $("<thead></thead>"), o = TableExcelHelper.getColumnsWidth(n, e), r = function r(t) {
           var e = $("<tr></tr>");
-          n[t].forEach(function (t) {
+          n[t].filter(function (t) {
+            return t.checked;
+          }).forEach(function (t) {
+            if (!t.checked) return;
             var n = $("<td></td>");
             t.id && n.attr("id", t.id), t.columnId && n.attr("column-id", t.columnId), (t.align || t.halign) && n.css("text-align", t.halign || t.align), t.vAlign && n.css("vertical-align", t.vAlign), t.colspan > 1 && n.attr("colspan", t.colspan), t.rowspan > 1 && n.attr("rowspan", t.rowspan), n.html(t.title), o[t.id] ? (t.hasWidth = !0, t.targetWidth = o[t.id], n.attr("haswidth", "haswidth"), n.css("width", o[t.id] + "pt")) : t.hasWidth = !1, e.append(n);
           }), i.append(e);
@@ -1997,7 +2000,9 @@ var hiprint = function (t) {
         let tSumData = n.tableFooterRepeat == "last" ? e : r;
         if (n.tableFooterRepeat != 'no' && n.columns[0].columns.some(function (column) {return column.tableSummary})) {
           var tableFooter = $("<tr></tr>");
-          n.columns[0].columns.forEach(function (column) {
+          n.columns[0].columns.filter(function (t) {
+            return t.checked;
+          }).forEach(function (column) {
             var fieldData = tSumData.filter(function (row) {
               return row[column.field];
             }).map(function (row) {
@@ -2067,8 +2072,13 @@ var hiprint = function (t) {
         return r;
       }, TableExcelHelper.createRowTarget = function (t, e, n, i) {
           var o = $("<tr></tr>");
-          var columns = t.rowColumns
-            o.data("rowData", e), t.rowColumns.forEach(function (t, i) {
+          var columns = t.rowColumns.filter(function (t) {
+            return t.checke;
+          });
+            o.data("rowData", e), t.rowColumns.filter(function (t) {
+              return t.checked;
+            }).forEach(function (t, i) {
+              if (!t.checked) return;
           var rowsColumnsMerge =''
           if (n.rowsColumnsMerge) {
             eval('rowsColumnsMerge=' + n.rowsColumnsMerge)
@@ -2175,7 +2185,9 @@ var hiprint = function (t) {
       }, TableExcelHelper.createEmptyRowTarget = function (t) {
         var e = TableExcelHelper.reconsitutionTableColumnTree(t),
           n = $("<tr></tr>");
-        return e.rowColumns.forEach(function (t, e) {
+        return e.rowColumns.filter(function (t) {
+          return t.checked;
+        }).forEach(function (t, e) {
           var i = $("<td></td>");
           t.field && i.attr("field", t.field), t.align && i.css("text-align", t.align), t.vAlign && i.css("vertical-align", t.vAlign), n.append(i);
         }), n;
@@ -2183,7 +2195,9 @@ var hiprint = function (t) {
         var n = {},
           i = TableExcelHelper.allAutoWidth(t),
           o = TableExcelHelper.allFixedWidth(t);
-        return t.rowColumns.forEach(function (t) {
+        return t.rowColumns.filter(function (t) {
+          return t.checked;
+        }).forEach(function (t) {
           if (t.fixed) n[t.id] = t.width; else {
             var r = e - o,
               a = t.width / i * (r > 0 ? r : 0);
@@ -2200,12 +2214,16 @@ var hiprint = function (t) {
         });
       }, TableExcelHelper.allAutoWidth = function (t) {
         var e = 0;
-        return t.rowColumns.forEach(function (t) {
+        return t.rowColumns.filter(function (t) {
+          return t.checked;
+        }).forEach(function (t) {
           e += t.fixed ? 0 : t.width;
         }), e;
       }, TableExcelHelper.allFixedWidth = function (t) {
         var e = 0;
-        return t.rowColumns.forEach(function (t) {
+        return t.rowColumns.filter(function (t) {
+          return t.checked;
+        }).forEach(function (t) {
           e += t.fixed ? t.width : 0;
         }), e;
       }, TableExcelHelper.reconsitutionTableColumnTree = function (t, e, n) {
@@ -3684,8 +3702,15 @@ var hiprint = function (t) {
           return e.checked = !1, e;
         });
         this.allColumns = t[0].columns.concat(r), t && 1 == t.length && (this.target.find("ul").html(this.allColumns.map(function (t, e) {
-          return '<li  class="hiprint-option-table-selected-item"> <div class="hi-pretty p-default">\n                ' + (t.checked ? '<input type="checkbox"   checked column-id="' + (t.columnId || "") + '" />' : '<input type="checkbox"  column-id="' + (t.columnId || "") + '" />') + '\n                <div class="state">\n                    <label></label>\n                </div>\n            </div><span class="column-title">' + (t.title || t.descTitle || "") + "</span></li>";
-        }).join("")), this.target.find("input").change(function () {
+          return '<li  class="hiprint-option-table-selected-item"> <div class="hi-pretty p-default">\n                ' + (t.checked ? '<input type="checkbox"   checked column-id="' + (t.columnId || t.id) + '" />' : '<input type="checkbox"  column-id="' + (t.columnId || t.id) + '" />') + '\n                <div class="state">\n                    <label></label>\n                </div>\n            </div><span class="column-title">' + (t.title || t.descTitle || "") + "</span></li>";
+        }).join("")), this.target.find("input").change(function (e) {
+          var checked = e.target.checked, id = e.target.attributes['column-id'].nodeValue || '';
+          var idx = i.allColumns.findIndex(function (e) {
+            return e.field == id || e.id == id;
+          });
+          if (idx >= 0) {
+            i.allColumns[idx]['checked'] = checked
+          }
           i.submit();
         }), this.printElementType.columnDisplayIndexEditable && this.target.find("li").hidraggable({
           revert: !0,
@@ -3706,21 +3731,8 @@ var hiprint = function (t) {
         }));
       }, t.prototype.buildData = function () {
         var t = this,
-          e = [];
-        return this.allColumns.filter(function (t) {
-          t.checked = !1;
-        }), (this.printElementType.columnDisplayEditable ? this.target.find("input:checked") : this.target.find("input")).map(function (n, i) {
-          var o = $(i).attr("column-id"),
-            r = t.options.makeColumnObj();
-          if (r[o]) r[o].checked = !0, e.push(r[o]); else {
-            var a = t.printElementType.getColumnByColumnId(o);
-
-            if (a) {
-              var p = new rt.a(a);
-              p.checked = !0, e.push(p);
-            }
-          }
-        }), this.value[0].columns = e, this.value;
+          e = t.allColumns;
+        return this.value[0].columns = e, this.value;
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
@@ -5409,7 +5421,7 @@ var hiprint = function (t) {
     r = (function () {
     }(), function () {
       return function (t) {
-        this.width = t.width, this.title = t.title, this.field = t.field, this.columnId = t.columnId, this.fixed = !1, this.rowspan = t.rowspan || 1, this.colspan = t.colspan || 1, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.formatter2 = t.formatter2, this.styler2 = t.styler2,this.tableColumnHeight = t.tableColumnHeight||30,this.tableTextType = t.tableTextType||'text',this.tableBarcodeMode = t.tableBarcodeMode||'CODE128A',this.tableSummary = t.tableSummary;
+        this.width = t.width, this.title = t.title, this.field = t.field, this.checked = t.checked, this.columnId = t.columnId, this.fixed = !1, this.rowspan = t.rowspan || 1, this.colspan = t.colspan || 1, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.formatter2 = t.formatter2, this.styler2 = t.styler2,this.tableColumnHeight = t.tableColumnHeight||30,this.tableTextType = t.tableTextType||'text',this.tableBarcodeMode = t.tableBarcodeMode||'CODE128A',this.tableSummary = t.tableSummary;
       };
     }()),
     a = n(5);
@@ -5444,12 +5456,10 @@ var hiprint = function (t) {
             var i = new r(t),
               o = n.getColumnByColumnId(i.columnId),
               p = o ? $.extend(o, i) : new a.a(i);
-            p.checked = !0, e.push(p);
+              e.push(p);
           }), i.columns.push(new o.a(e));
         }) : n.columns.forEach(function (t) {
-          i.columns.push(new o.a(t.filter(function (t) {
-            return t.checked;
-          })));
+          i.columns.push(new o.a(t));
         }));
         return i;
       }
@@ -5469,9 +5479,7 @@ var hiprint = function (t) {
         var e = t.prototype.getPrintElementOptionEntity.call(this);
         e.fields = this.fields;
         return this.columns && (e.columns = [], this.columns.forEach(function (t) {
-          var n = t.getPrintElementOptionEntity().filter(function (t) {
-            return t.checked;
-          }).map(function (t) {
+          var n = t.getPrintElementOptionEntity().map(function (t) {
             return new r(t);
           });
           e.columns.push(n);
