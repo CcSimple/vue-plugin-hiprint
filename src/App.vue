@@ -1,3 +1,9 @@
+<!--
+ * @Author: 54xavier
+ * @LastEditors: 54xavier
+ * @Date: 2022-06-07 10:08:14
+ * @LastEditTime: 2022-06-07 10:08:55
+-->
 <template>
   <div id="app">
     <a-space class="logos" style="float: left;">
@@ -78,7 +84,7 @@ export default {
 
 .hiprint-headerLine:hover:before {
   content: "页眉线";
-  left: 50%;
+  left: calc(50% - 18px);
   position: relative;
   background: #FFFF;
   top: -12px;
@@ -88,7 +94,7 @@ export default {
 
 .hiprint-footerLine:hover:before {
   content: "页脚线";
-  left: 50%;
+  left: calc(50% - 18px);
   position: relative;
   color: red;
   background: #FFFF;
