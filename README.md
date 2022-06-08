@@ -23,13 +23,26 @@
 > npm_demo_v3： vue3.x + vite + npm包(0.0.18)使用 示例
 
 ## 配套直接打印客户端(win/mac/linux)
-### <a href="https://gitee.com/CcSimple/electron-hiprint">gitee</a> <a href="https://github.com/CcSimple/electron-hiprint"> github</a>
-如果使用npm包或者本项目,请使用配套的直接打印客户端(兼容官网的js)
+### <a href="https://gitee.com/CcSimple/electron-hiprint">gitee客户端源码 / 下载</a><a style="margin-left:10px" href="https://github.com/CcSimple/electron-hiprint"> github客户端源码</a>
+<div style="color:red">如果使用npm包或者本项目,请使用如下样子的直接打印客户端(兼容官网的js)</div>
+<div style="color:red">如果使用npm包或者本项目,请使用如下样子的直接打印客户端(兼容官网的js)</div>
+<div style="color:red">如果使用npm包或者本项目,请使用如下样子的直接打印客户端(兼容官网的js)</div>
 <div align="center">
 
 ![image](./res/tool.jpeg)
 
 </div>
+<div style="color:red">本项目需要上面样式的直接打印客户端; 下载地址见下表:</div>
+
+|版本|下载地址|
+|---|---|
+|Win64|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/989578/download/tool_print_win_64.exe">下载</a>|
+|Win32|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/989575/download/tool_print_win_32.exe">下载</a>|
+|Linux64 (需要桌面系统)|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/989577/download/tool_print_linux_x64.tar.xz">下载</a>|
+|Mac (intel)|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/989579/download/tool_print_mac.dmg">下载</a>|
+|Mac (M1)|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/989580/download/tool_print_mac_arm64.dmg">下载</a>|
+
+
 
 ## 演示/截个图咯~
 <table>
