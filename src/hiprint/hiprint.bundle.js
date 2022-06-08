@@ -35,6 +35,8 @@ function _typeof(obj) {
 /**
  * import 相关资源
  */
+window.$ = window.jQuery = require('jquery')
+window.autoConnect = true;
 // 调用浏览器打印js
 import './plugins/jquery.hiwprint.js'
 // js颜色选择

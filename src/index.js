@@ -4,19 +4,6 @@ require('./hiprint/hiprint.config')
 import "./hiprint/css/hiprint.css"
 import "./hiprint/css/print-lock.css"
 
-function initJquery() {
-  if (window !== undefined) {
-    window.jQuery = window.$ = jQuery;
-    window.autoConnect = true;
-  }
-}
-
-function initConfig() {
-
-}
-
-initJquery()
-
 /**
  * 自动连接 / 连接
  * cb: 连接回调， (status, msg) {

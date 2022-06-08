@@ -26,7 +26,7 @@ module.exports = {
     ]),
   ],
   externals: {
-    jQuery: 'jquery',
+    jquery: 'jquery',
     '@claviska/jquery-minicolors': '@claviska/jquery-minicolors',
     jsbarcode: 'jsbarcode',
     'socket.io-client': 'socket.io-client',
