@@ -3132,7 +3132,7 @@ var hiprint = function (t) {
       }
 
       return t.prototype.createTarget = function () {
-        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        显示规则\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n            <option value="first" >首页</option>\n            <option value="odd" >奇数页</option>\n            <option value="even" >偶数页</option>\n            <option value="last" >尾页</option>\n        </select>\n        </div>\n    </div>'), this.target;
+        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        显示规则\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n            <option value="none" >始终隐藏</option>\n            <option value="first" >首页</option>\n            <option value="odd" >奇数页</option>\n            <option value="even" >偶数页</option>\n            <option value="last" >尾页</option>\n        </select>\n        </div>\n    </div>'), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
         if (t) return t.toString();
@@ -8204,7 +8204,8 @@ var hiprint = function (t) {
             t.referenceElement && (t.referenceElement.endPrintPaperIndex = t.referenceElement.beginPrintPaperIndex + n.length - 1);
             // 不分页时,不创建新page  后面调整了，好像不添加也行...
             "none" != r.panelPageRule && i > 0 && (l.index < p.length - 1 ? l = p[l.index + 1] : (l = s.createNewPage(p.length, l.referenceElement), p.push(l)), a.append(l.getTarget()));
-            t.target && (l.append(t.target), l.updatePrintLine(t.printLine), e.onRendered(l, t.target));
+            // 元素隐藏时不添加到html内
+            t.target && (("none" != e.options.showInPage && l.append(t.target)), l.updatePrintLine(t.printLine), e.onRendered(l, t.target));
             i == n.length - 1 && t.referenceElement && l.updateReferenceElement(t.referenceElement);
           });
         }), o && o.templates.forEach(function (t, e) {
