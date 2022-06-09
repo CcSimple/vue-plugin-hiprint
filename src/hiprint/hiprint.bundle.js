@@ -947,6 +947,8 @@ var hiprint = function (t) {
 
       return t.prototype.init = function (t) {
         t && $.extend(this, t);
+      }, t.prototype.on = function (t, c) {
+        hinnn.event.on(t, c);
       }, Object.defineProperty(t, "instance", {
         get: function get() {
           return t._instance || (t._instance = new t(), window.HIPRINT_CONFIG && $.extend(t._instance, HIPRINT_CONFIG), t._instance.optionItems && t._instance.optionItems.forEach(function (t) {
@@ -6227,6 +6229,13 @@ var hiprint = function (t) {
         console.log("refreshPrinterList error:" + JSON.stringify(e));
       }
     },
+    getAddress: function getAddress(type, ...args) {
+      try {
+        this.socket.emit("address", type, ...args);
+      } catch (e) {
+        console.log("getAddress error:" + JSON.stringify(e));
+      }
+    },
     setHost: function (host) {
       this.host = host
       this.stop()
@@ -6246,6 +6255,8 @@ var hiprint = function (t) {
         }), _this.socket.on("printerList", function (e) {
           t.printerList = e;
           hinnn.event.trigger("printerList", e);
+        }), _this.socket.on("address", function (type, addr, e) {
+          hinnn.event.trigger("address_" + type, {'addr': addr, 'e': e});
         }), t.state = n;
         cb && cb(true, e);
       }), this.socket.on("disconnect", function () {
@@ -9170,6 +9181,11 @@ var hiprint = function (t) {
     hiwebSocket.refreshPrinterList();
   }
 
+  function getAddr(type, c, ...args) {
+    p.a.instance.on("address_" + type, c);
+    hiwebSocket.getAddress(type, ...args);
+  }
+
   n.d(e, "init", function () {
     return mt;
   }), n.d(e, "setConfig", function () {
@@ -9180,6 +9196,8 @@ var hiprint = function (t) {
     return hiwebSocket
   }), n.d(e, "refreshPrinterList", function () {
     return rpl;
+  }), n.d(e, "getAddress", function () {
+    return getAddr;
   }), n.d(e, "PrintElementTypeManager", function () {
     return it;
   }), n.d(e, "PrintElementTypeGroup", function () {

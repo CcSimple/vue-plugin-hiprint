@@ -356,6 +356,36 @@ export default {
         console.log('refreshPrinterList')
         console.log(list)
       });
+      // 测试, 获取IP、IPV6、MAC地址、DNS
+      // 参数格式：
+      // 1. 类型（ip、ipv6、mac、dns、all、interface、vboxnet）
+      // 2. 回调 data => {addr, e}  addr: 返回的数据 e:错误信息
+      // 3. 其他参数 ...args
+      hiprint.getAddress('ip',(data)=>{
+        console.log('ip')
+        console.log(data)
+      })
+      hiprint.getAddress('ipv6',(data)=>{
+        console.log('ipv6')
+        console.log(data)
+      })
+      hiprint.getAddress('mac',(data)=>{
+        console.log('mac')
+        console.log(data)
+      })
+      hiprint.getAddress('dns',(data)=>{
+        console.log('dns')
+        console.log(data)
+      })
+      hiprint.getAddress('all',(data)=>{
+        console.log('all')
+        console.log(data)
+      })
+      // 各个平台不一样, 用法见: https://www.npmjs.com/package/address
+      hiprint.getAddress('interface',(data)=>{
+        console.log('interface')
+        console.log(data)
+      }, 'IPv4', 'eth1')
       this.$refs.preView.show(hiprintTemplate, printData)
     },
     onlyPrint() {
