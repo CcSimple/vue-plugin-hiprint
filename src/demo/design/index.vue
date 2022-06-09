@@ -351,6 +351,11 @@ export default {
         type.title = '这是更新后的元素';
         return type
       })
+      // 测试, 通过socket刷新打印机列表； 默认只有连接的时候才会获取到最新的打印机列表
+      hiprint.refreshPrinterList((list)=>{
+        console.log('refreshPrinterList')
+        console.log(list)
+      });
       this.$refs.preView.show(hiprintTemplate, printData)
     },
     onlyPrint() {

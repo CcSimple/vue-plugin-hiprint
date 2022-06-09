@@ -6220,6 +6220,13 @@ var hiprint = function (t) {
     getPrinterList: function getPrinterList() {
       return this.printerList;
     },
+    refreshPrinterList: function refreshPrinterList() {
+      try {
+        this.socket.emit("refreshPrinterList");
+      } catch (e) {
+        console.log("refreshPrinterList error:" + JSON.stringify(e));
+      }
+    },
     setHost: function (host) {
       this.host = host
       this.stop()
@@ -6238,6 +6245,7 @@ var hiprint = function (t) {
           hinnn.event.trigger("printError_" + t.templateId, t);
         }), _this.socket.on("printerList", function (e) {
           t.printerList = e;
+          hinnn.event.trigger("printerList", e);
         }), t.state = n;
         cb && cb(true, e);
       }), this.socket.on("disconnect", function () {
@@ -9157,6 +9165,11 @@ var hiprint = function (t) {
     return a.instance.updateElementType(t, c);
   }
 
+  function rpl(c) {
+    p.a.instance.on("printerList", c);
+    hiwebSocket.refreshPrinterList();
+  }
+
   n.d(e, "init", function () {
     return mt;
   }), n.d(e, "setConfig", function () {
@@ -9165,6 +9178,8 @@ var hiprint = function (t) {
     return uep;
   }), n.d(e, "hiwebSocket", function () {
     return hiwebSocket
+  }), n.d(e, "refreshPrinterList", function () {
+    return rpl;
   }), n.d(e, "PrintElementTypeManager", function () {
     return it;
   }), n.d(e, "PrintElementTypeGroup", function () {
