@@ -8854,7 +8854,7 @@ var hiprint = function (t) {
               format: this.printPanels[0].paperType ? this.printPanels[0].paperType.toLocaleLowerCase() : [r, a]
             }),
             l = this.getHtml(t, n);
-          if(n.hasOwnProperty("isDownload")){
+          if (n) {
             isDownload = n.isDownload
           }
           this.createTempContainer();
@@ -8868,12 +8868,11 @@ var hiprint = function (t) {
             for (var o = t.toDataURL("image/jpeg"), p = 0; p < d; p++) {
               s.addImage(o, "JPEG", 0, 0 - p * a, r, d * a), p < d - 1 && s.addPage();
             }
-            if(isDownload){
+            if (isDownload) {
               i.removeTempContainer(),e.indexOf(".pdf") > -1 ? s.save(e) : s.save(e + ".pdf");
             } else{
               i.removeTempContainer();
               var pdfFile = s.output('blob');
-              //var file = new File([pdfFile], e.name.indexOf(".pdf") > -1 ? e.name : e.name + ".pdf", {type: 'application/pdf', lastModified: Date.now()});
               dtd.resolve(pdfFile);
             }
           });
