@@ -102,6 +102,10 @@
           hidden: false
         },
         {
+          name: 'zIndex',
+          hidden: false
+        },
+        {
           name: 'optionsGroup',
           hidden: false
         },
@@ -195,6 +199,10 @@
         },
         {
           name: 'transform',
+          hidden: false
+        },
+        {
+          name: 'zIndex',
           hidden: false
         },
         {
@@ -292,6 +300,10 @@
         },
         {
           name: 'transform',
+          hidden: false
+        },
+        {
+          name: 'zIndex',
           hidden: false
         },
         {
@@ -621,6 +633,10 @@
           hidden: false
         },
         {
+          name: 'zIndex',
+          hidden: false
+        },
+        {
           name: 'borderStyle',
           hidden: false
         }
@@ -663,6 +679,10 @@
         },
         {
           name: 'transform',
+          hidden: false
+        },
+        {
+          name: 'zIndex',
           hidden: false
         },
         {
@@ -711,6 +731,10 @@
           hidden: false
         },
         {
+          name: 'zIndex',
+          hidden: false
+        },
+        {
           name: 'borderStyle',
           hidden: false
         }
@@ -756,6 +780,10 @@
           hidden: false
         },
         {
+          name: 'zIndex',
+          hidden: false
+        },
+        {
           name: 'borderStyle',
           hidden: false
         }
@@ -786,6 +814,10 @@
         },
         {
           name: 'fixed',
+          hidden: false
+        },
+        {
+          name: 'zIndex',
           hidden: false
         },
         {
