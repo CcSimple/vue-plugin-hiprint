@@ -51,7 +51,8 @@ export default {
         "testData": "古力娜扎",
         "color": "#f00808",
         "textDecoration": "underline",
-        "textAlign": "center"
+        "textAlign": "center",
+        "fields": [{"text":'id',"field":'id'},{"text":'姓名',"field":'name'},{"text":'性别',"field":'gender'},{"text":'数量',"field":'count'}],
       }, "printElementType": {"title": "文本", "type": "text"}
     }, {
       "options": {

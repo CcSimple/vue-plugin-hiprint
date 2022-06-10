@@ -1166,7 +1166,7 @@ var hiprint = function (t) {
       return Object.keys(this).filter(function (t) {
         return "topInDesign" != t;
       }).forEach(function (n) {
-        if ("number" != typeof e[n] && "string" != typeof e[n] && _typeof(e[n]) != _typeof(!0) || (t[n] = e[n]), "style" == n) {
+        if ("number" != typeof e[n] && "string" != typeof e[n] && !['fields'].includes(n) && _typeof(e[n]) != _typeof(!0) || (t[n] = e[n]), "style" == n) {
           t.style = {};
           var i = e[n];
           if (i) Object.keys(i).forEach(function (e) {
@@ -1565,7 +1565,7 @@ var hiprint = function (t) {
       }, BasePrintElement.prototype.removeLineOfPosition = function () {
         $(".toplineOfPosition" + this.id).remove(), $(".topPosition.id" + this.id).remove(), this.designTarget.find('.size-box')&&this.designTarget.find('.size-box').toggleClass('hide', false), $(".leftlineOfPosition" + this.id).remove(), $(".leftPosition.id" + this.id).remove(), $(".rightlineOfPosition" + this.id).remove(), $(".bottomlineOfPosition" + this.id).remove();
       }, BasePrintElement.prototype.getFields = function () {
-        var t = this.printElementType.getFields();
+        var t = this.options.fields;
         return t || (t = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(this.templateId).getFields());
       }, BasePrintElement.prototype.bingCopyEvent = function (t) {
         var n = this;
