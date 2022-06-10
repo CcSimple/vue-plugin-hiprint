@@ -35,6 +35,8 @@ function _typeof(obj) {
 /**
  * import 相关资源
  */
+window.$ = window.jQuery = require('jquery')
+window.autoConnect = true;
 // 调用浏览器打印js
 import './plugins/jquery.hiwprint.js'
 // js颜色选择
@@ -945,6 +947,8 @@ var hiprint = function (t) {
 
       return t.prototype.init = function (t) {
         t && $.extend(this, t);
+      }, t.prototype.on = function (t, c) {
+        hinnn.event.on(t, c);
       }, Object.defineProperty(t, "instance", {
         get: function get() {
           return t._instance || (t._instance = new t(), window.HIPRINT_CONFIG && $.extend(t._instance, HIPRINT_CONFIG), t._instance.optionItems && t._instance.optionItems.forEach(function (t) {
@@ -3130,7 +3134,7 @@ var hiprint = function (t) {
       }
 
       return t.prototype.createTarget = function () {
-        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        显示规则\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n            <option value="first" >首页</option>\n            <option value="odd" >奇数页</option>\n            <option value="even" >偶数页</option>\n            <option value="last" >尾页</option>\n        </select>\n        </div>\n    </div>'), this.target;
+        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        显示规则\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n            <option value="none" >始终隐藏</option>\n            <option value="first" >首页</option>\n            <option value="odd" >奇数页</option>\n            <option value="even" >偶数页</option>\n            <option value="last" >尾页</option>\n        </select>\n        </div>\n    </div>'), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
         if (t) return t.toString();
@@ -3375,6 +3379,27 @@ var hiprint = function (t) {
       }, t.prototype.getValue = function () {
         var t = this.target.find("input").val();
         if (t) return parseFloat(t.toString());
+      }, t.prototype.setValue = function (t) {
+        this.target.find("input").val(t);
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
+    zIndex = function () {
+      function t() {
+        this.name = "zIndex";
+      }
+
+      return t.prototype.css = function (t, e) {
+        if (t && t.length) {
+          if (e) return t.css('z-index', e);
+        }
+        return null;
+      }, t.prototype.createTarget = function () {
+        return this.target = $('<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        元素层级\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="number" class="auto-submit"/>\n        </div>\n    </div>'), this.target;
+      }, t.prototype.getValue = function () {
+        var t = this.target.find("input").val();
+        if (t) return parseInt(t.toString());
       }, t.prototype.setValue = function (t) {
         this.target.find("input").val(t);
       }, t.prototype.destroy = function () {
@@ -4212,7 +4237,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept(), new tableSummary()], t;
+    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept(), new tableSummary()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -6218,6 +6243,20 @@ var hiprint = function (t) {
     getPrinterList: function getPrinterList() {
       return this.printerList;
     },
+    refreshPrinterList: function refreshPrinterList() {
+      try {
+        this.socket.emit("refreshPrinterList");
+      } catch (e) {
+        console.log("refreshPrinterList error:" + JSON.stringify(e));
+      }
+    },
+    getAddress: function getAddress(type, ...args) {
+      try {
+        this.socket.emit("address", type, ...args);
+      } catch (e) {
+        console.log("getAddress error:" + JSON.stringify(e));
+      }
+    },
     setHost: function (host) {
       this.host = host
       this.stop()
@@ -6236,6 +6275,9 @@ var hiprint = function (t) {
           hinnn.event.trigger("printError_" + t.templateId, t);
         }), _this.socket.on("printerList", function (e) {
           t.printerList = e;
+          hinnn.event.trigger("printerList", e);
+        }), _this.socket.on("address", function (type, addr, e) {
+          hinnn.event.trigger("address_" + type, {'addr': addr, 'e': e});
         }), t.state = n;
         cb && cb(true, e);
       }), this.socket.on("disconnect", function () {
@@ -6642,6 +6684,19 @@ var hiprint = function (t) {
           return e.tid == t;
         });
         if (e.length > 0) return e[0];
+      }, t.prototype.updateElementType = function (t, c) {
+        var type = this.getElementType(t);
+        if (c) {
+          var newType = c(type);
+          var idx =  this.allElementTypes.findIndex(function (e) {
+            return e.tid = t;
+          })
+          if (idx >= 0) {
+            this.allElementTypes.splice(idx, 1, newType);
+            return newType;
+          }
+        }
+        return type;
       }, t.prototype.formatterModule = function (t) {
         return t || "_default";
       }, t;
@@ -8054,37 +8109,58 @@ var hiprint = function (t) {
           });
         }), this.bindShortcutKeyEvent(); this.bingPasteEvent(); this.bindBatchMoveElement();
       }, t.prototype.update = function (t) {
-        var e = this;
-        this.index = t.index, this.width = o.a.mm.toPt(t.width), this.height = o.a.mm.toPt(t.height), this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter;
-        this.designPaper.width = this.width, this.designPaper.height = this.height, this.designPaper.paperType = this.paperType, this.designPaper.paperHeader = this.paperHeader, this.designPaper.paperFooter = this.paperFooter;
-        this.designPaper.mmheight = t.height, this.designPaper.mmwidth = t.width;
-        // 页眉线
-        this.designPaper.headerLinetarget.css("top", (this.paperHeader || -1) + "pt"),
-        0 == this.paperHeader && this.designPaper.headerLinetarget.addClass("hideheaderLinetarget");
-        // 页脚线
-        this.designPaper.footerLinetarget.css("top", parseInt(this.paperFooter.toString()) + "pt"),
-        this.paperFooter == this.height && (this.designPaper.footerLinetarget.css("top", t.height - p.a.instance.paperHeightTrim + "mm"));
-        // 页码
-        this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat;
-        this.designPaper.paperNumberLeft = this.paperNumberLeft, this.designPaper.paperNumberTop = this.paperNumberTop, this.designPaper.paperNumberDisabled = this.paperNumberDisabled, this.designPaper.paperNumberFormat = this.paperNumberFormat;
-        this.designPaper.paperNumberTarget.css("top", this.paperNumberTop + "pt").css("left", this.paperNumberLeft + "pt"), this.designPaper.resetPaperNumber(this.designPaper.paperNumberTarget);
-        // 字体方向
-        this.fontFamily = t.fontFamily, this.orient = t.orient, this.rotate = t.rotate, this.scale = t.scale;
-        this.designPaper.fontFamily = this.fontFamily, this.designPaper.orient = this.orient, this.designPaper.scale = this.scale;
-        // 面板参数
-        this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter,
-          this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.leftOffset = t.leftOffset;
-        this.designPaper.setFooter(this.firstPaperFooter, this.evenPaperFooter, this.oddPaperFooter, this.lastPaperFooter),
-          this.designPaper.setOffset(this.leftOffset, this.topOffset);
-        // 清空面板
-        this.printElements.forEach(function (t) {
-          t.designTarget && t.designTarget.length && t.designTarget.remove();
-        }), this.printElements = [];
-        // 更新面板
-        this.initPrintElements(t.printElements);
-        this.printElements.forEach(function (n) {
-          e.appendDesignPrintElement(e.designPaper, n), n.design(t, e.designPaper);
-        })
+        try {
+          console.log('update ------>')
+          console.log(t)
+          var start = Date.now();
+          console.log('start',start)
+          var e = this;
+          this.index = t.index, this.width = o.a.mm.toPt(t.width), this.height = o.a.mm.toPt(t.height), this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter;
+          this.designPaper.width = this.width, this.designPaper.height = this.height, this.designPaper.paperType = this.paperType, this.designPaper.paperHeader = this.paperHeader, this.designPaper.paperFooter = this.paperFooter;
+          this.designPaper.mmheight = t.height, this.designPaper.mmwidth = t.width;
+          // 页眉线
+          this.designPaper.headerLinetarget.css("top", (this.paperHeader || -1) + "pt"),
+          0 == this.paperHeader && this.designPaper.headerLinetarget.addClass("hideheaderLinetarget");
+          // 页脚线
+          this.designPaper.footerLinetarget.css("top", parseInt(this.paperFooter.toString()) + "pt"),
+          this.paperFooter == this.height && (this.designPaper.footerLinetarget.css("top", t.height - p.a.instance.paperHeightTrim + "mm"));
+          // 页码
+          this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat;
+          this.designPaper.paperNumberLeft = this.paperNumberLeft, this.designPaper.paperNumberTop = this.paperNumberTop, this.designPaper.paperNumberDisabled = this.paperNumberDisabled, this.designPaper.paperNumberFormat = this.paperNumberFormat;
+          this.designPaper.paperNumberTarget.css("top", this.paperNumberTop + "pt").css("left", this.paperNumberLeft + "pt"), this.designPaper.resetPaperNumber(this.designPaper.paperNumberTarget);
+          // 字体方向
+          this.fontFamily = t.fontFamily, this.orient = t.orient, this.rotate = t.rotate, this.scale = t.scale;
+          this.designPaper.fontFamily = this.fontFamily, this.designPaper.orient = this.orient, this.designPaper.scale = this.scale;
+          // 面板参数
+          this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter,
+            this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.leftOffset = t.leftOffset;
+          this.designPaper.setFooter(this.firstPaperFooter, this.evenPaperFooter, this.oddPaperFooter, this.lastPaperFooter),
+            this.designPaper.setOffset(this.leftOffset, this.topOffset);
+          var end = Date.now();
+          console.log('更新参数 end',end)
+          console.log('更新参数 time:',end-start)
+          // 清空面板
+          this.printElements.forEach(function (t) {
+            t.designTarget && t.designTarget.length && t.designTarget.remove();
+          }), this.printElements = [];
+          var end = Date.now();
+          console.log('清空面板 end',end)
+          console.log('清空面板 time:',end-start)
+          // 更新面板
+          this.initPrintElements(t.printElements);
+          var end = Date.now();
+          console.log('初始化元素 end',end)
+          console.log('初始化元素 time:',end-start)
+          this.printElements.forEach(function (n) {
+            e.appendDesignPrintElement(e.designPaper, n), n.design(t, e.designPaper);
+          })
+          var end = Date.now();
+          console.log('插入面板 end',end)
+          console.log('插入面板 time:',end-start)
+        } catch (e) {
+          console.log('???????')
+          console.log(e)
+        }
       }, t.prototype.bindShortcutKeyEvent = function () {
         var n = this;
         $(document).keydown(function (e) {
@@ -8168,7 +8244,8 @@ var hiprint = function (t) {
             t.referenceElement && (t.referenceElement.endPrintPaperIndex = t.referenceElement.beginPrintPaperIndex + n.length - 1);
             // 不分页时,不创建新page  后面调整了，好像不添加也行...
             "none" != r.panelPageRule && i > 0 && (l.index < p.length - 1 ? l = p[l.index + 1] : (l = s.createNewPage(p.length, l.referenceElement), p.push(l)), a.append(l.getTarget()));
-            t.target && (l.append(t.target), l.updatePrintLine(t.printLine), e.onRendered(l, t.target));
+            // 元素隐藏时不添加到html内
+            t.target && (("none" != e.options.showInPage && l.append(t.target)), l.updatePrintLine(t.printLine), e.onRendered(l, t.target));
             i == n.length - 1 && t.referenceElement && l.updateReferenceElement(t.referenceElement);
           });
         }), o && o.templates.forEach(function (t, e) {
@@ -8610,8 +8687,9 @@ var hiprint = function (t) {
         this.dataMode = n.dataMode || 1;
         this.history = n.history != void 0 ? n.history : !0;
         this.onDataChanged = n.onDataChanged;
+        this.onUpdateError = n.onUpdateError;
         this.lastJson = n.template || {};
-        this.historyList = [];
+        this.historyList = [{ id: s.a.instance.guid(), type: '初始', json: this.lastJson }];
         this.historyPos = 0;
         var i = new st(n.template || []);
         n.template && i.panels.forEach(function (t) {
@@ -8816,7 +8894,7 @@ var hiprint = function (t) {
               format: this.printPanels[0].paperType ? this.printPanels[0].paperType.toLocaleLowerCase() : [r, a]
             }),
             l = this.getHtml(t, n);
-          if(n.hasOwnProperty("isDownload")){
+          if (n) {
             isDownload = n.isDownload
           }
           this.createTempContainer();
@@ -8830,12 +8908,11 @@ var hiprint = function (t) {
             for (var o = t.toDataURL("image/jpeg"), p = 0; p < d; p++) {
               s.addImage(o, "JPEG", 0, 0 - p * a, r, d * a), p < d - 1 && s.addPage();
             }
-            if(isDownload){
+            if (isDownload) {
               i.removeTempContainer(),e.indexOf(".pdf") > -1 ? s.save(e) : s.save(e + ".pdf");
             } else{
               i.removeTempContainer();
               var pdfFile = s.output('blob');
-              //var file = new File([pdfFile], e.name.indexOf(".pdf") > -1 ? e.name : e.name + ".pdf", {type: 'application/pdf', lastModified: Date.now()});
               dtd.resolve(pdfFile);
             }
           });
@@ -8863,9 +8940,6 @@ var hiprint = function (t) {
           }
           return {width: 10, height: 10}
         } else {
-          console.log(t)
-          console.log(t.style.width)
-          console.log(t.style.height)
           return {width: o.a.pt.toPx(parseFloat(t.style.width)), height: o.a.pt.toPx(parseFloat(t.style.height))}
         }
       }, t.prototype.on = function (t, e) {
@@ -8911,7 +8985,7 @@ var hiprint = function (t) {
           }
         } catch (er) {
           console.log(er);
-          e.update(e.lastJson);
+          e.onUpdateError && e.onUpdateError(er);
         }
       }, t.prototype.setElsAlign = function (e) { // 设置框选、多选元素对齐api
         var t = this;
@@ -9042,16 +9116,16 @@ var hiprint = function (t) {
             case "undo":
               if (t.historyPos > 0) {
                 t.historyPos -= 1;
+                var cur = t.historyList[t.historyPos];
+                t.update(cur.json, cur.type);
               }
-              var cur = t.historyList[t.historyPos];
-              t.update(cur.json);
               break;
             case "redo":
               if (t.historyPos < t.historyList.length - 1) {
                 t.historyPos += 1;
+                var cur = t.historyList[t.historyPos];
+                t.update(cur.json, cur.type);
               }
-              var cur = t.historyList[t.historyPos];
-              t.update(cur.json);
               break;
           }
         });
@@ -9119,12 +9193,32 @@ var hiprint = function (t) {
     }
   }
 
+  function uep(t, c) {
+    return a.instance.updateElementType(t, c);
+  }
+
+  function rpl(c) {
+    p.a.instance.on("printerList", c);
+    hiwebSocket.refreshPrinterList();
+  }
+
+  function getAddr(type, c, ...args) {
+    p.a.instance.on("address_" + type, c);
+    hiwebSocket.getAddress(type, ...args);
+  }
+
   n.d(e, "init", function () {
     return mt;
   }), n.d(e, "setConfig", function () {
     return cig;
+  }), n.d(e, "updateElementType", function () {
+    return uep;
   }), n.d(e, "hiwebSocket", function () {
     return hiwebSocket
+  }), n.d(e, "refreshPrinterList", function () {
+    return rpl;
+  }), n.d(e, "getAddress", function () {
+    return getAddr;
   }), n.d(e, "PrintElementTypeManager", function () {
     return it;
   }), n.d(e, "PrintElementTypeGroup", function () {

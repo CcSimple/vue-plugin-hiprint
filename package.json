@@ -1,7 +1,7 @@
 {
   "name": "vue-plugin-hiprint",
-  "description": "hiprint for vue2.0",
-  "version": "0.0.21",
+  "description": "hiprint for Vue2.x / Vue3.x",
+  "version": "0.0.22",
   "author": "CcSimple",
   "license": "MIT",
   "main": "dist/vue-plugin-hiprint.js",
@@ -32,30 +32,35 @@
     "not ie <= 8"
   ],
   "devDependencies": {
+    "@claviska/jquery-minicolors": "^2.3.6",
     "@vue/cli-plugin-babel": "^4.5.15",
     "@vue/cli-service": "^4.5.15",
     "ant-design-vue": "^1.7.8",
     "bootstrap": "^3.3.7",
+    "canvg": "^4.0.0",
     "concurrent-tasks": "^1.0.7",
     "copy-webpack-plugin": "^5.1.2",
     "core-js": "^3.6.5",
     "cross-env": "^5.0.5",
+    "html2canvas": "^1.4.1",
+    "jquery": "^3.6.0",
+    "jsbarcode": "^3.11.5",
+    "jspdf": "^2.5.1",
     "less-loader": "^6.1.1",
+    "socket.io-client": "^3.1.3",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "vue": "^2.5.11",
     "vue-ls": "^4.0.0",
     "vue-template-compiler": "^2.6.11",
     "webpack-cli": "^4.9.1"
   },
-  "dependencies": {
-  },
   "peerDependencies": {
-    "jquery": "^3.6.0",
     "@claviska/jquery-minicolors": "^2.3.6",
-    "jsbarcode": "^3.11.5",
-    "socket.io-client": "^3.1.3",
-    "html2canvas": "^1.4.1",
     "canvg": "^4.0.0",
-    "jspdf": "^2.5.1"
+    "html2canvas": "^1.4.1",
+    "jquery": "^3.6.0",
+    "jsbarcode": "^3.11.5",
+    "jspdf": "^2.5.1",
+    "socket.io-client": "^3.1.3"
   }
 }
