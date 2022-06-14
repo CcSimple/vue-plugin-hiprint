@@ -1292,7 +1292,31 @@ var hiprint = function (t) {
               _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.changed = !1,
               n.removeLineOfPosition();
           }
-        }), this.designTarget.hireizeable({
+        }), this.setResizePanel(), this.bindDocMouseUpEvent(this.designTarget), this.bingCopyEvent(this.designTarget), this.bingKeyboardMoveEvent(this.designTarget, e);
+      }, BasePrintElement.prototype.bindDocMouseUpEvent = function (t) {
+        var n = this;
+        _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.on("hiprintTemplate_doc_mouseup", function(target) {
+          n.removeLineOfPosition();
+        })
+      }, BasePrintElement.prototype.getPrintElementEntity = function (t) {
+        return t ? new _entity_PrintElementEntity__WEBPACK_IMPORTED_MODULE_0__.a(void 0, this.options.getPrintElementOptionEntity(), this.printElementType.getPrintElementTypeEntity()) : new _entity_PrintElementEntity__WEBPACK_IMPORTED_MODULE_0__.a(this.printElementType.tid, this.options.getPrintElementOptionEntity());
+      }, BasePrintElement.prototype.submitOption = function () {
+		    // 右侧选项修改模版数据触发history
+        var t = this;
+        this.getPrintElementOptionItems().forEach(function (e) {
+          var n = e.getValue();
+          n && "object" == _typeof(n) ? Object.keys(n).forEach(function (e) {
+            t.options[e] = n[e];
+          }) : t.options[e.name] = n;
+          if ('textType' == e.name) {
+            t.setResizePanel()
+          }
+        }), this.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "元素修改");
+      }, BasePrintElement.prototype.getReizeableShowPoints = function () {
+        return 'barcode' == this.options.textType ? ["se", "r"] : ["s", "e", "r"];
+      }, BasePrintElement.prototype.setResizePanel = function () {
+        var n = this, e = this.options;
+        this.designTarget.hireizeable({
           showPoints: n.getReizeableShowPoints(),
           // 是否显示宽高box
           showSizeBox: _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.showSizeBox,
@@ -1314,25 +1338,7 @@ var hiprint = function (t) {
             _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, r ? "旋转" : "大小");
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !1, n.removeLineOfPosition();
           }
-        }), this.bindDocMouseUpEvent(this.designTarget), this.bingCopyEvent(this.designTarget), this.bingKeyboardMoveEvent(this.designTarget, e);
-      }, BasePrintElement.prototype.bindDocMouseUpEvent = function (t) {
-        var n = this;
-        _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.on("hiprintTemplate_doc_mouseup", function(target) {
-          n.removeLineOfPosition();
         })
-      }, BasePrintElement.prototype.getPrintElementEntity = function (t) {
-        return t ? new _entity_PrintElementEntity__WEBPACK_IMPORTED_MODULE_0__.a(void 0, this.options.getPrintElementOptionEntity(), this.printElementType.getPrintElementTypeEntity()) : new _entity_PrintElementEntity__WEBPACK_IMPORTED_MODULE_0__.a(this.printElementType.tid, this.options.getPrintElementOptionEntity());
-      }, BasePrintElement.prototype.submitOption = function () {
-		    // 右侧选项修改模版数据触发history
-        var t = this;
-        this.getPrintElementOptionItems().forEach(function (e) {
-          var n = e.getValue();
-          n && "object" == _typeof(n) ? Object.keys(n).forEach(function (e) {
-            t.options[e] = n[e];
-          }) : t.options[e.name] = n;
-        }), this.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "元素修改");
-      }, BasePrintElement.prototype.getReizeableShowPoints = function () {
-        return ["s", "e", "r"];
       }, BasePrintElement.prototype.onRotate = function (t, r) {
         this.options.setRotate(r);
       }, BasePrintElement.prototype.onResize = function (t, e, n, i, o) {
@@ -6042,6 +6048,7 @@ var hiprint = function (t) {
       }
     },
     appendHandler: function appendHandler(t, e) {
+      e.find(".resize-panel").remove()
       for (var n = 0; n < t.length; n++) {
         e.append(t[n]);
       }
@@ -6224,7 +6231,8 @@ var hiprint = function (t) {
       return this.each(function () {
         var e,
           i = n.data(this, "hireizeable");
-        e = i ? n.extend(i.options, _1f) : n.extend({}, n.fn.hireizeable.defaults, t || {}), n.data(this, "hireizeable", {
+        e = i ? n.extend({}, i.options, t || {}) : n.extend({}, n.fn.hireizeable.defaults, t || {});
+        n.data(this, "hireizeable", {
           options: e
         }), new o({
           target: this,
