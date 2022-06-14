@@ -6089,39 +6089,39 @@ var hiprint = function (t) {
         s = t.offset().left,
         l = t.offset().top,
         u = i.options.noContainer ? n(e) : t.parent(),
-        d = !1;
+        d = !1; // 右
       t.on("mousedown", ".e", function (e) {
         o = e.pageX, a = t.width(), d = !0;
       });
-      var c = !1;
+      var c = !1; // 下
       t.on("mousedown", ".s", function (e) {
         r = e.pageY, p = t.height(), c = !0;
       });
-      var h = !1;
+      var h = !1; // 左
       t.on("mousedown", ".w", function (e) {
         o = e.pageX, a = t.width(), h = !0, s = u.offset().left;
       });
-      var f = !1;
+      var f = !1; // 上
       t.on("mousedown", ".n", function (e) {
         r = e.pageY, p = t.height(), f = !0, l = u.offset().top;
       });
-      var g = !1;
+      var g = !1; // 右上
       t.on("mousedown", ".ne", function (e) {
         o = e.pageX, r = e.pageY, a = t.width(), p = t.height(), g = !0, l = u.offset().top;
       });
-      var m = !1;
+      var m = !1; // 左上
       t.on("mousedown", ".nw", function (e) {
         o = e.pageX, r = e.pageY, a = t.width(), p = t.height(), l = u.offset().top, s = u.offset().left, m = !0;
       });
-      var v = !1;
+      var v = !1; // 右下
       t.on("mousedown", ".se", function (e) {
         o = e.pageX, r = e.pageY, a = t.width(), p = t.height(), v = !0;
       });
-      var y = !1;
+      var y = !1; // 左下
       t.on("mousedown", ".sw", function (e) {
         o = e.pageX, r = e.pageY, a = t.width(), p = t.height(), y = !0, s = u.offset().left;
       });
-      var rt = !1;
+      var rt = !1; // 旋转
       t.on("mousedown", ".r", function (e) {
         o = e.pageX, r = e.pageY, a = t.width(), p = t.height(), rt = !0, s = a/2 + u.offset().left, l = p/2 + u.offset().top;
       });
