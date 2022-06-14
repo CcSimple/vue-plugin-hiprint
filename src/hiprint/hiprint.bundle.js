@@ -3063,6 +3063,27 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
+    imageFit = function () {
+      function t() {
+        this.name = "fit";
+      }
+      return t.prototype.css = function (t, e) {
+        if (t && t.length) {
+          if (e) return t.find("img").css("object-fit", e), "object-fit:" + e;
+          t.find("img")[0].style['object-fit'] = "";
+        }
+        return null;
+      }, t.prototype.createTarget = function () {
+        this.target = $(' <div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        图片缩放\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n        <option value="contain" >等比</option>\n        <option value="cover" >剪裁</option>\n        <option value="fill" >填充</option>\n        <option value="none" >原始尺寸</option>\n                </select>\n        </div>\n    </div>'), this.target;
+        return this.target;
+      }, t.prototype.getValue = function () {
+        return this.target.find("select").val();
+      }, t.prototype.setValue = function (t) {
+        this.target.find("select").val(t);
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
     O = function () {
       function t() {
         this.name = "borderColor";
@@ -4248,7 +4269,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept(), new tableSummary()], t;
+    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept(), new tableSummary()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -6851,6 +6872,7 @@ var hiprint = function (t) {
         i.find("img").length ? i.find("img").attr("src", n) : i.html('<img style="width:100%;height:100%;" src="' + n + '">');
         if (n.length) i.find("img").css('cssText',`width:100%;height:100%;content:url("${n}")!important`)
         else i.find("img").css('cssText','width:100%;height:100%;')
+        if (this.options.fit) i.find("img").css("object-fit", this.options.fit);
       }, e.prototype.getHtml = function (t, e, n) {
         return this.getHtml2(t, e, n);
       }, e;

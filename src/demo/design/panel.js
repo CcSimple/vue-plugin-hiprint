@@ -27,7 +27,7 @@ export default {
       "options": {"left": 25.5, "top": 57, "height": 705, "width": 9, "fixed": true, "borderStyle": "dotted"},
       "printElementType": {"type": "vline"}
     }, {
-      "options": {"left": 60, "top": 61.5, "height": 48, "width": 87, "src": ""},
+      "options": {"left": 60, "top": 61.5, "height": 48, "width": 87, "src": "", "fit": "contain"},
       "printElementType": {"title": "图片", "type": "image"}
     }, {
       "options": {
