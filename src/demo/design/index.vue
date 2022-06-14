@@ -293,8 +293,18 @@ export default {
       // eslint-disable-next-line no-undef
       hiprint.PrintElementTypeManager.buildByHtml($('.ep-draggable-item'));
       $('#hiprint-printTemplate').empty()
+      let that = this;
       hiprintTemplate = new hiprint.PrintTemplate({
         template: panel,
+        // 图片选择功能
+        onImageChooseClick: (target) => {
+          // 测试 3秒后修改图片地址值
+          setTimeout(()=>{
+            target.refresh("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAtAAAAIIAQMAAAB99EudAAAABlBMVEUmf8vG2O41LStnAAABD0lEQVR42u3XQQqCQBSAYcWFS4/QUTpaHa2jdISWLUJjjMpclJoPGvq+1WsYfiJCZ4oCAAAAAAAAAAAAAAAAAHin6pL9c6H/fOzHbRrP0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0u/SY9LS0tLS0tLS0tLS0n+edm+UlpaWlpaWlpaWlpaW/tl0Ndyzbno7/+tPTJdd1wal69dNa6abx+Lq6TSeYtK7BX/Diek0XULSZZrakPRtV0i6Hu/KIt30q4fM0pvBqvR9mvsQkZaW9gyJT+f5lsnzjR54xAk8mAUeJyMPwYFH98ALx5Jr0kRLLndT7b64UX9QR/0eAAAAAAAAAAAAAAAAAAD/4gpryzr/bja4QgAAAABJRU5ErkJggg==")
+          },3000)
+          // target.getValue()
+          // target.refresh(url)
+        },
         dataMode: 1, // 1:getJson 其他：getJsonTid 默认1
         history: true, // 是否需要 撤销重做功能
         onDataChanged: (type, json) => {

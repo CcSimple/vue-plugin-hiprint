@@ -1567,6 +1567,9 @@ var hiprint = function (t) {
       }, BasePrintElement.prototype.getFields = function () {
         var t = this.options.fields;
         return t || (t = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(this.templateId).getFields());
+      }, BasePrintElement.prototype.getOnImageChooseClick = function () {
+        var t = this.options.onImageChooseClick;
+        return t || (t = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(this.templateId).getOnImageChooseClick());
       }, BasePrintElement.prototype.bingCopyEvent = function (t) {
         var n = this;
         t.keydown(function (r) {
@@ -3040,14 +3043,22 @@ var hiprint = function (t) {
       function t() {
         this.name = "src";
       }
-
-      return t.prototype.createTarget = function () {
-        return this.target = $(' <div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        图片地址\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="text" placeholder="请输入图片地址" class="auto-submit">\n        </div>\n    </div>'), this.target;
+      return t.prototype.createTarget = function (t) {
+        var e = void 0, i = this;
+        this.target = $(' <div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        图片地址\n        </div>\n        <div class="hiprint-option-item-field" style="display: flex;align-items: baseline;">\n        <input type="text" placeholder="请输入图片地址" class="auto-submit" style="width:70%">\n    <button class="hiprint-option-item-settingBtn" style="padding:0 10px;margin:0 0 0 5px" type="button">选择</button>        </div>\n    </div>');
+        if (t && (e = t.getOnImageChooseClick()), e) {
+          this.target.find('button').click(function() {
+            e && e(i);
+          })
+        }
+        return this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("input").val();
         if (t) return t.toString();
       }, t.prototype.setValue = function (t) {
         this.target.find("input").val(t);
+      }, t.prototype.refresh = function (t) {
+        this.setValue(t), this.target.find("input").change();
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
@@ -8694,7 +8705,9 @@ var hiprint = function (t) {
         var i = new st(n.template || []);
         n.template && i.panels.forEach(function (t) {
           e.printPanels.push(new pt(t, e.id));
-        }), n.fields && (this.fields = n.fields), n.settingContainer && new ut(this, n.settingContainer), n.paginationContainer && (this.printPaginationCreator = new dt(n.paginationContainer, this), this.printPaginationCreator.buildPagination()), this.initAutoSave();
+        }), n.fields && (this.fields = n.fields),
+          n.onImageChooseClick && (this.onImageChooseClick = n.onImageChooseClick),
+        n.settingContainer && new ut(this, n.settingContainer), n.paginationContainer && (this.printPaginationCreator = new dt(n.paginationContainer, this), this.printPaginationCreator.buildPagination()), this.initAutoSave();
       }
 
       return t.prototype.design = function (t, e) {
@@ -8971,6 +8984,10 @@ var hiprint = function (t) {
         this.fields = t;
       }, t.prototype.getFields = function () {
         return this.fields;
+      }, t.prototype.setOnImageChooseClick = function (t) {
+        this.onImageChooseClick = t;
+      }, t.prototype.getOnImageChooseClick = function () {
+        return this.onImageChooseClick;
       }, t.prototype.getFieldsInPanel = function () {
         var t = [];
         return this.printPanels.forEach(function (e) {
