@@ -1305,12 +1305,12 @@ var hiprint = function (t) {
         var t = this;
         this.getPrintElementOptionItems().forEach(function (e) {
           var n = e.getValue();
+          if ('textType' == e.name && t.options[e.name] !== n) {
+            t.setResizePanel()
+          }
           n && "object" == _typeof(n) ? Object.keys(n).forEach(function (e) {
             t.options[e] = n[e];
           }) : t.options[e.name] = n;
-          if ('textType' == e.name) {
-            t.setResizePanel()
-          }
         }), this.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "元素修改");
       }, BasePrintElement.prototype.getReizeableShowPoints = function () {
         return 'barcode' == this.options.textType ? ["se", "r"] : ["s", "e", "r"];
