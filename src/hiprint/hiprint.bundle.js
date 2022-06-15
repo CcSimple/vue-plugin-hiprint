@@ -8497,7 +8497,7 @@ var hiprint = function (t) {
           }
           s.a.instance.draging || 1 === e.buttons && (t.mouseRect && (t.mouseRect.updateRect(e.pageX, e.pageY), t.updateRectPanel(t.mouseRect)));
         }).on("mousedown", function (e) {
-          s.a.instance.draging || (t.mouseRect && t.mouseRect.target && t.mouseRect.target.remove(), 1 === e.buttons && (t.mouseRect = new at(e.pageX, e.pageY, s.a.instance.dragLengthCNum(e.pageX - t.designPaper.getTarget().offset().left, p.a.instance.movingDistance), s.a.instance.dragLengthCNum(e.pageY - t.designPaper.getTarget().offset().top, p.a.instance.movingDistance))));
+          s.a.instance.draging || (t.mouseRect && t.mouseRect.target && t.mouseRect.target.remove(), 1 === e.buttons && e.target.className == "hiprint-printPaper hidroppable design" && (t.mouseRect = new at(e.pageX, e.pageY, s.a.instance.dragLengthCNum(e.pageX - t.designPaper.getTarget().offset().left, p.a.instance.movingDistance), s.a.instance.dragLengthCNum(e.pageY - t.designPaper.getTarget().offset().top, p.a.instance.movingDistance))));
         });
       }, t.prototype.getElementInRect = function (t) {
         var e = [];
