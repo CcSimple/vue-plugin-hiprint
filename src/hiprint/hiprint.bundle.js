@@ -6133,21 +6133,21 @@ var hiprint = function (t) {
       t.on("mousedown", function (t) {
         i.options.onBeforeResize(), o = t.pageX, r = t.pageY, l = u.offset().top, s = u.offset().left, b = !1;
       }), n(i.options.stage).on("mousemove", function (e) {
-        if (d) {
+        if (d) { // 右
           var n = (e.pageX - o) / i.options.getScale();
           t.css({
             width: "100%"
           }), u.css({
             width: i.numHandlerText(a + n)
           }), i.options.onResize(e, void 0, i.numHandler(a + n), void 0, void 0);
-        } else if (c) {
+        } else if (c) { // 下
           var E = (e.pageY - r) / i.options.getScale();
           t.css({
             height: "100%"
           }), u.css({
             height: i.numHandlerText(p + E)
           }), i.options.onResize(e, i.numHandler(p + E), void 0, void 0, void 0);
-        } else if (rt) {
+        } else if (rt) { // 旋转
           t.css({ height: "100%" });
           var eo = e.pageX, er = e.pageY;
 		      var direct = (eo - o) * 360 / 100;
@@ -6159,48 +6159,69 @@ var hiprint = function (t) {
           }
           u.css({ transform: "rotate(" + R + "deg)" });
           i.options.onResize(e, void 0, void 0, void 0, void 0, R);
-        } else h ? (n = (e.pageX - o) / i.options.getScale(), t.css({
-          width: "100%"
-        }), u.css({
-          width: i.numHandlerText(a - n),
-          left: i.numHandlerText(i.options.noDrag ? void 0 : i.numHandler(s + n))
-        }), i.options.onResize(e, void 0, i.numHandler(a - n), void 0, i.options.noDrag ? void 0 : i.numHandler(s + n))) : f ? (E = (e.pageY - r) / i.options.getScale(), t.css({
-          height: "100%"
-        }), u.css({
-          height: i.numHandlerText(p - E),
-          top: i.numHandlerText(i.options.noDrag ? void 0 : l + E)
-        }), i.options.onResize(e, i.numHandler(p - E), void 0, i.options.noDrag ? void 0 : i.numHandler(l + E), void 0)) : g ? (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), t.css({
-          height: "100%",
-          width: "100%"
-        }), u.css({
-          height: i.numHandlerText(p - E),
-          top: i.numHandlerText(i.options.noDrag ? void 0 : l + E),
-          width: i.numHandlerText(a + n)
-        }), i.options.onResize(e, i.numHandler(p - E), i.numHandler(a + n), i.options.noDrag ? void 0 : i.numHandler(l + E), void 0)) : m ? (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), t.css({
-          height: "100%",
-          width: "100%"
-        }), u.css({
-          height: i.numHandlerText(p - E),
-          top: i.numHandlerText(i.options.noDrag ? void 0 : l + E),
-          width: i.numHandlerText(a - n),
-          left: i.numHandlerText(i.options.noDrag ? void 0 : s + n)
-        }), i.options.onResize(e, i.numHandler(p - E), i.numHandler(a - n), i.options.noDrag ? void 0 : i.numHandler(l + E), i.options.noDrag ? void 0 : i.numHandler(s + n))) : v ? (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), t.css({
-          width: "100%",
-          height: "100%"
-        }), u.css({
-          width: i.numHandlerText(a + n),
-          height: i.numHandlerText(p + E)
-        }), i.options.onResize(e, i.numHandler(p + E), i.numHandler(a + n), void 0, void 0)) : y ? (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), t.css({
-          width: "100%",
-          height: "100%"
-        }), u.css({
-          width: i.numHandlerText(a - n),
-          left: i.numHandlerText(i.options.noDrag ? void 0 : s + n),
-          height: i.numHandlerText(p + E)
-        }), i.options.onResize(e, i.numHandler(p + E), i.numHandler(a - n), i.numHandler(otundefinedop), i.options.noDrag ? void 0 : i.numHandler(s + n))) : b && (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), u.css({
-          left: i.numHandlerText(i.options.noDrag ? void 0 : s + n),
-          top: i.numHandlerText(i.options.noDrag ? void 0 : l + E)
-        }), i.options.onResize(e, void 0, void 0, i.options.noDrag ? void 0 : i.numHandler(l + E), i.options.noDrag ? void 0 : i.numHandler(s + n)));
+        } else if (h) { // 左
+          (n = (e.pageX - o) / i.options.getScale(), t.css({
+            width: "100%"
+          }), u.css({
+            width: i.numHandlerText(a - n),
+            left: i.numHandlerText(i.options.noDrag ? void 0 : i.numHandler(s + n))
+          }), i.options.onResize(e, void 0, i.numHandler(a - n), void 0, i.options.noDrag ? void 0 : i.numHandler(s + n)))
+        } else if (f) { // 上
+          (E = (e.pageY - r) / i.options.getScale(), t.css({
+            height: "100%"
+          }), u.css({
+            height: i.numHandlerText(p - E),
+            top: i.numHandlerText(i.options.noDrag ? void 0 : l + E)
+          }), i.options.onResize(e, i.numHandler(p - E), void 0, i.options.noDrag ? void 0 : i.numHandler(l + E), void 0))
+        } else if (g) { // 右上
+          (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), t.css({
+            height: "100%",
+            width: "100%"
+          }), u.css({
+            height: i.numHandlerText(p - E),
+            top: i.numHandlerText(i.options.noDrag ? void 0 : l + E),
+            width: i.numHandlerText(a + n)
+          }), i.options.onResize(e, i.numHandler(p - E), i.numHandler(a + n), i.options.noDrag ? void 0 : i.numHandler(l + E), void 0))
+        } else if (m) { // 左上
+          (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), t.css({
+            height: "100%",
+            width: "100%"
+          }), u.css({
+            height: i.numHandlerText(p - E),
+            top: i.numHandlerText(i.options.noDrag ? void 0 : l + E),
+            width: i.numHandlerText(a - n),
+            left: i.numHandlerText(i.options.noDrag ? void 0 : s + n)
+          }), i.options.onResize(e, i.numHandler(p - E), i.numHandler(a - n), i.options.noDrag ? void 0 : i.numHandler(l + E), i.options.noDrag ? void 0 : i.numHandler(s + n)))
+        } else if (v) { // 右下
+          (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale()),
+            t.css({width: "100%", height: "100%"});
+          if (e.shiftKey) {
+            u.css({width: i.numHandlerText(a + n), height: i.numHandlerText(p + E)});
+            i.options.onResize(e, i.numHandler(p + E), i.numHandler(a + n), void 0, void 0);
+          } else {
+            // 宽高比
+            var ratio = p / a;
+            var width = a + n, height = p + E;
+            console.log('ratio',ratio)
+            height = width * ratio;
+            u.css({width: i.numHandlerText(width), height: i.numHandlerText(height)});
+              i.options.onResize(e, i.numHandler(height), i.numHandler(width), void 0, void 0);
+          }
+        } else if (y) { // 左下
+          (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), t.css({
+            width: "100%",
+            height: "100%"
+          }), u.css({
+            width: i.numHandlerText(a - n),
+            left: i.numHandlerText(i.options.noDrag ? void 0 : s + n),
+            height: i.numHandlerText(p + E)
+          }), i.options.onResize(e, i.numHandler(p + E), i.numHandler(a - n), i.numHandler(otundefinedop), i.options.noDrag ? void 0 : i.numHandler(s + n)))
+        } else { // 按下
+          b && (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), u.css({
+            left: i.numHandlerText(i.options.noDrag ? void 0 : s + n),
+            top: i.numHandlerText(i.options.noDrag ? void 0 : l + E)
+          }), i.options.onResize(e, void 0, void 0, i.options.noDrag ? void 0 : i.numHandler(l + E), i.options.noDrag ? void 0 : i.numHandler(s + n)))
+        };
       }).on("mouseup", function (t) {
         // i.options.onStopResize(rt);
         hinnn.event.trigger('hiprintTemplate_doc_mouseup', u);
