@@ -10,9 +10,13 @@
 [![npm][npm]][npm-url]
 [![node][node]][node-url]
 ![image](https://badgen.net/packagephobia/publish/vue-plugin-hiprint)
-![image](https://badgen.net/packagephobia/install/vue-plugin-hiprint)
+![image](https://badgen.net/npm/v/vue-plugin-hiprint)
+![image](https://badgen.net/github/stars/CcSimple/vue-plugin-hiprint)
+![image](https://badgen.net/npm/dw/vue-plugin-hiprint)
+![image](https://badgen.net/npm/dm/vue-plugin-hiprint)
+![image](https://badgen.net/npm/dy/vue-plugin-hiprint)
 
-# vue-plugin-hiprint <a href="http://hiprint.io/docs/start">hiprint官方文档</a>
+# vue-plugin-hiprint
 > hiprint for Vue2.x / Vue3.x
 
 ### 分支说明
@@ -21,6 +25,17 @@
 > npm_demo： vue2.x + ant1.7.x + npm包使用 示例
 
 > npm_demo_v3： vue3.x + vite + npm包(0.0.18)使用 示例
+
+### 安装使用
+> npm install vue-plugin-hiprint
+```html
+// 在index.html 文件中添加打印所需样式: 当然你也可以调整成 相对链接/自有链接
+<link rel="stylesheet" type="text/css" media="print" href="https://cdn.jsdelivr.net/npm/vue-plugin-hiprint@latest/dist/print-lock.css">
+```
+
+### <a href="https://ccsimple.gitee.io/vue-plugin-hiprint/">Gitee Demo预览</a>
+### <a href="http://hiprint.io/docs/start">hiprint官方文档</a>
+### [npm包版本及更新记录](CHANGELOG.md)
 
 ## 配套直接打印客户端(win/mac/linux)
 ### <a href="https://gitee.com/CcSimple/electron-hiprint">gitee客户端源码 / 下载</a><a style="margin-left:10px" href="https://github.com/CcSimple/electron-hiprint"> github客户端源码</a>
@@ -60,41 +75,7 @@
     </tr>
 </table>
 
-## 参与/预览 <a href="https://ccsimple.gitee.io/vue-plugin-hiprint/">demo</a>
-```console
-git clone https://github.com/CcSimple/vue-plugin-hiprint.git
-// or
-git clone https://gitee.com/CcSimple/vue-plugin-hiprint.git
-// init
-cd vue-plugin-hiprint
-npm i
-// 调试预览
-npm run serve
-// 打包
-npm run build
-```
-## demo调试（显示打印iframe）
-```javascript
-// 快速显示/隐藏 打印iframe  方便调试 ￣□￣｜｜
-// 在浏览器控制台输入：
-// 显示打印页面
-$('#app').css('display','none');
-$('#hiwprint_iframe').css('visibility','visible');
-$('#hiwprint_iframe').css('width','100%');
-$('#hiwprint_iframe').css('height','251.09mm'); // 这里替换个实际高度才能显示完
-// 显示vue页面
-$('#app').css('display','block');
-$('#hiwprint_iframe').css('visibility','hidden');
-```
-
-## 安装使用
-```console
-// 控制台中输入 以安装npm包
-npm install vue-plugin-hiprint
-// 在index.html 文件中添加打印所需样式: 当然你也可以调整成 相对链接/自有链接
-<link rel="stylesheet" type="text/css" media="print" href="https://cdn.jsdelivr.net/npm/vue-plugin-hiprint@latest/dist/print-lock.css">
-```
-## 插件引入
+## 插件全局引入
 ```javascript
 // main.js中 引入安装
 import {hiPrintPlugin} from 'vue-plugin-hiprint'
@@ -131,7 +112,7 @@ hiprintTemplate.print({});
 hiprintTemplate.print2({});
 ```
 
-## 组件引入
+## 组件内引入
 ```javascript
 import {autoConnect, disAutoConnect, hiprint, defaultElementTypeProvider} from 'vue-plugin-hiprint'
 // autoConnect(); // 默认 自动连接直接打印客户端
@@ -291,6 +272,31 @@ autoConnect((status,msg) => {
  */
 ```
 
+## 参与项目
+```console
+git clone https://gitee.com/CcSimple/vue-plugin-hiprint.git
+// init
+cd vue-plugin-hiprint
+npm i
+// 调试预览
+npm run serve
+// 打包
+npm run build
+```
+## demo调试（显示打印iframe）
+```javascript
+// 快速显示/隐藏 打印iframe  方便调试 ￣□￣｜｜
+// 在浏览器控制台输入：
+// 显示打印页面
+$('#app').css('display','none');
+$('#hiwprint_iframe').css('visibility','visible');
+$('#hiwprint_iframe').css('width','100%');
+$('#hiwprint_iframe').css('height','251.09mm'); // 这里替换个实际高度才能显示完
+// 显示vue页面
+$('#app').css('display','block');
+$('#hiwprint_iframe').css('visibility','hidden');
+```
+
 ## 交流群
 <table>
     <tr>
@@ -301,8 +307,16 @@ autoConnect((status,msg) => {
 
 > 若过期 加我 备注加群
 
+#### 支持一下项目, 或者请作者喝杯咖啡☕️
+<table>
+    <tr>
+        <td><img src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/zWechat.png"/></td>
+        <td><img src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/zAlipay.png"/></td>
+    </tr>
+</table>
 
 ## 状态/调整/优化
+### 截止2022-06-15, npm包0.0.23版本已调整优化下列功能, 后续版本请查看[更新记录](CHANGELOG.md)
 - [x] `vue 插件` 发布npm包,方便直接使用
 - [x] `Ant Design Vue demo` 默认拖拽设计、自定义设计、队列打印
 - [x] `优化删除元素功能` 支持 backSpace/delete 按键删除
@@ -339,6 +353,16 @@ autoConnect((status,msg) => {
 - [x] `新增设置元素距离api` 多选元素后设置每个元素的间隔(垂直/水平) hiprintTemplate.setElsSpace(10,true)
 - [x] `调整优化table表头`  支持动态显示/隐藏表头列, getJson时也返回了所有设置的列
 - [x] `新增支持更新拖拽元素api` 通过tid获取拖拽元素/更新拖拽元素 hiprint.updateElementType(tid,(e)=>e)
+- [x] `新增支持不打印功能`   设置元素 showInPage: 'none' 打印时不打印
+- [x] `新增刷新获取打印机列表api` 连接上客户端时 通过 hiprint.refreshPrinterList 获取最新打印机列表
+- [x] `新增获取IP、IPv6、MAC的api` 连接上客户端时 通过 hiprint.getAddress('mac',(data)=>{}) 获取MAC地址
+- [x] `新增支持设置元素层级` 设置元素 zIndex: 10 调整元素层级
+- [x] `调整优化元素设置fields问题` 设置元素 options.fields: [{"text":'id',"field":'id']; getJson将返回此列表
+- [x] `新增支持图片地址选择按钮` new PrintTemplate时 指定 onImageChooseClick: (target) => {target.refresh('url')} 更新图片地址
+- [x] `新增支持图片元素设置缩放格式fit`  object-fix: fill|contain|cover|none
+- [x] `新增支持text元素修改为barcode/qrcode时调整控制按钮`  右和下控制点 变成 右下控制点(等比缩放)
+- [x] `调整优化控制点等比缩放功能`  右下控制点拖动时等比缩放, 按住shift时可自由缩放
+- [x] `调整优化元素框选功能`  从右侧参数栏快速从右往左选择时鼠标移动到design内时框选框的大小问题
 
 |setElsAlign 参数说明|说明|
 |---|---|
