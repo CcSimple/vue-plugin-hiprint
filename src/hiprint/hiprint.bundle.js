@@ -1313,7 +1313,7 @@ var hiprint = function (t) {
           }) : t.options[e.name] = n;
         }), this.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "元素修改");
       }, BasePrintElement.prototype.getReizeableShowPoints = function () {
-        return 'barcode' == this.options.textType ? ["se", "r"] : ["s", "e", "r"];
+        return ['barcode','qrcode'].includes(this.options.textType) ? ["se", "r"] : ["s", "e", "r"];
       }, BasePrintElement.prototype.setResizePanel = function () {
         var n = this, e = this.options;
         this.designTarget.hireizeable({
