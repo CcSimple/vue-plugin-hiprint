@@ -1166,7 +1166,7 @@ var hiprint = function (t) {
       return Object.keys(this).filter(function (t) {
         return "topInDesign" != t;
       }).forEach(function (n) {
-        if ("number" != typeof e[n] && "string" != typeof e[n] && _typeof(e[n]) != _typeof(!0) || (t[n] = e[n]), "style" == n) {
+        if ("number" != typeof e[n] && "string" != typeof e[n] && !['fields'].includes(n) && _typeof(e[n]) != _typeof(!0) || (t[n] = e[n]), "style" == n) {
           t.style = {};
           var i = e[n];
           if (i) Object.keys(i).forEach(function (e) {
@@ -1292,7 +1292,31 @@ var hiprint = function (t) {
               _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.changed = !1,
               n.removeLineOfPosition();
           }
-        }), this.designTarget.hireizeable({
+        }), this.setResizePanel(), this.bindDocMouseUpEvent(this.designTarget), this.bingCopyEvent(this.designTarget), this.bingKeyboardMoveEvent(this.designTarget, e);
+      }, BasePrintElement.prototype.bindDocMouseUpEvent = function (t) {
+        var n = this;
+        _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.on("hiprintTemplate_doc_mouseup", function(target) {
+          n.removeLineOfPosition();
+        })
+      }, BasePrintElement.prototype.getPrintElementEntity = function (t) {
+        return t ? new _entity_PrintElementEntity__WEBPACK_IMPORTED_MODULE_0__.a(void 0, this.options.getPrintElementOptionEntity(), this.printElementType.getPrintElementTypeEntity()) : new _entity_PrintElementEntity__WEBPACK_IMPORTED_MODULE_0__.a(this.printElementType.tid, this.options.getPrintElementOptionEntity());
+      }, BasePrintElement.prototype.submitOption = function () {
+		    // 右侧选项修改模版数据触发history
+        var t = this;
+        this.getPrintElementOptionItems().forEach(function (e) {
+          var n = e.getValue();
+          if ('textType' == e.name && t.options[e.name] !== n) {
+            t.setResizePanel()
+          }
+          n && "object" == _typeof(n) ? Object.keys(n).forEach(function (e) {
+            t.options[e] = n[e];
+          }) : t.options[e.name] = n;
+        }), this.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "元素修改");
+      }, BasePrintElement.prototype.getReizeableShowPoints = function () {
+        return ['barcode','qrcode'].includes(this.options.textType) ? ["se", "r"] : ["s", "e", "r"];
+      }, BasePrintElement.prototype.setResizePanel = function () {
+        var n = this, e = this.options;
+        this.designTarget.hireizeable({
           showPoints: n.getReizeableShowPoints(),
           // 是否显示宽高box
           showSizeBox: _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.showSizeBox,
@@ -1314,25 +1338,7 @@ var hiprint = function (t) {
             _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, r ? "旋转" : "大小");
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !1, n.removeLineOfPosition();
           }
-        }), this.bindDocMouseUpEvent(this.designTarget), this.bingCopyEvent(this.designTarget), this.bingKeyboardMoveEvent(this.designTarget, e);
-      }, BasePrintElement.prototype.bindDocMouseUpEvent = function (t) {
-        var n = this;
-        _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.on("hiprintTemplate_doc_mouseup", function(target) {
-          n.removeLineOfPosition();
         })
-      }, BasePrintElement.prototype.getPrintElementEntity = function (t) {
-        return t ? new _entity_PrintElementEntity__WEBPACK_IMPORTED_MODULE_0__.a(void 0, this.options.getPrintElementOptionEntity(), this.printElementType.getPrintElementTypeEntity()) : new _entity_PrintElementEntity__WEBPACK_IMPORTED_MODULE_0__.a(this.printElementType.tid, this.options.getPrintElementOptionEntity());
-      }, BasePrintElement.prototype.submitOption = function () {
-		    // 右侧选项修改模版数据触发history
-        var t = this;
-        this.getPrintElementOptionItems().forEach(function (e) {
-          var n = e.getValue();
-          n && "object" == _typeof(n) ? Object.keys(n).forEach(function (e) {
-            t.options[e] = n[e];
-          }) : t.options[e.name] = n;
-        }), this.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "元素修改");
-      }, BasePrintElement.prototype.getReizeableShowPoints = function () {
-        return ["s", "e", "r"];
       }, BasePrintElement.prototype.onRotate = function (t, r) {
         this.options.setRotate(r);
       }, BasePrintElement.prototype.onResize = function (t, e, n, i, o) {
@@ -1565,8 +1571,11 @@ var hiprint = function (t) {
       }, BasePrintElement.prototype.removeLineOfPosition = function () {
         $(".toplineOfPosition" + this.id).remove(), $(".topPosition.id" + this.id).remove(), this.designTarget.find('.size-box')&&this.designTarget.find('.size-box').toggleClass('hide', false), $(".leftlineOfPosition" + this.id).remove(), $(".leftPosition.id" + this.id).remove(), $(".rightlineOfPosition" + this.id).remove(), $(".bottomlineOfPosition" + this.id).remove();
       }, BasePrintElement.prototype.getFields = function () {
-        var t = this.printElementType.getFields();
+        var t = this.options.fields;
         return t || (t = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(this.templateId).getFields());
+      }, BasePrintElement.prototype.getOnImageChooseClick = function () {
+        var t = this.options.onImageChooseClick;
+        return t || (t = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(this.templateId).getOnImageChooseClick());
       }, BasePrintElement.prototype.bingCopyEvent = function (t) {
         var n = this;
         t.keydown(function (r) {
@@ -3040,14 +3049,43 @@ var hiprint = function (t) {
       function t() {
         this.name = "src";
       }
-
-      return t.prototype.createTarget = function () {
-        return this.target = $(' <div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        图片地址\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="text" placeholder="请输入图片地址" class="auto-submit">\n        </div>\n    </div>'), this.target;
+      return t.prototype.createTarget = function (t) {
+        var e = void 0, i = this;
+        this.target = $(' <div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        图片地址\n        </div>\n        <div class="hiprint-option-item-field" style="display: flex;align-items: baseline;">\n        <input type="text" placeholder="请输入图片地址" class="auto-submit" style="width:70%">\n    <button class="hiprint-option-item-settingBtn" style="padding:0 10px;margin:0 0 0 5px" type="button">选择</button>        </div>\n    </div>');
+        if (t && (e = t.getOnImageChooseClick()), e) {
+          this.target.find('button').click(function() {
+            e && e(i);
+          })
+        }
+        return this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("input").val();
         if (t) return t.toString();
       }, t.prototype.setValue = function (t) {
         this.target.find("input").val(t);
+      }, t.prototype.refresh = function (t) {
+        this.setValue(t), this.target.find("input").change();
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
+    imageFit = function () {
+      function t() {
+        this.name = "fit";
+      }
+      return t.prototype.css = function (t, e) {
+        if (t && t.length) {
+          if (e) return t.find("img").css("object-fit", e), "object-fit:" + e;
+          t.find("img")[0].style['object-fit'] = "";
+        }
+        return null;
+      }, t.prototype.createTarget = function () {
+        this.target = $(' <div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        图片缩放\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n        <option value="contain" >等比</option>\n        <option value="cover" >剪裁</option>\n        <option value="fill" >填充</option>\n        <option value="none" >原始尺寸</option>\n                </select>\n        </div>\n    </div>'), this.target;
+        return this.target;
+      }, t.prototype.getValue = function () {
+        return this.target.find("select").val();
+      }, t.prototype.setValue = function (t) {
+        this.target.find("select").val(t);
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
@@ -4237,7 +4275,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept(), new tableSummary()], t;
+    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept(), new tableSummary()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -6010,6 +6048,7 @@ var hiprint = function (t) {
       }
     },
     appendHandler: function appendHandler(t, e) {
+      e.find(".resize-panel").remove()
       for (var n = 0; n < t.length; n++) {
         e.append(t[n]);
       }
@@ -6050,39 +6089,39 @@ var hiprint = function (t) {
         s = t.offset().left,
         l = t.offset().top,
         u = i.options.noContainer ? n(e) : t.parent(),
-        d = !1;
+        d = !1; // 右
       t.on("mousedown", ".e", function (e) {
         o = e.pageX, a = t.width(), d = !0;
       });
-      var c = !1;
+      var c = !1; // 下
       t.on("mousedown", ".s", function (e) {
         r = e.pageY, p = t.height(), c = !0;
       });
-      var h = !1;
+      var h = !1; // 左
       t.on("mousedown", ".w", function (e) {
         o = e.pageX, a = t.width(), h = !0, s = u.offset().left;
       });
-      var f = !1;
+      var f = !1; // 上
       t.on("mousedown", ".n", function (e) {
         r = e.pageY, p = t.height(), f = !0, l = u.offset().top;
       });
-      var g = !1;
+      var g = !1; // 右上
       t.on("mousedown", ".ne", function (e) {
         o = e.pageX, r = e.pageY, a = t.width(), p = t.height(), g = !0, l = u.offset().top;
       });
-      var m = !1;
+      var m = !1; // 左上
       t.on("mousedown", ".nw", function (e) {
         o = e.pageX, r = e.pageY, a = t.width(), p = t.height(), l = u.offset().top, s = u.offset().left, m = !0;
       });
-      var v = !1;
+      var v = !1; // 右下
       t.on("mousedown", ".se", function (e) {
         o = e.pageX, r = e.pageY, a = t.width(), p = t.height(), v = !0;
       });
-      var y = !1;
+      var y = !1; // 左下
       t.on("mousedown", ".sw", function (e) {
         o = e.pageX, r = e.pageY, a = t.width(), p = t.height(), y = !0, s = u.offset().left;
       });
-      var rt = !1;
+      var rt = !1; // 旋转
       t.on("mousedown", ".r", function (e) {
         o = e.pageX, r = e.pageY, a = t.width(), p = t.height(), rt = !0, s = a/2 + u.offset().left, l = p/2 + u.offset().top;
       });
@@ -6094,21 +6133,21 @@ var hiprint = function (t) {
       t.on("mousedown", function (t) {
         i.options.onBeforeResize(), o = t.pageX, r = t.pageY, l = u.offset().top, s = u.offset().left, b = !1;
       }), n(i.options.stage).on("mousemove", function (e) {
-        if (d) {
+        if (d) { // 右
           var n = (e.pageX - o) / i.options.getScale();
           t.css({
             width: "100%"
           }), u.css({
             width: i.numHandlerText(a + n)
           }), i.options.onResize(e, void 0, i.numHandler(a + n), void 0, void 0);
-        } else if (c) {
+        } else if (c) { // 下
           var E = (e.pageY - r) / i.options.getScale();
           t.css({
             height: "100%"
           }), u.css({
             height: i.numHandlerText(p + E)
           }), i.options.onResize(e, i.numHandler(p + E), void 0, void 0, void 0);
-        } else if (rt) {
+        } else if (rt) { // 旋转
           t.css({ height: "100%" });
           var eo = e.pageX, er = e.pageY;
 		      var direct = (eo - o) * 360 / 100;
@@ -6120,48 +6159,69 @@ var hiprint = function (t) {
           }
           u.css({ transform: "rotate(" + R + "deg)" });
           i.options.onResize(e, void 0, void 0, void 0, void 0, R);
-        } else h ? (n = (e.pageX - o) / i.options.getScale(), t.css({
-          width: "100%"
-        }), u.css({
-          width: i.numHandlerText(a - n),
-          left: i.numHandlerText(i.options.noDrag ? void 0 : i.numHandler(s + n))
-        }), i.options.onResize(e, void 0, i.numHandler(a - n), void 0, i.options.noDrag ? void 0 : i.numHandler(s + n))) : f ? (E = (e.pageY - r) / i.options.getScale(), t.css({
-          height: "100%"
-        }), u.css({
-          height: i.numHandlerText(p - E),
-          top: i.numHandlerText(i.options.noDrag ? void 0 : l + E)
-        }), i.options.onResize(e, i.numHandler(p - E), void 0, i.options.noDrag ? void 0 : i.numHandler(l + E), void 0)) : g ? (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), t.css({
-          height: "100%",
-          width: "100%"
-        }), u.css({
-          height: i.numHandlerText(p - E),
-          top: i.numHandlerText(i.options.noDrag ? void 0 : l + E),
-          width: i.numHandlerText(a + n)
-        }), i.options.onResize(e, i.numHandler(p - E), i.numHandler(a + n), i.options.noDrag ? void 0 : i.numHandler(l + E), void 0)) : m ? (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), t.css({
-          height: "100%",
-          width: "100%"
-        }), u.css({
-          height: i.numHandlerText(p - E),
-          top: i.numHandlerText(i.options.noDrag ? void 0 : l + E),
-          width: i.numHandlerText(a - n),
-          left: i.numHandlerText(i.options.noDrag ? void 0 : s + n)
-        }), i.options.onResize(e, i.numHandler(p - E), i.numHandler(a - n), i.options.noDrag ? void 0 : i.numHandler(l + E), i.options.noDrag ? void 0 : i.numHandler(s + n))) : v ? (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), t.css({
-          width: "100%",
-          height: "100%"
-        }), u.css({
-          width: i.numHandlerText(a + n),
-          height: i.numHandlerText(p + E)
-        }), i.options.onResize(e, i.numHandler(p + E), i.numHandler(a + n), void 0, void 0)) : y ? (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), t.css({
-          width: "100%",
-          height: "100%"
-        }), u.css({
-          width: i.numHandlerText(a - n),
-          left: i.numHandlerText(i.options.noDrag ? void 0 : s + n),
-          height: i.numHandlerText(p + E)
-        }), i.options.onResize(e, i.numHandler(p + E), i.numHandler(a - n), i.numHandler(otundefinedop), i.options.noDrag ? void 0 : i.numHandler(s + n))) : b && (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), u.css({
-          left: i.numHandlerText(i.options.noDrag ? void 0 : s + n),
-          top: i.numHandlerText(i.options.noDrag ? void 0 : l + E)
-        }), i.options.onResize(e, void 0, void 0, i.options.noDrag ? void 0 : i.numHandler(l + E), i.options.noDrag ? void 0 : i.numHandler(s + n)));
+        } else if (h) { // 左
+          (n = (e.pageX - o) / i.options.getScale(), t.css({
+            width: "100%"
+          }), u.css({
+            width: i.numHandlerText(a - n),
+            left: i.numHandlerText(i.options.noDrag ? void 0 : i.numHandler(s + n))
+          }), i.options.onResize(e, void 0, i.numHandler(a - n), void 0, i.options.noDrag ? void 0 : i.numHandler(s + n)))
+        } else if (f) { // 上
+          (E = (e.pageY - r) / i.options.getScale(), t.css({
+            height: "100%"
+          }), u.css({
+            height: i.numHandlerText(p - E),
+            top: i.numHandlerText(i.options.noDrag ? void 0 : l + E)
+          }), i.options.onResize(e, i.numHandler(p - E), void 0, i.options.noDrag ? void 0 : i.numHandler(l + E), void 0))
+        } else if (g) { // 右上
+          (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), t.css({
+            height: "100%",
+            width: "100%"
+          }), u.css({
+            height: i.numHandlerText(p - E),
+            top: i.numHandlerText(i.options.noDrag ? void 0 : l + E),
+            width: i.numHandlerText(a + n)
+          }), i.options.onResize(e, i.numHandler(p - E), i.numHandler(a + n), i.options.noDrag ? void 0 : i.numHandler(l + E), void 0))
+        } else if (m) { // 左上
+          (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), t.css({
+            height: "100%",
+            width: "100%"
+          }), u.css({
+            height: i.numHandlerText(p - E),
+            top: i.numHandlerText(i.options.noDrag ? void 0 : l + E),
+            width: i.numHandlerText(a - n),
+            left: i.numHandlerText(i.options.noDrag ? void 0 : s + n)
+          }), i.options.onResize(e, i.numHandler(p - E), i.numHandler(a - n), i.options.noDrag ? void 0 : i.numHandler(l + E), i.options.noDrag ? void 0 : i.numHandler(s + n)))
+        } else if (v) { // 右下
+          (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale()),
+            t.css({width: "100%", height: "100%"});
+          if (e.shiftKey) {
+            u.css({width: i.numHandlerText(a + n), height: i.numHandlerText(p + E)});
+            i.options.onResize(e, i.numHandler(p + E), i.numHandler(a + n), void 0, void 0);
+          } else {
+            // 宽高比
+            var ratio = p / a;
+            var width = a + n, height = p + E;
+            console.log('ratio',ratio)
+            height = width * ratio;
+            u.css({width: i.numHandlerText(width), height: i.numHandlerText(height)});
+              i.options.onResize(e, i.numHandler(height), i.numHandler(width), void 0, void 0);
+          }
+        } else if (y) { // 左下
+          (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), t.css({
+            width: "100%",
+            height: "100%"
+          }), u.css({
+            width: i.numHandlerText(a - n),
+            left: i.numHandlerText(i.options.noDrag ? void 0 : s + n),
+            height: i.numHandlerText(p + E)
+          }), i.options.onResize(e, i.numHandler(p + E), i.numHandler(a - n), i.numHandler(otundefinedop), i.options.noDrag ? void 0 : i.numHandler(s + n)))
+        } else { // 按下
+          b && (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), u.css({
+            left: i.numHandlerText(i.options.noDrag ? void 0 : s + n),
+            top: i.numHandlerText(i.options.noDrag ? void 0 : l + E)
+          }), i.options.onResize(e, void 0, void 0, i.options.noDrag ? void 0 : i.numHandler(l + E), i.options.noDrag ? void 0 : i.numHandler(s + n)))
+        };
       }).on("mouseup", function (t) {
         // i.options.onStopResize(rt);
         hinnn.event.trigger('hiprintTemplate_doc_mouseup', u);
@@ -6192,7 +6252,8 @@ var hiprint = function (t) {
       return this.each(function () {
         var e,
           i = n.data(this, "hireizeable");
-        e = i ? n.extend(i.options, _1f) : n.extend({}, n.fn.hireizeable.defaults, t || {}), n.data(this, "hireizeable", {
+        e = i ? n.extend({}, i.options, t || {}) : n.extend({}, n.fn.hireizeable.defaults, t || {});
+        n.data(this, "hireizeable", {
           options: e
         }), new o({
           target: this,
@@ -6840,6 +6901,7 @@ var hiprint = function (t) {
         i.find("img").length ? i.find("img").attr("src", n) : i.html('<img style="width:100%;height:100%;" src="' + n + '">');
         if (n.length) i.find("img").css('cssText',`width:100%;height:100%;content:url("${n}")!important`)
         else i.find("img").css('cssText','width:100%;height:100%;')
+        if (this.options.fit) i.find("img").css("object-fit", this.options.fit);
       }, e.prototype.getHtml = function (t, e, n) {
         return this.getHtml2(t, e, n);
       }, e;
@@ -8435,7 +8497,7 @@ var hiprint = function (t) {
           }
           s.a.instance.draging || 1 === e.buttons && (t.mouseRect && (t.mouseRect.updateRect(e.pageX, e.pageY), t.updateRectPanel(t.mouseRect)));
         }).on("mousedown", function (e) {
-          s.a.instance.draging || (t.mouseRect && t.mouseRect.target && t.mouseRect.target.remove(), 1 === e.buttons && (t.mouseRect = new at(e.pageX, e.pageY, s.a.instance.dragLengthCNum(e.pageX - t.designPaper.getTarget().offset().left, p.a.instance.movingDistance), s.a.instance.dragLengthCNum(e.pageY - t.designPaper.getTarget().offset().top, p.a.instance.movingDistance))));
+          s.a.instance.draging || (t.mouseRect && t.mouseRect.target && t.mouseRect.target.remove(), 1 === e.buttons && e.target.className == "hiprint-printPaper hidroppable design" && (t.mouseRect = new at(e.pageX, e.pageY, s.a.instance.dragLengthCNum(e.pageX - t.designPaper.getTarget().offset().left, p.a.instance.movingDistance), s.a.instance.dragLengthCNum(e.pageY - t.designPaper.getTarget().offset().top, p.a.instance.movingDistance))));
         });
       }, t.prototype.getElementInRect = function (t) {
         var e = [];
@@ -8694,7 +8756,9 @@ var hiprint = function (t) {
         var i = new st(n.template || []);
         n.template && i.panels.forEach(function (t) {
           e.printPanels.push(new pt(t, e.id));
-        }), n.fields && (this.fields = n.fields), n.settingContainer && new ut(this, n.settingContainer), n.paginationContainer && (this.printPaginationCreator = new dt(n.paginationContainer, this), this.printPaginationCreator.buildPagination()), this.initAutoSave();
+        }), n.fields && (this.fields = n.fields),
+          n.onImageChooseClick && (this.onImageChooseClick = n.onImageChooseClick),
+        n.settingContainer && new ut(this, n.settingContainer), n.paginationContainer && (this.printPaginationCreator = new dt(n.paginationContainer, this), this.printPaginationCreator.buildPagination()), this.initAutoSave();
       }
 
       return t.prototype.design = function (t, e) {
@@ -8971,6 +9035,10 @@ var hiprint = function (t) {
         this.fields = t;
       }, t.prototype.getFields = function () {
         return this.fields;
+      }, t.prototype.setOnImageChooseClick = function (t) {
+        this.onImageChooseClick = t;
+      }, t.prototype.getOnImageChooseClick = function () {
+        return this.onImageChooseClick;
       }, t.prototype.getFieldsInPanel = function () {
         var t = [];
         return this.printPanels.forEach(function (e) {

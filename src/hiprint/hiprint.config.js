@@ -178,6 +178,10 @@
           hidden: false
         },
         {
+          name: 'fit',
+          hidden: false
+        },
+        {
           name: 'coordinate',
           hidden: false
         },

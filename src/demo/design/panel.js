@@ -27,7 +27,7 @@ export default {
       "options": {"left": 25.5, "top": 57, "height": 705, "width": 9, "fixed": true, "borderStyle": "dotted"},
       "printElementType": {"type": "vline"}
     }, {
-      "options": {"left": 60, "top": 61.5, "height": 48, "width": 87, "src": ""},
+      "options": {"left": 60, "top": 61.5, "height": 48, "width": 87, "src": "", "fit": "contain"},
       "printElementType": {"title": "图片", "type": "image"}
     }, {
       "options": {
@@ -51,7 +51,8 @@ export default {
         "testData": "古力娜扎",
         "color": "#f00808",
         "textDecoration": "underline",
-        "textAlign": "center"
+        "textAlign": "center",
+        "fields": [{"text":'id',"field":'id'},{"text":'姓名',"field":'name'},{"text":'性别',"field":'gender'},{"text":'数量',"field":'count'}],
       }, "printElementType": {"title": "文本", "type": "text"}
     }, {
       "options": {
