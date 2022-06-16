@@ -305,7 +305,7 @@ $('#hiwprint_iframe').css('visibility','hidden');
     </tr>
 </table>
 
-> 若过期 加我 备注加群
+> 群人数已超过200 请 '加我好友' 备注加群, 邀你进群
 
 #### 支持一下项目, 或者请作者喝杯咖啡☕️
 <table>
