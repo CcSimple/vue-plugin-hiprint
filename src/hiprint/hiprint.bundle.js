@@ -3677,7 +3677,7 @@ var hiprint = function (t) {
         return null;
       }, t.prototype.createTarget = function (t) {
         var name = ['hline','vline','rect','oval'].includes(t.printElementType.type) ? '样式' : '边框样式';
-        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n       ' + name + '\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n            <option value="" >默认</option>\n            <option value="solid" >实线</option>\n            <option value="dotted" >虚线</option>\n        </select>\n        </div>\n    </div>'), this.target;
+        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n       ' + name + '\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n            <option value="" >默认</option>\n            <option value="solid" >实线</option>\n            <option value="dashed" >长虚线</option>\n            <option value="dotted" >短虚线</option>\n        </select>\n        </div>\n    </div>'), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
         if (t) return t;
