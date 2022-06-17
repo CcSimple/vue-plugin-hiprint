@@ -305,6 +305,18 @@ export default {
           // target.getValue()
           // target.refresh(url)
         },
+        // 自定义可选字体
+        // 或者使用 hiprintTemplate.setFontList([])
+        // 或元素中 options.fontList: []
+        fontList: [
+          {title:'微软雅黑',value:'Microsoft YaHei'},
+          {title:'黑体',value:'STHeitiSC-Light'},
+          {title:'思源黑体',value:'SourceHanSansCN-Normal'},
+          {title:'王羲之书法体',value:'王羲之书法体'},
+          {title:'宋体',value:'SimSun'},
+          {title:'华为楷体',value:'STKaiti'},
+          {title:'cursive',value:'cursive'},
+        ],
         dataMode: 1, // 1:getJson 其他：getJsonTid 默认1
         history: true, // 是否需要 撤销重做功能
         onDataChanged: (type, json) => {

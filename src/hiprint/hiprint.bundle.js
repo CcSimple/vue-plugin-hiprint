@@ -1568,6 +1568,9 @@ var hiprint = function (t) {
         }
       }, BasePrintElement.prototype.removeLineOfPosition = function () {
         $(".toplineOfPosition" + this.id).remove(), $(".topPosition.id" + this.id).remove(), this.designTarget.find('.size-box')&&this.designTarget.find('.size-box').toggleClass('hide', false), $(".leftlineOfPosition" + this.id).remove(), $(".leftPosition.id" + this.id).remove(), $(".rightlineOfPosition" + this.id).remove(), $(".bottomlineOfPosition" + this.id).remove();
+      }, BasePrintElement.prototype.getFontList = function () {
+        var t = this.options.fontList;
+        return t || (t = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(this.templateId).getFontList());
       }, BasePrintElement.prototype.getFields = function () {
         var t = this.options.fields;
         return t || (t = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(this.templateId).getFields());
@@ -2349,19 +2352,26 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
-    o = function () {
+    fontFamily = function () {
       function t() {
         this.name = "fontFamily";
       }
-
-      return t.prototype.createTarget = function () {
-        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        字体\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n            <option value="SimSun" >宋体</option>\n            <option value="Microsoft YaHei" >微软雅黑</option>\n        </select>\n        </div>\n    </div>'), this.target;
+      return t.prototype.createTarget = function (t) {
+        var e = void 0;
+        if (t && (e = t.getFontList()), e) {
+          var n = ' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        字体\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>';
+          e.forEach(function (t, e) {
+            n += ' <option value="' + (t.value || "") + '" >' + (t.title || "") + "</option>";
+          }), n += " </select>\n            </div>\n        </div>", this.target = $(n);
+        } else {
+          this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        字体\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n            <option value="SimSun" >宋体</option>\n            <option value="Microsoft YaHei" >微软雅黑</option>\n        </select>\n        </div>\n    </div>');
+        }
+        return this.target;
       }, t.prototype.css = function (t, e) {
         if (t && t.length) {
           if (e) return t.css("font-family", e), "font-family:" + e;
-          t[0].style.fontFamily = "";
+          t[0].style.fontFamily = "inherit"; // 从父元素继承字体, 否则模板字体无效
         }
-
         return null;
       }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
@@ -4273,7 +4283,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new o(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept(), new tableSummary()], t;
+    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new partsValues(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept(), new tableSummary()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -8276,7 +8286,8 @@ var hiprint = function (t) {
           console.error('pasteJson error', e);
         }
       }, t.prototype.css = function (t) {
-        this.fontFamily && t.css("fontFamily", this.fontFamily);
+        if (this.fontFamily) t.css("fontFamily", this.fontFamily);
+        else t[0].style.fontFamily = '';
       }, t.prototype.getHtml = function (t, e, n, i, o) {
         var r = this;
         this.orderPrintElements();
@@ -8693,7 +8704,7 @@ var hiprint = function (t) {
         t.title && r.append('<div class="hiprint-option-item hiprint-option-item-row">\n            <div class="hiprint-option-item-label hiprint-option-title">\n              ' + t.title + "\n            </div>\n        </div>"), o.forEach(function (e) {
           e.submit = function (e) {
             t.callback(n.getValueByOptionItems(o));
-          }, r.append(e.createTarget(void 0, t.options, void 0)), e.setValue(t.options[e.name], t.options, void 0);
+          }, r.append(e.createTarget(n.printTemplate, t.options, void 0)), e.setValue(t.options[e.name], t.options, void 0);
         });
         var a = $('<button class="hiprint-option-item-settingBtn hiprint-option-item-submitBtn"\n        type="button">确定</button>');
         r.append(a), a.bind("click.submitOption", function () {
@@ -8754,8 +8765,8 @@ var hiprint = function (t) {
         var i = new st(n.template || []);
         n.template && i.panels.forEach(function (t) {
           e.printPanels.push(new pt(t, e.id));
-        }), n.fields && (this.fields = n.fields),
-          n.onImageChooseClick && (this.onImageChooseClick = n.onImageChooseClick),
+        }), n.fields && (this.fields = n.fields), n.partsMultiple && (this.partsMultiple = n.partsMultiple), n.partsList && (this.partsList = n.partsList),
+          n.partsRule && (this.partsRule = n.partsRule), n.onImageChooseClick && (this.onImageChooseClick = n.onImageChooseClick),
         n.settingContainer && new ut(this, n.settingContainer), n.paginationContainer && (this.printPaginationCreator = new dt(n.paginationContainer, this), this.printPaginationCreator.buildPagination()), this.initAutoSave();
       }
 
@@ -9029,6 +9040,10 @@ var hiprint = function (t) {
         n++ , !r && n < 10 ? setTimeout(function () {
           i.loadAllImages(t, e, n);
         }, 500) : e();
+      }, t.prototype.setFontList = function (t) {
+        this.fontList = t;
+      }, t.prototype.getFontList = function () {
+        return this.fontList;
       }, t.prototype.setFields = function (t) {
         this.fields = t;
       }, t.prototype.getFields = function () {
