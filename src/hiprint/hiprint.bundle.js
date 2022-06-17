@@ -2778,8 +2778,9 @@ var hiprint = function (t) {
         this.name = "borderWidth";
       }
 
-      return t.prototype.createTarget = function () {
-        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        边框大小\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n        <option value="0.75" >0.75pt</option>\n        <option value="1.5" >1.5pt</option>\n        <option value="2.25" >2.25pt</option>\n        <option value="3" >3pt</option>\n        <option value="3.75" >3.75pt</option>\n        <option value="4.5" >4.5pt</option>\n        <option value="5.25" >5.25pt</option>\n        <option value="6" >6pt</option>\n        <option value="6.75" >6.75pt</option>\n        </select>\n        </div>\n    </div>'), this.target;
+      return t.prototype.createTarget = function (t) {
+        var name = ['hline','vline','rect','oval'].includes(t.printElementType.type) ? '线宽' : '边框大小';
+        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        ' + name + '\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n        <option value="0.75" >0.75pt</option>\n        <option value="1.5" >1.5pt</option>\n        <option value="2.25" >2.25pt</option>\n        <option value="3" >3pt</option>\n        <option value="3.75" >3.75pt</option>\n        <option value="4.5" >4.5pt</option>\n        <option value="5.25" >5.25pt</option>\n        <option value="6" >6pt</option>\n        <option value="6.75" >6.75pt</option>\n        </select>\n        </div>\n    </div>'), this.target;
       }, t.prototype.css = function (t, e) {
         if (t && t.length) {
           if (e) return t.css("border-width", e + "pt"), "border-width:" + e + "pt";
@@ -3110,8 +3111,9 @@ var hiprint = function (t) {
         }
 
         return null;
-      }, t.prototype.createTarget = function () {
-        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        边框颜色\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="text" class="auto-submit" />\n        </div>\n    </div>'), this.target;
+      }, t.prototype.createTarget = function (t) {
+        var name = ['hline','vline','rect','oval'].includes(t.printElementType.type) ? '颜色' : '边框颜色';
+        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        ' + name + '\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="text" class="auto-submit" />\n        </div>\n    </div>'), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("input").val();
         if (t) return t.toString();
@@ -3673,8 +3675,9 @@ var hiprint = function (t) {
         }
 
         return null;
-      }, t.prototype.createTarget = function () {
-        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n       边框样式\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n            <option value="" >默认</option>\n            <option value="solid" >实线</option>\n            <option value="dotted" >虚线</option>\n        </select>\n        </div>\n    </div>'), this.target;
+      }, t.prototype.createTarget = function (t) {
+        var name = ['hline','vline','rect','oval'].includes(t.printElementType.type) ? '样式' : '边框样式';
+        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n       ' + name + '\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n            <option value="" >默认</option>\n            <option value="solid" >实线</option>\n            <option value="dotted" >虚线</option>\n        </select>\n        </div>\n    </div>'), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
         if (t) return t;
@@ -7556,7 +7559,7 @@ var hiprint = function (t) {
           this.css(this.designTarget, t);
         }
       }, e.prototype.getConfigOptions = function () {
-        return p.a.instance.hline;
+        return p.a.instance.vline;
       }, e.prototype.createTarget = function (t, e) {
         return $('<div class="hiprint-printElement hiprint-printElement-vline" style="border-left:1px solid;position: absolute;"></div>');
       }, e.prototype.getReizeableShowPoints = function () {
@@ -7638,7 +7641,7 @@ var hiprint = function (t) {
           this.css(this.designTarget, t);
         }
       }, e.prototype.getConfigOptions = function () {
-        return p.a.instance.hline;
+        return p.a.instance.rect;
       }, e.prototype.createTarget = function (t, e) {
         return $('<div class="hiprint-printElement hiprint-printElement-rect" style="border:1px solid;position: absolute;"></div>');
       }, e.prototype.getHtml = function (t, e, n) {
@@ -7678,7 +7681,7 @@ var hiprint = function (t) {
           this.css(this.designTarget, t);
         }
       }, e.prototype.getConfigOptions = function () {
-        return p.a.instance.hline;
+        return p.a.instance.oval;
       }, e.prototype.createTarget = function (t, e) {
         return $('<div class="hiprint-printElement hiprint-printElement-oval" style="border:1px solid;position: absolute;border-radius: 50%;"></div>');
       }, e.prototype.getHtml = function (t, e, n) {

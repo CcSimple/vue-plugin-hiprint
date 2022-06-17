@@ -613,11 +613,15 @@
           hidden: false
         },
         {
-          name: 'borderColor',
+          name: 'borderWidth',
           hidden: false
         },
         {
-          name: 'borderWidth',
+          name: 'borderStyle',
+          hidden: false
+        },
+        {
+          name: 'borderColor',
           hidden: false
         },
         {
@@ -640,10 +644,6 @@
           name: 'zIndex',
           hidden: false
         },
-        {
-          name: 'borderStyle',
-          hidden: false
-        }
       ],
       default: {
         borderWidth: 0.75,
@@ -662,11 +662,15 @@
           hidden: false
         },
         {
-          name: 'borderColor',
+          name: 'borderWidth',
           hidden: false
         },
         {
-          name: 'borderWidth',
+          name: 'borderStyle',
+          hidden: false
+        },
+        {
+          name: 'borderColor',
           hidden: false
         },
         {
@@ -689,10 +693,6 @@
           name: 'zIndex',
           hidden: false
         },
-        {
-          name: 'borderStyle',
-          hidden: false
-        }
       ],
       default: {
         borderWidth: undefined,
@@ -711,11 +711,19 @@
           hidden: false
         },
         {
+          name: 'borderWidth',
+          hidden: false
+        },
+        {
+          name: 'borderStyle',
+          hidden: false
+        },
+        {
           name: 'borderColor',
           hidden: false
         },
         {
-          name: 'borderWidth',
+          name: 'backgroundColor',
           hidden: false
         },
         {
@@ -738,10 +746,6 @@
           name: 'zIndex',
           hidden: false
         },
-        {
-          name: 'borderStyle',
-          hidden: false
-        }
       ],
       default: {
         borderWidth: undefined,
@@ -760,11 +764,19 @@
           hidden: false
         },
         {
+          name: 'borderWidth',
+          hidden: false
+        },
+        {
+          name: 'borderStyle',
+          hidden: false
+        },
+        {
           name: 'borderColor',
           hidden: false
         },
         {
-          name: 'borderWidth',
+          name: 'backgroundColor',
           hidden: false
         },
         {
@@ -785,10 +797,6 @@
         },
         {
           name: 'zIndex',
-          hidden: false
-        },
-        {
-          name: 'borderStyle',
           hidden: false
         }
       ],
