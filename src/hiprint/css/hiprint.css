@@ -24,6 +24,11 @@
   background: unset;
 }
 
+/* 元素始终隐藏 */
+.alwaysHide {
+  background-color: gray !important;
+}
+
 /* 元素宽高 */
 .resize-panel .size-box {
   border: 1px solid;

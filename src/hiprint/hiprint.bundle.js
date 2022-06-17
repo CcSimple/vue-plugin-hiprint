@@ -3181,7 +3181,13 @@ var hiprint = function (t) {
         this.name = "showInPage";
       }
 
-      return t.prototype.createTarget = function () {
+      return t.prototype.css = function (t, e) {
+        if (t && t.length) {
+          if (e && 'none' == e) return t.addClass('alwaysHide');
+          t.removeClass('alwaysHide');
+        }
+        return null;
+      }, t.prototype.createTarget = function () {
         return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        显示规则\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n            <option value="none" >始终隐藏</option>\n            <option value="first" >首页</option>\n            <option value="odd" >奇数页</option>\n            <option value="even" >偶数页</option>\n            <option value="last" >尾页</option>\n        </select>\n        </div>\n    </div>'), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
