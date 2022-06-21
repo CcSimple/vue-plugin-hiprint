@@ -4446,7 +4446,7 @@ var hiprint = function (t) {
       }
 
       return t.prototype.init = function (t, e, n) {
-        this.isHead = n, this.target = e || $("<tr></tr>"), this.tableOptions = t, this.initCells(this.columns);
+        this.isHead = n, this.target = e || $("<tr></tr>"), this.tableOptions = t, this.initCells((this.columns||[]).filter(function(column) {return column.checked}));
       }, t.prototype.getTarget = function () {
         return this.target;
       }, t.prototype.initCells = function (t) {
