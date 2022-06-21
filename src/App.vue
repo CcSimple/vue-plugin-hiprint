@@ -1,9 +1,3 @@
-<!--
- * @Author: 54xavier
- * @LastEditors: 54xavier
- * @Date: 2022-06-07 10:08:14
- * @LastEditTime: 2022-06-07 10:08:55
--->
 <template>
   <div id="app">
     <a-space class="logos" style="float: left;">
