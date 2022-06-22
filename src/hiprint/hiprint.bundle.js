@@ -1292,12 +1292,7 @@ var hiprint = function (t) {
               _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.changed = !1,
               n.removeLineOfPosition();
           }
-        }), this.setResizePanel(), this.bindDocMouseUpEvent(this.designTarget), this.bingCopyEvent(this.designTarget), this.bingKeyboardMoveEvent(this.designTarget, e);
-      }, BasePrintElement.prototype.bindDocMouseUpEvent = function (t) {
-        var n = this;
-        _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.on("hiprintTemplate_doc_mouseup", function(target) {
-          n.removeLineOfPosition();
-        })
+        }), this.setResizePanel(), this.bingCopyEvent(this.designTarget), this.bingKeyboardMoveEvent(this.designTarget, e);
       }, BasePrintElement.prototype.getPrintElementEntity = function (t) {
         return t ? new _entity_PrintElementEntity__WEBPACK_IMPORTED_MODULE_0__.a(void 0, this.options.getPrintElementOptionEntity(), this.printElementType.getPrintElementTypeEntity()) : new _entity_PrintElementEntity__WEBPACK_IMPORTED_MODULE_0__.a(this.printElementType.tid, this.options.getPrintElementOptionEntity());
       }, BasePrintElement.prototype.submitOption = function () {
@@ -6240,7 +6235,6 @@ var hiprint = function (t) {
         };
       }).on("mouseup", function (t) {
         // i.options.onStopResize(rt);
-        hinnn.event.trigger('hiprintTemplate_doc_mouseup', u);
         d = !1, c = !1, h = !1, f = !1, g = !1, m = !1, y = !1, v = !1, b = !1, rt = !1;
       });
     },
