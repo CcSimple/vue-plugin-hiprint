@@ -1999,7 +1999,6 @@ var hiprint = function (t) {
           n[t].filter(function (t) {
             return t.checked;
           }).forEach(function (t) {
-            if (!t.checked) return;
             var n = $("<td></td>");
             t.id && n.attr("id", t.id), t.columnId && n.attr("column-id", t.columnId), (t.align || t.halign) && n.css("text-align", t.halign || t.align), t.vAlign && n.css("vertical-align", t.vAlign), t.colspan > 1 && n.attr("colspan", t.colspan), t.rowspan > 1 && n.attr("rowspan", t.rowspan), n.html(t.title), o[t.id] ? (t.hasWidth = !0, t.targetWidth = o[t.id], n.attr("haswidth", "haswidth"), n.css("width", o[t.id] + "pt")) : t.hasWidth = !1, e.append(n);
           }), i.append(e);
@@ -4349,7 +4348,7 @@ var hiprint = function (t) {
       }, t.prototype.getCellByXY = function (t, e) {
         var n;
         return this.rows.forEach(function (i, o) {
-          var r = i.columns.filter(function (n) {
+          var r = (i.columns||[]).filter(function (column) {return column.checked}).filter(function (n) {
             return n.isXYinCell(t, e);
           });
           r.length && (n = new p(o, r[0]));
@@ -4993,7 +4992,7 @@ var hiprint = function (t) {
           n = [],
           i = $('<div class="columngrips"/>');
         i.width(this.target.width()), this.rows.forEach(function (o) {
-          o.columns.forEach(function (o, a) {
+          (o.columns||[]).filter(function (column) {return column.checked}).forEach(function (o, a) {
             if (o.getTarget().attr("haswidth")) {
               var p = $('<div class="columngrip"><div class="gripResizer"></div></div>');
               i.append(p);
