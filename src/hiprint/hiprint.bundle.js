@@ -4292,7 +4292,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new partsValues(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept(), new tableSummary()], t;
+    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept(), new tableSummary()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -8774,8 +8774,7 @@ var hiprint = function (t) {
         var i = new st(n.template || []);
         n.template && i.panels.forEach(function (t) {
           e.printPanels.push(new pt(t, e.id));
-        }), n.fields && (this.fields = n.fields), n.partsMultiple && (this.partsMultiple = n.partsMultiple), n.partsList && (this.partsList = n.partsList),
-          n.partsRule && (this.partsRule = n.partsRule), n.onImageChooseClick && (this.onImageChooseClick = n.onImageChooseClick),
+        }), n.fontList && (this.fontList = n.fontList), n.fields && (this.fields = n.fields), n.onImageChooseClick && (this.onImageChooseClick = n.onImageChooseClick),
         n.settingContainer && new ut(this, n.settingContainer), n.paginationContainer && (this.printPaginationCreator = new dt(n.paginationContainer, this), this.printPaginationCreator.buildPagination()), this.initAutoSave();
       }
 
