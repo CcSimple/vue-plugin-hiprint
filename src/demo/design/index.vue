@@ -44,6 +44,12 @@
           <a-icon type="close"/>
         </a-button>
       </a-popconfirm>
+    </a-space>
+    <a-space style="margin-bottom: 10px">
+      <a-button  type="primary" @click="setElsSpace(true)" >  水平间距10
+      </a-button>
+      <a-button  type="primary" @click="setElsSpace(false)" >  垂直间距10
+      </a-button>
       <a-radio-group>
         <a-radio-button @click="setElsAlign('left')" title="左对齐">
           <span class="glyphicon glyphicon-object-align-left"></span>
@@ -461,6 +467,9 @@ export default {
     },
     setElsAlign(e) {
       hiprintTemplate.setElsAlign(e)
+    },
+    setElsSpace(h) {
+      hiprintTemplate.setElsSpace(10, h)
     }
   }
 }
