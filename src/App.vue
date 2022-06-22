@@ -78,7 +78,7 @@ export default {
 
 .hiprint-headerLine:hover:before {
   content: "页眉线";
-  left: 50%;
+  left: calc(50% - 18px);
   position: relative;
   background: #FFFF;
   top: -12px;
@@ -88,7 +88,7 @@ export default {
 
 .hiprint-footerLine:hover:before {
   content: "页脚线";
-  left: 50%;
+  left: calc(50% - 18px);
   position: relative;
   color: red;
   background: #FFFF;
