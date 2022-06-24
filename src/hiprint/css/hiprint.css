@@ -6,10 +6,14 @@
   min-width: 10px;
   padding: 0 2px;
   font-size: 12px;
+  line-height: normal;
+  z-index: 9;
 }
 .topPosition-lineMode {
   color: red;
   background: unset;
+  line-height: normal;
+  z-index: 9;
 }
 .leftPosition {
   background: red;
@@ -18,10 +22,14 @@
   min-width: 10px;
   padding: 0 2px;
   font-size: 12px;
+  line-height: normal;
+  z-index: 9;
 }
 .leftPosition-lineMode {
   color: red;
   background: unset;
+  line-height: normal;
+  z-index: 9;
 }
 
 /* 元素始终隐藏 */
@@ -38,6 +46,8 @@
   font-size: 12px;
   border-radius: 6px 6px 0 0;
   white-space: nowrap;
+  line-height: normal;
+  z-index: 9;
 }
 .resize-panel .size-box .hide {
   display: none;
