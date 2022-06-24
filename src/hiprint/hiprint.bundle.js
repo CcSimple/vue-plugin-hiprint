@@ -1911,7 +1911,8 @@ var hiprint = function (t) {
         var e = t.rect,
           n = this.getTableRect();
 
-        if (e.x + e.width > n.x && n.x + n.width > e.x && e.y + e.height > n.y && n.y + n.height > e.y) {
+        // if (e.x + e.width > n.x && n.x + n.width > e.x && e.y + e.height > n.y && n.y + n.height > e.y) {
+        if (n.x >= e.x && n.x + n.width <= e.x + e.width && n.y >= e.y && n.y + n.height <= e.y + e.height) {
           var i = p.a.mergeRect(e, n);
           return JSON.stringify(e) == JSON.stringify(i) || (t.changed = !0, t.rect = i, !0);
         }
