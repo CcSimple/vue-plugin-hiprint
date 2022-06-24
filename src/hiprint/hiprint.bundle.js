@@ -1308,7 +1308,7 @@ var hiprint = function (t) {
       }, BasePrintElement.prototype.getReizeableShowPoints = function () {
         return ['barcode','qrcode'].includes(this.options.textType) ? ["se", "r"] : ["s", "e", "r"];
       }, BasePrintElement.prototype.setResizePanel = function () {
-        var n = this, e = this.options;
+        var n = this, e = this.designPaper;
         this.designTarget.hireizeable({
           showPoints: n.getReizeableShowPoints(),
           // 是否显示宽高box
