@@ -2066,22 +2066,22 @@ var hiprint = function (t) {
             e.find("td").append(i.groupFormatter(t, n)), r.append(e);
           }
 
-          if (t.rows.forEach(function (t) {
-            var e = TableExcelHelper.createRowTarget(o, t, n, i);
+          if (t.rows.forEach(function (t, rowIndex) {
+            var e = TableExcelHelper.createRowTarget(o, t, n, i, rowIndex);
             r.append(e);
           }), i.groupFooterFormatter) {
             var a = $("<tr><td colspan=" + o.colspan + "></td></tr>");
             a.find("td").append(i.groupFooterFormatter(t, n)), r.append(a);
           }
-        }) : e.forEach(function (t) {
-          var e = TableExcelHelper.createRowTarget(o, t, n, i);
+        }) : e.forEach(function (t, rowIndex) {
+          var e = TableExcelHelper.createRowTarget(o, t, n, i, rowIndex);
           r.append(e);
         });
         return r;
-      }, TableExcelHelper.createRowTarget = function (t, e, n, i) {
+      }, TableExcelHelper.createRowTarget = function (t, e, n, i, rowIndex) {
           var o = $("<tr></tr>");
           var columns = t.rowColumns.filter(function (t) {
-            return t.checke;
+            return t.checked;
           });
             o.data("rowData", e), t.rowColumns.filter(function (t) {
               return t.checked;
@@ -2167,6 +2167,9 @@ var hiprint = function (t) {
               } catch (t) {
                 console.log(t), r.html("二维码生成失败");
               }
+            }
+            if ('sequence' === t.tableTextType) {
+              r.html(rowIndex + 1);
             }
           }
           var s = TableExcelHelper.getColumnStyler(t);
@@ -3834,7 +3837,7 @@ var hiprint = function (t) {
 
       return t.prototype.createTarget = function() {
         return this.target = $(
-          ' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        字段类型\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="text" >文本</option>\n        <option value="barcode" >条形码</option>\n        <option value="qrcode" >二维码</option>\n    <option value="image" >图片</option>\n        </select>\n        </div>\n    </div>'
+          ' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        字段类型\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="text" >文本</option>\n <option value="sequence" >序号</option>\n       <option value="barcode" >条形码</option>\n        <option value="qrcode" >二维码</option>\n    <option value="image" >图片</option>\n        </select>\n        </div>\n    </div>'
         ), this.target;
       }, t.prototype.getValue = function() {
         var t = this.target.find("select").val();
@@ -7380,7 +7383,7 @@ var hiprint = function (t) {
         }
 
         return e;
-      }, e.prototype.updateTargetText = function (t, e, n, i) {
+      }, e.prototype.updateTargetText = function (t, e, n, i, rowIndex) {
         var r = this.getFormatter(),
           a = t.find(".hiprint-printElement-text-content"),
           p = "";
