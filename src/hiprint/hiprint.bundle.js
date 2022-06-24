@@ -1490,15 +1490,15 @@ var hiprint = function (t) {
       }, BasePrintElement.prototype.onRendered = function (t, e) {
         this.printElementType && this.printElementType.onRendered && this.printElementType.onRendered(e, this.options, t.getTarget());
       }, BasePrintElement.prototype.createLineOfPosition = function (t) {
-        var e = $(".toplineOfPosition" + this.id),
+        var e = $(".toplineOfPosition.id" + this.id),
           topPos = $(".topPosition.id" + this.id),
-          n = $(".leftlineOfPosition" + this.id),
+          n = $(".leftlineOfPosition.id" + this.id),
           leftPos = $(".leftPosition.id" + this.id),
-          i = $(".rightlineOfPosition" + this.id),
-          o = $(".bottomlineOfPosition" + this.id);
+          i = $(".rightlineOfPosition.id" + this.id),
+          o = $(".bottomlineOfPosition.id" + this.id);
         var config = _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance;
         if (e.length) e.css("top", this.options.displayTop(true)); else {
-          var e = $('<div class="toplineOfPosition' + this.id + '" style="border:0;border-top:1px dashed  rgb(169, 169, 169);position: absolute; width: 100%;"></div>');
+          var e = $('<div class="toplineOfPosition id' + this.id + '" style="position: absolute; width: 100%;"></div>');
           e.css("top", this.options.displayTop(true)), e.css("width", t.displayWidth()), this.designTarget.parents(".hiprint-printPaper-content").append(e);
         }
         if (config.showPosition) {
@@ -1527,7 +1527,7 @@ var hiprint = function (t) {
           }
         }
         if (n.length) n.css("left", this.options.displayLeft(true)); else {
-          var r = $('<div class="leftlineOfPosition' + this.id + '" style="border:0;border-left:1px dashed  rgb(169, 169, 169);position: absolute;height: 100%;"></div>');
+          var r = $('<div class="leftlineOfPosition id' + this.id + '" style="position: absolute;height: 100%;"></div>');
           r.css("left", this.options.displayLeft(true)), r.css("height", t.displayHeight()), this.designTarget.parents(".hiprint-printPaper-content").append(r);
         }
         if (config.showPosition) {
@@ -1554,15 +1554,15 @@ var hiprint = function (t) {
           }
         }
         if (i.length) i.css("left", this.options.getLeft() + this.options.getWidth() + "pt"); else {
-          var a = $('<div class="rightlineOfPosition' + this.id + '" style="border:0;border-left:1px dashed  rgb(169, 169, 169);position: absolute;height: 100%;"></div>');
+          var a = $('<div class="rightlineOfPosition id' + this.id + '" style="position: absolute;height: 100%;"></div>');
           a.css("left", this.options.getLeft() + this.options.getWidth() + "pt"), a.css("height", t.displayHeight()), this.designTarget.parents(".hiprint-printPaper-content").append(a);
         }
         if (o.length) o.css("top", this.options.getTop() + this.options.getHeight() + "pt"); else {
-          var p = $('<div class="bottomlineOfPosition' + this.id + '" style="border:0;border-top:1px dashed  rgb(169, 169, 169);position: absolute;width: 100%;"></div>');
+          var p = $('<div class="bottomlineOfPosition id' + this.id + '" style="position: absolute;width: 100%;"></div>');
           p.css("top", this.options.getTop() + this.options.getHeight() + "pt"), p.css("width", t.displayWidth()), this.designTarget.parents(".hiprint-printPaper-content").append(p);
         }
       }, BasePrintElement.prototype.removeLineOfPosition = function () {
-        $(".toplineOfPosition" + this.id).remove(), $(".topPosition.id" + this.id).remove(), this.designTarget.find('.size-box')&&this.designTarget.find('.size-box').toggleClass('hide', false), $(".leftlineOfPosition" + this.id).remove(), $(".leftPosition.id" + this.id).remove(), $(".rightlineOfPosition" + this.id).remove(), $(".bottomlineOfPosition" + this.id).remove();
+        $(".toplineOfPosition.id" + this.id).remove(), $(".topPosition.id" + this.id).remove(), this.designTarget.find('.size-box')&&this.designTarget.find('.size-box').toggleClass('hide', false), $(".leftlineOfPosition.id" + this.id).remove(), $(".leftPosition.id" + this.id).remove(), $(".rightlineOfPosition.id" + this.id).remove(), $(".bottomlineOfPosition.id" + this.id).remove();
       }, BasePrintElement.prototype.getFontList = function () {
         var t = this.options.fontList;
         return t || (t = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(this.templateId).getFontList());

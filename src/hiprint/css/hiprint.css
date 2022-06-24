@@ -1,3 +1,13 @@
+/* 拖拽时元素辅助线 */
+.toplineOfPosition, .bottomlineOfPosition {
+  border: 0;
+  border-top: 1px dashed  rgb(169, 169, 169);
+}
+.leftlineOfPosition, .rightlineOfPosition {
+  border: 0;
+  border-left: 1px dashed  rgb(169, 169, 169);
+}
+
 /* 拖拽时的坐标位置 */
 .topPosition {
   background: red;

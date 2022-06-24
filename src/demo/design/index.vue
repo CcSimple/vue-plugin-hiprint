@@ -507,6 +507,23 @@ export default {
     content: url("~@/assets/logo.png");
   }
 }
+// 辅助线样式
+/deep/ .toplineOfPosition {
+  border: 0;
+  border-top: 1px dashed purple;
+}
+/deep/ .bottomlineOfPosition {
+  border: 0;
+  border-top: 1px dashed purple;
+}
+/deep/ .leftlineOfPosition {
+  border: 0;
+  border-left: 1px dashed purple;
+}
+/deep/ .rightlineOfPosition {
+  border: 0;
+  border-left: 1px dashed purple;
+}
 
 // 设计容器
 .card-design {
