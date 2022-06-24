@@ -6043,9 +6043,6 @@ var hiprint = function (t) {
         var f = n(this);
         n(o).on("mousedown", ".resizebtn", function () {
           f.addClass("resizeing");
-        }).on("mouseup", ".resizebtn", function(t) {
-          var isRotate = t.target.className == 'r resizebtn';
-          e.options.onStopResize(isRotate);
         }), n(".easyui-droppable").on("mouseup", function () {
           f.removeClass("resizeing");
         }), e.bindTrigger(n(this));
@@ -6239,6 +6236,10 @@ var hiprint = function (t) {
         };
       }).on("mouseup", function (t) {
         // i.options.onStopResize(rt);
+        // 当某个 '控制点' 按下时 (每个'控制点'按下状态是独立的)
+        if ((d || c || h || f || g || m || y || v || b || rt)) {
+          i.options.onStopResize(rt);
+        }
         d = !1, c = !1, h = !1, f = !1, g = !1, m = !1, y = !1, v = !1, b = !1, rt = !1;
       });
     },
