@@ -3808,8 +3808,16 @@ var hiprint = function (t) {
           }
         }));
       }, t.prototype.buildData = function () {
-        var t = this,
-          e = t.allColumns;
+        var t = this, e = [];
+        t.printElementType.makeColumnObj(t.allColumns);
+        this.target.find("input").map(function (n, i) {
+          var o = $(i).attr("column-id");
+          var a = t.printElementType.getColumnByColumnId(o);
+          if (a) {
+            var p = new rt.a(a);
+            p.checked = a.checked, e.push(p);
+          }
+        })
         return this.value[0].columns = e, this.value;
       }, t.prototype.destroy = function () {
         this.target.remove();
@@ -6862,13 +6870,15 @@ var hiprint = function (t) {
         return this.options || {};
       }, t.prototype.getColumnByColumnId = function (t) {
         return this.columnObj[t];
-      }, t.prototype.makeColumnObj = function () {
+      }, t.prototype.makeColumnObj = function (columns) {
         var t = {};
-        return this.columns && this.columns.forEach(function (e) {
+        return columns ? columns.forEach(function (e) {
+          (e.columnId || e.id) && (t[e.columnId || e.id] = e);
+        }) : this.columns && this.columns.forEach(function (e) {
           e.forEach(function (e) {
-            e.columnId && (t[e.columnId] = e);
+            (e.columnId || e.id) && (t[e.columnId || e.id] = e);
           });
-        }), t;
+        }), this.columnObj = t, t;
       }, t;
     }(),
     f = n(4),
