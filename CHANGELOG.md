@@ -1,5 +1,93 @@
 版本及更新记录
 ------------------------------
+## 0.0.24 (2022-06-26)
+<details>
+ <summary>1. 🌈 新增支持设置字体列表fontList</summary>
+
+```javascript
+hiprintTemplate = new hiprint.PrintTemplate({
+  ...,
+  // 自定义可选字体（本机已安装字体）
+  // 或者使用 hiprintTemplate.setFontList([])
+  // 或元素中 options.fontList: []
+  fontList: [
+    {title:'微软雅黑',value:'Microsoft YaHei'},
+    {title:'黑体',value:'STHeitiSC-Light'},
+    {title:'思源黑体',value:'SourceHanSansCN-Normal'},
+    {title:'王羲之书法体',value:'王羲之书法体'},
+    {title:'宋体',value:'SimSun'},
+    {title:'华为楷体',value:'STKaiti'},
+    {title:'cursive',value:'cursive'},
+  ],
+```
+</details>
+<details>
+ <summary>2. ✨ 调整优化横/竖线参数，虚线->长虚线、短虚线</summary>
+
+```
+详见参数配置
+```
+</details>
+<details>
+ <summary>3. 🐛 fix元素多时卡机的问题(hinnn.event导致)</summary>
+
+```
+元素多卡顿问题(hinnn.event导致)
+```
+</details>
+<details>
+ <summary>4. ✨ 调整优化部分样式问题，并支持重写(辅助线,始终隐藏元素)样式</summary>
+
+```
+始终隐藏元素 重写 .alwaysHide css
+
+position/size-box的样式（层级及元素行高影响问题）
+
+/* 拖拽时元素辅助线 */
+.toplineOfPosition, .bottomlineOfPosition {
+  border: 0;
+  border-top: 1px dashed  rgb(169, 169, 169);
+}
+.leftlineOfPosition, .rightlineOfPosition {
+  border: 0;
+  border-left: 1px dashed  rgb(169, 169, 169);
+}
+```
+</details>
+<details>
+ <summary>5. 🐛 ️fix优化表格列显示隐藏/列排序相关问题</summary>
+
+```
+```
+</details>
+<details>
+ <summary>6. ✨ 调整优化列选择/列宽调整的问题</summary>
+
+```
+```
+</details>
+<details>
+ <summary>7. 🌈 新增支持设置面板参数显示/隐藏</summary>
+
+```javascript
+hiprint.setConfig({
+  movingDistance: 2.5,
+  panel: {
+    supportOptions: [
+      {
+        name: 'firstPaperFooter', // 隐藏 首页页尾
+        hidden: true
+      },
+      {
+        name: 'evenPaperFooter', // 隐藏 偶数页页尾
+        hidden: true
+      },
+    ]
+  }
+})
+```
+</details>
+
 ## 0.0.23 (2022-06-15)
 <details>
  <summary>1. 新增支持不打印功能</summary>
