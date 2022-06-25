@@ -3798,13 +3798,13 @@ var hiprint = function (t) {
           deltaY: 0
         }).hidroppable({
           onDragOver: function onDragOver(t, e) {
-            $(this).css("border-bottom-color", "red");
+            $(this).css("border-top-color", "red");
           },
           onDragLeave: function onDragLeave(t, e) {
-            $(this).css("border-bottom-color", "");
+            $(this).css("border-top-color", "");
           },
           onDrop: function onDrop(t, e) {
-            $(e).insertAfter(this), $(this).css("border-bottom-color", ""), o.submit();
+            $(e).insertBefore(this), $(this).css("border-top-color", ""), o.submit();
           }
         }));
       }, t.prototype.buildData = function () {
@@ -5610,8 +5610,8 @@ var hiprint = function (t) {
         i = n.options,
         o = n.proxy,
         r = e.data,
-		a = r.startLeft + (e.pageX   - r.startX) / n.options.getScale() ,
-        p = r.startTop  + (e.pageY  - r.startY) / n.options.getScale() ;
+		    a = r.startLeft + (e.pageX   - r.startX) / (n.options.getScale() || 1),
+        p = r.startTop  + (e.pageY  - r.startY) / (n.options.getScale() || 1);
       o && (o.parent()[0] == document.body ? (a = null != i.deltaX && null != i.deltaX ? e.pageX + i.deltaX : e.pageX - e.data.offsetWidth, p = null != i.deltaY && null != i.deltaY ? e.pageY + i.deltaY : e.pageY - e.data.offsetHeight) : (null != i.deltaX && null != i.deltaX && (a += e.data.offsetWidth + i.deltaX), null != i.deltaY && null != i.deltaY && (p += e.data.offsetHeight + i.deltaY))), e.data.parent != document.body && (a += t(e.data.parent).scrollLeft(), p += t(e.data.parent).scrollTop()), "h" == i.axis ? r.left = a : "v" == i.axis ? r.top = p : (r.left = a, r.top = p);
     }
 
