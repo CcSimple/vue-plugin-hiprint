@@ -152,10 +152,12 @@ export default {
         "tableFooterRepeat": "",
         "fields": [{"text":'id',"field":'id'},{"text":'姓名',"field":'name'},{"text":'性别',"field":'gender'},{"text":'数量',"field":'count'}],
         "columns": [[{"width": 85.25, "colspan": 1, "rowspan": 1, "checked": true}, {
+          "title": "性别",
+          "field": "gender",
           "width": 85.25,
           "colspan": 1,
           "rowspan": 1,
-          "checked": true
+          "checked": false
         }, {
           "title": "姓名",
           "field": "name",
