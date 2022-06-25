@@ -4444,14 +4444,15 @@ var hiprint = function (t) {
       }
 
       return t.prototype.init = function (t, e, n) {
-        this.isHead = n, this.target = e || $("<tr></tr>"), this.tableOptions = t, this.initCells((this.columns||[]).filter(function(column) {return column.checked}));
+        this.isHead = n, this.target = e || $("<tr></tr>"), this.tableOptions = t,
+          this.initCells((this.columns||[]).filter(function(column) {return column.checked}));
       }, t.prototype.getTarget = function () {
         return this.target;
       }, t.prototype.initCells = function (t) {
         var e = this;
-        t ? t.forEach(function (t, n) {
+        t ? (this.columns = t, t.forEach(function (t, n) {
           t.init(e.target.find("td:eq(" + n + ")"), e.tableOptions, e.id, e.isHead);
-        }) : (this.columns = [], this.target.find("td").map(function (t, n) {
+        })) : (this.columns = [], this.target.find("td").map(function (t, n) {
           var i = new o.a();
           i.init($(n), e.tableOptions, e.id, e.isHead), e.columns.push(i);
         }));
