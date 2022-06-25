@@ -8713,8 +8713,14 @@ var hiprint = function (t) {
         this.lastPrintElement = void 0;
         var i = e || this.settingContainer;
         e || this.settingContainer.html("");
-        var o = [];
-        t.optionItems ? o = t.optionItems : Object.keys(t.options).forEach(function (t) {
+        var o = [], supportOptions = p.a.instance.panel.supportOptions.filter(function (t) {
+          return !t.hidden;
+        }).map(function (e) {
+          return e.name;
+        });
+        t.optionItems ? o = t.optionItems : Object.keys(t.options).filter(function (t) {
+          return supportOptions.includes(t);
+        }).forEach(function (t) {
           var e = lt.a.getItem(t);
           e && o.push(e);
         });

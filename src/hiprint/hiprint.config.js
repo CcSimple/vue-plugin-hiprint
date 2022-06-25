@@ -7,6 +7,59 @@
     positionLineMode: false, //坐标显示在线上的
     positionUnit: true, //显示坐标单位
     showSizeBox: true, //显示宽高box
+    panel: {
+      supportOptions: [
+        {
+          name: 'panelPaperRule',
+          hidden: false
+        },
+        {
+          name: 'panelPageRule',
+          hidden: false
+        },
+        {
+          name: 'firstPaperFooter',
+          hidden: false
+        },
+        {
+          name: 'evenPaperFooter',
+          hidden: false
+        },
+        {
+          name: 'oddPaperFooter',
+          hidden: false
+        },
+        {
+          name: 'lastPaperFooter',
+          hidden: false
+        },
+        {
+          name: 'leftOffset',
+          hidden: false
+        },
+        {
+          name: 'topOffset',
+          hidden: false
+        },
+        {
+          name: 'fontFamily',
+          hidden: false
+        },
+        {
+          name: 'orient',
+          hidden: false
+        },
+        {
+          name: 'paperNumberDisabled',
+          hidden: false
+        },
+        {
+          name: 'paperNumberFormat',
+          hidden: false
+        },
+      ],
+      default: {}
+    },
     text: {
       supportOptions: [
         {
