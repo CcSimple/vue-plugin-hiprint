@@ -182,12 +182,19 @@ export default {
         }, {"width": 85.25, "colspan": 1, "rowspan": 1, "checked": true}]]
       }, "printElementType": {
         "title": "表格", "type": "table",
-        editable:true,
+        editable: true,
         columnDisplayEditable: true,//列显示是否能编辑
         columnDisplayIndexEditable: true,//列顺序显示是否能编辑
         columnTitleEditable: true,//列标题是否能编辑
         columnResizable: true, //列宽是否能调整
         columnAlignEditable: true,//列对齐是否调整
+        isEnableEditField: true, //编辑字段
+        isEnableContextMenu: true, //开启右键菜单 默认true
+        isEnableInsertRow: true, //插入行
+        isEnableDeleteRow: true, //删除行
+        isEnableInsertColumn: true, //插入列
+        isEnableDeleteColumn: true, //删除列
+        isEnableMergeCell: true, //合并单元格
       }
     }, {
       "options": {
