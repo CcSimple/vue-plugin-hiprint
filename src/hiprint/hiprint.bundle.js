@@ -8331,8 +8331,7 @@ var hiprint = function (t) {
           i.referenceElement.isPositionLeftOrRight(e.options.getTop()) ? (l = p[i.referenceElement.beginPrintPaperIndex], n = e.getHtml(l, t)) : (l = p[i.referenceElement.endPrintPaperIndex], n = e.getHtml(l, t));
           n.forEach(function (t, i) {
             t.referenceElement && (t.referenceElement.endPrintPaperIndex = t.referenceElement.beginPrintPaperIndex + n.length - 1);
-            // 不分页时,不创建新page  后面调整了，好像不添加也行...
-            "none" != r.panelPageRule && i > 0 && (l.index < p.length - 1 ? l = p[l.index + 1] : (l = s.createNewPage(p.length, l.referenceElement), p.push(l)), a.append(l.getTarget()));
+            i > 0 && (l.index < p.length - 1 ? l = p[l.index + 1] : (l = s.createNewPage(p.length, l.referenceElement), p.push(l)), a.append(l.getTarget()));
             // 元素隐藏时不添加到html内
             t.target && (("none" != e.options.showInPage && l.append(t.target)), l.updatePrintLine(t.printLine), e.onRendered(l, t.target));
             i == n.length - 1 && t.referenceElement && l.updateReferenceElement(t.referenceElement);
