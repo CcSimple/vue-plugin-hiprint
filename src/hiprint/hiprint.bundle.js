@@ -6284,8 +6284,8 @@ var hiprint = function (t) {
     },
     bindTrigger: function bindTrigger(t) {
       var e = this;
-      t.on("click", function (n) {
-        n.stopPropagation(), e.triggerResize(t, n);
+      t.on("click", function (_n) {
+        _n.stopPropagation(), e.triggerResize(t, _n), n(".mouseRect").remove();
       });
     },
     bindHidePanel: function bindHidePanel(t) {
@@ -8566,7 +8566,7 @@ var hiprint = function (t) {
         var e = this,
           n = this.designPaper.getTarget();
         var ptr = this.designPaper.scale || 1;
-        this.mouseRect.target || (this.mouseRect.target = $('<div tabindex="1" style="z-index:2;position: absolute;opacity:0.2;border: 1px dashed #000;background-color:#31676f;"><span></span></div>'), n.find(".hiprint-printPaper-content").append(this.mouseRect.target), this.bingKeyboardMoveEvent(this.mouseRect.target), this.mouseRect.target.hidraggable({
+        this.mouseRect.target || (this.mouseRect.target = $('<div tabindex="1" class="mouseRect" style="z-index:2;position: absolute;opacity:0.2;border: 1px dashed #000;background-color:#31676f;"><span></span></div>'), n.find(".hiprint-printPaper-content").append(this.mouseRect.target), this.bingKeyboardMoveEvent(this.mouseRect.target), this.mouseRect.target.hidraggable({
           onDrag: function onDrag(t, n, i) {
             e.mouseRect.target.css({
               transform: 'unset'
