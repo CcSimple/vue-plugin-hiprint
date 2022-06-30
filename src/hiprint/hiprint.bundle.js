@@ -1259,6 +1259,7 @@ var hiprint = function (t) {
           // 添加 draggable 属性
           draggable: n.options.draggable,
           axis: n.options.axis && t && t.axisEnabled ? n.options.axis : void 0,
+          designTarget: n,
           onDrag: function onDrag(t, i, o) {
             // 处理按住 ctrl / command 多选元素
             var els = n.panel.printElements.filter(function (t) {
@@ -5678,6 +5679,81 @@ var hiprint = function (t) {
       e(i);
       if (!(i.ctrlKey || i.metaKey) && (i.data.target.className.startsWith('resize-panel') || "2" == i.data.target.style.zIndex || i.data.target.className.startsWith('hiprint-printElement'))) {
         var data = i.data
+        if (t(".mouseRect").length == 0) {
+          let left = window.hinnn.px.toPt(data.left);
+          let top = window.hinnn.px.toPt(data.top);
+          let cPosition = o.options.designTarget.options;
+          cPosition.left = left;
+          cPosition.top = top;
+          cPosition.right = left + cPosition.width;
+          cPosition.bottom = top + cPosition.height;
+          cPosition.vCenter = left + cPosition.width / 2;
+          cPosition.hCenter = top + cPosition.height / 2;
+          (() => {
+            let oPositions = o.options.designTarget.panel.printElements.filter(el => el.id != o.options.designTarget.id).map(el => {
+              let { left, top, width, height } = el.options;
+              return {
+                ...el.options,
+                bottom: top + height,
+                right: left + width,
+                vCenter: left + width / 2,
+                hCenter: top + height / 2
+              }
+            })
+            for (let idx in oPositions) {
+              // 元素左边线
+              if (Math.abs(oPositions[idx].left - cPosition.left) <= 3) {
+                cPosition.left = oPositions[idx].left;
+              } else if (Math.abs(oPositions[idx].vCenter - cPosition.left) <= 3) {
+                cPosition.left = oPositions[idx].vCenter;
+              } else if (Math.abs(oPositions[idx].right - cPosition.left) <= 3) {
+                cPosition.left = oPositions[idx].right;
+              }
+              // 元素垂直中线
+              if (Math.abs(oPositions[idx].left - cPosition.vCenter) <= 3) {
+                cPosition.left = oPositions[idx].left - cPosition.width / 2;
+              } else if (Math.abs(oPositions[idx].vCenter - cPosition.vCenter) <= 3) {
+                cPosition.left = oPositions[idx].vCenter - cPosition.width / 2;
+              } else if (Math.abs(oPositions[idx].right - cPosition.vCenter) <= 3) {
+                cPosition.left = oPositions[idx].right - cPosition.width / 2;
+              }
+              // 元素右边线
+              if (Math.abs(oPositions[idx].left - cPosition.right) <= 3) {
+                cPosition.left = oPositions[idx].left - cPosition.width;
+              } else if (Math.abs(oPositions[idx].vCenter - cPosition.right) <= 3) {
+                cPosition.left = oPositions[idx].vCenter - cPosition.width;
+              } else if (Math.abs(oPositions[idx].right - cPosition.right) <= 3) {
+                cPosition.left = oPositions[idx].right - cPosition.width;
+              }
+              // 元素顶边线
+              if (Math.abs(oPositions[idx].top - cPosition.top) <= 3) {
+                cPosition.top = oPositions[idx].top;
+              } else if (Math.abs(oPositions[idx].hCenter - cPosition.top) <= 3) {
+                cPosition.top = oPositions[idx].hCenter;
+              } else if (Math.abs(oPositions[idx].bottom - cPosition.top) <= 3) {
+                cPosition.top = oPositions[idx].bottom;
+              }
+              // 元素水平中线
+              if (Math.abs(oPositions[idx].top - cPosition.hCenter) <= 3) {
+                cPosition.top = oPositions[idx].top - cPosition.height / 2;
+              } else if (Math.abs(oPositions[idx].hCenter - cPosition.hCenter) <= 3) {
+                cPosition.top = oPositions[idx].hCenter - cPosition.height / 2;
+              } else if (Math.abs(oPositions[idx].bottom - cPosition.hCenter) <= 3) {
+                cPosition.top = oPositions[idx].bottom - cPosition.height / 2;
+              }
+              // 元素底边线
+              if (Math.abs(oPositions[idx].top - cPosition.bottom) <= 3) {
+                cPosition.top = oPositions[idx].top - cPosition.height;
+              } else if (Math.abs(oPositions[idx].hCenter - cPosition.bottom) <= 3) {
+                cPosition.top = oPositions[idx].hCenter - cPosition.height;
+              } else if (Math.abs(oPositions[idx].bottom - cPosition.bottom) <= 3) {
+                cPosition.top = oPositions[idx].bottom - cPosition.height;
+              }
+            }
+          })()
+          i.data.left = window.hinnn.pt.toPx(cPosition.left);
+          i.data.top = window.hinnn.pt.toPx(cPosition.top);
+        }
         // 当前纸张宽高
         var parent = data.parent.className.endsWith('design') ? data.parent : data.parent.offsetParent;
         var paperW = parent.clientWidth, paperH = parent.clientHeight;
