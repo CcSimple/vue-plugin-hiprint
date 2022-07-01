@@ -4702,6 +4702,7 @@ var hiprint = function (t) {
             n.find(".hiprint-printElement-tableTarget thead").remove();
           } else {
             n.find(".hiprint-printElement-tableTarget thead").css("background", "firebrick");
+            n.find(".hiprint-printElement-tableTarget thead tr").css("background", "firebrick");
           }
         }
         var noPaging = "none" == this.panel.panelPageRule;
