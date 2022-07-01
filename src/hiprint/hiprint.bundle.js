@@ -1319,6 +1319,19 @@ var hiprint = function (t) {
           });
         }
         this.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "元素修改");
+      }, BasePrintElement.prototype.updateOption = function (o, v, b) {
+        try {
+          var optionKeys = this.getConfigOptions().supportOptions.map(function(e){return e.name});
+          if (optionKeys && optionKeys.includes(o)) {
+            this.options[o] = v;
+            this.updateDesignViewFromOptions();
+            if (!b) {
+              _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "参数修改");
+            }
+          }
+        } catch (e) {
+          console.log('updateOption error', e)
+        }
       }, BasePrintElement.prototype.getReizeableShowPoints = function () {
         return ['barcode','qrcode'].includes(this.options.textType) ? ["se", "r"] : ["s", "e", "r"];
       }, BasePrintElement.prototype.setResizePanel = function () {
@@ -9300,6 +9313,14 @@ var hiprint = function (t) {
           })
         }
         return elements
+      }, t.prototype.updateOption = function (option, v) { // 批量更新参数
+        var elements = this.getSelectEls();
+        if (elements && elements.length) {
+          elements.forEach(function (e) {
+            e.updateOption(option, v, true)
+          })
+          o.a.event.trigger("hiprintTemplateDataChanged_" + this.id, "批量修改");
+        }
       }, t.prototype.setElsAlign = function (e) { // 设置框选、多选元素对齐api
         var t = this;
         var elements = this.getSelectEls();
