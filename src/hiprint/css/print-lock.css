@@ -191,8 +191,8 @@
 
 .design .hiprint-printElement-table-handle {
     position: absolute;
-    height: 21pt;
-    width: 21pt;
+    height: 12pt;
+    width: 12pt;
     background: red;
     z-index:1;
 }

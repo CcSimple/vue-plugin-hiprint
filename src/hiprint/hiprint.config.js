@@ -61,6 +61,116 @@
       default: {}
     },
     text: {
+      tabs: [
+        {
+          name: '基础', options: [
+            {
+              name: 'title',
+              hidden: false
+            },
+            {
+              name: 'field',
+              hidden: false
+            },
+            {
+              name: 'testData',
+              hidden: false
+            },
+            {
+              name: 'coordinate',
+              hidden: false
+            },
+            {
+              name: 'widthHeight',
+              hidden: false
+            },
+            {
+              name: 'hideTitle',
+              hidden: false
+            },
+            {
+              name: 'fixed',
+              hidden: false
+            },
+          ]
+        },
+        {
+          name: '样式', options: [
+            {
+              name: 'dataType',
+              hidden: false
+            },
+            {
+              name: 'fontFamily',
+              hidden: false
+            },
+            {
+              name: 'fontSize',
+              hidden: false
+            },
+            {
+              name: 'fontWeight',
+              hidden: false
+            },
+            {
+              name: 'letterSpacing',
+              hidden: false
+            },
+            {
+              name: 'color',
+              hidden: false
+            },
+            {
+              name: 'textDecoration',
+              hidden: false
+            },
+            {
+              name: 'textAlign',
+              hidden: false
+            },
+            {
+              name: 'textContentVerticalAlign',
+              hidden: false
+            },
+            {
+              name: 'lineHeight',
+              hidden: false
+            },
+            {
+              name: 'transform',
+              hidden: false
+            },
+            {
+              name: 'zIndex',
+              hidden: false
+            }
+          ]
+        },
+        {
+          name: '高级', options: [
+            {
+              name: 'textType',
+              hidden: false
+            },
+            {
+              name: 'barcodeMode',
+              hidden: false
+            },
+            {
+              name: 'showInPage',
+              hidden: false
+            },
+            {
+              name: 'unShowInPage',
+              hidden: false
+            },
+            {
+              name: 'axis',
+              hidden: false
+            },
+          ]
+        },
+      ],
       supportOptions: [
         {
           name: 'title',
@@ -221,6 +331,64 @@
       }
     },
     image: {
+      tabs: [
+        {
+          name: '基础', options: [
+            {
+              name: 'field',
+              hidden: false
+            },
+            {
+              name: 'src',
+              hidden: false
+            },
+            {
+              name: 'fit',
+              hidden: false
+            },
+            {
+              name: 'coordinate',
+              hidden: false
+            },
+            {
+              name: 'widthHeight',
+              hidden: false
+            },
+            {
+              name: 'fixed',
+              hidden: false
+            },
+          ]
+        },
+        {
+          name: '样式', options: [
+            {
+              name: 'transform',
+              hidden: false
+            },
+            {
+              name: 'zIndex',
+              hidden: false
+            },
+          ]
+        },
+        {
+          name: '高级', options: [
+            {
+              name: 'axis',
+              hidden: false
+            },
+            {
+              name: 'formatter',
+              hidden: false
+            },
+            {
+              name: 'styler',
+              hidden: false
+            }
+          ]
+        },
+      ],
       supportOptions: [
         {
           name: 'field',
@@ -274,6 +442,116 @@
       default: {}
     },
     longText: {
+      tabs: [
+        {
+          name: '基础', options: [
+            {
+              name: 'title',
+              hidden: false
+            },
+            {
+              name: 'field',
+              hidden: false
+            },
+            {
+              name: 'testData',
+              hidden: false
+            },
+            {
+              name: 'coordinate',
+              hidden: false
+            },
+            {
+              name: 'widthHeight',
+              hidden: false
+            },
+            {
+              name: 'hideTitle',
+              hidden: false
+            },
+            {
+              name: 'fixed',
+              hidden: false
+            },
+          ]
+        },
+        {
+          name: '样式', options: [
+            {
+              name: 'fontFamily',
+              hidden: false
+            },
+            {
+              name: 'fontSize',
+              hidden: false
+            },
+            {
+              name: 'fontWeight',
+              hidden: false
+            },
+            {
+              name: 'letterSpacing',
+              hidden: false
+            },
+            {
+              name: 'textAlign',
+              hidden: false
+            },
+            {
+              name: 'lineHeight',
+              hidden: false
+            },
+            {
+              name: 'color',
+              hidden: false
+            },
+            {
+              name: 'longTextIndent',
+              hidden: false
+            },
+            {
+              name: 'leftSpaceRemoved',
+              hidden: false
+            },
+            {
+              name: 'lHeight',
+              hidden: false
+            },
+            {
+              name: 'transform',
+              hidden: false
+            },
+            {
+              name: 'zIndex',
+              hidden: false
+            },
+          ]
+        },
+        {
+          name: '高级', options: [
+            {
+              name: 'showInPage',
+              hidden: false
+            },
+            {
+              name: 'unShowInPage',
+              hidden: false
+            },
+            {
+              name: 'axis',
+              hidden: false
+            },
+            {
+              name: 'formatter',
+              hidden: false
+            },
+            {
+              name: 'styler',
+              hidden: false
+            }
+          ]
+        },
+      ],
       supportOptions: [
         {
           name: 'title',
@@ -426,6 +704,154 @@
       }
     },
     table: {
+      tabs: [
+        {
+          name: '基础', options: [
+            {
+              name: 'field',
+              hidden: false
+            },
+            {
+              name: 'coordinate',
+              hidden: false
+            },
+            {
+              name: 'widthHeight',
+              hidden: false
+            },
+            {
+              name: 'tableHeaderRepeat',
+              hidden: false
+            },
+            {
+              name: 'tableFooterRepeat',
+              hidden: false
+            },
+            {
+              name: 'autoCompletion',
+              hidden: false
+            },
+            {
+              name: 'columns',
+              hidden: false
+            },
+          ]
+        },
+        {
+          name: '样式', options: [
+            {
+              name: 'fontFamily',
+              hidden: false
+            },
+            {
+              name: 'fontSize',
+              hidden: false
+            },
+            {
+              name: 'lineHeight',
+              hidden: false
+            },
+            {
+              name: 'textAlign',
+              hidden: false
+            },
+            {
+              name: 'gridColumns',
+              hidden: false
+            },
+            {
+              name: 'gridColumnsGutter',
+              hidden: false
+            },
+            {
+              name: 'tableBorder',
+              hidden: false
+            },
+            {
+              name: 'tableHeaderBorder',
+              hidden: false
+            },
+            {
+              name: 'tableHeaderCellBorder',
+              hidden: false
+            },
+            {
+              name: 'tableHeaderRowHeight',
+              hidden: false
+            },
+            {
+              name: 'tableHeaderBackground',
+              hidden: false
+            },
+            {
+              name: 'tableHeaderFontSize',
+              hidden: false
+            },
+            {
+              name: 'tableHeaderFontWeight',
+              hidden: false
+            },
+            {
+              name: 'tableBodyRowHeight',
+              hidden: false
+            },
+            {
+              name: 'tableBodyRowBorder',
+              hidden: false
+            },
+            {
+              name: 'tableBodyCellBorder',
+              hidden: false
+            },
+            {
+              name: 'tableFooterBorder',
+              hidden: false
+            },
+            {
+              name: 'tableFooterCellBorder',
+              hidden: false
+            },
+            {
+              name: 'lHeight',
+              hidden: false
+            },
+          ]
+        },
+        // 留空即显示 表格 列 属性
+        {
+          name: '列', options: [
+
+          ]
+        },
+        {
+          name: '高级', options: [
+            {
+              name: 'axis',
+              hidden: false
+            },
+            {
+              name: 'styler',
+              hidden: false
+            },
+            {
+              name: 'rowStyler',
+              hidden: false
+            },
+            {
+              name: 'footerFormatter',
+              hidden: false
+            },
+            {
+              name: 'rowsColumnsMerge',
+              hidden: false
+            },
+            {
+              name: 'gridColumnsFooterFormatter',
+              hidden: false
+            }
+          ]
+        },
+      ],
       supportOptions: [
         {
           name: 'field',
@@ -656,6 +1082,60 @@
       }
     },
     hline: {
+      tabs: [
+        {
+          name: '基础', options: [
+            {
+              name: 'coordinate',
+              hidden: false
+            },
+            {
+              name: 'widthHeight',
+              hidden: false
+            },
+            {
+              name: 'showInPage',
+              hidden: false
+            },
+            {
+              name: 'fixed',
+              hidden: false
+            },
+          ]
+        },
+        {
+          name: '样式', options: [
+            {
+              name: 'borderWidth',
+              hidden: false
+            },
+            {
+              name: 'borderStyle',
+              hidden: false
+            },
+            {
+              name: 'borderColor',
+              hidden: false
+            },
+            {
+              name: 'transform',
+              hidden: false
+            },
+            {
+              name: 'zIndex',
+              hidden: false
+            },
+          ]
+        },
+        {
+          name: '高级', options: [
+            {
+              name: 'axis',
+              hidden: false
+            },
+          ]
+        },
+      ],
       supportOptions: [
         {
           name: 'coordinate',
@@ -705,6 +1185,60 @@
       }
     },
     vline: {
+      tabs: [
+        {
+          name: '基础', options: [
+            {
+              name: 'coordinate',
+              hidden: false
+            },
+            {
+              name: 'widthHeight',
+              hidden: false
+            },
+            {
+              name: 'showInPage',
+              hidden: false
+            },
+            {
+              name: 'fixed',
+              hidden: false
+            },
+          ]
+        },
+        {
+          name: '样式', options: [
+            {
+              name: 'borderWidth',
+              hidden: false
+            },
+            {
+              name: 'borderStyle',
+              hidden: false
+            },
+            {
+              name: 'borderColor',
+              hidden: false
+            },
+            {
+              name: 'transform',
+              hidden: false
+            },
+            {
+              name: 'zIndex',
+              hidden: false
+            },
+          ]
+        },
+        {
+          name: '高级', options: [
+            {
+              name: 'axis',
+              hidden: false
+            },
+          ]
+        },
+      ],
       supportOptions: [
         {
           name: 'coordinate',
@@ -754,6 +1288,64 @@
       }
     },
     rect: {
+      tabs: [
+        {
+          name: '基础', options: [
+            {
+              name: 'coordinate',
+              hidden: false
+            },
+            {
+              name: 'widthHeight',
+              hidden: false
+            },
+            {
+              name: 'showInPage',
+              hidden: false
+            },
+            {
+              name: 'fixed',
+              hidden: false
+            },
+          ]
+        },
+        {
+          name: '样式', options: [
+            {
+              name: 'borderWidth',
+              hidden: false
+            },
+            {
+              name: 'borderStyle',
+              hidden: false
+            },
+            {
+              name: 'borderColor',
+              hidden: false
+            },
+            {
+              name: 'backgroundColor',
+              hidden: false
+            },
+            {
+              name: 'transform',
+              hidden: false
+            },
+            {
+              name: 'zIndex',
+              hidden: false
+            },
+          ]
+        },
+        {
+          name: '高级', options: [
+            {
+              name: 'axis',
+              hidden: false
+            },
+          ]
+        },
+      ],
       supportOptions: [
         {
           name: 'coordinate',
@@ -807,6 +1399,64 @@
       }
     },
     oval: {
+      tabs: [
+        {
+          name: '基础', options: [
+            {
+              name: 'coordinate',
+              hidden: false
+            },
+            {
+              name: 'widthHeight',
+              hidden: false
+            },
+            {
+              name: 'showInPage',
+              hidden: false
+            },
+            {
+              name: 'fixed',
+              hidden: false
+            },
+          ]
+        },
+        {
+          name: '样式', options: [
+            {
+              name: 'borderWidth',
+              hidden: false
+            },
+            {
+              name: 'borderStyle',
+              hidden: false
+            },
+            {
+              name: 'borderColor',
+              hidden: false
+            },
+            {
+              name: 'backgroundColor',
+              hidden: false
+            },
+            {
+              name: 'transform',
+              hidden: false
+            },
+            {
+              name: 'zIndex',
+              hidden: false
+            },
+          ]
+        },
+        {
+          name: '高级', options: [
+            {
+              name: 'axis',
+              hidden: false
+            },
+          ]
+        },
+      ],
       supportOptions: [
         {
           name: 'coordinate',
@@ -860,6 +1510,56 @@
       }
     },
     html: {
+      tabs: [
+        {
+          name: '基础', options: [
+            {
+              name: 'coordinate',
+              hidden: false
+            },
+            {
+              name: 'widthHeight',
+              hidden: false
+            },
+            {
+              name: 'showInPage',
+              hidden: false
+            },
+            {
+              name: 'unShowInPage',
+              hidden: false
+            },
+            {
+              name: 'fixed',
+              hidden: false
+            },
+          ]
+        },
+        {
+          name: '样式', options: [
+            {
+              name: 'transform',
+              hidden: false
+            },
+            {
+              name: 'zIndex',
+              hidden: false
+            },
+          ]
+        },
+        {
+          name: '高级', options: [
+            {
+              name: 'axis',
+              hidden: false
+            },
+            {
+              name: 'formatter',
+              hidden: false
+            }
+          ]
+        },
+      ],
       supportOptions: [
         {
           name: 'coordinate',

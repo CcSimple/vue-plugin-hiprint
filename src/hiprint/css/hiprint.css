@@ -57,10 +57,73 @@
   border-radius: 6px 6px 0 0;
   white-space: nowrap;
   line-height: normal;
+  font-family: normal;
+  letter-spacing: normal;
   z-index: 9;
 }
 .resize-panel .size-box .hide {
   display: none;
+}
+
+/* 参数tab */
+.prop-tabs {
+  background-color: #FFF;
+  border-style: none;
+  box-shadow: none;
+  border-color: #e6e6e6;
+}
+.prop-tabs .prop-tab-items {
+  height: 31px;
+  line-height: 31px;
+  padding: 2px 0 1px 2px;
+  list-style: none;
+  outline: 0;
+  border: 0;
+  text-decoration: none;
+  font-size: 100%;
+  margin: 0;
+  border-bottom: 1px solid #ddd;
+  /*box-shadow: 0 1px 3px rgba(26, 26, 26, .1);*/
+  box-sizing: content-box;
+}
+.prop-tabs .prop-tab-items .prop-tab-item {
+  background-color: #FFF;
+  border-radius: 0;
+  padding: 0;
+  margin: 0 -1px 0 0;
+  display: inline-block;
+  cursor: pointer;
+  list-style-type: none;
+}
+
+.prop-tabs .prop-tab-items .prop-tab-item .tab-title {
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.prop-tabs .prop-tab-items li.active {
+  border: none;
+  border-bottom: 2px solid #2196f3;
+  color: #2196f3;
+  height: 31px;
+  line-height: 30px;
+}
+
+.prop-tabs .hiprint-option-items.active {
+  display: flex;
+}
+
+.prop-tabs .hiprint-option-items {
+  display: none;
+  margin-top: 1px;
+  border: none;
+  background-color: #FFF;
+  overflow: auto;
+  /*height: calc(100vh - 150px);*/
+  padding: 0;
 }
 
 /* hiprint-pagination */

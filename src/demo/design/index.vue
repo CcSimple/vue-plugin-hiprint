@@ -46,6 +46,15 @@
       </a-popconfirm>
     </a-space>
     <a-space style="margin-bottom: 10px">
+      <a-button type="primary" @click="getSelectEls">
+        获取选中元素
+      </a-button>
+      <a-button type="primary" @click="updateFontSize">
+        选中元素字体12pt
+      </a-button>
+      <a-button type="primary" @click="updateFontWeight">
+        选中元素字体Bolder
+      </a-button>
       <a-button  type="primary" @click="setElsSpace(true)" >  水平间距10
       </a-button>
       <a-button  type="primary" @click="setElsSpace(false)" >  垂直间距10
@@ -470,6 +479,16 @@ export default {
     },
     setElsSpace(h) {
       hiprintTemplate.setElsSpace(10, h)
+    },
+    getSelectEls() {
+      let els = hiprintTemplate.getSelectEls();
+      console.log(els)
+    },
+    updateFontSize() {
+      hiprintTemplate.updateOption('fontSize', 12);
+    },
+    updateFontWeight() {
+      hiprintTemplate.updateOption('fontWeight', 'bolder');
     }
   }
 }
