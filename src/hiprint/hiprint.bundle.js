@@ -9286,7 +9286,7 @@ var hiprint = function (t) {
           console.log(er);
           e.onUpdateError && e.onUpdateError(er);
         }
-      }, t.prototype.setElsAlign = function (e) { // 设置框选、多选元素对齐api
+      }, t.prototype.getSelectEls = function () {
         var t = this;
         var elements = [];
         // 获取选区元素
@@ -9297,6 +9297,10 @@ var hiprint = function (t) {
             return "block" == el.designTarget.children().last().css("display") && !el.printElementType.type.includes("table");
           })
         }
+        return elements
+      }, t.prototype.setElsAlign = function (e) { // 设置框选、多选元素对齐api
+        var t = this;
+        var elements = this.getSelectEls();
         if (elements.length) {
           var minLeft = Math.min.apply(null, elements.map(function (el) {return el.options.left}));
           var maxRight = Math.max.apply(null, elements.map(function (el) {return el.options.left + el.options.width}));
@@ -9375,15 +9379,7 @@ var hiprint = function (t) {
         }
       }, t.prototype.setElsSpace = function (dis, isHor) {
         var t = this;
-        var elements = [];
-        // 获取选区元素
-        if (t.editingPanel.mouseRect && t.editingPanel.mouseRect.target) {
-          elements = t.editingPanel.getElementInRect(t.editingPanel.mouseRect);
-        } else { // 获取多选元素
-          elements = t.editingPanel.printElements.filter(function (el) {
-            return "block" == el.designTarget.children().last().css("display") && !el.printElementType.type.includes("table");
-          })
-        }
+        var elements = this.getSelectEls();
         if (elements.length) {
           if (isHor) { // 水平距离 →
             elements.sort(function (prev, curr) {

@@ -46,6 +46,9 @@
       </a-popconfirm>
     </a-space>
     <a-space style="margin-bottom: 10px">
+      <a-button type="primary" @click="getSelectEls">
+        获取选中元素
+      </a-button>
       <a-button  type="primary" @click="setElsSpace(true)" >  水平间距10
       </a-button>
       <a-button  type="primary" @click="setElsSpace(false)" >  垂直间距10
@@ -470,6 +473,10 @@ export default {
     },
     setElsSpace(h) {
       hiprintTemplate.setElsSpace(10, h)
+    },
+    getSelectEls() {
+      let els = hiprintTemplate.getSelectEls();
+      console.log(els)
     }
   }
 }
