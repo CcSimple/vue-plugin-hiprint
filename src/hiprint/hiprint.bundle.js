@@ -3009,7 +3009,7 @@ var hiprint = function (t) {
       }, t.prototype.css = function (t) {
         if (t && t.length && this.target) {
           // 仅当前元素被选中才更新坐标位置, 以避免冲突
-          if ('block' == t.find('.resize-panel').css('display')) {
+          if ('block' == t.find('.resize-panel').css('display') && this.el == t) {
             var v = this.getValue();
             return t.css("left", v.left + "pt").css("top", v.top + "pt");
           }
@@ -3024,7 +3024,8 @@ var hiprint = function (t) {
         v.left = parseFloat(this.target.find("input:first").val() || 0)
         v.top = parseFloat(this.target.find("input:last").val() || 0)
         return v;
-      }, t.prototype.setValue = function (t) {
+      }, t.prototype.setValue = function (t, el) {
+        this.el = el;
         this.target.find("input:first").val(t.left);
         this.target.find("input:last").val(t.top);
       }, t.prototype.destroy = function () {
@@ -3074,7 +3075,7 @@ var hiprint = function (t) {
       }, t.prototype.css = function (t) {
         if (t && t.length && this.target) {
           // 仅当前元素被选中才更新宽高大小, 以避免冲突
-          if ('block' == t.find('.resize-panel').css('display')) {
+          if ('block' == t.find('.resize-panel').css('display') && this.el == t) {
             var v = this.getValue();
             return t.css("width", v.width + "pt").css("height", v.height + "pt");
           }
@@ -3089,7 +3090,8 @@ var hiprint = function (t) {
         v.width = parseFloat(this.target.find("input:first").val() || 0)
         v.height = parseFloat(this.target.find("input:last").val() || 0)
         return v;
-      }, t.prototype.setValue = function (t) {
+      }, t.prototype.setValue = function (t, el) {
+        this.el = el;
         this.target.find("input:first").val(t.width);
         this.target.find("input:last").val(t.height);
       }, t.prototype.destroy = function () {
@@ -8834,7 +8836,7 @@ var hiprint = function (t) {
               } else {
                 // 传入所有参数
                 if (['coordinate','widthHeight'].includes(t.name)) {
-                  t.setValue(i.options)
+                  t.setValue(i.options, i)
                 } else {
                   // options 没有就取 printElementType内的 (如 table 的 footerFormatter)
                   t.setValue(i.options[t.name] || i.printElementType[t.name])
