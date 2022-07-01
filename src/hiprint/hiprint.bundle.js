@@ -4802,6 +4802,7 @@ var hiprint = function (t) {
         this.designTarget.hidraggable({
           handle: this.designTarget.find(".hiprint-printElement-table-handle"),
           axis: n.options.axis && t && t.axisEnabled ? n.options.axis : void 0,
+          designTarget: n,
           onDrag: function onDrag(t, i, o) {
             n.updateSizeAndPositionOptions(i, o), n.createLineOfPosition(e);
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_9__.a.instance.changed = !0;
