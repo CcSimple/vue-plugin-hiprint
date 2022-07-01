@@ -57,6 +57,8 @@
   border-radius: 6px 6px 0 0;
   white-space: nowrap;
   line-height: normal;
+  font-family: normal;
+  letter-spacing: normal;
   z-index: 9;
 }
 .resize-panel .size-box .hide {
