@@ -9273,6 +9273,7 @@ var hiprint = function (t) {
           return {width: o.a.pt.toPx(parseFloat(t.style.width)), height: o.a.pt.toPx(parseFloat(t.style.height))}
         }
       }, t.prototype.on = function (t, e) {
+        o.a.event.clear(t + "_" + this.id);
         o.a.event.on(t + "_" + this.id, e);
       }, t.prototype.clientIsOpened = function () {
         return hiwebSocket.opened;
