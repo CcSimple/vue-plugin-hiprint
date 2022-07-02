@@ -9540,11 +9540,13 @@ var hiprint = function (t) {
   }
 
   function rpl(c) {
+    p.a.instance.clear("printerList");
     p.a.instance.on("printerList", c);
     hiwebSocket.refreshPrinterList();
   }
 
   function getAddr(type, c, ...args) {
+    p.a.instance.clear("address_" + type);
     p.a.instance.on("address_" + type, c);
     hiwebSocket.getAddress(type, ...args);
   }
