@@ -5698,7 +5698,9 @@ var hiprint = function (t) {
       e(i);
       if (!(i.ctrlKey || i.metaKey) && (i.data.target.className.startsWith('resize-panel') || "2" == i.data.target.style.zIndex || i.data.target.className.startsWith('hiprint-printElement'))) {
         var data = i.data
-        if (t(".mouseRect").length == 0) {
+        if (t(".mouseRect").length == 0 && o.options.designTarget && o.options.designTarget.panel.printElements.filter(function (el) {
+          return "block" == el.designTarget.children().last().css("display") && !el.printElementType.type.includes("table");
+        }).length <= 1) {
           let left = window.hinnn.px.toPt(data.left);
           let top = window.hinnn.px.toPt(data.top);
           let cPosition = o.options.designTarget.options;
@@ -8100,6 +8102,7 @@ var hiprint = function (t) {
             n.updateSizeAndPositionOptions(i, o), n.createLineOfPosition(e);
             s.a.instance.changed = !0;
           },
+          designTarget: n,
           moveUnit: "pt",
           minMove: p.a.instance.movingDistance,
           onBeforeDrag: function onBeforeDrag(t) {
