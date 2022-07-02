@@ -949,6 +949,8 @@ var hiprint = function (t) {
         t && $.extend(this, t);
       }, t.prototype.on = function (t, c) {
         hinnn.event.on(t, c);
+      }, t.prototype.clear = function (t) {
+        hinnn.event.clear(t);
       }, Object.defineProperty(t, "instance", {
         get: function get() {
           return t._instance || (t._instance = new t(), window.HIPRINT_CONFIG && $.extend(t._instance, HIPRINT_CONFIG), t._instance.optionItems && t._instance.optionItems.forEach(function (t) {
@@ -6465,6 +6467,20 @@ var hiprint = function (t) {
         console.log("getAddress error:" + JSON.stringify(e));
       }
     },
+    ippPrint: function ippPrint(options) {
+      try {
+        this.socket.emit("ippPrint", options);
+      } catch (e) {
+        console.log("ippPrint error:" + JSON.stringify(e));
+      }
+    },
+    ippRequest: function ippRequest(options) {
+      try {
+        this.socket.emit("ippRequest", options);
+      } catch (e) {
+        console.log("ippRequest error:" + JSON.stringify(e));
+      }
+    },
     setHost: function (host) {
       this.host = host
       this.stop()
@@ -6486,6 +6502,12 @@ var hiprint = function (t) {
           hinnn.event.trigger("printerList", e);
         }), _this.socket.on("address", function (type, addr, e) {
           hinnn.event.trigger("address_" + type, {'addr': addr, 'e': e});
+        }), _this.socket.on("ippPrinterConnected", function (printer) {
+          hinnn.event.trigger("ippPrinterConnected", printer);
+        }), _this.socket.on("ippPrinterCallback", function (err, res) {
+          hinnn.event.trigger("ippPrinterCallback", {'err': err, 'res': res});
+        }), _this.socket.on("ippRequestCallback", function (err, res) {
+          hinnn.event.trigger("ippRequestCallback", {'err': err, 'res': res});
         }), t.state = n;
         cb && cb(true, e);
       }), this.socket.on("disconnect", function () {
@@ -9527,6 +9549,20 @@ var hiprint = function (t) {
     hiwebSocket.getAddress(type, ...args);
   }
 
+  function ippPrint(options, callback, connected) {
+    p.a.instance.clear("ippPrinterCallback");
+    p.a.instance.on("ippPrinterCallback", callback);
+    p.a.instance.clear("ippPrinterConnected");
+    p.a.instance.on("ippPrinterConnected", connected);
+    hiwebSocket.ippPrint(options);
+  }
+
+  function ippRequest(options, callback) {
+    p.a.instance.clear("ippRequestCallback");
+    p.a.instance.on("ippRequestCallback", callback);
+    hiwebSocket.ippRequest(options);
+  }
+
   n.d(e, "init", function () {
     return mt;
   }), n.d(e, "setConfig", function () {
@@ -9539,6 +9575,10 @@ var hiprint = function (t) {
     return rpl;
   }), n.d(e, "getAddress", function () {
     return getAddr;
+  }), n.d(e, "ippPrint", function () {
+    return ippPrint;
+  }), n.d(e, "ippRequest", function () {
+    return ippRequest;
   }), n.d(e, "PrintElementTypeManager", function () {
     return it;
   }), n.d(e, "PrintElementTypeGroup", function () {
