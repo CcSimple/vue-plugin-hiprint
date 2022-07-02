@@ -1,97 +1,88 @@
 <template>
-  <a-card>
-    <a-row :gutter="[8,0]" style="margin-bottom: 10px">
-      <a-col :span="24">
+  <el-card>
+    <el-row style="margin-bottom: 10px">
+      <el-col :span="24">
         <a-space>
           <!-- 纸张设置 -->
-          <a-button-group>
-            <template v-for="(value,type) in paperTypes">
-              <a-button :type="curPaperType === type ? 'primary' : 'info'" @click="setPaper(type,value)" :key="type">
-                {{ type }}
-              </a-button>
-            </template>
-            <a-popover v-model="paperPopVisible" title="设置纸张宽高(mm)" trigger="click">
-              <div slot="content">
-                <a-input-group compact style="margin: 10px 10px">
-                  <a-input type="number" v-model="paperWidth" style=" width: 100px; text-align: center"
-                           placeholder="宽(mm)"/>
-                  <a-input style=" width: 30px; border-left: 0; pointer-events: none; backgroundColor: #fff"
-                           placeholder="~" disabled
-                  />
-                  <a-input type="number" v-model="paperHeight" style="width: 100px; text-align: center; border-left: 0"
-                           placeholder="高(mm)"/>
-                </a-input-group>
-                <a-button type="primary" style="width: 100%" @click="otherPaper">确定</a-button>
-              </div>
-              <a-button :type="'other'==curPaperType?'primary':''">自定义纸张</a-button>
-            </a-popover>
-          </a-button-group>
+          <el-button-group>
+            <el-button   v-for="(value,type) in paperTypes" :type="curPaperType === type ? 'primary' : ' '" @click="setPaper(type,value)" :key="type">
+              {{ type }}
+            </el-button>
+          </el-button-group>
+          <el-popover
+              placement="bottom"
+              width="300"
+              title="设置纸张宽高(mm)"
+              v-model="paperPopVisible">
+            <div style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 10px">
+              <el-input type="number" v-model="paperWidth" style=" width: 100px; text-align: center" place="宽（mm）"></el-input>~
+              <el-input type="number" v-model="paperHeight" style=" width: 100px; text-align: center" place="高（mm）"></el-input>
+            </div>
+            <div>
+              <el-button type="primary" style="width: 100%" @click="otherPaper" size="mini">确定</el-button>
+            </div>
+            <el-button slot="reference" type="primary" style="margin:0 10px">自定义宽高</el-button>
+          </el-popover>
           <!-- 打印数量 -->
           打印数量：
-          <a-slider v-model="count" style="width: 200px" :min="1" :max="10000"/>
-          <a-input-number v-model="count" :min="1" :max="10000" style="margin-left: 16px"/>
+          <el-slider
+              style="width: 300px"
+              v-model="count"
+              :max="10000"
+              show-input>
+          </el-slider>
+
+<!--          <a-slider v-model="count" style="width: 200px" :min="1" :max="10000"/>-->
+<!--          <a-input-number v-model="count" :min="1" :max="10000" style="margin-left: 16px"/>-->
           <!-- 预览/打印 -->
-          <a-button-group>
-            <a-button type="primary" icon="eye" @click="preView">
+          <el-button-group>
+            <el-button type="primary" icon="el-icon-view" @click="preView">
               预览
-            </a-button>
-            <a-button type="primary" @click="print">
+            </el-button>
+            <el-button  type="primary" icon="el-icon-printer" @click="print">
               直接打印
-              <a-icon type="printer"/>
-            </a-button>
-          </a-button-group>
-          <!-- 保存/清空 -->
-          <a-button-group>
-            <a-button type="primary" icon="save" @click="save">
+            </el-button >
+            <el-button type="primary" icon="el-icon-s-management" @click="save">
               保存
-            </a-button>
-            <a-popconfirm
-              title="是否确认清空?"
-              okType="danger"
-              okText="确定清空"
-              @confirm="clearPaper"
-            >
-              <a-icon slot="icon" type="question-circle-o" style="color: red"/>
-              <a-button type="danger">
-                清空
-                <a-icon type="close"/>
-              </a-button>
-            </a-popconfirm>
-          </a-button-group>
+            </el-button>
+            <el-button  type="danger"  icon="el-icon-delete" @click="clearPaper">
+              清空
+            </el-button >
+          </el-button-group>
         </a-space>
-      </a-col>
-    </a-row>
-    <a-row :gutter="[8,0]">
-      <a-col :span="4">
-        <a-card style="height: 100vh">
-          <a-row>
-            <a-col :span="24" class="rect-printElement-types hiprintEpContainer">
-            </a-col>
-          </a-row>
-        </a-card>
-      </a-col>
-      <a-col :span="14">
-        <a-card class="card-design">
+      </el-col>
+    </el-row>
+    <el-row >
+      <el-col :span="4">
+        <el-card style="height: 100vh">
+          <el-row>
+            <el-col :span="24" class="rect-printElement-types hiprintEpContainer">
+            </el-col>
+          </el-row>
+        </el-card>
+      </el-col>
+      <el-col :span="14">
+        <el-card class="card-design">
           <div id="hiprint-printTemplate" class="hiprint-printTemplate"></div>
-        </a-card>
-      </a-col>
-      <a-col :span="6" class="params_setting_container">
-        <a-card>
-          <a-row class="hinnn-layout-sider">
+        </el-card>
+      </el-col>
+      <el-col :span="6" class="params_setting_container">
+        <el-card>
+          <el-row class="hinnn-layout-sider">
             <div id="PrintElementOptionSetting"></div>
-          </a-row>
-        </a-card>
-      </a-col>
-    </a-row>
+          </el-row>
+        </el-card>
+      </el-col>
+    </el-row>
     <!-- 预览 -->
     <print-preview ref="preView"/>
-  </a-card>
+  </el-card>
 </template>
 
 <script>
 
 import printPreview from './preview'
-
+import {MessageBox} from 'element-ui'
 import {hiprint} from 'vue-plugin-hiprint'
 import TaskRunner from 'concurrent-tasks';
 import panel from './panel'
@@ -104,6 +95,7 @@ export default {
   components: {printPreview},
   data() {
     return {
+      paperPopVisible:false,
       // 打印数量
       count: 1,
       // 当前纸张
@@ -140,7 +132,6 @@ export default {
         }
       },
       // 自定义纸张
-      paperPopVisible: false,
       paperWidth: '80',
       paperHeight: '60',
     }
@@ -280,7 +271,7 @@ export default {
         description: '点击关闭所有任务',
         btn: h => {
           return h(
-            'a-button',
+            'el-button',
             {
               props: {
                 type: 'danger',
@@ -309,12 +300,20 @@ export default {
       this.$message.info('保存成功')
     },
     clearPaper() {
-      try {
-        hiprintTemplate.clear();
-      } catch (error) {
-        this.$message.error(`操作失败: ${error}`);
-      }
-    }
+      MessageBox.confirm('是否确认清空模板信息?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        try {
+          hiprintTemplate.clear();
+        } catch (error) {
+          this.$message.error(`操作失败: ${error}`);
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
   }
 }
 </script>

@@ -1,83 +1,81 @@
 <template>
-  <a-card>
-    <a-row :gutter="[8,0]" style="margin-bottom: 10px">
-      <a-col :span="4">
+  <el-card>
+    <el-row style="margin-bottom: 10px">
+      <el-col :span="4">
         <!-- 模板选择 -->
-        <a-select v-model='mode' showSearch @change="changeMode" :defaultValue="0" option-label-prop="label"
+
+        <el-select v-model='mode' filterable @change="changeMode" :defaultValue="0" option-label-prop="label"
                   style="width: 100%;">
-          <a-select-option v-for='(opt,idx) in modeList' :key='idx' :label="opt.name" :value='idx'>
+          <el-option v-for='(opt,idx) in modeList' :key='idx' :label="opt.name" :value='idx'>
             {{ opt.name }}
-          </a-select-option>
-        </a-select>
-      </a-col>
+          </el-option>
+        </el-select>
+      </el-col>
       <a-col :span="20">
-        <a-space>
           <!-- 纸张设置 -->
-          <a-button-group>
-            <template v-for="(value,type) in paperTypes">
-              <a-button :type="curPaperType === type ? 'primary' : 'info'" @click="setPaper(type,value)" :key="type">
-                {{ type }}
-              </a-button>
-            </template>
-            <a-popover v-model="paperPopVisible" title="设置纸张宽高(mm)" trigger="click">
-              <div slot="content">
-                <a-input-group compact style="margin: 10px 10px">
-                  <a-input type="number" v-model="paperWidth" style=" width: 100px; text-align: center"
-                           placeholder="宽(mm)"/>
-                  <a-input style=" width: 30px; border-left: 0; pointer-events: none; backgroundColor: #fff"
-                           placeholder="~" disabled
-                  />
-                  <a-input type="number" v-model="paperHeight" style="width: 100px; text-align: center; border-left: 0"
-                           placeholder="高(mm)"/>
-                </a-input-group>
-                <a-button type="primary" style="width: 100%" @click="otherPaper">确定</a-button>
-              </div>
-              <a-button :type="'other'==curPaperType?'primary':''">自定义纸张</a-button>
-            </a-popover>
-          </a-button-group>
-          <a-button type="text" icon="zoom-out" @click="changeScale(false)"></a-button>
-          <a-input-number
-            :value="scaleValue"
-            :min="scaleMin"
-            :max="scaleMax"
-            :step="0.1"
-            disabled
-            style="width: 70px;"
-            :formatter="value => `${(value * 100).toFixed(0)}%`"
-            :parser="value => value.replace('%', '')"
-          />
-          <a-button type="text" icon="zoom-in" @click="changeScale(true)"></a-button>
+          <el-button-group style="margin:0 10px">
+            <el-button   v-for="(value,type) in paperTypes" :type="curPaperType === type ? 'primary' : ' '" @click="setPaper(type,value)" :key="type">
+              {{ type }}
+            </el-button>
+          </el-button-group>
+          <el-input-number style="margin:0 10px" :value="scaleValue " :precision="2" :step="0.1" :min="scaleMin" :max="scaleMax" @change="changeScale"></el-input-number>
+        <el-popover
+            placement="bottom"
+            width="300"
+            title="设置纸张宽高(mm)"
+            v-model="paperPopVisible">
+          <div style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 10px">
+            <el-input type="number" v-model="paperWidth" style=" width: 100px; text-align: center" place="宽（mm）"></el-input>~
+            <el-input type="number" v-model="paperHeight" style=" width: 100px; text-align: center" place="高（mm）"></el-input>
+          </div>
+          <div>
+            <el-button type="primary" style="width: 100%" @click="otherPaper" size="mini">确定</el-button>
+          </div>
+          <el-button slot="reference" type="primary" style="margin:0 10px">自定义宽高</el-button>
+        </el-popover>
+
+<!--          <a-button-group>-->
+<!--            <template v-for="(value,type) in paperTypes">-->
+<!--              <a-button :type="curPaperType === type ? 'primary' : 'info'" @click="setPaper(type,value)" :key="type">-->
+<!--                {{ type }}-->
+<!--              </a-button>-->
+<!--            </template>-->
+<!--            <a-popover v-model="paperPopVisible" title="设置纸张宽高(mm)" trigger="click">-->
+<!--              <div slot="content">-->
+<!--                <a-input-group compact style="margin: 10px 10px">-->
+<!--                  <a-input type="number" v-model="paperWidth" style=" width: 100px; text-align: center"-->
+<!--                           placeholder="宽(mm)"/>-->
+<!--                  <a-input style=" width: 30px; border-left: 0; pointer-events: none; backgroundColor: #fff"-->
+<!--                           placeholder="~" disabled-->
+<!--                  />-->
+<!--                  <a-input type="number" v-model="paperHeight" style="width: 100px; text-align: center; border-left: 0"-->
+<!--                           placeholder="高(mm)"/>-->
+<!--                </a-input-group>-->
+<!--                <a-button type="primary" style="width: 100%" @click="otherPaper">确定</a-button>-->
+<!--              </div>-->
+<!--              <a-button :type="'other'==curPaperType?'primary':''">自定义纸张</a-button>-->
+<!--            </a-popover>-->
+<!--          </a-button-group>-->
+
           <!-- 预览/打印 -->
-          <a-button-group>
-            <a-button type="primary" icon="eye" @click="preView">
-              预览
-            </a-button>
-            <a-button type="primary" @click="print">
-              直接打印
-              <a-icon type="printer"/>
-            </a-button>
-          </a-button-group>
-          <!-- 保存/清空 -->
-          <a-button-group>
-            <a-button type="primary" icon="save" @click="save">
+          <el-button-group>
+          <el-button type="primary" icon="el-icon-view" @click="preView">
+            预览
+          </el-button>
+          <el-button  type="primary" icon="el-icon-printer" @click="print">
+            直接打印
+          </el-button >
+            <el-button type="primary" icon="el-icon-s-management" @click="save">
               保存
-            </a-button>
-            <a-popconfirm
-              title="是否确认清空?"
-              okType="danger"
-              okText="确定清空"
-              @confirm="clearPaper"
-            >
-              <a-icon slot="icon" type="question-circle-o" style="color: red"/>
-              <a-button type="danger">
-                清空
-                <a-icon type="close"/>
-              </a-button>
-            </a-popconfirm>
-          </a-button-group>
-        </a-space>
+            </el-button>
+            <el-button  type="danger"  icon="el-icon-delete" @click="clearPaper">
+              清空
+            </el-button >
+          </el-button-group>
+          <!-- 保存/清空 -->
+
       </a-col>
-    </a-row>
+    </el-row>
     <a-row :gutter="[8,0]">
       <a-col :span="4">
         <a-card style="height: 100vh">
@@ -102,13 +100,13 @@
     </a-row>
     <!-- 预览 -->
     <print-preview ref="preView"/>
-  </a-card>
+  </el-card>
 </template>
 
 <script>
 
 import printPreview from './preview'
-
+import {MessageBox} from 'element-ui'
 import {hiprint} from 'vue-plugin-hiprint'
 import providers from './providers'
 import printData from './print-data'
@@ -119,6 +117,7 @@ export default {
   components: {printPreview},
   data() {
     return {
+      paperPopVisible: false,
       // 模板选择
       mode: 0,
       modeList: [],
@@ -228,7 +227,9 @@ export default {
         this.$message.error(`操作失败: ${error}`)
       }
     },
-    changeScale(big) {
+    changeScale(currentValue,oldValue) {
+      let big = false
+      currentValue <= oldValue ? big = false :big = true
       let scaleValue = this.scaleValue;
       if (big) {
         scaleValue += 0.1;
@@ -239,9 +240,24 @@ export default {
       }
       if (hiprintTemplate) {
         // scaleValue: 放大缩小值, false: 不保存(不传也一样), 如果传 true, 打印时也会放大
-        hiprintTemplate.zoom(scaleValue, true);
+        hiprintTemplate.zoom(scaleValue);
         this.scaleValue = scaleValue;
       }
+    },
+    clearPaper() {
+      MessageBox.confirm('是否确认清空模板信息?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        try {
+          hiprintTemplate.clear();
+        } catch (error) {
+          this.$message.error(`操作失败: ${error}`);
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
     },
     otherPaper() {
       let value = {}
@@ -277,13 +293,6 @@ export default {
       templates[payload.name] = payload.json
       this.$ls.set('KEY_TEMPLATES', templates)
       this.$message.info('保存成功')
-    },
-    clearPaper() {
-      try {
-        hiprintTemplate.clear();
-      } catch (error) {
-        this.$message.error(`操作失败: ${error}`);
-      }
     }
   }
 }
