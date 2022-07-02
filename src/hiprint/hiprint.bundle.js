@@ -1292,8 +1292,13 @@ var hiprint = function (t) {
 			      // 普通元素拖动结束事件history
             if (_HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.changed) _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "移动");
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !1,
-              _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.changed = !1,
-              n.removeLineOfPosition();
+              _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.changed = !1;
+            var els = n.panel.printElements.filter(function (t) {
+              return 'block' == t.designTarget.children().last().css('display') && !t.printElementType.type.includes('table');
+            });
+            if (els.length > 1) {
+              els.forEach(function (t) { t.removeLineOfPosition() })
+            } else n.removeLineOfPosition();
           }
         }), this.setResizePanel(), this.bingCopyEvent(this.designTarget), this.bingKeyboardMoveEvent(this.designTarget, e);
       }, BasePrintElement.prototype.getPrintElementEntity = function (t) {
