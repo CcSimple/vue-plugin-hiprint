@@ -24,6 +24,8 @@
 
 > npm_demo： vue2.x + ant1.7.x + npm包使用 示例
 
+> npm_demo_ele： vue2.x + ElementUi 2.x + npm包使用 示例
+
 > npm_demo_v3： vue3.x + vite + npm包(0.0.18)使用 示例
 
 ### 安装使用
