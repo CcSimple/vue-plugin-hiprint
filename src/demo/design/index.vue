@@ -46,6 +46,20 @@
       </a-popconfirm>
     </a-space>
     <a-space style="margin-bottom: 10px">
+      <a-button type="primary" @click="ippPrintAttr">
+        ipp获取 打印机 参数情况
+      </a-button>
+      <a-button type="primary" @click="ippPrintTest">
+        ipp打印测试
+      </a-button>
+      <a-button type="primary" @click="ippRequestTest">
+        ipp请求 获取 打印机 参数情况
+      </a-button>
+      <a-button type="primary" @click="ippRequestPrint">
+        ipp请求 打印测试
+      </a-button>
+    </a-space>
+    <a-space style="margin-bottom: 10px">
       <a-button type="primary" @click="getSelectEls">
         获取选中元素
       </a-button>
@@ -473,6 +487,138 @@ export default {
       } catch (error) {
         this.$message.error(`操作失败: ${error}`);
       }
+    },
+    ippPrintAttr() {
+      // 不知道打印机 ipp 情况， 可通过 '客户端' 获取一下
+      const printerList = hiprintTemplate.getPrinterList();
+      console.log(printerList)
+      if (!printerList.length) return;
+      let p = printerList[0];
+      console.log(p)
+      // 系统不同， 参数可能不同
+      let url = p.options['printer-uri-supported'];
+      // 测试 获取 ipp打印 支持参数
+      hiprint.ippPrint({
+        url: url,
+        // 打印机参数： {version,uri,charset,language}
+        opt: {},
+        action: 'Get-Printer-Attributes', // 获取打印机支持参数
+        // ipp参数
+        message: null,
+      }, (res) => {
+        // 执行的ipp 任务回调 / 错误回调
+        console.log(res)
+      }, (printer) => {
+        // ipp连接成功 回调 打印机信息
+        console.log(printer)
+      })
+    },
+    ippPrintTest() {
+      // 不知道打印机 ipp 情况， 可通过 '客户端' 获取一下
+      const printerList = hiprintTemplate.getPrinterList();
+      console.log(printerList)
+      if (!printerList.length) return;
+      let p = printerList[0];
+      console.log(p)
+      // 系统不同， 参数可能不同
+      let url = p.options['printer-uri-supported'];
+      // 测试 打印文本
+      hiprint.ippPrint({
+        url: url,
+        // 打印机参数： {version,uri,charset,language}
+        opt: {},
+        action: 'Print-Job',
+        // ipp参数
+        message: {
+          "operation-attributes-tag": {
+            "requesting-user-name": "hiPrint", // 用户名
+            "job-name": "ipp Test Job", // 任务名
+            "document-format": "text/plain" // 文档类型
+          },
+          // data 需为 Buffer (客户端简单处理了string 转 Buffer), 支持设置 encoding
+          // data 需为 Buffer (客户端简单处理了string 转 Buffer), 支持设置 encoding
+          // data 需为 Buffer (客户端简单处理了string 转 Buffer), 支持设置 encoding
+          // 其他 Uint8Array/ArrayBuffer   默认仅 使用 Buffer.from(data)
+          // 其他 Uint8Array/ArrayBuffer   默认仅 使用 Buffer.from(data)
+          // 其他 Uint8Array/ArrayBuffer   默认仅 使用 Buffer.from(data)
+          // 其他 Uint8Array/ArrayBuffer   默认仅 使用 Buffer.from(data)
+          data: 'test test test test test test test',
+          encoding: 'utf-8' // 默认可不传
+        }
+      }, (res) => {
+        // 执行的ipp 任务回调 / 错误回调
+        console.log(res)
+      }, (printer) => {
+        // ipp连接成功 回调 打印机信息
+        console.log(printer)
+      })
+    },
+    // 自定义 ipp 请求
+    ippRequestTest() {
+      const printerList = hiprintTemplate.getPrinterList();
+      console.log(printerList)
+      if (!printerList.length) return;
+      let p = printerList[0];
+      console.log(p)
+      // 系统不同， 参数可能不同
+      let url = p.options['printer-uri-supported'];
+      // 详见： https://www.npmjs.com/package/ipp
+      hiprint.ippRequest({
+        url: url,
+        // 传入的数据 ipp.serialize 后 未做任何处理  打印内容 需要 Buffer
+        // 传入的数据 ipp.serialize 后 未做任何处理  打印内容 需要 Buffer
+        // 传入的数据 ipp.serialize 后 未做任何处理  打印内容 需要 Buffer
+        data: {
+          "operation": "Get-Printer-Attributes",
+          "operation-attributes-tag": {
+            // 测试发现 Request下列3个必须要有
+            "attributes-charset": "utf-8",
+            "attributes-natural-language": "zh-cn",
+            "printer-uri": url
+          }
+        }
+      }, (res) => {
+        // 执行的ipp 任务回调 / 错误回调
+        console.log(res)
+      })
+    },
+    ippRequestPrint() {
+      const printerList = hiprintTemplate.getPrinterList();
+      console.log(printerList)
+      if (!printerList.length) return;
+      let p = printerList[0];
+      console.log(p)
+      // 系统不同， 参数可能不同
+      let url = p.options['printer-uri-supported'];
+      let str = "ippRequestPrint ippRequestPrint ippRequestPrint";
+      let array = new Uint8Array(str.length);
+      for(var i = 0; i < str.length; i++) {
+        array[i] = str.charCodeAt(i);
+      }
+      let testData = array.buffer;
+      // 详见： https://www.npmjs.com/package/ipp
+      hiprint.ippRequest({
+        url: url,
+        // 传入的数据 ipp.serialize 后 未做任何处理  打印内容 需要 Buffer
+        // 传入的数据 ipp.serialize 后 未做任何处理  打印内容 需要 Buffer
+        // 传入的数据 ipp.serialize 后 未做任何处理  打印内容 需要 Buffer
+        data: {
+          "operation": "Print-Job",
+          "operation-attributes-tag": {
+            // 测试发现 Request下列3个必须要有
+            "attributes-charset": "utf-8",
+            "attributes-natural-language": "zh-cn",
+            "printer-uri": url,
+            "requesting-user-name": "hiPrint", // 用户名
+            "job-name": "ipp Request Job", // 任务名
+            "document-format": "text/plain" // 文档类型
+          },
+          data: testData
+        }
+      }, (res) => {
+        // 执行的ipp 任务回调 / 错误回调
+        console.log(res)
+      })
     },
     setElsAlign(e) {
       hiprintTemplate.setElsAlign(e)
