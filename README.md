@@ -51,11 +51,11 @@
 
 |版本|下载地址|
 |---|---|
-|Win64|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/1091816/download/hiprint_win_x64-1.0.2.exe">下载</a>|
-|Win32|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/1091805/download/hiprint_win_x32-1.0.2.exe">下载</a>|
-|Linux64 (需要桌面系统)|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/1091802/download/hiprint_linux_x64-1.0.2.tar.xz">下载</a>|
-|Mac (intel)|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/1091808/download/hiprint_mac_intel-1.0.2.dmg">下载</a>|
-|Mac (M1)|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/1091817/download/hiprint_mac_m1-1.0.2.dmg">下载</a>|
+|Win64|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/1114716/download/hiprint_win_x64-1.0.4.exe">下载(v1.0.4)</a>|
+|Win32|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/1114721/download/hiprint_win_x32-1.0.4.exe">下载(v1.0.4)</a>|
+|Linux64 (需要桌面系统)|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/1114718/download/hiprint_linux_x64-1.0.4.tar.xz">下载(v1.0.4)</a>|
+|Mac (intel)|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/1114720/download/hiprint_mac_intel-1.0.4.dmg">下载(v1.0.4)</a>|
+|Mac (M1)|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/1114719/download/hiprint_mac_arm64-1.0.4.dmg">下载(v1.0.4)</a>|
 
 
 
