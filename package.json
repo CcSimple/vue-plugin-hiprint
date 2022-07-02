@@ -27,11 +27,12 @@
   },
   "dependencies": {
     "ant-design-vue": "^1.7.8",
-    "core-js": "^3.6.5",
-    "vue": "^2.5.11",
     "concurrent-tasks": "^1.0.7",
+    "core-js": "^3.6.5",
+    "element-ui": "^2.15.9",
+    "vue": "^2.5.11",
     "vue-ls": "^4.0.0",
-    "vue-plugin-hiprint": "^0.0.17"
+    "vue-plugin-hiprint": "0.0.25-beta1"
   },
   "browserslist": [
     "> 1%",
@@ -41,6 +42,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.15",
     "@vue/cli-service": "^4.5.15",
+    "babel-plugin-component": "^1.1.1",
     "less-loader": "^6.1.1",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "vue-template-compiler": "^2.6.11",
