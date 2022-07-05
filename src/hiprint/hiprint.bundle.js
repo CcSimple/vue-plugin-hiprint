@@ -8939,7 +8939,7 @@ var hiprint = function (t) {
             options.siblings().removeClass('active');
           })
           var lastIndex = +(e.settingContainer.data('last-index') || 0);
-          if (lastIndex >= tabs.length - 1) {
+          if (lastIndex >= tabs.length) {
             lastIndex = 0;
           }
           r.find('.prop-tab-item:eq(' + lastIndex + ')').click();
