@@ -2986,8 +2986,8 @@ var hiprint = function (t) {
         n.target = $('<div class="hiprint-option-item hiprint-option-item-row">' +
           '<div class="hiprint-option-item-label">\n        位置坐标\n        </div>' +
           '<div class="hiprint-option-item-field" style="display: flex;align-items: baseline;">\n        ' +
-          '<input type="number" style="width:45%" placeholder="X位置(左)" class="auto-submit" />\n        ' +
-          '<input type="number" style="width:45%" placeholder="Y位置(上)" class="auto-submit" />\n        ' +
+          '<input type="number" style="width:48%" placeholder="X位置(左)" class="auto-submit" />\n        ' +
+          '<input type="number" style="width:48%" placeholder="Y位置(上)" class="auto-submit" />\n        ' +
           '</div>\n' +
           '</div>');
         n.syncLock = o.coordinateSync || false;
@@ -2995,7 +2995,7 @@ var hiprint = function (t) {
         return n.target;
       }, t.prototype.createSyncLock = function (t) {
         var n = this;
-        n.lockTarget = n.syncLock ? $('<label style="margin:0 4px;width: 8%" title="同步">🔒</label>') : $('<label style="margin:0 4px;width: 8%" title="不同步">🔓</label>');
+        n.lockTarget = n.syncLock ? $('<label style="margin: 0 4px;text-align:center;width: 8%" title="同步">🔗</label>') : $('<label style="margin: 0 4px;text-align:center;width: 8%" title="不同步">🔓</label>');
         n.lockTarget.click(function() {
           if (n.syncLock) {
             n.lockTarget.text("🔓").attr("title", "不同步");
@@ -3052,8 +3052,8 @@ var hiprint = function (t) {
         n.target = $('<div class="hiprint-option-item hiprint-option-item-row">' +
           '<div class="hiprint-option-item-label">\n        宽高大小\n        </div>' +
           '<div class="hiprint-option-item-field" style="display: flex;align-items: baseline;">\n        ' +
-          '<input type="number" style="width:45%" placeholder="宽" class="auto-submit" />\n        ' +
-          '<input type="number" style="width:45%" placeholder="高" class="auto-submit" />\n        ' +
+          '<input type="number" style="width:48%" placeholder="宽" class="auto-submit" />\n        ' +
+          '<input type="number" style="width:48%" placeholder="高" class="auto-submit" />\n        ' +
           '</div>\n' +
           '</div>');
         n.syncLock = o.widthHeightSync || false;
@@ -3061,7 +3061,7 @@ var hiprint = function (t) {
         return n.target;
       }, t.prototype.createSyncLock = function (t) {
         var n = this;
-        n.lockTarget = n.syncLock ? $('<label style="margin:0 4px;width: 8%" title="同步">🔒</label>') : $('<label style="margin:0 4px;width: 8%" title="不同步">🔓</label>');
+        n.lockTarget = n.syncLock ? $('<label style="margin: 0 4px;text-align:center;width: 8%" title="同步">🔗</label>') : $('<label style="margin: 0 4px;text-align:center;width: 8%" title="不同步">🔓</label>');
         n.lockTarget.click(function() {
           if (n.syncLock) {
             n.lockTarget.text("🔓").attr("title", "不同步");
