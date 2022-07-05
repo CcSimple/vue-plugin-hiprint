@@ -8887,6 +8887,15 @@ var hiprint = function (t) {
                   }, options.append(e.createTarget(n.printTemplate, t.options, void 0)),
                     e.setValue(t.options[e.name], t.options, void 0);
                 });
+                options.bind('click.submitOption', function(){
+                  t.callback(n.getValueByOptionItems(tableColumn));
+                })
+                options.find('.auto-submit').change(function(){
+                  t.callback(n.getValueByOptionItems(tableColumn))
+                })
+                options.find('.auto-submit:input').bind('keydown.submitOption', function(e){
+                  13 === e.keyCode && t.callback(n.getValueByOptionItems(tableColumn));
+                })
               })
             }
             r.append(options)
