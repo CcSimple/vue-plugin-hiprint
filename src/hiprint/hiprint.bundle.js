@@ -1260,7 +1260,7 @@ var hiprint = function (t) {
         this.designTarget.hidraggable({
           // 添加 draggable 属性
           draggable: n.options.draggable,
-          axis: n.options.axis && t && t.axisEnabled ? n.options.axis : void 0,
+          axis: n.options.axis ? n.options.axis : void 0,
           designTarget: n,
           onDrag: function onDrag(t, i, o) {
             // 处理按住 ctrl / command 多选元素
@@ -1309,20 +1309,24 @@ var hiprint = function (t) {
         if (o && o.tabs && o.tabs.length) {
           this.getPrintElementOptionTabs().forEach(function (tab) {
             tab.list.forEach(function (e) {
-              var n = e.getValue(), r = 'textType' == e.name && t.options[e.name] !== n;
+              var n = e.getValue(), r = 'textType' == e.name && t.options[e.name] !== n,
+                a = 'axis' == e.name && t.options[e.name] !== n;
               n && "object" == _typeof(n) ? Object.keys(n).forEach(function (e) {
                 t.options[e] = n[e];
               }) : t.options[e.name] = n;
               if (r) { t.setResizePanel() }
+              if (a) { t.designTarget.hidraggable('update',{axis: n}) }
             })
           });
         } else {
           this.getPrintElementOptionItems().forEach(function (e) {
-            var n = e.getValue(), r = 'textType' == e.name && t.options[e.name] !== n;
+            var n = e.getValue(), r = 'textType' == e.name && t.options[e.name] !== n,
+              a = 'axis' == e.name && t.options[e.name] !== n;
             n && "object" == _typeof(n) ? Object.keys(n).forEach(function (e) {
               t.options[e] = n[e];
             }) : t.options[e.name] = n;
             if (r) { t.setResizePanel() }
+            if (a) { t.designTarget.hidraggable('update',{axis: n}) }
           });
         }
         this.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "元素修改");
@@ -3381,7 +3385,7 @@ var hiprint = function (t) {
       }
 
       return t.prototype.createTarget = function () {
-        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        拖动方向\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n        <option value="v" >横向</option>\n        <option value="h" >竖向</option>\n        </select>\n        </div>\n    </div>'), this.target;
+        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        拖动方向\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n        <option value="h" >横向</option>\n        <option value="v" >竖向</option>\n        </select>\n        </div>\n    </div>'), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
         return t || void 0;
@@ -4824,7 +4828,7 @@ var hiprint = function (t) {
         var n = this;
         this.designTarget.hidraggable({
           handle: this.designTarget.find(".hiprint-printElement-table-handle"),
-          axis: n.options.axis && t && t.axisEnabled ? n.options.axis : void 0,
+          axis: n.options.axis ? n.options.axis : void 0,
           designTarget: n,
           onDrag: function onDrag(t, i, o) {
             n.updateSizeAndPositionOptions(i, o), n.createLineOfPosition(e);
@@ -5667,7 +5671,9 @@ var hiprint = function (t) {
         r = e.data,
 		    a = r.startLeft + (e.pageX   - r.startX) / (n.options.getScale() || 1),
         p = r.startTop  + (e.pageY  - r.startY) / (n.options.getScale() || 1);
-      o && (o.parent()[0] == document.body ? (a = null != i.deltaX && null != i.deltaX ? e.pageX + i.deltaX : e.pageX - e.data.offsetWidth, p = null != i.deltaY && null != i.deltaY ? e.pageY + i.deltaY : e.pageY - e.data.offsetHeight) : (null != i.deltaX && null != i.deltaX && (a += e.data.offsetWidth + i.deltaX), null != i.deltaY && null != i.deltaY && (p += e.data.offsetHeight + i.deltaY))), e.data.parent != document.body && (a += t(e.data.parent).scrollLeft(), p += t(e.data.parent).scrollTop()), "h" == i.axis ? r.left = a : "v" == i.axis ? r.top = p : (r.left = a, r.top = p);
+      o && (o.parent()[0] == document.body ? (a = null != i.deltaX && null != i.deltaX ? e.pageX + i.deltaX : e.pageX - e.data.offsetWidth, p = null != i.deltaY && null != i.deltaY ? e.pageY + i.deltaY : e.pageY - e.data.offsetHeight) : (null != i.deltaX && null != i.deltaX && (a += e.data.offsetWidth + i.deltaX), null != i.deltaY && null != i.deltaY && (p += e.data.offsetHeight + i.deltaY))),
+      e.data.parent != document.body && (a += t(e.data.parent).scrollLeft(), p += t(e.data.parent).scrollTop()),
+        "h" == i.axis ? r.left = a : "v" == i.axis ? r.top = p : (e.shiftKey && e.altKey ? r.top = p : e.shiftKey ? r.left = a : (r.left = a, r.top = p));
     }
 
     function n(e) {
@@ -5965,6 +5971,13 @@ var hiprint = function (t) {
     }, t.fn.hidraggable.methods = {
       options: function options(e) {
         return t.data(e[0], "hidraggable").options;
+      },
+      update: function update(e, n) {
+        if (n && "object" == typeof n) {
+          Object.keys(n).forEach(function (k){
+            t.data(e[0], "hidraggable").options[k] = n[k]
+          })
+        }
       },
       proxy: function proxy(e) {
         return t.data(e[0], "hidraggable").proxy;
@@ -8102,7 +8115,7 @@ var hiprint = function (t) {
         var n = this;
         this.designTarget.hidraggable({
           handle: this.designTarget.find(".hiprint-printElement-table-handle"),
-          axis: n.options.axis && t && t.axisEnabled ? n.options.axis : void 0,
+          axis: n.options.axis ? n.options.axis : void 0,
           onDrag: function onDrag(t, i, o) {
             n.updateSizeAndPositionOptions(i, o), n.createLineOfPosition(e);
             s.a.instance.changed = !0;
