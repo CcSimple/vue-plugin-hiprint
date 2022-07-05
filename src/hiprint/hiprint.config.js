@@ -121,6 +121,10 @@
               hidden: false
             },
             {
+              name: 'backgroundColor',
+              hidden: false
+            },
+            {
               name: 'textDecoration',
               hidden: false
             },
@@ -147,6 +151,54 @@
           ]
         },
         {
+          name: '边框', options: [
+            {
+              name: 'optionsGroup',
+              hidden: false
+            },
+            {
+              name: 'borderLeft',
+              hidden: false
+            },
+            {
+              name: 'borderTop',
+              hidden: false
+            },
+            {
+              name: 'borderRight',
+              hidden: false
+            },
+            {
+              name: 'borderBottom',
+              hidden: false
+            },
+            {
+              name: 'borderWidth',
+              hidden: false
+            },
+            {
+              name: 'borderColor',
+              hidden: false
+            },
+            {
+              name: 'contentPaddingLeft',
+              hidden: false
+            },
+            {
+              name: 'contentPaddingTop',
+              hidden: false
+            },
+            {
+              name: 'contentPaddingRight',
+              hidden: false
+            },
+            {
+              name: 'contentPaddingBottom',
+              hidden: false
+            },
+          ]
+        },
+        {
           name: '高级', options: [
             {
               name: 'textType',
@@ -168,6 +220,14 @@
               name: 'axis',
               hidden: false
             },
+            {
+              name: 'formatter',
+              hidden: false
+            },
+            {
+              name: 'styler',
+              hidden: false
+            }
           ]
         },
       ],
