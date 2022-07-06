@@ -1336,7 +1336,17 @@ var hiprint = function (t) {
         this.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "元素修改");
       }, BasePrintElement.prototype.updateOption = function (o, v, b) {
         try {
-          var optionKeys = this.getConfigOptions().supportOptions.map(function(e){return e.name});
+          var e = this.getConfigOptions();
+          var optionKeys = [];
+          if (e && e.tabs && e.tabs.length) {
+            e.tabs.forEach(function (n) {
+              n.options.forEach(function(e) {
+                optionKeys.push(e.name);
+              })
+            });
+          } else {
+            optionKeys = e.supportOptions.map(function(e){return e.name});
+          }
           if (optionKeys && optionKeys.includes(o)) {
             this.options[o] = v;
             this.updateDesignViewFromOptions();
@@ -1445,7 +1455,15 @@ var hiprint = function (t) {
           o = this.getConfigOptions();
 
         if (o) {
-          var r = o.supportOptions;
+          var r;
+          if (o.tabs && o.tabs.length) {
+            r = [];
+            o.tabs.forEach(function (n) {
+              r = r.concat(n.options)
+            });
+          } else {
+            r = o.supportOptions;
+          }
           r && r.forEach(function (e) {
             var o = _print_element_option_PrintElementOptionItemManager__WEBPACK_IMPORTED_MODULE_2__.a.getItem(e.name);
 
@@ -1471,7 +1489,17 @@ var hiprint = function (t) {
         return t ? f ? f.split('.').reduce((a,c)=>a ? a[c] : t ? t[c] : "", !1) || "" : "" : this.printElementType.getData();
       }, BasePrintElement.prototype.copyFromType = function () {
         var options = this.options,type = this.printElementType;
-        var names = this.getConfigOptions().supportOptions.map(function(e){return e.name});
+        var o = this.getConfigOptions();
+        var names = [];
+        if (o && o.tabs && o.tabs.length) {
+          o.tabs.forEach(function (n) {
+            n.options.forEach(function(e) {
+              names.push(e.name);
+            })
+          });
+        } else {
+          names = o.supportOptions.map(function(e){return e.name});
+        }
         Object.keys(type).forEach(function (e) {
           if (type[e] && ('columns' != e) && names.indexOf(e) > -1) {
             options[e] = 'function' == _typeof(type[e]) ? type[e].toString() : type[e]
@@ -1501,7 +1529,15 @@ var hiprint = function (t) {
           e = this.getConfigOptions();
 
         if (e) {
-          var n = e.supportOptions;
+          var n;
+          if (e.tabs && e.tabs.length) {
+            n = [];
+            e.tabs.forEach(function (n) {
+              n = n.concat(n.options)
+            });
+          } else {
+            n = e.supportOptions;
+          }
           n && n.filter(function (t) {
             return !t.hidden;
           }).forEach(function (e) {
@@ -1517,7 +1553,15 @@ var hiprint = function (t) {
           n = this.getConfigOptionsByName(t);
 
         if (n) {
-          var i = n.supportOptions;
+          var i;
+          if (n.tabs && n.tabs.length) {
+            i = [];
+            n.tabs.forEach(function (n) {
+              i = i.concat(n.options)
+            });
+          } else {
+            i = n.supportOptions;
+          }
           i && i.filter(function (t) {
             return !t.hidden;
           }).forEach(function (t) {
