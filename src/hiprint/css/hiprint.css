@@ -841,6 +841,10 @@ font-weight: normal;*/
         line-height: 19pt;
         margin: 3px 0;
     }
+    .hiprint-option-table-selected-columns .hiprint-option-table-selected-item .column-title {
+      display: inline-block;
+      min-width: 90%;
+    }
 /*hi-pretty */
 .hi-pretty * {
     box-sizing: border-box;
@@ -893,7 +897,7 @@ font-weight: normal;*/
             z-index: 0;
             position: absolute;
             left: 0;
-            top: calc((0% - (100% - 1em)) - 8%);
+            top: 0;
             background-color: transparent;
         }
 
