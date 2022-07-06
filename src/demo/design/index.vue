@@ -305,18 +305,112 @@ export default {
       hiprint.setConfig()
       // 替换配置
       hiprint.setConfig({
+        optionItems: [
+          function () {
+            function t() {
+              // json模板 options 对应键值
+              this.name = "scale";
+            }
+            return t.prototype.css = function (t, e) { // t: 元素对象， e 参数值
+              if (t && t.length) {
+                if (e) return t.css('transform', 'scale(' + e + ')');
+              }
+              return null;
+            }, t.prototype.createTarget = function (t,i,e) { //  t: 元素对象，i: 元素options, e: 元素printElementType
+              return this.target = $('<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        缩放\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="number" class="auto-submit"/>\n        </div>\n    </div>'), this.target;
+            }, t.prototype.getValue = function () {
+              var t = this.target.find("input").val();
+              if (t) return parseFloat(t.toString());
+            }, t.prototype.setValue = function (t) { //  t: options 对应键的值
+              this.target.find("input").val(t);
+            }, t.prototype.destroy = function () {
+              this.target.remove();
+            }, t;
+          }(),
+          function () {
+            function t() {
+              this.name = "zIndex";
+            }
+            return t.prototype.css = function (t, e) {
+              if (t && t.length) {
+                if (e) return t.css('z-index', e);
+              }
+              return null;
+            }, t.prototype.createTarget = function () {
+              return this.target = $('<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        元素层级2\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="number" class="auto-submit"/>\n        </div>\n    </div>'), this.target;
+            }, t.prototype.getValue = function () {
+              var t = this.target.find("input").val();
+              if (t) return parseInt(t.toString());
+            }, t.prototype.setValue = function (t) {
+              this.target.find("input").val(t);
+            }, t.prototype.destroy = function () {
+              this.target.remove();
+            }, t;
+          }(),
+        ],
         movingDistance: 2.5,
         text: {
+          tabs: [
+            // 隐藏部分
+            {
+              name: '测试', options: [
+                {
+                  name: 'title',
+                  hidden: false
+                },
+                {
+                  name: 'field',
+                  hidden: true
+                },
+              ]
+            },
+            {
+              name: '样式', options: [
+                {
+                  name: 'scale',
+                  after: 'transform', // 自定义参数，插入在 transform 之后
+                  hidden: false
+                },
+              ]
+            }
+          ],
           supportOptions: [
             {
               name: 'styler',
               hidden: true
             },
             {
+              name: 'scale', // 自定义参数，supportOptions 必须得添加
+              after: 'transform', // 自定义参数，插入在 transform 之后
+              hidden: false
+            },
+            {
               name: 'formatter',
               hidden: true
             },
           ]
+        },
+        image: {
+          tabs: [
+            {
+              // 整体替换
+              replace: true,
+              name: '基本', options: [
+                {
+                  name: 'field',
+                  hidden: false
+                },
+                {
+                  name: 'src',
+                  hidden: false
+                },
+                {
+                  name: 'fit',
+                  hidden: false
+                }
+              ]
+            },
+          ],
         }
       })
       // eslint-disable-next-line no-undef

@@ -951,10 +951,14 @@ var hiprint = function (t) {
         hinnn.event.on(t, c);
       }, t.prototype.clear = function (t) {
         hinnn.event.clear(t);
+      }, t.prototype.registerItems = function (items) {
+        items.forEach(function (t) {
+          i.a.registerItem(new t());
+        });
       }, Object.defineProperty(t, "instance", {
         get: function get() {
           return t._instance || (t._instance = new t(), window.HIPRINT_CONFIG && $.extend(t._instance, HIPRINT_CONFIG), t._instance.optionItems && t._instance.optionItems.forEach(function (t) {
-            i.a.registerItem(t);
+            i.a.registerItem(new t());
           })), t._instance;
         },
         enumerable: !0,
@@ -9548,14 +9552,55 @@ var hiprint = function (t) {
   function cig(t) {
     if (t) {
       t && Object.keys(t).forEach(function (i) {
-        if (t[i].supportOptions) {
-          var options = t[i].supportOptions,
-            configs = p.a.instance[i].supportOptions,
-            list = configs.filter(function (e) {
-              return options.every(function (ee) {
-                return ee.name != e.name
+        if (i == "optionItems" && t.optionItems && t.optionItems.length) {
+          p.a.instance.registerItems(t.optionItems);
+        }
+        if (t[i].tabs && t[i].tabs.length) {
+          t[i].tabs.forEach(function (tab, idx) {
+            if (tab.replace) {
+              $.extend(p.a.instance[i].tabs[idx], tab);
+            } else {
+              var options = tab.options, list = p.a.instance[i].tabs[idx].options;
+              options.forEach(function (o) {
+                var idx = list.findIndex(function (e) {
+                  return e.name == o.name
+                });
+                if (idx > -1) list[idx].hidden = o.hidden;
+                else {
+                  if (o.after) {
+                    idx = list.findIndex(function (e) {
+                      return e.name == o.after
+                    });
+                    if (idx > -1) list.splice(idx + 1, 0, o)
+                  }
+                  else list.push(o);
+                }
               })
-            }),list = list.concat(options);
+              $.extend(p.a.instance[i].tabs[idx], {
+                name: tab.name,
+                options: list
+              });
+            }
+          })
+          delete t[i].tabs;
+        }
+        if (t[i].supportOptions) {
+          var options = t[i].supportOptions, list = p.a.instance[i].supportOptions;
+          options.forEach(function (o) {
+            var idx = list.findIndex(function (e) {
+              return e.name == o.name
+            });
+            if (idx > -1) list[idx].hidden = o.hidden;
+            else {
+              if (o.after) {
+                idx = list.findIndex(function (e) {
+                  return e.name == o.after
+                });
+                if (idx > -1) list.splice(idx + 1, 0, o)
+              }
+              else list.push(o);
+            }
+          })
           $.extend(p.a.instance[i].supportOptions, list);
           delete t[i].supportOptions;
         }
