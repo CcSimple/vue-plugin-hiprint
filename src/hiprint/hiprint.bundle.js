@@ -363,6 +363,9 @@ var hiprint = function (t) {
             name: "barcodeMode",
             hidden: !1
           }, {
+            name: "qrCodeLevel",
+            hidden: !1
+          }, {
             name: "hideTitle",
             hidden: !1
           }, {
@@ -933,6 +936,9 @@ var hiprint = function (t) {
             hidden: !1
           }, {
             name: 'tableBarcodeMode',
+            hidden: !1
+          }, {
+            name: 'tableQRCodeLevel',
             hidden: !1
           }, {
             name: 'tableColumnHeight',
@@ -1959,7 +1965,7 @@ var hiprint = function (t) {
     }(),
     u = function () {
       return function (t) {
-        this.title = t.title, this.field = t.field, this.width = t.width, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.colspan = t.colspan, this.rowspan = t.rowspan, this.checked = t.checked, this.columnId = t.columnId, this.tableSummary = t.tableSummary, this.formatter2 = t.formatter2, this.styler2 = t.styler2,this.tableColumnHeight = t.tableColumnHeight,this.tableTextType = t.tableTextType,this.tableBarcodeMode = t.tableBarcodeMode;
+        this.title = t.title, this.field = t.field, this.width = t.width, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.colspan = t.colspan, this.rowspan = t.rowspan, this.checked = t.checked, this.columnId = t.columnId, this.tableSummary = t.tableSummary, this.formatter2 = t.formatter2, this.styler2 = t.styler2,this.tableColumnHeight = t.tableColumnHeight,this.tableTextType = t.tableTextType,this.tableBarcodeMode = t.tableBarcodeMode,this.tableQRCodeLevel = t.tableQRCodeLevel;
       };
     }(),
     d = function () {
@@ -2061,7 +2067,7 @@ var hiprint = function (t) {
     f = function (t) {
       function e(e) {
         var n = this;
-        return e = e || {}, (n = t.call(this) || this).width = e.width ? parseFloat(e.width.toString()) : 100, n.title = e.title, n.descTitle = e.descTitle, n.field = e.field, n.fixed = e.fixed, n.rowspan = e.rowspan ? parseInt(e.rowspan) : 1, n.colspan = e.colspan ? parseInt(e.colspan) : 1, n.align = e.align, n.halign = e.halign, n.vAlign = e.vAlign, n.formatter = e.formatter, n.styler = e.styler, n.formatter2 = e.formatter2, n.styler2 = e.styler2, n.checkbox = e.checkbox, n.checked = 0 != e.checked, n.columnId = e.columnId || e.field,n.tableColumnHeight = e.tableColumnHeight||30,n.tableTextType = e.tableTextType||'text',n.tableBarcodeMode = e.tableBarcodeMode||'CODE128A',n.tableSummary = e.tableSummary, n;
+        return e = e || {}, (n = t.call(this) || this).width = e.width ? parseFloat(e.width.toString()) : 100, n.title = e.title, n.descTitle = e.descTitle, n.field = e.field, n.fixed = e.fixed, n.rowspan = e.rowspan ? parseInt(e.rowspan) : 1, n.colspan = e.colspan ? parseInt(e.colspan) : 1, n.align = e.align, n.halign = e.halign, n.vAlign = e.vAlign, n.formatter = e.formatter, n.styler = e.styler, n.formatter2 = e.formatter2, n.styler2 = e.styler2, n.checkbox = e.checkbox, n.checked = 0 != e.checked, n.columnId = e.columnId || e.field,n.tableColumnHeight = e.tableColumnHeight||30,n.tableTextType = e.tableTextType||'text',n.tableBarcodeMode = e.tableBarcodeMode||'CODE128A',n.tableQRCodeLevel = e.tableQRCodeLevel,n.tableSummary = e.tableSummary, n;
       }
 
       return h(e, t), e.prototype.css = function (t) {
@@ -2264,7 +2270,8 @@ var hiprint = function (t) {
                     width: l>u?u:l,
                     height: l>u?u:l,
                     colorDark:"#000000",
-                    useSVG: !0
+                    useSVG: !0,
+                    correctLevel: t.tableQRCodeLevel
                   }).makeCode(p);
                   r.html(qrcodebox)
                 }
@@ -2909,6 +2916,22 @@ var hiprint = function (t) {
       }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
         return t || void 0;
+      }, t.prototype.setValue = function (t) {
+        this.target.find("select").val(t);
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
+    qrCodeLevel = function () {
+      function t() {
+        this.name = "qrCodeLevel";
+      }
+
+      return t.prototype.createTarget = function () {
+        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        二维码容错率\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n        <option value="1" >7% L</option>\n        <option value="0" >15% M</option>\n        <option value="3" >25% Q</option>\n        <option value="2" >30% H</option>\n        </select>\n        </div>\n    </div>'), this.target;
+      }, t.prototype.getValue = function () {
+        var t = this.target.find("select").val();
+        return parseInt(t || 0);
       }, t.prototype.setValue = function (t) {
         this.target.find("select").val(t);
       }, t.prototype.destroy = function () {
@@ -3980,6 +4003,24 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
+    tableQRCodeLevel = function() {
+      function t() {
+        this.name = "tableQRCodeLevel";
+      }
+
+      return t.prototype.createTarget = function() {
+        return this.target = $(
+          ' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        二维码容错率\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n        <option value="1" >7% L</option>\n        <option value="0" >15% M</option>\n        <option value="3" >25% Q</option>\n        <option value="2" >30% H</option>\n        </select>\n        </div>\n    </div>'
+        ), this.target;
+      }, t.prototype.getValue = function() {
+        var t = this.target.find("select").val();
+        return parseInt(t || 0);
+      }, t.prototype.setValue = function(t) {
+        this.target.find("select").val(t);
+      }, t.prototype.destroy = function() {
+        this.target.remove();
+      }, t;
+    }(),
     tableColumnH = function() {
       function t() {
         this.name = "tableColumnHeight";
@@ -4403,7 +4444,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(),new tablept(), new tableSummary()], t;
+    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(), new tableQRCodeLevel(),new tablept(), new tableSummary()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -5615,7 +5656,7 @@ var hiprint = function (t) {
     r = (function () {
     }(), function () {
       return function (t) {
-        this.width = t.width, this.title = t.title, this.field = t.field, this.checked = t.checked, this.columnId = t.columnId, this.fixed = !1, this.rowspan = t.rowspan || 1, this.colspan = t.colspan || 1, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.formatter2 = t.formatter2, this.styler2 = t.styler2,this.tableColumnHeight = t.tableColumnHeight||30,this.tableTextType = t.tableTextType||'text',this.tableBarcodeMode = t.tableBarcodeMode||'CODE128A',this.tableSummary = t.tableSummary;
+        this.width = t.width, this.title = t.title, this.field = t.field, this.checked = t.checked, this.columnId = t.columnId, this.fixed = !1, this.rowspan = t.rowspan || 1, this.colspan = t.colspan || 1, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.formatter2 = t.formatter2, this.styler2 = t.styler2,this.tableColumnHeight = t.tableColumnHeight||30,this.tableTextType = t.tableTextType||'text',this.tableBarcodeMode = t.tableBarcodeMode||'CODE128A',this.tableQRCodeLevel = t.tableQRCodeLevel||0,this.tableSummary = t.tableSummary;
       };
     }()),
     a = n(5);
@@ -7550,6 +7591,8 @@ var hiprint = function (t) {
         return (null == this.fontSize ? this.defaultOptions.fontSize : this.fontSize) || 9;
       }, e.prototype.getbarcodeMode = function () {
         return (null == this.barcodeMode ? this.defaultOptions.barcodeMode : this.barcodeMode) || "CODE128";
+      }, e.prototype.getQRcodeLevel = function () {
+        return (null == this.qrCodeLevel ? this.defaultOptions.qrCodeLevel : this.qrCodeLevel) || 0;
       }, e;
     }(g.a),
     H = function () {
@@ -7652,7 +7695,8 @@ var hiprint = function (t) {
                   width: "100%",
                   height: "100%",
                   colorDark: this.options.color || "#000000",
-                  useSVG: !0
+                  useSVG: !0,
+                  correctLevel: this.options.getQRcodeLevel()
                 }).makeCode(n);
                 a.html(box)
               }

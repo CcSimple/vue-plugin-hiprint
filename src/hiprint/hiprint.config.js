@@ -209,6 +209,10 @@
               hidden: false
             },
             {
+              name: 'qrCodeLevel',
+              hidden: false
+            },
+            {
               name: 'showInPage',
               hidden: false
             },
@@ -298,6 +302,10 @@
         },
         {
           name: 'barcodeMode',
+          hidden: false
+        },
+        {
+          name: "qrCodeLevel",
           hidden: false
         },
         {
@@ -1683,6 +1691,10 @@
         },
         {
           name: 'tableBarcodeMode',
+          hidden: false
+        },
+        {
+          name: 'tableQRCodeLevel',
           hidden: false
         },
         {
