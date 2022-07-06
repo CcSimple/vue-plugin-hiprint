@@ -843,7 +843,7 @@ font-weight: normal;*/
     }
     .hiprint-option-table-selected-columns .hiprint-option-table-selected-item .column-title {
       display: inline-block;
-      min-width: 90%;
+      min-width: calc(100% - 26px);
     }
 /*hi-pretty */
 .hi-pretty * {
