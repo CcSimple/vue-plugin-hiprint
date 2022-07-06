@@ -3084,7 +3084,7 @@ var hiprint = function (t) {
         v.top = parseFloat(this.target.find("input:last").val() || 0)
         return v;
       }, t.prototype.setValue = function (t, el) {
-        this.el = el;
+        this.el = el.designTarget || el;
         this.target.find("input:first").val(t.left);
         this.target.find("input:last").val(t.top);
       }, t.prototype.destroy = function () {
@@ -3150,7 +3150,7 @@ var hiprint = function (t) {
         v.height = parseFloat(this.target.find("input:last").val() || 0)
         return v;
       }, t.prototype.setValue = function (t, el) {
-        this.el = el;
+        this.el = el.designTarget || el;
         this.target.find("input:first").val(t.width);
         this.target.find("input:last").val(t.height);
       }, t.prototype.destroy = function () {
