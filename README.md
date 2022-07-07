@@ -7,8 +7,6 @@
   </a>
 </div>
 
-[![npm][npm]][npm-url]
-[![node][node]][node-url]
 ![image](https://badgen.net/packagephobia/publish/vue-plugin-hiprint)
 ![image](https://badgen.net/npm/v/vue-plugin-hiprint)
 ![image](https://badgen.net/github/stars/CcSimple/vue-plugin-hiprint)
@@ -322,7 +320,7 @@ $('#hiwprint_iframe').css('visibility','hidden');
 - [x] `vue 插件` 发布npm包,方便直接使用
 - [x] `Ant Design Vue demo` 默认拖拽设计、自定义设计、队列打印
 - [x] `优化删除元素功能` 支持 backSpace/delete 按键删除
-- [x] `优化拖动功能` 调整优化 不允许元素拖出窗口 按住ctrl/command允许脱出窗口外
+- [x] `优化拖动功能` 调整优化 不允许元素拖出窗口 按住ctrl/command允许拖出窗口外
 - [x] `优化框选功能` fix 原只能从上往下框选问题
 - [x] `支持修改默认直接打印主机` window.hiwebSocket.setHost("xxx:17521")
 - [x] `print优化调整` 支持设置callback 见demo的preview.vue
@@ -420,6 +418,7 @@ hiprint 开源协议如下:
 
 ### 关于LGPL协议
 
+```
 LGPL是GPL的一个为主要为类库使用设计的开源协议。和GPL要求任何使用/修改/衍生之GPL类库的的软件必须采用GPL协议不同。
 
 LGPL允许商业软件通过类库引用(link)方式使用LGPL类库而不需要开源商业软件的代码。这使得采用LGPL协议的开源代码可以被商业软件作为类库引用并发布和销售。
@@ -429,8 +428,4 @@ LGPL允许商业软件通过类库引用(link)方式使用LGPL类库而不需要
 因此LGPL协议的开源代码很适合作为第三方类库被商业软件引用，但不适合希望以LGPL协议代码为基础，通过修改和衍生的方式做二次开发的商业软件采用。
 
 GPL/LGPL都保障原作者的知识产权，避免有人利用开源代码复制并开发类似的产品。
-
-[npm]: https://img.shields.io/npm/v/vue-plugin-hiprint.svg
-[npm-url]: https://npmjs.com/package/vue-plugin-hiprint
-[node]: https://img.shields.io/node/v/vue-plugin-hiprint.svg
-[node-url]: https://nodejs.org
+```
