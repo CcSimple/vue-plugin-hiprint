@@ -1,5 +1,203 @@
 版本及更新记录
 ------------------------------
+## 0.0.26 (2022-07-07)
+<details>
+ <summary>1. 🌈 新增支持参数面板tabs分组(默认已分组支持自定义分组)</summary>
+
+```javascript
+hiprint.setConfig({
+  text: {
+    tabs: [
+      // 隐藏部分 (根据已有分组顺序来)
+      {
+        name: '测试', options: [
+          {
+            name: 'title',
+            hidden: false
+          },
+          {
+            name: 'field',
+            hidden: true
+          },
+        ]
+      },
+    ],
+  },
+  image: {
+    tabs: [
+      {
+        // 整体替换 及当前选项卡 按新参数设定
+        replace: true,
+        name: '基本', options: [
+          {
+            name: 'field',
+            hidden: false
+          },
+          {
+            name: 'src',
+            hidden: false
+          },
+          {
+            name: 'fit',
+            hidden: false
+          }
+        ]
+      },
+    ],
+  }
+});
+```
+</details>
+<details>
+ <summary>2. 🌈 新增支持拖拽元素 "吸附 / 对齐" 功能</summary>
+
+</details>
+<details>
+ <summary>3. 🌈 新增Api获取选中元素 "getSelectEls" (框选/按住ctrl/command多选)</summary>
+
+```javascript
+// 单选时 返回 [e]
+let els = hiprintTemplate.getSelectEls();
+console.log(els)
+```
+</details>
+<details>
+ <summary>4. 🌈 新增Api更新选中元素参数 "updateOption" </summary>
+
+```javascript
+// 更新当前选中元素字体为 12pt
+hiprintTemplate.updateOption('fontSize', 12);
+// 更新当前选中元素字体粗细为 bolder
+hiprintTemplate.updateOption('fontWeight', 'bolder');
+```
+</details>
+<details>
+ <summary>5. 🌈 新增Api IPP打印(需客户端1.0.4及以上) "ippPrint","ippRequest" </summary>
+
+```javascript
+/**
+ * 通过IPP 可以调用打印机所提供的功能
+ * 如：创建打印任务，取消打印任务，通过uri打印文档等等 （需要打印机支持）
+ * 详见 IPP: https://github.com/williamkapke/ipp
+ */
+// 不知道打印机 ipp 情况， 可通过 '客户端' 获取一下
+const printerList = hiprintTemplate.getPrinterList();
+console.log(printerList)
+if (!printerList.length) return;
+let p = printerList[0];
+console.log(p)
+// 系统不同， 参数可能不同
+let url = p.options['printer-uri-supported'];
+// 测试 打印文本
+hiprint.ippPrint({
+  url: url,
+  // 打印机参数： {version,uri,charset,language}
+  opt: {},
+  action: 'Print-Job',
+  // ipp参数
+  message: {
+    "operation-attributes-tag": {
+      "requesting-user-name": "hiPrint", // 用户名
+      "job-name": "ipp Test Job", // 任务名
+      "document-format": "text/plain" // 文档类型
+    },
+    // data 需为 Buffer (客户端简单处理了string 转 Buffer), 支持设置 encoding
+    // data 需为 Buffer (客户端简单处理了string 转 Buffer), 支持设置 encoding
+    // data 需为 Buffer (客户端简单处理了string 转 Buffer), 支持设置 encoding
+    // 其他 Uint8Array/ArrayBuffer   默认仅 使用 Buffer.from(data)
+    // 其他 Uint8Array/ArrayBuffer   默认仅 使用 Buffer.from(data)
+    // 其他 Uint8Array/ArrayBuffer   默认仅 使用 Buffer.from(data)
+    // 其他 Uint8Array/ArrayBuffer   默认仅 使用 Buffer.from(data)
+    data: 'test test test test test test test',
+    encoding: 'utf-8' // 默认可不传
+  }
+}, (res) => {
+  // 执行的ipp 任务回调 / 错误回调
+  console.log(res)
+}, (printer) => {
+  // ipp连接成功 回调 打印机信息
+  console.log(printer)
+})
+```
+</details>
+<details>
+ <summary>6. ✨ 调整优化"拖动方向"功能, 支持按住shift 横向拖动, shift+alt 竖向拖动 </summary>
+
+</details>
+<details>
+ <summary>7. 🌈 新增支持添加自定义/重写参数 通过setConfig</summary>
+
+```javascript
+hiprint.setConfig({
+  optionItems: [
+    // 自定义添加一个scale参数  （重写及定义一个已存在的name）
+    function () {
+      function t() {
+        // json模板 options 对应键值
+        this.name = "scale";
+      }
+      return t.prototype.css = function (t, e) { // t: 元素对象， e 参数值
+        if (t && t.length) {
+          if (e) return t.css('transform', 'scale(' + e + ')');
+        }
+        return null;
+      }, t.prototype.createTarget = function (t,i,e) { //  t: 元素对象，i: 元素options, e: 元素printElementType
+        return this.target = $('<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        缩放\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="number" class="auto-submit"/>\n        </div>\n    </div>'), this.target;
+      }, t.prototype.getValue = function () {
+        var t = this.target.find("input").val();
+        if (t) return parseFloat(t.toString());
+      }, t.prototype.setValue = function (t) { //  t: options 对应键的值
+        this.target.find("input").val(t);
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
+  ],
+  // 添加到 样式 tab 下的 transform 后面
+  text: {
+    tabs: [
+      {
+        name: '基础', options: []
+      },
+      {
+        name: '样式', options: [
+          {
+            name: 'scale',
+            after: 'transform', // 自定义参数，插入在 transform 之后
+            hidden: false
+          },
+        ]
+      }
+    ]
+  }
+})
+```
+</details>
+<details>
+ <summary>8. 🌈 新增支持 二维码 "容错率" 参数 {L:1, M:0, Q:3, H:2}</summary>
+
+```javascript
+// json模板中配置
+options: {
+  qrcodeLevel: 1 // {L:1, M:0, Q:3, H:2}
+}
+```
+</details>
+<details>
+ <summary>8. 🐛 一些问题的修复及调整</summary>
+
+```
+1. fix 不显示表头时，样式问题
+2. fix 元素参数(字体、字间距)对宽高大小框的影响
+3. fix printerList、address 回调越来越多的问题
+4. fix printSuccess、printError 回调越来越多的问题
+5. fix 多选元素 拖拽 辅助线 问题
+6. 调整优化 宽高大小/坐标位置 样式 (居中)
+7. fix 表格列排序样式问题
+8. fix 部分参数设置未及时生效问题（左/右/下边框;上/下/右内边距）
+```
+</details>
+
 ## 0.0.24 (2022-06-26)
 <details>
  <summary>1. 🌈 新增支持设置字体列表fontList</summary>
