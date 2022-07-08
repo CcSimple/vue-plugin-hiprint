@@ -9020,7 +9020,7 @@ var hiprint = function (t) {
             } else {
               // 传入所有参数
               if (['coordinate','widthHeight'].includes(t.name)) {
-                t.setValue(i.options)
+                t.setValue(i.options, i)
               } else {
                 // options 没有就取 printElementType内的 (如 table 的 footerFormatter)
                 t.setValue(i.options[t.name] || i.printElementType[t.name])
