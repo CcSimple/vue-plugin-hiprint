@@ -3091,7 +3091,7 @@ var hiprint = function (t) {
       }, t.prototype.css = function (t) {
         if (t && t.length && this.target) {
           // 仅当前元素被选中才更新坐标位置, 以避免冲突
-          if ('block' == t.find('.resize-panel').css('display') && this.el == t) {
+          if (('block' == t.find('.resize-panel').css('display') || t[0].className.includes('table')) && this.el == t) {
             var v = this.getValue();
             return t.css("left", v.left + "pt").css("top", v.top + "pt");
           }
@@ -3157,7 +3157,7 @@ var hiprint = function (t) {
       }, t.prototype.css = function (t) {
         if (t && t.length && this.target) {
           // 仅当前元素被选中才更新宽高大小, 以避免冲突
-          if ('block' == t.find('.resize-panel').css('display') && this.el == t) {
+          if (('block' == t.find('.resize-panel').css('display') || t[0].className.includes('table')) && this.el == t) {
             var v = this.getValue();
             return t.css("width", v.width + "pt").css("height", v.height + "pt");
           }
