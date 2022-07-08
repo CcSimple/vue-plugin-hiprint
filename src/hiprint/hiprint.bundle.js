@@ -8461,8 +8461,8 @@ var hiprint = function (t) {
           var start = Date.now();
           console.log('start',start)
           var e = this;
-          this.index = t.index, this.width = o.a.mm.toPt(t.width), this.height = o.a.mm.toPt(t.height), this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter;
-          this.designPaper.width = this.width, this.designPaper.height = this.height, this.designPaper.paperType = this.paperType, this.designPaper.paperHeader = this.paperHeader, this.designPaper.paperFooter = this.paperFooter;
+          this.index = t.index, this.width = t.width, this.height = t.height, this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter;
+          this.designPaper.width = o.a.mm.toPt(t.width), this.designPaper.height = o.a.mm.toPt(this.height), this.designPaper.paperType = this.paperType, this.designPaper.paperHeader = this.paperHeader, this.designPaper.paperFooter = this.paperFooter;
           this.designPaper.mmheight = t.height, this.designPaper.mmwidth = t.width;
           // 页眉线
           this.designPaper.headerLinetarget.css("top", (this.paperHeader || -1) + "pt"),
