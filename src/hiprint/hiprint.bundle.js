@@ -1756,6 +1756,10 @@ var hiprint = function (t) {
           if ('INPUT' == r.target.tagName) {
             return;
           }
+          // 元素禁止移动
+          if (false === n.options.draggable) {
+            return;
+          }
           // 处理按住 ctrl / command 多选元素
           var els = n.panel.printElements.filter(function (t) {
             return 'block' == t.designTarget.children().last().css('display') && !t.printElementType.type.includes('table');
@@ -1778,7 +1782,7 @@ var hiprint = function (t) {
                   t.updatePositionByMultipleSelect(0 - movingDistance, 0);
                 })
               } else {
-                n.updateSizeAndPositionOptions(i - movingDistance), t.css("left", n.options.displayLeft()), n.createLineOfPosition(e);
+                n.updateSizeAndPositionOptions(i - movingDistance), t.css("left", n.options.displayLeft());
               }
               r.preventDefault();
               break;
@@ -1790,7 +1794,7 @@ var hiprint = function (t) {
                   t.updatePositionByMultipleSelect(0, 0 - movingDistance);
                 })
               } else {
-                n.updateSizeAndPositionOptions(void 0, o - movingDistance), t.css("top", n.options.displayTop()), n.createLineOfPosition(e);
+                n.updateSizeAndPositionOptions(void 0, o - movingDistance), t.css("top", n.options.displayTop());
               }
               r.preventDefault();
               break;
@@ -1802,7 +1806,7 @@ var hiprint = function (t) {
                   t.updatePositionByMultipleSelect(movingDistance, 0);
                 })
               } else {
-                n.updateSizeAndPositionOptions(i + movingDistance), t.css("left", n.options.displayLeft()), n.createLineOfPosition(e);
+                n.updateSizeAndPositionOptions(i + movingDistance), t.css("left", n.options.displayLeft());
               }
               r.preventDefault();
               break;
@@ -1814,7 +1818,7 @@ var hiprint = function (t) {
                   t.updatePositionByMultipleSelect(0, movingDistance);
                 })
               } else {
-                n.updateSizeAndPositionOptions(void 0, o + movingDistance), t.css("top", n.options.displayTop()), n.createLineOfPosition(e);
+                n.updateSizeAndPositionOptions(void 0, o + movingDistance), t.css("top", n.options.displayTop());
               }
               r.preventDefault();
           }
@@ -1833,6 +1837,7 @@ var hiprint = function (t) {
       }, BasePrintElement.prototype.multipleSelect = function (t) {
         t ? this.designTarget.addClass("multipleSelect") : this.designTarget.removeClass("multipleSelect");
       }, BasePrintElement.prototype.updatePositionByMultipleSelect = function (t, e) {
+        if (false === this.options.draggable) return;
         this.updateSizeAndPositionOptions(t + this.options.getLeft(), e + this.options.getTop()), this.designTarget.css("left", this.options.displayLeft()), this.designTarget.css("top", this.options.displayTop());
       }, BasePrintElement;
     }();
