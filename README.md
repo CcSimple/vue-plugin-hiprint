@@ -15,7 +15,9 @@
 ![image](https://badgen.net/npm/dy/vue-plugin-hiprint)
 
 # vue-plugin-hiprint
-> hiprint for Vue2.x / Vue3.x
+> hiprint for Vue2.x / Vue3.x (基于jQuery, 理论上应该也是支持其他框架的)
+
+本项目使用 <a href="https://jb.gg/OpenSourceSupport"><img height="40" width="100" src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/WebStorm.svg"/></a><a href="https://jb.gg/OpenSourceSupport"><img width="50" height="50" src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/WebStorm_icon.svg"/></a> 开发
 
 ### 分支说明
 > main： vue2.x + ant1.7.x融合版 及 npm包源代码
