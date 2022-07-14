@@ -2,7 +2,7 @@
   <a-modal :visible="visible" :maskClosable="false"
            @cancel="hideModal" :width="width+'mm'">
     <a-spin :spinning="spinning" style="min-height: 100px">
-      <div id="preview_content"></div>
+      <div id="preview_content_tasks"></div>
     </a-spin>
     <template slot="title">
       <a-space>
@@ -54,7 +54,7 @@ export default {
       this.printData = printData
       setTimeout(() => {
         // eslint-disable-next-line no-undef
-        $('#preview_content').html(hiprintTemplate.getHtml(printData))
+        $('#preview_content_tasks').html(hiprintTemplate.getHtml(printData))
         this.spinning = false
       }, 500)
     },
