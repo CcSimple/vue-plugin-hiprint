@@ -4804,7 +4804,7 @@ var hiprint = function (t) {
               printTopInPaper: a
             })
           })), s++;
-          this.updatePanelHeight(f + this.options.getHeight(),t);
+          e && this.updatePanelHeight(f + this.options.getHeight(),t);
         }
 
         return n;
@@ -7488,7 +7488,7 @@ var hiprint = function (t) {
               printTopInPaper: m
             })
           })), r++;
-          this.updatePanelHeight(g + this.options.getHeight(),t);
+          e && this.updatePanelHeight(g + this.options.getHeight(),t);
         }
 
         return o;
