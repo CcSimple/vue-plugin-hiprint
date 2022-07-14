@@ -7272,12 +7272,12 @@ var hiprint = function (t) {
         this.footerLinetarget = $('<div class="hiprint-footerLine"  style="position: absolute;width: 100%;border-top: 1px dashed #c9bebe;height: 7pt;"></div>'), this.footerLinetarget.css("top", parseInt(this.paperFooter.toString()) + "pt"), this.paperFooter == this.height && (this.footerLinetarget.css("top", this.mmheight - p.a.instance.paperHeightTrim + "mm"), this.footerLinetarget.addClass("hidefooterLinetarget")), this.paperContentTarget.append(this.footerLinetarget), this.dragHeadLineOrFootLine(this.footerLinetarget, function (e, n) {
           t.paperFooter = n, t.triggerOnPaperBaseInfoChanged();
         });
-      }, t.prototype.createPaperNumber = function (t) {
+      }, t.prototype.createPaperNumber = function (t, d) {
         var e = this,
           n = this.target.find(".hiprint-paperNumber");
         if (n.length) return n.html(t), n;
         var i = $('<span class="hiprint-paperNumber"  style="position: absolute">' + t + "</span>");
-        return i.css("top", this.paperNumberTop + "pt"), i.css("left", this.paperNumberLeft + "pt"), this.paperContentTarget.append(i), this.dragHeadLineOrFootLine(i, function (t, n) {
+        return i.css("top", this.paperNumberTop + "pt"), i.css("left", this.paperNumberLeft + "pt"), this.paperContentTarget.append(i), d && this.dragHeadLineOrFootLine(i, function (t, n) {
           e.paperNumberTop = n, e.paperNumberLeft = t, e.triggerOnPaperBaseInfoChanged();
         }, !0), i;
       }, t.prototype.getTarget = function () {
@@ -7290,7 +7290,7 @@ var hiprint = function (t) {
         t >= this.printLine && (this.printLine = t);
       }, t.prototype.design = function (t) {
         var e = this;
-        this.createHeaderLine(), this.createFooterLine(), this.target.addClass("design"), this.paperNumberTarget = this.createPaperNumber(this.formatPaperNumber(1, 1)), this.createRuler(), this.resetPaperNumber(this.paperNumberTarget), $(this.paperNumberTarget).bind("dblclick.hiprint", function () {
+        this.createHeaderLine(), this.createFooterLine(), this.target.addClass("design"), this.paperNumberTarget = this.createPaperNumber(this.formatPaperNumber(1, 1), true), this.createRuler(), this.resetPaperNumber(this.paperNumberTarget), $(this.paperNumberTarget).bind("dblclick.hiprint", function () {
           null == e.paperNumberDisabled && (e.paperNumberDisabled = !1), e.paperNumberDisabled = !e.paperNumberDisabled, e.resetPaperNumber(e.paperNumberTarget), e.triggerOnPaperBaseInfoChanged("初始");
         }), $(this.paperNumberTarget).bind("click.hiprint", function () {
           o.a.event.trigger("BuildCustomOptionSettingEventKey_" + e.templateId, {
@@ -7299,7 +7299,7 @@ var hiprint = function (t) {
               paperNumberDisabled: e.paperNumberDisabled
             },
             callback: function callback(t) {
-              e.paperNumberDisabled = !!t.paperNumberDisabled || void 0, e.paperNumberFormat = t.paperNumberFormat ? t.paperNumberFormat : void 0, e.createPaperNumber(e.formatPaperNumber(1, 1)), e.resetPaperNumber(e.paperNumberTarget), e.triggerOnPaperBaseInfoChanged();
+              e.paperNumberDisabled = !!t.paperNumberDisabled || void 0, e.paperNumberFormat = t.paperNumberFormat ? t.paperNumberFormat : void 0, e.createPaperNumber(e.formatPaperNumber(1, 1), true), e.resetPaperNumber(e.paperNumberTarget), e.triggerOnPaperBaseInfoChanged();
             }
           });
         });
@@ -8455,7 +8455,7 @@ var hiprint = function (t) {
               paperNumberFormat: e.paperNumberFormat
             },
             callback: function callback(t) {
-              e.panelPaperRule = t.panelPaperRule, e.panelPageRule = t.panelPageRule, e.firstPaperFooter = t.firstPaperFooter, e.evenPaperFooter = t.evenPaperFooter, e.oddPaperFooter = t.oddPaperFooter, e.lastPaperFooter = t.lastPaperFooter, e.leftOffset = t.leftOffset, e.topOffset = t.topOffset, e.fontFamily = t.fontFamily, e.orient = t.orient, e.paperNumberDisabled = e.designPaper.paperNumberDisabled = !!t.paperNumberDisabled || void 0, e.paperNumberFormat = t.paperNumberFormat, e.designPaper.paperNumberFormat = t.paperNumberFormat, (t.paperNumberFormat && (e.designPaper.paperNumberTarget = e.designPaper.createPaperNumber(e.designPaper.formatPaperNumber(1, 1)))), e.designPaper.setOffset(e.leftOffset, e.topOffset), e.css(e.target), e.designPaper.resetPaperNumber(e.designPaper.paperNumberTarget), e.designPaper.triggerOnPaperBaseInfoChanged();
+              e.panelPaperRule = t.panelPaperRule, e.panelPageRule = t.panelPageRule, e.firstPaperFooter = t.firstPaperFooter, e.evenPaperFooter = t.evenPaperFooter, e.oddPaperFooter = t.oddPaperFooter, e.lastPaperFooter = t.lastPaperFooter, e.leftOffset = t.leftOffset, e.topOffset = t.topOffset, e.fontFamily = t.fontFamily, e.orient = t.orient, e.paperNumberDisabled = e.designPaper.paperNumberDisabled = !!t.paperNumberDisabled || void 0, e.paperNumberFormat = t.paperNumberFormat, e.designPaper.paperNumberFormat = t.paperNumberFormat, (t.paperNumberFormat && (e.designPaper.paperNumberTarget = e.designPaper.createPaperNumber(e.designPaper.formatPaperNumber(1, 1), true))), e.designPaper.setOffset(e.leftOffset, e.topOffset), e.css(e.target), e.designPaper.resetPaperNumber(e.designPaper.paperNumberTarget), e.designPaper.triggerOnPaperBaseInfoChanged();
             }
           });
         }), this.bindShortcutKeyEvent(); this.bingPasteEvent(); this.bindBatchMoveElement();
