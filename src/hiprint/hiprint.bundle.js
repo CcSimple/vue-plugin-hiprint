@@ -1402,7 +1402,7 @@ var hiprint = function (t) {
         var o = [],
           r = this.getBeginPrintTopInPaperByReferenceElement(t),
           a = t.getPaperFooter(i);
-        this.isHeaderOrFooter() || this.isFixed() || r > a && (o.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_3__.a({
+        this.isHeaderOrFooter() || this.isFixed() || r > a && "none" != t.panelPageRule && (o.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_3__.a({
           target: void 0,
           printLine: void 0
         })), r = r - a + t.paperHeader, i++ , a = t.getPaperFooter(i));
@@ -1422,7 +1422,7 @@ var hiprint = function (t) {
         this.isHeaderOrFooter() || this.isFixed() || ("none" != t.panelPageRule && r > a && (o.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_3__.a({
           target: void 0,
           printLine: void 0
-        })), r = r - a + t.paperHeader, i++ , a = t.getPaperFooter(i)), r <= a && r + this.options.getHeight() > a && (o.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_3__.a({
+        })), r = r - a + t.paperHeader, i++ , a = t.getPaperFooter(i)), r <= a && r + this.options.getHeight() > a && "none" != t.panelPageRule && (o.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_3__.a({
           target: void 0,
           printLine: void 0
         })), r = t.paperHeader, i++ , a = t.getPaperFooter(i)));
@@ -4783,7 +4783,7 @@ var hiprint = function (t) {
         for (var a, p = this.getBeginPrintTopInPaperByReferenceElement(t), s = 0, l = !1; !l;) {
           var u = 0,
             d = t.getPaperFooter(s);
-          0 == s && p > d && (p = p - d + t.paperHeader, n.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_2__.a({
+          0 == s && p > d && "none" != t.panelPageRule && (p = p - d + t.paperHeader, n.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_2__.a({
             target: void 0,
             printLine: void 0
           })), u = t.getContentHeight(s) - (p - t.paperHeader), s++ , d = t.getPaperFooter(s));
@@ -7467,7 +7467,7 @@ var hiprint = function (t) {
         for (var d = this.getBeginPrintTopInPaperByReferenceElement(t); l.length > 0;) {
           var c = 0,
             h = t.getPaperFooter(r);
-          0 == r && d > h && (d = d - h + t.paperHeader, o.push(new P.a({
+          0 == r && d > h && "none" != t.panelPageRule && (d = d - h + t.paperHeader, o.push(new P.a({
             target: void 0,
             printLine: void 0
           })), r++ , c = t.getContentHeight(r) - (d - t.paperHeader), h = t.getPaperFooter(r));
@@ -8118,7 +8118,7 @@ var hiprint = function (t) {
         for (var a, p = this.getBeginPrintTopInPaperByReferenceElement(t), s = 0, l = !1; !l;) {
           var u = 0,
             d = t.getPaperFooter(s);
-          0 == s && p > d && (p = p - d + t.paperHeader, n.push(new P.a({
+          0 == s && p > d && "none" != t.panelPageRule && (p = p - d + t.paperHeader, n.push(new P.a({
             target: void 0,
             printLine: void 0
           })), s++ , u = t.getContentHeight(s) - (p - t.paperHeader), d = t.getPaperFooter(s));
@@ -8577,35 +8577,60 @@ var hiprint = function (t) {
           s = i || this,
           l = void 0;
 
-        if (i ? (l = p[p.length - 1], a = l.getPanelTarget(), l.updateReferenceElement(new E.a({
-          top: this.paperHeader,
-          left: 0,
-          height: 0,
-          width: 0,
-          bottomInLastPaper: l.referenceElement.bottomInLastPaper,
-          beginPrintPaperIndex: p.length - 1,
-          printTopInPaper: l.referenceElement.bottomInLastPaper,
-          endPrintPaperIndex: p.length - 1
-        }))) : (a = s.createTarget(), l = s.createNewPage(p.length), p.push(l), a.append(l.getTarget())), this.printElements.filter(function (t) {
+        if (i) {
+          l = p[p.length - 1];
+          a = l.getPanelTarget();
+          l.updateReferenceElement(new E.a({
+            top: this.paperHeader,
+            left: 0,
+            height: 0,
+            width: 0,
+            bottomInLastPaper: l.referenceElement.bottomInLastPaper,
+            beginPrintPaperIndex: p.length - 1,
+            printTopInPaper: l.referenceElement.bottomInLastPaper,
+            endPrintPaperIndex: p.length - 1
+          }));
+        } else {
+          a = s.createTarget();
+          l = s.createNewPage(p.length);
+          p.push(l);
+          a.append(l.getTarget());
+        }
+        this.printElements.filter(function (t) {
           return !t.isFixed() && !t.isHeaderOrFooter();
         }).forEach(function (e) {
           var n = [],
             i = p[p.length - 1];
-          i.referenceElement.isPositionLeftOrRight(e.options.getTop()) ? (l = p[i.referenceElement.beginPrintPaperIndex], n = e.getHtml(l, t)) : (l = p[i.referenceElement.endPrintPaperIndex], n = e.getHtml(l, t));
+          if (i.referenceElement.isPositionLeftOrRight(e.options.getTop())) {
+            l = p[i.referenceElement.beginPrintPaperIndex];
+          } else {
+            l = p[i.referenceElement.endPrintPaperIndex];
+          }
+          n = e.getHtml(l, t)
           n.forEach(function (t, i) {
             t.referenceElement && (t.referenceElement.endPrintPaperIndex = t.referenceElement.beginPrintPaperIndex + n.length - 1);
-            i > 0 && (l.index < p.length - 1 ? l = p[l.index + 1] : (l = s.createNewPage(p.length, l.referenceElement), p.push(l)), a.append(l.getTarget()));
+            if (i > 0) {
+              if (l.index < p.length - 1) {
+                l = p[l.index + 1];
+              } else {
+                l = s.createNewPage(p.length, l.referenceElement);
+                p.push(l)
+              }
+              a.append(l.getTarget());
+            }
             // 元素隐藏时不添加到html内
             t.target && (("none" != e.options.showInPage && l.append(t.target)), l.updatePrintLine(t.printLine), e.onRendered(l, t.target));
             i == n.length - 1 && t.referenceElement && l.updateReferenceElement(t.referenceElement);
           });
-        }), o && o.templates.forEach(function (t, e) {
+        });
+        o && o.templates.forEach(function (t, e) {
           var i = t.data || {},
             o = t.options || {};
           t.template.printPanels.forEach(function (t) {
             t.getHtml(i, o, n, r);
           });
-        }), !i) {
+        });
+        if (!i) {
           if (this.lastPaperFooter) p[p.length - 1].printLine > this.lastPaperFooter && (l = s.createNewPage(p.length, l.referenceElement), p.push(l), a.append(l.getTarget()));
           // 这里是处理奇偶页设置
           this.panelPaperRule && ("odd" == this.panelPaperRule && p.length % 2 == 0 && (l = s.createNewPage(p.length, l.referenceElement), p.push(l), a.append(l.getTarget())), "even" == this.panelPaperRule && p.length % 2 == 1 && (l = s.createNewPage(p.length, l.referenceElement), p.push(l), a.append(l.getTarget())));
