@@ -4584,7 +4584,7 @@ var hiprint = function (t) {
 
       return a(e, t), e.prototype.getPrintElementOptionEntity = function () {
         var t = [];
-        return this.columns.forEach(function (e) {
+        return [...this.columns, ...this.allColumns.filter(function(c) {return !c.checked})].forEach(function (e) {
           t.push(e.getEntity());
         }), t;
       }, e;
@@ -4605,6 +4605,7 @@ var hiprint = function (t) {
 
       return t.prototype.init = function (t, e, n) {
         this.isHead = n, this.target = e || $("<tr></tr>"), this.tableOptions = t,
+          this.allColumns = (this.columns||[]),
           this.initCells((this.columns||[]).filter(function(column) {return column.checked}));
       }, t.prototype.getTarget = function () {
         return this.target;
@@ -4634,7 +4635,7 @@ var hiprint = function (t) {
         this.columns.push(t), this.target.append(t.getTarget());
       }, t.prototype.getPrintElementOptionEntity = function () {
         var t = [];
-        return this.columns.forEach(function (e) {
+        return [...this.columns, ...this.allColumns.filter(function(c) {return !c.checked})].forEach(function (e) {
           t.push(e.getEntity());
         }), t;
       }, t;
