@@ -4584,7 +4584,8 @@ var hiprint = function (t) {
 
       return a(e, t), e.prototype.getPrintElementOptionEntity = function () {
         var t = [];
-        return [...this.columns, ...this.allColumns.filter(function(c) {return !c.checked})].forEach(function (e) {
+        var all = this.allColumns ? this.allColumns.filter(function(c) {return !c.checked}) : [];
+        return [...this.columns, ...all].forEach(function (e) {
           t.push(e.getEntity());
         }), t;
       }, e;
