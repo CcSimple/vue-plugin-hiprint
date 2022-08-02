@@ -9285,7 +9285,9 @@ var hiprint = function (t) {
           var n = this,
             i = 0,
             o = {},
-            r = $("link[media=print]").length > 0 ? $("link[media=print]") : $("link"),
+            r = $("link[media=print]").length > 0 ? $("link[media=print]").filter(function(link) {
+              return $(link).attr("href").indexOf('print-lock.css') >= 0;
+            }) : [],
             css = '';
           if (e.styleHandler) {
             css += e.styleHandler()

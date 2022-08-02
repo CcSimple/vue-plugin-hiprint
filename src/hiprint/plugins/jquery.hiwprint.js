@@ -18,11 +18,6 @@
             css += '<link rel="stylesheet" type="text/css" href="' + $(this).attr("href") + '">';
           }
         });
-      } else {
-        $("link").each(function () {
-          css += '<link rel="stylesheet" type="text/css" media="print" href="' + $(this).attr("href") + '">';
-          css += '<link rel="stylesheet" type="text/css" href="' + $(this).attr("href") + '">';
-        });
       }
     }
     $iframe[0].srcdoc = '<!DOCTYPE html><html><head><title></title><meta charset="UTF-8">' + css + '</head><body></body></html>';
