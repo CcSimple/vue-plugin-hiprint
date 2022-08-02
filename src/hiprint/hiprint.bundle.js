@@ -8604,7 +8604,7 @@ var hiprint = function (t) {
         }).forEach(function (e) {
           var n = [],
             i = p[p.length - 1];
-          if (i.referenceElement.isPositionLeftOrRight(e.options.getTop())) {
+          if (i.referenceElement.isPositionLeftOrRight(e.options.getTop(), e.options.getHeight())) {
             l = p[i.referenceElement.beginPrintPaperIndex];
           } else {
             l = p[i.referenceElement.endPrintPaperIndex];
