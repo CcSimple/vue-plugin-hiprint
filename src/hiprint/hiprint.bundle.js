@@ -4872,8 +4872,8 @@ var hiprint = function (t) {
 
             if (c) {
               // 这里是table 没有tfoot, 后面再看什么原因...
-              if ("last" == this.options.tableFooterRepeat) break;
-              if (this.options.tableFooterRepeat != "no") {
+              if ("last" == this.options.tableFooterRepeat && !c.isEnd) break;
+              if (this.options.tableFooterRepeat != "no" && !this.options.columns[0].columns.some(function (column) {return column.tableSummary})) {
                 if (d.find("tfoot").length) {
                   d.find("tfoot").html(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, this.getData(t), this.options, this.printElementType, t, h).html());
                 } else {
