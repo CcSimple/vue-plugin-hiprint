@@ -1,105 +1,134 @@
 <template>
   <a-card>
-    <a-space style="margin-bottom: 10px">
-      <a-button-group>
-        <template v-for="(value,type) in paperTypes">
-          <a-button :type="curPaperType === type ? 'primary' : 'info'" @click="setPaper(type,value)" :key="type">
-            {{ type }}
-          </a-button>
-        </template>
-      </a-button-group>
-      <a-button type="text" icon="zoom-out" @click="changeScale(false)"></a-button>
-      <a-input-number
-        :value="scaleValue"
-        :min="scaleMin"
-        :max="scaleMax"
-        :step="0.1"
-        disabled
-        style="width: 70px;"
-        :formatter="value => `${(value * 100).toFixed(0)}%`"
-        :parser="value => value.replace('%', '')"
-      />
-      <a-button type="text" icon="zoom-in" @click="changeScale(true)"></a-button>
-      <a-button type="primary" icon="eye" @click="preView">
-        预览
-      </a-button>
-      <a-button type="primary" icon="printer" @click="print">
-        直接打印
-      </a-button>
-      <a-button type="primary" @click="onlyPrint">
-        Api单独打印
-      </a-button>
-      <a-button type="primary" @click="onlyPrint2">
-        Api单独直接打印
-      </a-button>
-      <a-popconfirm
-        title="是否确认清空?"
-        okType="danger"
-        okText="确定清空"
-        @confirm="clearPaper"
-      >
-        <a-icon slot="icon" type="question-circle-o" style="color: red"/>
-        <a-button type="danger">
-          清空
-          <a-icon type="close"/>
+    <div style="display: flex;flex-direction: column">
+      <a-space style="margin-bottom: 10px">
+        <a-button-group>
+          <template v-for="(value,type) in paperTypes">
+            <a-button :type="curPaperType === type ? 'primary' : 'info'" @click="setPaper(type,value)" :key="type">
+              {{ type }}
+            </a-button>
+          </template>
+          <a-popover v-model="paperPopVisible" title="设置纸张宽高(mm)" trigger="click">
+            <div slot="content">
+              <a-input-group compact style="margin: 10px 10px">
+                <a-input type="number" v-model="paperWidth" style=" width: 100px; text-align: center"
+                         placeholder="宽(mm)"/>
+                <a-input style=" width: 30px; border-left: 0; pointer-events: none; backgroundColor: #fff"
+                         placeholder="~" disabled
+                />
+                <a-input type="number" v-model="paperHeight" style="width: 100px; text-align: center; border-left: 0"
+                         placeholder="高(mm)"/>
+              </a-input-group>
+              <a-button type="primary" style="width: 100%" @click="otherPaper">确定</a-button>
+            </div>
+            <a-button :type="'other'==curPaperType?'primary':''">自定义纸张</a-button>
+          </a-popover>
+        </a-button-group>
+        <a-button type="text" icon="zoom-out" @click="changeScale(false)"></a-button>
+        <a-input-number
+          :value="scaleValue"
+          :min="scaleMin"
+          :max="scaleMax"
+          :step="0.1"
+          disabled
+          style="width: 70px;"
+          :formatter="value => `${(value * 100).toFixed(0)}%`"
+          :parser="value => value.replace('%', '')"
+        />
+        <a-button type="text" icon="zoom-in" @click="changeScale(true)"></a-button>
+        <a-button type="primary" icon="redo" @click="rotatePaper()">旋转</a-button>
+        <a-button type="primary" icon="eye" @click="preView">
+          预览
         </a-button>
-      </a-popconfirm>
-    </a-space>
-    <a-space style="margin-bottom: 10px">
-      <a-button type="primary" @click="ippPrintAttr">
-        ipp获取 打印机 参数情况
-      </a-button>
-      <a-button type="primary" @click="ippPrintTest">
-        ipp打印测试
-      </a-button>
-      <a-button type="primary" @click="ippRequestTest">
-        ipp请求 获取 打印机 参数情况
-      </a-button>
-      <a-button type="primary" @click="ippRequestPrint">
-        ipp请求 打印测试
-      </a-button>
-    </a-space>
-    <a-space style="margin-bottom: 10px">
-      <a-button type="primary" @click="getSelectEls">
-        获取选中元素
-      </a-button>
-      <a-button type="primary" @click="updateFontSize">
-        选中元素字体12pt
-      </a-button>
-      <a-button type="primary" @click="updateFontWeight">
-        选中元素字体Bolder
-      </a-button>
-      <a-button  type="primary" @click="setElsSpace(true)" >  水平间距10
-      </a-button>
-      <a-button  type="primary" @click="setElsSpace(false)" >  垂直间距10
-      </a-button>
-      <a-radio-group>
-        <a-radio-button @click="setElsAlign('left')" title="左对齐">
-          <span class="glyphicon glyphicon-object-align-left"></span>
-        </a-radio-button>
-        <a-radio-button @click="setElsAlign('vertical')" title="居中">
-          <span class="glyphicon glyphicon-object-align-vertical"></span>
-        </a-radio-button>
-        <a-radio-button @click="setElsAlign('right')" title="右对齐">
-          <span class="glyphicon glyphicon-object-align-right"></span>
-        </a-radio-button>
-        <a-radio-button @click="setElsAlign('top')" title="顶部对齐">
-          <span class="glyphicon glyphicon-object-align-top"></span>
-        </a-radio-button>
-        <a-radio-button @click="setElsAlign('horizontal')" title="垂直居中">
-          <span class="glyphicon glyphicon-object-align-horizontal"></span>
-        </a-radio-button>
-        <a-radio-button @click="setElsAlign('bottom')" title="底部对齐">
-          <span class="glyphicon glyphicon-object-align-bottom"></span>
-        </a-radio-button>
-        <a-radio-button @click="setElsAlign('distributeHor')" title="横向分散">
-          <span class="glyphicon glyphicon-resize-horizontal"></span>
-        </a-radio-button>
-        <a-radio-button @click="setElsAlign('distributeVer')" title="纵向分散">
-          <span class="glyphicon glyphicon-resize-vertical"></span>
-        </a-radio-button>
-      </a-radio-group>
-    </a-space>
+        <a-button type="primary" icon="printer" @click="print">
+          直接打印
+        </a-button>
+        <a-button type="primary" @click="onlyPrint">
+          Api单独打印
+        </a-button>
+        <a-button type="primary" @click="onlyPrint2">
+          Api单独直接打印
+        </a-button>
+        <a-popconfirm
+          title="是否确认清空?"
+          okType="danger"
+          okText="确定清空"
+          @confirm="clearPaper"
+        >
+          <a-icon slot="icon" type="question-circle-o" style="color: red"/>
+          <a-button type="danger">
+            清空
+            <a-icon type="close"/>
+          </a-button>
+        </a-popconfirm>
+      </a-space>
+      <a-space style="margin-bottom: 10px">
+        <a-button type="primary" @click="ippPrintAttr">
+          ipp获取 打印机 参数情况
+        </a-button>
+        <a-button type="primary" @click="ippPrintTest">
+          ipp打印测试
+        </a-button>
+        <a-button type="primary" @click="ippRequestTest">
+          ipp请求 获取 打印机 参数情况
+        </a-button>
+        <a-button type="primary" @click="ippRequestPrint">
+          ipp请求 打印测试
+        </a-button>
+      </a-space>
+      <a-space style="margin-bottom: 10px">
+        <a-textarea style="width:30vw" v-model:value="jsonIn" @pressEnter="updateJson" placeholder="复制json模板到此后 点击右侧更新"
+                    allow-clear/>
+        <a-button type="primary" @click="updateJson">
+          更新json模板
+        </a-button>
+        <a-button type="primary" @click="exportJson">
+          导出json模板到 textArea
+        </a-button>
+        <a-textarea style="width:30vw" v-model:value="jsonOut" placeholder="点击左侧导出json" allow-clear/>
+      </a-space>
+      <a-space style="margin-bottom: 10px">
+        <a-button type="primary" @click="getSelectEls">
+          获取选中元素
+        </a-button>
+        <a-button type="primary" @click="updateFontSize">
+          选中元素字体12pt
+        </a-button>
+        <a-button type="primary" @click="updateFontWeight">
+          选中元素字体Bolder
+        </a-button>
+        <a-button type="primary" @click="setElsSpace(true)"> 水平间距10
+        </a-button>
+        <a-button type="primary" @click="setElsSpace(false)"> 垂直间距10
+        </a-button>
+        <a-radio-group>
+          <a-radio-button @click="setElsAlign('left')" title="左对齐">
+            <span class="glyphicon glyphicon-object-align-left"></span>
+          </a-radio-button>
+          <a-radio-button @click="setElsAlign('vertical')" title="居中">
+            <span class="glyphicon glyphicon-object-align-vertical"></span>
+          </a-radio-button>
+          <a-radio-button @click="setElsAlign('right')" title="右对齐">
+            <span class="glyphicon glyphicon-object-align-right"></span>
+          </a-radio-button>
+          <a-radio-button @click="setElsAlign('top')" title="顶部对齐">
+            <span class="glyphicon glyphicon-object-align-top"></span>
+          </a-radio-button>
+          <a-radio-button @click="setElsAlign('horizontal')" title="垂直居中">
+            <span class="glyphicon glyphicon-object-align-horizontal"></span>
+          </a-radio-button>
+          <a-radio-button @click="setElsAlign('bottom')" title="底部对齐">
+            <span class="glyphicon glyphicon-object-align-bottom"></span>
+          </a-radio-button>
+          <a-radio-button @click="setElsAlign('distributeHor')" title="横向分散">
+            <span class="glyphicon glyphicon-resize-horizontal"></span>
+          </a-radio-button>
+          <a-radio-button @click="setElsAlign('distributeVer')" title="纵向分散">
+            <span class="glyphicon glyphicon-resize-vertical"></span>
+          </a-radio-button>
+        </a-radio-group>
+      </a-space>
+    </div>
     <a-row :gutter="[8,0]">
       <a-col :span="4">
         <a-card style="height: 100vh">
@@ -220,13 +249,13 @@
 </template>
 
 <script>
-import {disAutoConnect, hiprint, defaultElementTypeProvider} from '../../index'
-// disAutoConnect();
-
-let hiprintTemplate;
+import {defaultElementTypeProvider, hiprint} from '../../index'
 import panel from './panel'
 import printData from './print-data'
 import printPreview from './preview'
+// disAutoConnect();
+
+let hiprintTemplate;
 
 export default {
   name: "printDesign",
@@ -265,9 +294,17 @@ export default {
           height: 175.6
         }
       },
+      // 自定义纸张
+      paperPopVisible: false,
+      paperWidth: '220',
+      paperHeight: '80',
+      // 缩放
       scaleValue: 1,
       scaleMax: 5,
-      scaleMin: 0.5
+      scaleMin: 0.5,
+      // 导入导出json
+      jsonIn: '',
+      jsonOut: '',
     }
   },
   computed: {
@@ -311,12 +348,13 @@ export default {
               // json模板 options 对应键值
               this.name = "scale";
             }
+
             return t.prototype.css = function (t, e) { // t: 元素对象， e 参数值
               if (t && t.length) {
                 if (e) return t.css('transform', 'scale(' + e + ')');
               }
               return null;
-            }, t.prototype.createTarget = function (t,i,e) { //  t: 元素对象，i: 元素options, e: 元素printElementType
+            }, t.prototype.createTarget = function (t, i, e) { //  t: 元素对象，i: 元素options, e: 元素printElementType
               return this.target = $('<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        缩放\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="number" class="auto-submit"/>\n        </div>\n    </div>'), this.target;
             }, t.prototype.getValue = function () {
               var t = this.target.find("input").val();
@@ -331,6 +369,7 @@ export default {
             function t() {
               this.name = "zIndex";
             }
+
             return t.prototype.css = function (t, e) {
               if (t && t.length) {
                 if (e) return t.css('z-index', e);
@@ -422,9 +461,9 @@ export default {
         // 图片选择功能
         onImageChooseClick: (target) => {
           // 测试 3秒后修改图片地址值
-          setTimeout(()=>{
+          setTimeout(() => {
             target.refresh("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAtAAAAIIAQMAAAB99EudAAAABlBMVEUmf8vG2O41LStnAAABD0lEQVR42u3XQQqCQBSAYcWFS4/QUTpaHa2jdISWLUJjjMpclJoPGvq+1WsYfiJCZ4oCAAAAAAAAAAAAAAAAAHin6pL9c6H/fOzHbRrP0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0u/SY9LS0tLS0tLS0tLS0n+edm+UlpaWlpaWlpaWlpaW/tl0Ndyzbno7/+tPTJdd1wal69dNa6abx+Lq6TSeYtK7BX/Diek0XULSZZrakPRtV0i6Hu/KIt30q4fM0pvBqvR9mvsQkZaW9gyJT+f5lsnzjR54xAk8mAUeJyMPwYFH98ALx5Jr0kRLLndT7b64UX9QR/0eAAAAAAAAAAAAAAAAAAD/4gpryzr/bja4QgAAAABJRU5ErkJggg==")
-          },3000)
+          }, 3000)
           // target.getValue()
           // target.refresh(url)
         },
@@ -432,13 +471,13 @@ export default {
         // 或者使用 hiprintTemplate.setFontList([])
         // 或元素中 options.fontList: []
         fontList: [
-          {title:'微软雅黑',value:'Microsoft YaHei'},
-          {title:'黑体',value:'STHeitiSC-Light'},
-          {title:'思源黑体',value:'SourceHanSansCN-Normal'},
-          {title:'王羲之书法体',value:'王羲之书法体'},
-          {title:'宋体',value:'SimSun'},
-          {title:'华为楷体',value:'STKaiti'},
-          {title:'cursive',value:'cursive'},
+          {title: '微软雅黑', value: 'Microsoft YaHei'},
+          {title: '黑体', value: 'STHeitiSC-Light'},
+          {title: '思源黑体', value: 'SourceHanSansCN-Normal'},
+          {title: '王羲之书法体', value: '王羲之书法体'},
+          {title: '宋体', value: 'SimSun'},
+          {title: '华为楷体', value: 'STKaiti'},
+          {title: 'cursive', value: 'cursive'},
         ],
         dataMode: 1, // 1:getJson 其他：getJsonTid 默认1
         history: true, // 是否需要 撤销重做功能
@@ -475,6 +514,13 @@ export default {
         this.$message.error(`操作失败: ${error}`)
       }
     },
+    otherPaper() {
+      let value = {}
+      value.width = this.paperWidth
+      value.height = this.paperHeight
+      this.paperPopVisible = false
+      this.setPaper('other', value)
+    },
     changeScale(big) {
       let scaleValue = this.scaleValue;
       if (big) {
@@ -490,6 +536,11 @@ export default {
         this.scaleValue = scaleValue;
       }
     },
+    rotatePaper() {
+      if (hiprintTemplate) {
+        hiprintTemplate.rotatePaper()
+      }
+    },
     preView() {
       // 测试, 点预览更新拖拽元素
       hiprint.updateElementType('defaultModule.text', (type) => {
@@ -497,7 +548,7 @@ export default {
         return type
       })
       // 测试, 通过socket刷新打印机列表； 默认只有连接的时候才会获取到最新的打印机列表
-      hiprint.refreshPrinterList((list)=>{
+      hiprint.refreshPrinterList((list) => {
         console.log('refreshPrinterList')
         console.log(list)
       });
@@ -506,28 +557,28 @@ export default {
       // 1. 类型（ip、ipv6、mac、dns、all、interface、vboxnet）
       // 2. 回调 data => {addr, e}  addr: 返回的数据 e:错误信息
       // 3. 其他参数 ...args
-      hiprint.getAddress('ip',(data)=>{
+      hiprint.getAddress('ip', (data) => {
         console.log('ip')
         console.log(data)
       })
-      hiprint.getAddress('ipv6',(data)=>{
+      hiprint.getAddress('ipv6', (data) => {
         console.log('ipv6')
         console.log(data)
       })
-      hiprint.getAddress('mac',(data)=>{
+      hiprint.getAddress('mac', (data) => {
         console.log('mac')
         console.log(data)
       })
-      hiprint.getAddress('dns',(data)=>{
+      hiprint.getAddress('dns', (data) => {
         console.log('dns')
         console.log(data)
       })
-      hiprint.getAddress('all',(data)=>{
+      hiprint.getAddress('all', (data) => {
         console.log('all')
         console.log(data)
       })
       // 各个平台不一样, 用法见: https://www.npmjs.com/package/address
-      hiprint.getAddress('interface',(data)=>{
+      hiprint.getAddress('interface', (data) => {
         console.log('interface')
         console.log(data)
       }, 'IPv4', 'eth1')
@@ -686,7 +737,7 @@ export default {
       let url = p.options['printer-uri-supported'];
       let str = "ippRequestPrint ippRequestPrint ippRequestPrint";
       let array = new Uint8Array(str.length);
-      for(var i = 0; i < str.length; i++) {
+      for (var i = 0; i < str.length; i++) {
         array[i] = str.charCodeAt(i);
       }
       let testData = array.buffer;
@@ -713,6 +764,20 @@ export default {
         // 执行的ipp 任务回调 / 错误回调
         console.log(res)
       })
+    },
+    updateJson() {
+      if (hiprintTemplate) {
+        try {
+          hiprintTemplate.update(JSON.parse(this.jsonIn))
+        } catch (e) {
+          this.$message.error(`更新失败: ${e}`)
+        }
+      }
+    },
+    exportJson() {
+      if (hiprintTemplate) {
+        this.jsonOut = JSON.stringify(hiprintTemplate.getJson() || {})
+      }
     },
     setElsAlign(e) {
       hiprintTemplate.setElsAlign(e)
@@ -775,19 +840,23 @@ export default {
     content: url("~@/assets/logo.png");
   }
 }
+
 // 辅助线样式
 /deep/ .toplineOfPosition {
   border: 0;
   border-top: 1px dashed purple;
 }
+
 /deep/ .bottomlineOfPosition {
   border: 0;
   border-top: 1px dashed purple;
 }
+
 /deep/ .leftlineOfPosition {
   border: 0;
   border-left: 1px dashed purple;
 }
+
 /deep/ .rightlineOfPosition {
   border: 0;
   border-left: 1px dashed purple;
