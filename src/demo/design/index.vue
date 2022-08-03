@@ -352,18 +352,18 @@ export default {
         text: {
           tabs: [
             // 隐藏部分
-            {
-              name: '测试', options: [
-                {
-                  name: 'title',
-                  hidden: false
-                },
-                {
-                  name: 'field',
-                  hidden: true
-                },
-              ]
-            },
+            // {
+            //   name: '测试', options: [
+            //     {
+            //       name: 'title',
+            //       hidden: false
+            //     },
+            //     {
+            //       name: 'field',
+            //       hidden: true
+            //     },
+            //   ]
+            // },
             {
               name: '样式', options: [
                 {
