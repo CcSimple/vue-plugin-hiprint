@@ -4794,19 +4794,28 @@ var hiprint = function (t) {
             h = this.getRowsInSpecificHeight(e, u > 0 ? u : 0 == s ? d - p : t.getContentHeight(s), r, o, s, c);
           l = h.isEnd;
           var f = void 0;
-          h.target && (h.target.css("left", this.options.displayLeft()), h.target[0].height = ""), 0 == s || u > 0 ? (h.target && (a = p, h.target.css("top", p + "pt")), f = l && null != this.options.lHeight ? p + (h.height > this.options.lHeight ? h.height : this.options.lHeight) : p + h.height) : (h.target && (a = t.paperHeader, h.target.css("top", t.paperHeader + "pt")), f = t.paperHeader + h.height), n.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_2__.a({
-            target: h.target,
-            printLine: f,
-            referenceElement: new _PrintReferenceElement__WEBPACK_IMPORTED_MODULE_4__.a({
-              top: this.options.getTop(),
-              left: this.options.getLeft(),
-              height: this.options.getHeight(),
-              width: this.options.getWidth(),
-              beginPrintPaperIndex: t.index,
-              bottomInLastPaper: f,
-              printTopInPaper: a
-            })
-          })), s++;
+          if (h.target) {
+            h.target.css("left", this.options.displayLeft()), h.target[0].height = "";
+            if (0 == s || u > 0) {
+              a = p, h.target.css("top", p + "pt");
+              f = l && null != this.options.lHeight ? p + (h.height > this.options.lHeight ? h.height : this.options.lHeight) : p + h.height
+            } else {
+              a = t.paperHeader, h.target.css("top", a + "pt"), f = t.paperHeader + h.height
+            }
+            n.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_2__.a({
+              target: h.target,
+              printLine: f,
+              referenceElement: new _PrintReferenceElement__WEBPACK_IMPORTED_MODULE_4__.a({
+                top: this.options.getTop(),
+                left: this.options.getLeft(),
+                height: this.options.getHeight(),
+                width: this.options.getWidth(),
+                beginPrintPaperIndex: t.index,
+                bottomInLastPaper: f,
+                printTopInPaper: a
+              })
+            })), s++;
+          }
           e && this.updatePanelHeight(f + this.options.getHeight(),t);
         }
 
@@ -4873,7 +4882,7 @@ var hiprint = function (t) {
             if (c) {
               // 这里是table 没有tfoot, 后面再看什么原因...
               if ("last" == this.options.tableFooterRepeat && !c.isEnd) break;
-              if (this.options.tableFooterRepeat != "no" && !this.options.columns[0].columns.some(function (column) {return column.tableSummary})) {
+              if (this.options.tableFooterRepeat != "no" && (undefined == t && !this.options.columns[0].columns.some(function (column) {return column.tableSummary}))) {
                 if (d.find("tfoot").length) {
                   d.find("tfoot").html(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, this.getData(t), this.options, this.printElementType, t, h).html());
                 } else {
