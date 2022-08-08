@@ -1963,7 +1963,8 @@ var hiprint = function (t) {
         if (e) {
           if (this.tableOptions.options.isEnableEditField || this.tableOptions.options.fields) {
             var n = e.split("#");
-            t.title = this.title = n[0], n.length > 0 && (t.field = this.field = n[1]);
+            t.title = this.title = n[0], n.length > 0 && (t.columnId = t.field = this.field = n[1]);
+            t.id && t.target.attr("id", t.id), t.columnId && t.target.attr("column-id", t.columnId);
           } else t.title = this.title = e;
         } else this.tableOptions.options.isEnableEditField ? (t.title = this.title = "", t.field = this.field = "") : t.title = this.title = "";
         this.editor.destroy(), t.getTarget().html(this.title);
