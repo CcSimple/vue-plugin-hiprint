@@ -1,5 +1,34 @@
 版本及更新记录
 ------------------------------
+## 0.0.28 (2022-08-08)
+<details>
+  <summary>1. 🐛 socket.io-client 更新到 4.x</summary>
+</details>
+<details>
+  <summary>2. 🐛 fix 打印预览(getHtml) 页码可拖拽问题</summary>
+</details>
+<details>
+  <summary>3. 🐛 fix 模板不分页时, table design时模板高度问题</summary>
+</details>
+<details>
+  <summary>4. 🐛 fix 分页后辅助元素错位问题</summary>
+</details>
+<details>
+  <summary>5. 🐛 fix getJson 隐藏列未返回问题</summary>
+</details>
+<details>
+  <summary>6. 🐛 fix 表格脚函数'最后显示'无效问题</summary>
+</details>
+<details>
+  <summary>7. ✨ 调整优化 样式引入问题(当没有print-lock.css情况现默认空样式)</summary>
+</details>
+<details>
+  <summary>8. ✨ 调整优化 页眉线问题(小于0时分页显示问题)</summary>
+</details>
+<details>
+  <summary>9. 🐛 fix 新插入列,选择字段后,'列属性' 空白问题</summary>
+</details>
+
 ## 0.0.26 (2022-07-07)
 <details>
  <summary>1. 🌈 新增支持参数面板tabs分组(默认已分组支持自定义分组)</summary>
