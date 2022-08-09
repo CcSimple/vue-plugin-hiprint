@@ -423,6 +423,10 @@
               hidden: false
             },
             {
+              name: 'showInPage',
+              hidden: false
+            },
+            {
               name: 'fixed',
               hidden: false
             },
