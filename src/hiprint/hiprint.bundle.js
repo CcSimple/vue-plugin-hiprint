@@ -8118,7 +8118,7 @@ var hiprint = function (t) {
         return i.find(".hiprint-printElement-table-content").append(this.getTableHtml(e, n)), i;
       }, e.prototype.getTableHtml = function (t, e) {
         var n = $('<table class="hiprint-printElement-tableTarget" style="border-collapse: collapse;width:100%;"></table>');
-        return n.append(X.a.createTableHead(this.columns, this.options.getWidth())), n.append(X.a.createTableRow(this.columns, t, this.options, this.printElementType)), this.printElementType.footerFormatter && ("no" == this.options.tableFooterRepeat || e && X.a.createTableFooter(this.printElementType.columns, t, this.options, this.printElementType, e, t)).insertBefore(o.find("tbody")), n;
+        return n.append(X.a.createTableHead(this.columns, this.options.getWidth())), n.append(X.a.createTableRow(this.columns, t, this.options, this.printElementType)), this.printElementType.footerFormatter && ("no" == this.options.tableFooterRepeat || e && X.a.createTableFooter(this.printElementType.columns, t, this.options, this.printElementType, e, t)).insertBefore(n.find("tbody")), n;
       }, e.prototype.getHtml = function (t, e) {
         this.setCurrenttemplateData(e), this.createTempContainer();
         var n = this.getPaperHtmlResult(t, e);
@@ -8158,6 +8158,7 @@ var hiprint = function (t) {
 
         return n;
       }, e.prototype.getRowsInSpecificHeight = function (t, e, n, i, r, a) {
+        var that = this;
         var p = void 0,
           s = n.find("tbody"),
           l = o.a.pt.toPx(t);
@@ -8199,6 +8200,7 @@ var hiprint = function (t) {
             if ("last" == this.options.tableFooterRepeat && !p.isEnd) break;
             if (this.printElementType.footerFormatter) {
               X.a.createTableFooter(this.printElementType.columns, this.getData(a), this.options, this.printElementType, a, d).insertBefore(e.find("tbody"));
+              that.css(e, a);
             }
             break;
           }
