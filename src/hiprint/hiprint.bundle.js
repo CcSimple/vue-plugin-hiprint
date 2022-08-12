@@ -4770,7 +4770,7 @@ var hiprint = function (t) {
         if (!this.getField() && this.options.content) return (n = $("<div></div>")).append(this.options.content), (i = n.find("table")).addClass("hiprint-printElement-tableTarget"), i;
         if (this.printElementType.formatter) return (n = $("<div></div>")).append(this.printElementType.formatter(t)), (i = n.find("table")).addClass("hiprint-printElement-tableTarget"), i;
         var o = $('<table class="hiprint-printElement-tableTarget" style="border-collapse: collapse;"></table>');
-        return o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableHead(this.getColumns(), this.options.getWidth() / this.options.getGridColumns())), o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableRow(this.getColumns(), t, this.options, this.printElementType)),"no" == this.options.tableFooterRepeat || ("last" == this.options.tableFooterRepeat ? o.find("tbody").append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, t, this.options, this.printElementType, e, t).html()) : o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, t, this.options, this.printElementType, e, []))), o;
+        return o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableHead(this.getColumns(), this.options.getWidth() / this.options.getGridColumns())), o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableRow(this.getColumns(), t, this.options, this.printElementType)), "no" == this.options.tableFooterRepeat || e && _table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, t, this.options, this.printElementType, e, t).insertBefore(o.find("tbody")), o;
       }, TablePrintElement.prototype.getEmptyRowTarget = function () {
         return _table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createEmptyRowTarget(this.getColumns());
       }, TablePrintElement.prototype.getHtml = function (t, e) {
@@ -4822,10 +4822,15 @@ var hiprint = function (t) {
 
         return n;
       }, TablePrintElement.prototype.getRowsInSpecificHeight = function (t, e, n, i, o, r) {
+        var that = this;
         var a = i.find("tbody"),
           p = _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.pt.toPx(e);
 
         n.find(".hiprint-printElement-tableTarget tbody").html("");
+        // 不是最后显示页脚
+        if ("last" != this.options.tableFooterRepeat) {
+          n.find(".hiprint-printElement-tableTarget tfoot").remove();
+        }
         // 仅首页显示表头
         if ("first" == this.options.tableHeaderRepeat && o > 0) {
           n.find(".hiprint-printElement-tableTarget thead").remove();
@@ -4883,12 +4888,9 @@ var hiprint = function (t) {
             if (c) {
               // 这里是table 没有tfoot, 后面再看什么原因...
               if ("last" == this.options.tableFooterRepeat && !c.isEnd) break;
-              if (this.options.tableFooterRepeat != "no" && (undefined == t && !this.options.columns[0].columns.some(function (column) {return column.tableSummary}))) {
-                if (d.find("tfoot").length) {
-                  d.find("tfoot").html(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, this.getData(t), this.options, this.printElementType, t, h).html());
-                } else {
-                  d.find("tbody").length && d.find("tbody").append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, this.getData(t), this.options, this.printElementType, t, h).html());
-                }
+              if ("no" !== this.options.tableFooterRepeat) {
+                _table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, this.getData(t), this.options, this.printElementType, t, h).insertBefore(d.find("tbody"));
+                that.css(d, t);
               }
               break;
             }
@@ -8116,7 +8118,7 @@ var hiprint = function (t) {
         return i.find(".hiprint-printElement-table-content").append(this.getTableHtml(e, n)), i;
       }, e.prototype.getTableHtml = function (t, e) {
         var n = $('<table class="hiprint-printElement-tableTarget" style="border-collapse: collapse;width:100%;"></table>');
-        return n.append(X.a.createTableHead(this.columns, this.options.getWidth())), n.append(X.a.createTableRow(this.columns, t, this.options, this.printElementType)), this.printElementType.footerFormatter && ("no" == this.options.tableFooterRepeat || ("last" == this.options.tableFooterRepeat ? n.find("tbody").append(X.a.createTableFooter(this.printElementType.columns, t, this.options, this.printElementType, e, t).html()) : n.append(X.a.createTableFooter(this.printElementType.columns, t, this.options, this.printElementType, e, [])))), n;
+        return n.append(X.a.createTableHead(this.columns, this.options.getWidth())), n.append(X.a.createTableRow(this.columns, t, this.options, this.printElementType)), this.printElementType.footerFormatter && ("no" == this.options.tableFooterRepeat || e && X.a.createTableFooter(this.printElementType.columns, t, this.options, this.printElementType, e, t)).insertBefore(o.find("tbody")), n;
       }, e.prototype.getHtml = function (t, e) {
         this.setCurrenttemplateData(e), this.createTempContainer();
         var n = this.getPaperHtmlResult(t, e);
@@ -8194,10 +8196,9 @@ var hiprint = function (t) {
           };
 
           if (p) {
-            // 这里是tableCustom, 有tfoot
             if ("last" == this.options.tableFooterRepeat && !p.isEnd) break;
             if (this.printElementType.footerFormatter) {
-              e.find("tfoot") && e.find("tfoot").html(X.a.createTableFooter(this.printElementType.columns, this.getData(a), this.options, this.printElementType, a, d).html());
+              X.a.createTableFooter(this.printElementType.columns, this.getData(a), this.options, this.printElementType, a, d).insertBefore(e.find("tbody"));
             }
             break;
           }
