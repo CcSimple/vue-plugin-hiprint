@@ -4770,7 +4770,7 @@ var hiprint = function (t) {
         if (!this.getField() && this.options.content) return (n = $("<div></div>")).append(this.options.content), (i = n.find("table")).addClass("hiprint-printElement-tableTarget"), i;
         if (this.printElementType.formatter) return (n = $("<div></div>")).append(this.printElementType.formatter(t)), (i = n.find("table")).addClass("hiprint-printElement-tableTarget"), i;
         var o = $('<table class="hiprint-printElement-tableTarget" style="border-collapse: collapse;"></table>');
-        return o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableHead(this.getColumns(), this.options.getWidth() / this.options.getGridColumns())), o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableRow(this.getColumns(), t, this.options, this.printElementType)), "no" == this.options.tableFooterRepeat || e && _table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, t, this.options, this.printElementType, e, t).insertBefore(o.find("tbody")), o;
+        return o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableHead(this.getColumns(), this.options.getWidth() / this.options.getGridColumns())), o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableRow(this.getColumns(), t, this.options, this.printElementType)), "no" == this.options.tableFooterRepeat || _table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, t, this.options, this.printElementType, e, t).insertBefore(o.find("tbody")), o;
       }, TablePrintElement.prototype.getEmptyRowTarget = function () {
         return _table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createEmptyRowTarget(this.getColumns());
       }, TablePrintElement.prototype.getHtml = function (t, e) {
@@ -4783,7 +4783,8 @@ var hiprint = function (t) {
           o = this.getTableHtml(i, e),
           r = this.createtempEmptyRowsTargetStructure(e);
         e ? this.updateTargetWidth(r) : this.updateTargetSize(r), this.css(r, i), this.css(o, i), this.getTempContainer().html(""), this.getTempContainer().append(r);
-
+        // 页脚导致 分页高度的问题, -> 获取到表格脚高度后移除避免重复
+        var tfh = r.find('tfoot').outerHeight() || 0; r.find('tfoot').remove();
         for (var a, p = this.getBeginPrintTopInPaperByReferenceElement(t), s = 0, l = !1; !l;) {
           var u = 0,
             d = t.getPaperFooter(s);
@@ -4792,7 +4793,7 @@ var hiprint = function (t) {
             printLine: void 0
           })), u = t.getContentHeight(s) - (p - t.paperHeader), s++ , d = t.getPaperFooter(s));
           var c = n.length > 0 ? n[n.length - 1].target : void 0,
-            h = this.getRowsInSpecificHeight(e, u > 0 ? u : 0 == s ? d - p : t.getContentHeight(s), r, o, s, c);
+            h = this.getRowsInSpecificHeight(e, u > 0 ? u : 0 == s ? d - p : t.getContentHeight(s), r, o, s, c, tfh);
           l = h.isEnd;
           var f = void 0;
           if (h.target) {
@@ -4821,7 +4822,7 @@ var hiprint = function (t) {
         }
 
         return n;
-      }, TablePrintElement.prototype.getRowsInSpecificHeight = function (t, e, n, i, o, r) {
+      }, TablePrintElement.prototype.getRowsInSpecificHeight = function (t, e, n, i, o, r, tfh) {
         var that = this;
         var a = i.find("tbody"),
           p = _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.pt.toPx(e);
@@ -4878,7 +4879,7 @@ var hiprint = function (t) {
                 var f = a.find("tr:lt(1)");
                 d.find("tbody").append(f);
                 var g = f.data("rowData");
-                l.push(g), h.push(g), (s = n.outerHeight()) > p && (a.prepend(f), l.pop(), h.pop(), s = n.outerHeight(), c = {
+                l.push(g), h.push(g), (s = n.outerHeight(), s += tfh) > p && (a.prepend(f), l.pop(), h.pop(), s = n.outerHeight(), c = {
                   height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
                   isEnd: !1
                 });
@@ -4900,6 +4901,7 @@ var hiprint = function (t) {
         var m = n.find(".hiprint-printElement-tableTarget tbody tr").length,
           v = this.getGridColumnsFooterFormatter();
         v && n.find(this.gridColumnsFooterCss).html(v(this.options, this.getData(t), t, l));
+        s = n.outerHeight();
         // 方便调试看 值...
         var zz = 0 == a.find("tr").length ? 0 == m && r ? {
           target: void 0,
@@ -8118,7 +8120,7 @@ var hiprint = function (t) {
         return i.find(".hiprint-printElement-table-content").append(this.getTableHtml(e, n)), i;
       }, e.prototype.getTableHtml = function (t, e) {
         var n = $('<table class="hiprint-printElement-tableTarget" style="border-collapse: collapse;width:100%;"></table>');
-        return n.append(X.a.createTableHead(this.columns, this.options.getWidth())), n.append(X.a.createTableRow(this.columns, t, this.options, this.printElementType)), this.printElementType.footerFormatter && ("no" == this.options.tableFooterRepeat || e && X.a.createTableFooter(this.printElementType.columns, t, this.options, this.printElementType, e, t)).insertBefore(n.find("tbody")), n;
+        return n.append(X.a.createTableHead(this.columns, this.options.getWidth())), n.append(X.a.createTableRow(this.columns, t, this.options, this.printElementType)), this.printElementType.footerFormatter && ("no" == this.options.tableFooterRepeat || X.a.createTableFooter(this.printElementType.columns, t, this.options, this.printElementType, e, t)).insertBefore(n.find("tbody")), n;
       }, e.prototype.getHtml = function (t, e) {
         this.setCurrenttemplateData(e), this.createTempContainer();
         var n = this.getPaperHtmlResult(t, e);
@@ -8129,7 +8131,8 @@ var hiprint = function (t) {
           o = this.getTableHtml(i, e),
           r = this.createTarget(this.printElementType.title, [], e);
         e ? this.updateTargetWidth(r) : this.updateTargetSize(r), this.css(r, i), this.css(o, i), this.getTempContainer().html(""), this.getTempContainer().append(r);
-
+        // 页脚导致 分页高度的问题, -> 获取到表格脚高度后移除避免重复
+        var tfh = r.find('tfoot').outerHeight() || 0; r.find('tfoot').remove();
         for (var a, p = this.getBeginPrintTopInPaperByReferenceElement(t), s = 0, l = !1; !l;) {
           var u = 0,
             d = t.getPaperFooter(s);
@@ -8138,7 +8141,7 @@ var hiprint = function (t) {
             printLine: void 0
           })), s++ , u = t.getContentHeight(s) - (p - t.paperHeader), d = t.getPaperFooter(s));
           var c = n.length > 0 ? n[n.length - 1].target : void 0,
-            h = this.getRowsInSpecificHeight(u > 0 ? u : 0 == s ? d - p : t.getContentHeight(s), r, o, s, c, e);
+            h = this.getRowsInSpecificHeight(u > 0 ? u : 0 == s ? d - p : t.getContentHeight(s), r, o, s, c, e, tfh);
           l = h.isEnd;
           var f = void 0;
           h.target && (h.target.css("left", this.options.displayLeft()), h.target[0].height = ""), 0 == s || u > 0 ? (h.target && (a = p, h.target.css("top", p + "pt")), f = l && null != this.options.lHeight ? p + (h.height > this.options.lHeight ? h.height : this.options.lHeight) : p + h.height) : (h.target && (a = t.paperHeader, h.target.css("top", t.paperHeader + "pt")), f = t.paperHeader + h.height), n.push(new P.a({
@@ -8157,7 +8160,7 @@ var hiprint = function (t) {
         }
 
         return n;
-      }, e.prototype.getRowsInSpecificHeight = function (t, e, n, i, r, a) {
+      }, e.prototype.getRowsInSpecificHeight = function (t, e, n, i, r, a, tfh) {
         var that = this;
         var p = void 0,
           s = n.find("tbody"),
@@ -8182,7 +8185,7 @@ var hiprint = function (t) {
               var c = s.find("tr:lt(1)");
               e.find("tbody").append(c), u = e.outerHeight();
               var h = c.data("rowData");
-              d.push(h), u > l && (s.prepend(c), d.pop(), u = e.outerHeight(), p = {
+              d.push(h), u += tfh > l && (s.prepend(c), d.pop(), u = e.outerHeight(), p = {
                 target: e.clone(),
                 length: e.find("tbody tr").length,
                 height: o.a.px.toPt(u),
