@@ -4842,6 +4842,22 @@ var hiprint = function (t) {
           var c = n.length > 0 ? n[n.length - 1].target : void 0,
             h = this.getRowsInSpecificHeight(e, u > 0 ? u : 0 == s ? d - p : t.getContentHeight(s), r, o, s, c, tfh);
           l = h.isEnd;
+          if (u < 0) {
+            n[0].target = $('<div style="position:absolute;background: red;color: white;padding: 0px 4px;">没有足够空间进行表格分页，请调整页眉/页脚线</div>')
+            n[0].printLine = p;
+            n[0].referenceElement =  new _PrintReferenceElement__WEBPACK_IMPORTED_MODULE_4__.a({
+              top: this.options.getTop(),
+              left: this.options.getLeft(),
+              height: this.options.getHeight(),
+              width: this.options.getWidth(),
+              beginPrintPaperIndex: t.index,
+              bottomInLastPaper: p + this.options.lHeight,
+              printTopInPaper: p
+            });
+            n[0].target.css("top", p + "pt");
+            n[0].target.css("left", this.options.displayLeft())
+            break;
+          }
           var f = void 0;
           if (h.target) {
             h.target.css("left", this.options.displayLeft()), h.target[0].height = "";
