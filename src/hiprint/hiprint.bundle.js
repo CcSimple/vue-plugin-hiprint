@@ -3223,14 +3223,14 @@ var hiprint = function (t) {
       }, t.prototype.updateEl = function (width, height, opt, cb) {
         if (opt) {
           var ratio, w, h;
-          if (opt.auto) {
+          if (opt || opt.auto) {
             if (width >= height) {
               opt.width = true;
             } else {
               opt.height = true;
             }
           }
-          if (opt || opt.width) {
+          if (opt.width) {
             ratio = height / width;
             w = this.el.options.width;
             h = Math.floor(w * ratio * 10) / 10;
