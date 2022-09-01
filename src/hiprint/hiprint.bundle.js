@@ -2212,7 +2212,8 @@ var hiprint = function (t) {
           } else {
             var r = $("<td></td>");
           }
-          if ("first" == n.tableHeaderRepeat || "none" == n.tableHeaderRepeat) {
+          // 设计时不去计算宽度
+          if (e && Object.keys(e).length > 0 && ("first" == n.tableHeaderRepeat || "none" == n.tableHeaderRepeat)) {
             t.field && r.attr("field", t.field), t.align && r.css("text-align", t.align), t.vAlign && r.css("vertical-align", t.vAlign);
             // 无表头时跨行无效，需根据所跨行数重新计算宽度
             if (n.rowsColumnsMerge) {
