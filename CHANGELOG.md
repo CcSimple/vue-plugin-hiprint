@@ -1,5 +1,48 @@
 版本及更新记录
 ------------------------------
+## 0.0.30 (2022-09-01)
+<details>
+  <summary>1. 🌈 新增支持 选择图片后根据原始宽高自定义调整元素宽高</summary>
+
+```javascript
+hiprintTemplate = new hiprint.PrintTemplate({
+  onImageChooseClick: (target) => {
+    // 测试 3秒后修改图片地址值
+    setTimeout(() => {
+      // target.refresh(url,options,callback)
+      // 自定义处理
+      // target.refresh(url,false,(el,width,height)=>{
+      //   el.options.width = width;
+      //   el.designTarget.css('width', width + "pt");
+      //   el.designTarget.children('.resize-panel').trigger($.Event('click'));
+      // })
+      target.refresh("https://portrait.gitee.com/uploads/avatars/user/1800/5400665_CcSimple_1591166830.png!avatar200", {
+        // auto: true, // 根据图片宽高自动等比(宽>高?width:height)
+        // width: true, // 按宽调整高
+        // height: true, // 按高调整宽
+        real: true // 根据图片实际尺寸调整(转pt)
+      })
+    }, 3000)
+  }
+})
+```
+</details>
+<details>
+  <summary>2. ✨ 调整优化 页脚线/页眉线时相互超过时 进行偏移处理</summary>
+</details>
+<details>
+  <summary>3. ✨ 调整优化 页眉/页脚过近，表格分页卡死情况(无法正常分页计算)</summary>
+</details>
+<details>
+  <summary>4. 🐛 fix 表格分页高度问题(未计算表格脚高度)</summary>
+</details>
+<details>
+  <summary>5. 🐛 fix 表格脚"最后显示"及"底部聚合类型"问题</summary>
+</details>
+<details>
+  <summary>6. 🐛 fix 表格头仅首页显示/不显示时 列宽拖拽调整问题</summary>
+</details>
+
 ## 0.0.28 (2022-08-08)
 <details>
   <summary>1. 🐛 socket.io-client 更新到 4.x</summary>
