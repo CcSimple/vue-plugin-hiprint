@@ -1,22 +1,18 @@
 <template>
-  <a-modal :visible="visible" :maskClosable="false"
-           @cancel="hideModal" :width="width+'mm'">
-    <a-spin :spinning="spinning" style="min-height: 100px">
-      <div id="preview_content"></div>
-    </a-spin>
+  <el-dialog :visible="visible" :maskClosable="false"
+             @close="hideModal" :width="width+'mm'">
+    <div id="preview_content"></div>
     <template slot="title">
-      <a-space>
-        <div style="margin-right: 20px">打印预览</div>
-        <a-button :loading="waitShowPrinter" type="primary" icon="printer" @click.stop="print">打印</a-button>
-        <a-button type="primary" icon="printer" @click.stop="toPdf">pdf</a-button>
-      </a-space>
+      <div style="margin-right: 20px">打印预览</div>
+      <el-button type="primary" icon="printer" @click.stop="print">打印</el-button>
+      <el-button type="primary" icon="printer" @click.stop="toPdf">pdf</el-button>
     </template>
     <template slot="footer">
-      <a-button key="close" type="info" @click="hideModal">
+      <el-button key="close" type="info" @click="hideModal">
         关闭
-      </a-button>
+      </el-button>
     </template>
-  </a-modal>
+  </el-dialog>
 </template>
 
 <script>
@@ -59,22 +55,20 @@ export default {
       }, 500)
     },
     print() {
-      this.waitShowPrinter = true
       this.hiprintTemplate.print(this.printData, {}, {
         callback: () => {
-          this.waitShowPrinter = false
+          console.log('callback')
         }
       })
     },
     toPdf() {
-      this.hiprintTemplate.toPdf(this.printData, '打印预览pdf');
+      this.hiprintTemplate.toPdf({}, '打印预览');
     },
   }
 }
 
 </script>
 <style lang="less" scoped>
-
 /deep/ .ant-modal-body {
   padding: 0px;
 }

@@ -1,19 +1,21 @@
 <template>
-  <div id="app">
-    <a-space class="logos" style="float: left;">
-      <img src="./assets/logo.png">
-      <img src="./assets/hi.png">
-      <div>期待大家的参与😁</div>
-    </a-space>
-    <a-row type="flex" class="menus">
-      <a-button-group>
-        <template v-for="demo in demoList">
-          <a-button :type="demo.name === curDemo ? 'primary' : 'info'" @click="curDemo = demo.name" :key="demo.name">
-            {{ demo.title }}
-          </a-button>
-        </template>
-      </a-button-group>
-    </a-row>
+  <div id="app" >
+    <div  style="display: flex; align-items: center;justify-content: left">
+      <div class="logos">
+        <img src="./assets/logo.png">
+        <img src="./assets/hi.png">
+        <div>期待大家的参与😁</div>
+      </div>
+      <el-row type="flex" class="menus">
+        <el-button-group>
+          <template v-for="demo in demoList">
+            <el-button :type="demo.name === curDemo ? 'primary' : ' '" @click="curDemo = demo.name" :key="demo.name">
+              {{ demo.title }}
+            </el-button>
+          </template>
+        </el-button-group>
+      </el-row>
+    </div>
     <!-- 动态渲染组件，懒得去弄路由了 -->
     <keep-alive :include='keepInclude' :max="10">
       <component :is="curDemo"/>
