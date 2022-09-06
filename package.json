@@ -26,7 +26,6 @@
     "build-demo": "vue-cli-service build"
   },
   "dependencies": {
-    "ant-design-vue": "^1.7.8",
     "concurrent-tasks": "^1.0.7",
     "core-js": "^3.6.5",
     "element-ui": "^2.15.9",
