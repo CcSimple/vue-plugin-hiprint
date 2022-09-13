@@ -41,9 +41,9 @@
 
 ## 配套直接打印客户端(win/mac/linux)
 ### <a href="https://gitee.com/CcSimple/electron-hiprint">gitee客户端源码 / 下载</a><a style="margin-left:10px" href="https://github.com/CcSimple/electron-hiprint"> github客户端源码</a>
-<div style="color:red">如果使用npm包或者本项目,请使用如下样子的直接打印客户端(兼容官网的js)</div>
-<div style="color:red">如果使用npm包或者本项目,请使用如下样子的直接打印客户端(兼容官网的js)</div>
-<div style="color:red">如果使用npm包或者本项目,请使用如下样子的直接打印客户端(兼容官网的js)</div>
+<div style="color:red">如果使用npm包或者本项目,请使用如下样子的直接打印客户端</div>
+<div style="color:red">如果使用npm包或者本项目,请使用如下样子的直接打印客户端</div>
+<div style="color:red">如果使用npm包或者本项目,请使用如下样子的直接打印客户端</div>
 <div align="center">
 
 ![image](./res/tool.jpeg)
@@ -51,13 +51,14 @@
 </div>
 <div style="color:red">本项目需要上面样式的直接打印客户端; 下载地址见下表:</div>
 
-|版本|下载地址|
-|---|---|
-|Win64|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/1114716/download/hiprint_win_x64-1.0.4.exe">下载(v1.0.4)</a>|
-|Win32|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/1114721/download/hiprint_win_x32-1.0.4.exe">下载(v1.0.4)</a>|
-|Linux64 (需要桌面系统)|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/1114718/download/hiprint_linux_x64-1.0.4.tar.xz">下载(v1.0.4)</a>|
-|Mac (intel)|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/1114720/download/hiprint_mac_intel-1.0.4.dmg">下载(v1.0.4)</a>|
-|Mac (M1)|<a href="https://gitee.com/CcSimple/electron-hiprint/attach_files/1114719/download/hiprint_mac_arm64-1.0.4.dmg">下载(v1.0.4)</a>|
+| 版本                     | 下载地址                                                                                                                              |
+|------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| Win64                  | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.5/hiprint_win_x64-1.0.5.exe">下载(v1.0.5)</a>      |
+| Win32                  | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.5/hiprint_win_x32-1.0.5.exe">下载(v1.0.5)</a>      |
+| Linux64 (需要桌面系统)       | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.5/hiprint_linux_64-1.0.5.tar.xz">下载(v1.0.5)</a> |
+| Linux64 arm64 (需要桌面系统) | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.5/hiprint_linux_arm64-1.0.5.tar.xz">下载(v1.0.5)</a> |
+| Mac (intel)            | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.5/hiprint_mac_x64-1.0.5.dmg">下载(v1.0.5)</a>    |
+| Mac (M1)               | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.5/hiprint_mac_arm64-1.0.5.dmg">下载(v1.0.5)</a>    |
 
 
 
