@@ -213,6 +213,10 @@
               hidden: false
             },
             {
+              name: 'pageBreak',
+              hidden: false
+            },
+            {
               name: 'showInPage',
               hidden: false
             },
@@ -310,6 +314,10 @@
         },
         {
           name: 'hideTitle',
+          hidden: false
+        },
+        {
+          name: 'pageBreak',
           hidden: false
         },
         {
@@ -447,6 +455,10 @@
         {
           name: '高级', options: [
             {
+              name: 'pageBreak',
+              hidden: false
+            },
+            {
               name: 'axis',
               hidden: false
             },
@@ -488,6 +500,10 @@
         },
         {
           name: 'fixed',
+          hidden: false
+        },
+        {
+          name: 'pageBreak',
           hidden: false
         },
         {
@@ -602,6 +618,10 @@
         {
           name: '高级', options: [
             {
+              name: 'pageBreak',
+              hidden: false
+            },
+            {
               name: 'showInPage',
               hidden: false
             },
@@ -683,6 +703,10 @@
         },
         {
           name: 'leftSpaceRemoved',
+          hidden: false
+        },
+        {
+          name: 'pageBreak',
           hidden: false
         },
         {
@@ -1202,6 +1226,10 @@
         {
           name: '高级', options: [
             {
+              name: 'pageBreak',
+              hidden: false
+            },
+            {
               name: 'axis',
               hidden: false
             },
@@ -1227,6 +1255,10 @@
         },
         {
           name: 'borderColor',
+          hidden: false
+        },
+        {
+          name: 'pageBreak',
           hidden: false
         },
         {
@@ -1305,6 +1337,10 @@
         {
           name: '高级', options: [
             {
+              name: 'pageBreak',
+              hidden: false
+            },
+            {
               name: 'axis',
               hidden: false
             },
@@ -1330,6 +1366,10 @@
         },
         {
           name: 'borderColor',
+          hidden: false
+        },
+        {
+          name: 'pageBreak',
           hidden: false
         },
         {
@@ -1412,6 +1452,10 @@
         {
           name: '高级', options: [
             {
+              name: 'pageBreak',
+              hidden: false
+            },
+            {
               name: 'axis',
               hidden: false
             },
@@ -1441,6 +1485,10 @@
         },
         {
           name: 'backgroundColor',
+          hidden: false
+        },
+        {
+          name: 'pageBreak',
           hidden: false
         },
         {
@@ -1523,6 +1571,10 @@
         {
           name: '高级', options: [
             {
+              name: 'pageBreak',
+              hidden: false
+            },
+            {
               name: 'axis',
               hidden: false
             },
@@ -1552,6 +1604,10 @@
         },
         {
           name: 'backgroundColor',
+          hidden: false
+        },
+        {
+          name: 'pageBreak',
           hidden: false
         },
         {
@@ -1622,6 +1678,10 @@
         {
           name: '高级', options: [
             {
+              name: 'pageBreak',
+              hidden: false
+            },
+            {
               name: 'axis',
               hidden: false
             },
@@ -1639,6 +1699,10 @@
         },
         {
           name: 'widthHeight',
+          hidden: false
+        },
+        {
+          name: 'pageBreak',
           hidden: false
         },
         {

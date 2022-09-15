@@ -3430,6 +3430,26 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
+    pageBreak = function () {
+      function t() {
+        this.name = "pageBreak";
+      }
+      return t.prototype.css = function (t, e) {
+        if (t && t.length) {
+          if (e && 'none' == e) return t.addClass('alwaysHide');
+          t.removeClass('alwaysHide');
+        }
+        return null;
+      }, t.prototype.createTarget = function () {
+        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        强制分页\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n            <option value="true" >是</option>\n        </select>\n        </div>\n    </div>'), this.target;
+      }, t.prototype.getValue = function () {
+        if ("true" == this.target.find("select").val()) return !0;
+      }, t.prototype.setValue = function (t) {
+        this.target.find("select").val((null == t ? "" : t).toString());
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
     M = function () {
       function t() {
         this.name = "panelPaperRule";
@@ -4550,7 +4570,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new I(), new R(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(), new tableQRCodeLevel(),new tablept(), new tableSummary()], t;
+    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(), new tableQRCodeLevel(),new tablept(), new tableSummary()], t;
   }();
 }, function (t, e, n) {
   "use strict";
