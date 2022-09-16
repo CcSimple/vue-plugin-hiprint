@@ -8037,55 +8037,6 @@ var hiprint = function (t) {
           var t = this.getData();
           this.css(this.designTarget, t);
         }
-      // }, e.prototype.getHtml = function (t, e, n) {
-      //   var i = 0;
-      //   var o = [],
-      //     r = this.getBeginPrintTopInPaperByReferenceElement(t),
-      //     a = t.getPaperFooter(i);
-      //   this.isHeaderOrFooter() || this.isFixed() || ("none" != t.panelPageRule && r > a && (o.push(new P.a({
-      //     target: $('<div>1111</div>'),
-      //     printLine: void 0
-      //   })), r = r - a + t.paperHeader, i++ , a = t.getPaperFooter(i)), r <= a && r + this.options.getHeight() > a && "none" != t.panelPageRule && (o.push(new P.a({
-      //     target: $('<div>222</div>'),
-      //     printLine: void 0
-      //   })), r = t.paperHeader, i++ , a = t.getPaperFooter(i)));
-      //   var p = this.getData(e),
-      //     s = this.createTarget(this.getTitle(), p);
-      //   this.updateTargetSize(s), this.css(s, p), s.css("position", "absolute"), s.css("left", this.options.displayLeft()), s.css("top", r + "pt"),
-      //   o.push(new P.a({
-      //     target: s,
-      //     printLine: r + this.options.getHeight(),
-      //     referenceElement: new E.a({
-      //       top: this.options.getTop(),
-      //       left: this.options.getLeft(),
-      //       height: this.options.getHeight(),
-      //       width: this.options.getWidth(),
-      //       beginPrintPaperIndex: t.index,
-      //       bottomInLastPaper: r + this.options.getHeight(),
-      //       printTopInPaper: r
-      //     })
-      //   }));
-      //   if (e && this.options.pageBreak) {
-      //     o[0].target.css("top", t.paperHeader + "pt");
-      //     o[0].referenceElement.top = this.options.getTop() - this.options.getHeight() - t.paperHeader;
-      //     o[0].printLine = t.paperHeader;
-      //     o[0].referenceElement.bottomInLastPaper = 0;
-      //     o[0].referenceElement.printTopInPaper = t.paperHeader;
-      //     o.unshift(new P.a({
-      //       target: s,
-      //       printLine: t.height,
-      //       referenceElement: new E.a({
-      //         top: 0,
-      //         left: 0,
-      //         height: 0,
-      //         width: 0,
-      //         beginPrintPaperIndex: t.index,
-      //         bottomInLastPaper: t.height,
-      //         printTopInPaper: t.paperHeader
-      //       })
-      //     }))
-      //   }
-      //   return o;
       }, e.prototype.getConfigOptions = function () {
         return p.a.instance.hline;
       }, e.prototype.createTarget = function (t, e) {
