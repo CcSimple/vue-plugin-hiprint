@@ -5010,11 +5010,11 @@ var hiprint = function (t) {
               if (s <= p) if (0 == a.find("tr").length) c = {
                 height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
                 isEnd: !0
-              }, t && this.options.autoCompletion && (this.autoCompletion(p, d), s = n.outerHeight()); else {
+              }, t && this.options.autoCompletion && (this.autoCompletion(p, d), s = d.outerHeight()); else {
                 var f = a.find("tr:lt(1)");
                 d.find("tbody").append(f);
                 var g = f.data("rowData");
-                l.push(g), h.push(g), (s = n.outerHeight(), s += tfh) > p && (a.prepend(f), l.pop(), h.pop(), s = n.outerHeight(), c = {
+                l.push(g), h.push(g), (s = d.outerHeight(), s += tfh) > p && (a.prepend(f), l.pop(), h.pop(), s = d.outerHeight(), c = {
                   height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
                   isEnd: !1
                 });
