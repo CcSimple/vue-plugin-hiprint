@@ -38,24 +38,27 @@ function _typeof(obj) {
 window.$ = window.jQuery = require('jquery')
 window.autoConnect = true;
 // 调用浏览器打印js
-import './plugins/jquery.hiwprint.js'
+import "./plugins/jquery.hiwprint.js";
 // js颜色选择
-import '@claviska/jquery-minicolors/jquery.minicolors.min'
+import "@claviska/jquery-minicolors/jquery.minicolors.min";
 // 条形码
-import JsBarcode from 'jsbarcode'
+import JsBarcode from "jsbarcode";
 // 二维码
-import './plugins/qrcode.js'
+import "./plugins/qrcode.js";
 // 直接打印需要
-import { io } from "socket.io-client";
-window.io = io;
+import {io} from "socket.io-client";
 //引入标尺
-import lImg from './css/image/l_img.svg'
-import vImg from './css/image/v_img.svg'
+import lImg from "./css/image/l_img.svg";
+import vImg from "./css/image/v_img.svg";
 // pdf
-import { jsPDF } from 'jspdf'
-import html2canvas from 'html2canvas'
+import {jsPDF} from "jspdf";
+import html2canvas from "html2canvas";
 // 解析svg 到 canvas, 二维码条形码需要
-import { Canvg, Document } from 'canvg'
+import {Canvg, Document} from "canvg";
+// 默认自定义拖拽列表
+import defaultTypeProvider from "./etypes/default-etyps-provider";
+
+window.io = io;
 
 var hiprint = function (t) {
   var e = {};
@@ -666,10 +669,10 @@ var hiprint = function (t) {
             name: "rowsColumnsMerge",
             hidden: !1
           },
-          {
-            name: "gridColumnsFooterFormatter",
-            hidden: !1
-          }],
+            {
+              name: "gridColumnsFooterFormatter",
+              hidden: !1
+            }],
           default: {
             fontFamily: void 0,
             fontSize: void 0,
@@ -1107,7 +1110,7 @@ var hiprint = function (t) {
     }, t.prototype.initSizeByHtml = function (t, e) {
       this.width || this.setWidth(t), this.height || this.setHeight(e);
     }, t.prototype.getRectInfo = function () {
-      var d = { w: 0, h:0, diffW: 0, diffH: 0 };
+      var d = {w: 0, h: 0, diffW: 0, diffH: 0};
       if (this.transform) {
         var rad = this.transform * Math.PI / 180,
           width = this.width, height = this.height,
@@ -1115,7 +1118,7 @@ var hiprint = function (t) {
           w = Math.abs(width * cos) + Math.abs(height * sin),
           h = Math.abs(width * sin) + Math.abs(height * cos),
           diffW = (width - w) / 2, diffH = (height - h) / 2;
-          d.w = w, d.h = h, d.diffW = diffW, d.diffH = diffH;
+        d.w = w, d.h = h, d.diffW = diffW, d.diffH = diffH;
       }
       return d;
     }, t.prototype.getLeft = function () {
@@ -1295,11 +1298,11 @@ var hiprint = function (t) {
           onBeforeDrag: function onBeforeDrag(t) {
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !0, n.designTarget.focus(), n.createLineOfPosition(e);
           },
-          getScale: function getScale () {
+          getScale: function getScale() {
             return n.designPaper.scale || 1;
           },
           onStopDrag: function onStopDrag(t) {
-			      // 普通元素拖动结束事件history
+            // 普通元素拖动结束事件history
             if (_HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.changed) _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "移动");
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !1,
               _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.changed = !1;
@@ -1314,7 +1317,7 @@ var hiprint = function (t) {
       }, BasePrintElement.prototype.getPrintElementEntity = function (t) {
         return t ? new _entity_PrintElementEntity__WEBPACK_IMPORTED_MODULE_0__.a(void 0, this.options.getPrintElementOptionEntity(), this.printElementType.getPrintElementTypeEntity()) : new _entity_PrintElementEntity__WEBPACK_IMPORTED_MODULE_0__.a(this.printElementType.tid, this.options.getPrintElementOptionEntity());
       }, BasePrintElement.prototype.submitOption = function () {
-		    // 右侧选项修改模版数据触发history
+        // 右侧选项修改模版数据触发history
         var t = this, o = this.getConfigOptions();
         if (o && o.tabs && o.tabs.length) {
           this.getPrintElementOptionTabs().forEach(function (tab) {
@@ -1324,8 +1327,12 @@ var hiprint = function (t) {
               n && "object" == _typeof(n) ? Object.keys(n).forEach(function (e) {
                 t.options[e] = n[e];
               }) : t.options[e.name] = n;
-              if (r) { t.setResizePanel() }
-              if (a) { t.designTarget.hidraggable('update',{axis: n}) }
+              if (r) {
+                t.setResizePanel()
+              }
+              if (a) {
+                t.designTarget.hidraggable('update', {axis: n})
+              }
             })
           });
         } else {
@@ -1335,8 +1342,12 @@ var hiprint = function (t) {
             n && "object" == _typeof(n) ? Object.keys(n).forEach(function (e) {
               t.options[e] = n[e];
             }) : t.options[e.name] = n;
-            if (r) { t.setResizePanel() }
-            if (a) { t.designTarget.hidraggable('update',{axis: n}) }
+            if (r) {
+              t.setResizePanel()
+            }
+            if (a) {
+              t.designTarget.hidraggable('update', {axis: n})
+            }
           });
         }
         this.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "元素修改");
@@ -1346,12 +1357,12 @@ var hiprint = function (t) {
           var optionKeys = [];
           if (e && e.tabs && e.tabs.length) {
             e.tabs.forEach(function (n) {
-              n.options.forEach(function(e) {
+              n.options.forEach(function (e) {
                 optionKeys.push(e.name);
               })
             });
           } else {
-            optionKeys = e.supportOptions.map(function(e){return e.name});
+            optionKeys = e.supportOptions.map(function (e) {return e.name});
           }
           if (optionKeys && optionKeys.includes(o)) {
             this.options[o] = v;
@@ -1364,14 +1375,14 @@ var hiprint = function (t) {
           console.log('updateOption error', e)
         }
       }, BasePrintElement.prototype.getReizeableShowPoints = function () {
-        return ['barcode','qrcode'].includes(this.options.textType) ? ["se", "r"] : ["s", "e", "r"];
+        return ['barcode', 'qrcode'].includes(this.options.textType) ? ["se", "r"] : ["s", "e", "r"];
       }, BasePrintElement.prototype.setResizePanel = function () {
         var n = this, e = this.designPaper;
         this.designTarget.hireizeable({
           showPoints: n.getReizeableShowPoints(),
           // 是否显示宽高box
           showSizeBox: _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.showSizeBox,
-          getScale: function getScale () {
+          getScale: function getScale() {
             return n.designPaper.scale || 1
           },
           onBeforeResize: function onBeforeResize() {
@@ -1458,7 +1469,7 @@ var hiprint = function (t) {
         })), r = t.paperHeader, i++ , a = t.getPaperFooter(i)));
         var p = this.getData(e),
           s = this.createTarget(this.getTitle(), p);
-        if ("none" == t.panelPageRule && (r + this.options.getHeight()) > a) this.updatePanelHeight(r + this.options.getHeight(),t);
+        if ("none" == t.panelPageRule && (r + this.options.getHeight()) > a) this.updatePanelHeight(r + this.options.getHeight(), t);
         this.updateTargetSize(s), this.css(s, p), s.css("position", "absolute"), s.css("left", this.options.displayLeft()), s.css("top", r + "pt"), o.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_3__.a({
           target: s,
           printLine: r + this.options.getHeight(),
@@ -1493,7 +1504,7 @@ var hiprint = function (t) {
           }))
         }
         return o;
-      }, BasePrintElement.prototype.updatePanelHeight = function (h,p) {
+      }, BasePrintElement.prototype.updatePanelHeight = function (h, p) {
         if ("none" == this.panel.panelPageRule) {
           var nmh = _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.pt.toMm(h);
           // 更改模板高度 paperType, width(mm), height(mm), rotate
@@ -1506,7 +1517,7 @@ var hiprint = function (t) {
       }, BasePrintElement.prototype.getBeginPrintTopInPaperByReferenceElement = function (t) {
         var e = this.options.getTop();
         var h = this.options.getHeight();
-        return this.isHeaderOrFooter() || this.isFixed() ? e : t.referenceElement.isPositionLeftOrRight(e,h) ? t.referenceElement.printTopInPaper + (e - t.referenceElement.top) : t.referenceElement.bottomInLastPaper + (e - (t.referenceElement.top + t.referenceElement.height));
+        return this.isHeaderOrFooter() || this.isFixed() ? e : t.referenceElement.isPositionLeftOrRight(e, h) ? t.referenceElement.printTopInPaper + (e - t.referenceElement.top) : t.referenceElement.bottomInLastPaper + (e - (t.referenceElement.top + t.referenceElement.height));
       }, BasePrintElement.prototype.css = function (t, e) {
         var n = this,
           i = [],
@@ -1544,19 +1555,19 @@ var hiprint = function (t) {
         }
       }, BasePrintElement.prototype.getData = function (t) {
         var f = this.getField();
-        return t ? f ? f.split('.').reduce((a,c)=>a ? a[c] : t ? t[c] : "", !1) || "" : "" : this.printElementType.getData();
+        return t ? f ? f.split('.').reduce((a, c) => a ? a[c] : t ? t[c] : "", !1) || "" : "" : this.printElementType.getData();
       }, BasePrintElement.prototype.copyFromType = function () {
-        var options = this.options,type = this.printElementType;
+        var options = this.options, type = this.printElementType;
         var o = this.getConfigOptions();
         var names = [];
         if (o && o.tabs && o.tabs.length) {
           o.tabs.forEach(function (n) {
-            n.options.forEach(function(e) {
+            n.options.forEach(function (e) {
               names.push(e.name);
             })
           });
         } else {
-          names = o.supportOptions.map(function(e){return e.name});
+          names = o.supportOptions.map(function (e) {return e.name});
         }
         Object.keys(type).forEach(function (e) {
           if (type[e] && ('columns' != e) && names.indexOf(e) > -1) {
@@ -1571,10 +1582,10 @@ var hiprint = function (t) {
         if (e) {
           var t = e.tabs;
           t && t.forEach(function (n, i) {
-            tabs.push({name:n.name,list:[]})
+            tabs.push({name: n.name, list: []})
             n.options.filter(function (t) {
               return !t.hidden;
-            }).forEach(function(e) {
+            }).forEach(function (e) {
               var n = _print_element_option_PrintElementOptionItemManager__WEBPACK_IMPORTED_MODULE_2__.a.getItem(e.name);
               tabs[i].list.push(n);
             })
@@ -1605,7 +1616,7 @@ var hiprint = function (t) {
           });
         }
 
-        return this._printElementOptionItems = this.filterOptionItems(t.concat()), this._printElementOptionTabs = void 0,  this._printElementOptionItems;
+        return this._printElementOptionItems = this.filterOptionItems(t.concat()), this._printElementOptionTabs = void 0, this._printElementOptionItems;
       }, BasePrintElement.prototype.getPrintElementOptionItemsByName = function (t) {
         var e = [],
           n = this.getConfigOptionsByName(t);
@@ -1666,25 +1677,25 @@ var hiprint = function (t) {
           if (topPos.length) {
             topPos.toggleClass("topPosition-lineMode", config.positionLineMode);
             topPos.text(this.options.posTop() + (config.positionUnit ? 'pt' : ''));
-            topPos.css("top", (this.options.posTop() - topPos.height())  + "pt");
+            topPos.css("top", (this.options.posTop() - topPos.height()) + "pt");
             if (config.positionLineMode) {
-              topPos.css("left", (this.options.posLeft() - topPos.width()/2) + "pt");
+              topPos.css("left", (this.options.posLeft() - topPos.width() / 2) + "pt");
             } else {
               topPos.css("left", this.options.posLeft() + 2 + "pt");
             }
-            this.designTarget.find('.size-box')&&this.designTarget.find('.size-box').toggleClass('hide', true);
+            this.designTarget.find('.size-box') && this.designTarget.find('.size-box').toggleClass('hide', true);
           } else {
             var topPos = $('<div class="topPosition id' + this.id + '" style="position: absolute;"></div>');
             topPos.toggleClass("topPosition-lineMode", config.positionLineMode);
             topPos.text(this.options.posTop() + (config.positionUnit ? 'pt' : ''));
             if (config.positionLineMode) {
-              topPos.css("left", (this.options.posLeft() - topPos.width()/2) + "pt");
+              topPos.css("left", (this.options.posLeft() - topPos.width() / 2) + "pt");
             } else {
               topPos.css("left", this.options.posLeft() + 2 + "pt");
             }
-            this.designTarget.find('.size-box')&&this.designTarget.find('.size-box').toggleClass('hide', true);
+            this.designTarget.find('.size-box') && this.designTarget.find('.size-box').toggleClass('hide', true);
             this.designTarget.parents(".hiprint-printPaper-content").append(topPos);
-            topPos.css("top", (this.options.posTop() - topPos.height())  + "pt");
+            topPos.css("top", (this.options.posTop() - topPos.height()) + "pt");
           }
         }
         if (n.length) n.css("left", this.options.displayLeft(true)); else {
@@ -1697,7 +1708,7 @@ var hiprint = function (t) {
             leftPos.toggleClass("leftPosition-lineMode", config.positionLineMode);
             leftPos.css("left", (this.options.posLeft() - leftPos.width()) + "pt");
             if (config.positionLineMode) {
-              leftPos.css("top", this.options.posTop() - leftPos.height()/3  + "pt");
+              leftPos.css("top", this.options.posTop() - leftPos.height() / 3 + "pt");
             } else {
               leftPos.css("top", this.options.posTop() + 2 + "pt");
             }
@@ -1706,7 +1717,7 @@ var hiprint = function (t) {
             leftPos.text(this.options.posLeft() + (config.positionUnit ? 'pt' : ''));
             leftPos.toggleClass("leftPosition-lineMode", config.positionLineMode);
             if (config.positionLineMode) {
-              leftPos.css("top", this.options.posTop() - leftPos.height()/3  + "pt");
+              leftPos.css("top", this.options.posTop() - leftPos.height() / 3 + "pt");
             } else {
               leftPos.css("top", this.options.posTop() + 2 + "pt");
             }
@@ -1723,7 +1734,7 @@ var hiprint = function (t) {
           p.css("top", this.options.getTop() + this.options.getHeight() + "pt"), p.css("width", t.displayWidth()), this.designTarget.parents(".hiprint-printPaper-content").append(p);
         }
       }, BasePrintElement.prototype.removeLineOfPosition = function () {
-        $(".toplineOfPosition.id" + this.id).remove(), $(".topPosition.id" + this.id).remove(), this.designTarget.find('.size-box')&&this.designTarget.find('.size-box').toggleClass('hide', false), $(".leftlineOfPosition.id" + this.id).remove(), $(".leftPosition.id" + this.id).remove(), $(".rightlineOfPosition.id" + this.id).remove(), $(".bottomlineOfPosition.id" + this.id).remove();
+        $(".toplineOfPosition.id" + this.id).remove(), $(".topPosition.id" + this.id).remove(), this.designTarget.find('.size-box') && this.designTarget.find('.size-box').toggleClass('hide', false), $(".leftlineOfPosition.id" + this.id).remove(), $(".leftPosition.id" + this.id).remove(), $(".rightlineOfPosition.id" + this.id).remove(), $(".bottomlineOfPosition.id" + this.id).remove();
       }, BasePrintElement.prototype.getFontList = function () {
         var t = this.options.fontList;
         return t || (t = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(this.templateId).getFontList());
@@ -1757,7 +1768,7 @@ var hiprint = function (t) {
           });
           copyArea.text(json);
           // 元素需可见才能选中复制到剪切板
-          copyArea.css('visibility','visible');
+          copyArea.css('visibility', 'visible');
           copyArea.focus();
           if (copyArea.setSelectionRange)
             copyArea.setSelectionRange(0, copyArea.value.length);
@@ -1765,13 +1776,13 @@ var hiprint = function (t) {
             copyArea.select();
           var flag = false;
           flag = document.execCommand("copy");
-          copyArea.css('visibility','hidden');
+          copyArea.css('visibility', 'hidden');
           // 获取元素焦点，不然无法粘贴（keydown问题）
           n.designTarget.focus();
           console.log('copyJson success');
-        } catch(e){
+        } catch (e) {
           flag = false;
-          console.log('copyJson error',e);
+          console.log('copyJson error', e);
         }
         return flag;
       }, BasePrintElement.prototype.clone = function (t) {
@@ -1820,71 +1831,73 @@ var hiprint = function (t) {
           var movingDistance = _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.movingDistance;
           switch (r.keyCode) {
             // BackSpace/Delete 删除元素
-            case 8:
-            case 46:
-              var templete = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(n.templateId)
-              templete.deletePrintElement(n)
-              _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "删除");
-              _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("clearSettingContainer")
-              break
-            case 37:
-              i = n.options.getLeft();
-              if (isMultiple) {
-                els.forEach(function (t) {
-                  t.updatePositionByMultipleSelect(0 - movingDistance, 0);
-                })
-              } else {
-                n.updateSizeAndPositionOptions(i - movingDistance), t.css("left", n.options.displayLeft());
-              }
-              r.preventDefault();
-              break;
+          case 8:
+          case 46:
+            var templete = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(n.templateId)
+            templete.deletePrintElement(n)
+            _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "删除");
+            _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("clearSettingContainer")
+            break
+          case 37:
+            i = n.options.getLeft();
+            if (isMultiple) {
+              els.forEach(function (t) {
+                t.updatePositionByMultipleSelect(0 - movingDistance, 0);
+              })
+            } else {
+              n.updateSizeAndPositionOptions(i - movingDistance), t.css("left", n.options.displayLeft());
+            }
+            r.preventDefault();
+            break;
 
-            case 38:
-              o = n.options.getTop();
-              if (isMultiple) {
-                els.forEach(function (t) {
-                  t.updatePositionByMultipleSelect(0, 0 - movingDistance);
-                })
-              } else {
-                n.updateSizeAndPositionOptions(void 0, o - movingDistance), t.css("top", n.options.displayTop());
-              }
-              r.preventDefault();
-              break;
+          case 38:
+            o = n.options.getTop();
+            if (isMultiple) {
+              els.forEach(function (t) {
+                t.updatePositionByMultipleSelect(0, 0 - movingDistance);
+              })
+            } else {
+              n.updateSizeAndPositionOptions(void 0, o - movingDistance), t.css("top", n.options.displayTop());
+            }
+            r.preventDefault();
+            break;
 
-            case 39:
-              i = n.options.getLeft();
-              if (isMultiple) {
-                els.forEach(function (t) {
-                  t.updatePositionByMultipleSelect(movingDistance, 0);
-                })
-              } else {
-                n.updateSizeAndPositionOptions(i + movingDistance), t.css("left", n.options.displayLeft());
-              }
-              r.preventDefault();
-              break;
+          case 39:
+            i = n.options.getLeft();
+            if (isMultiple) {
+              els.forEach(function (t) {
+                t.updatePositionByMultipleSelect(movingDistance, 0);
+              })
+            } else {
+              n.updateSizeAndPositionOptions(i + movingDistance), t.css("left", n.options.displayLeft());
+            }
+            r.preventDefault();
+            break;
 
-            case 40:
-              o = n.options.getTop();
-              if (isMultiple) {
-                els.forEach(function (t) {
-                  t.updatePositionByMultipleSelect(0, movingDistance);
-                })
-              } else {
-                n.updateSizeAndPositionOptions(void 0, o + movingDistance), t.css("top", n.options.displayTop());
-              }
-              r.preventDefault();
+          case 40:
+            o = n.options.getTop();
+            if (isMultiple) {
+              els.forEach(function (t) {
+                t.updatePositionByMultipleSelect(0, movingDistance);
+              })
+            } else {
+              n.updateSizeAndPositionOptions(void 0, o + movingDistance), t.css("top", n.options.displayTop());
+            }
+            r.preventDefault();
           }
-          if ([37,38,39,40].includes(r.keyCode)) {
+          if ([37, 38, 39, 40].includes(r.keyCode)) {
             _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "键盘移动");
           }
         });
       }, BasePrintElement.prototype.inRect = function (t) {
         var ptr = this.designPaper.scale || 1;
         var x1 = this.designTarget[0].offsetLeft,
-          y1 = this.designTarget[0].offsetTop, h = this.designTarget[0].offsetHeight, w = this.designTarget[0].offsetWidth,
-        x2 = x1 + w, y2 = y1 + h,
-        ex1 = $(t.target[0]).position().left/ptr, ey1 = $(t.target[0]).position().top/ptr, eh = t.target[0].offsetHeight, ew = t.target[0].offsetWidth,
-        ex2 = ex1 + ew, ey2 = ey1 + eh;
+          y1 = this.designTarget[0].offsetTop, h = this.designTarget[0].offsetHeight,
+          w = this.designTarget[0].offsetWidth,
+          x2 = x1 + w, y2 = y1 + h,
+          ex1 = $(t.target[0]).position().left / ptr, ey1 = $(t.target[0]).position().top / ptr,
+          eh = t.target[0].offsetHeight, ew = t.target[0].offsetWidth,
+          ex2 = ex1 + ew, ey2 = ey1 + eh;
         return ex1 < x2 && ex2 > x1 && y1 < ey2 && y2 > ey1;
       }, BasePrintElement.prototype.multipleSelect = function (t) {
         t ? this.designTarget.addClass("multipleSelect") : this.designTarget.removeClass("multipleSelect");
@@ -1927,7 +1940,7 @@ var hiprint = function (t) {
       function t() {
       }
 
-      return t.prototype.init = function (e,i) {
+      return t.prototype.init = function (e, i) {
         var n = '<select class="auto-submit" style="width:100%">\n                <option value="" disabled>请选择字段</option>';
         e.forEach(function (t, e) {
           if (t.field == i.field) {
@@ -1936,7 +1949,7 @@ var hiprint = function (t) {
             n += ' <option value="' + (t.field || "") + '" >' + (t.text || "") + "</option>";
           }
         }), n += " </select>";
-          this.target = $(n), i.getTarget().append(this.target), this.target.focus();
+        this.target = $(n), i.getTarget().append(this.target), this.target.focus();
       }, t.prototype.getValue = function () {
         var val = this.target.val()
         var text = this.target.find('option[value="' + val + '"]').text()
@@ -2023,7 +2036,7 @@ var hiprint = function (t) {
     }(),
     u = function () {
       return function (t) {
-        this.title = t.title, this.field = t.field, this.width = t.width, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.colspan = t.colspan, this.rowspan = t.rowspan, this.checked = t.checked, this.columnId = t.columnId, this.tableSummary = t.tableSummary, this.formatter2 = t.formatter2, this.styler2 = t.styler2,this.tableColumnHeight = t.tableColumnHeight,this.tableTextType = t.tableTextType,this.tableBarcodeMode = t.tableBarcodeMode,this.tableQRCodeLevel = t.tableQRCodeLevel;
+        this.title = t.title, this.field = t.field, this.width = t.width, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.colspan = t.colspan, this.rowspan = t.rowspan, this.checked = t.checked, this.columnId = t.columnId, this.tableSummary = t.tableSummary, this.formatter2 = t.formatter2, this.styler2 = t.styler2, this.tableColumnHeight = t.tableColumnHeight, this.tableTextType = t.tableTextType, this.tableBarcodeMode = t.tableBarcodeMode, this.tableQRCodeLevel = t.tableQRCodeLevel;
       };
     }(),
     d = function () {
@@ -2125,7 +2138,7 @@ var hiprint = function (t) {
     f = function (t) {
       function e(e) {
         var n = this;
-        return e = e || {}, (n = t.call(this) || this).width = e.width ? parseFloat(e.width.toString()) : 100, n.title = e.title, n.descTitle = e.descTitle, n.field = e.field, n.fixed = e.fixed, n.rowspan = e.rowspan ? parseInt(e.rowspan) : 1, n.colspan = e.colspan ? parseInt(e.colspan) : 1, n.align = e.align, n.halign = e.halign, n.vAlign = e.vAlign, n.formatter = e.formatter, n.styler = e.styler, n.formatter2 = e.formatter2, n.styler2 = e.styler2, n.checkbox = e.checkbox, n.checked = 0 != e.checked, n.columnId = e.columnId || e.field,n.tableColumnHeight = e.tableColumnHeight||30,n.tableTextType = e.tableTextType||'text',n.tableBarcodeMode = e.tableBarcodeMode||'CODE128A',n.tableQRCodeLevel = e.tableQRCodeLevel,n.tableSummary = e.tableSummary, n;
+        return e = e || {}, (n = t.call(this) || this).width = e.width ? parseFloat(e.width.toString()) : 100, n.title = e.title, n.descTitle = e.descTitle, n.field = e.field, n.fixed = e.fixed, n.rowspan = e.rowspan ? parseInt(e.rowspan) : 1, n.colspan = e.colspan ? parseInt(e.colspan) : 1, n.align = e.align, n.halign = e.halign, n.vAlign = e.vAlign, n.formatter = e.formatter, n.styler = e.styler, n.formatter2 = e.formatter2, n.styler2 = e.styler2, n.checkbox = e.checkbox, n.checked = 0 != e.checked, n.columnId = e.columnId || e.field, n.tableColumnHeight = e.tableColumnHeight || 30, n.tableTextType = e.tableTextType || 'text', n.tableBarcodeMode = e.tableBarcodeMode || 'CODE128A', n.tableQRCodeLevel = e.tableQRCodeLevel, n.tableSummary = e.tableSummary, n;
       }
 
       return h(e, t), e.prototype.css = function (t) {
@@ -2172,7 +2185,7 @@ var hiprint = function (t) {
         return TableExcelHelper.syncTargetWidthToOption(t), i;
       }, TableExcelHelper.createTableFooter = function (t, e, n, i, o, r) {
         // n=>options e=>表格所有数据 o=>所有打印数据 r=>表格每页数据
-        var a = $("<tfoot></tfoot>"),p = this.getFooterFormatter(n, i);
+        var a = $("<tfoot></tfoot>"), p = this.getFooterFormatter(n, i);
         let tSumData = n.tableFooterRepeat == "last" ? e : r;
         if (n.tableFooterRepeat != 'no' && n.columns[0].columns.some(function (column) {return column.tableSummary})) {
           var tableFooter = $("<tr></tr>");
@@ -2185,37 +2198,37 @@ var hiprint = function (t) {
               return new RegExp("^-?(0|[1-9]\\d*)(\\.\\d+)?").test(row[column.field]) ? Number(row[column.field]) : 0;
             });
             switch (column.tableSummary) {
-              case "count":
-                tableFooter.append(`<td style="text-align: center">计数:${tSumData.length || 0}</td>`);
-                break;
-              case "sum":
-                var sum = parseFloat(Number(fieldData.reduce(function (prev, cur) {
-                  return prev + cur;
-                }, 0))).toFixed(2);
-                tableFooter.append(`<td style="text-align: center">合计:${sum}</td>`)
-                break;
-              case "avg":
-                var sum = parseFloat(Number(fieldData.reduce(function (prev, cur) {
-                  return prev + cur;
-                }, 0))).toFixed(2);
-                var avg = parseFloat(Number(sum / (fieldData.length || 1))).toFixed(2);
-                tableFooter.append(`<td style="text-align: center">平均值:${avg}</td>`)
-                break;
-              case "min":
-                var min = Math.min(...fieldData);
-                tableFooter.append(`<td style="text-align: center">最小值:${min || 0}</td>`)
-                break;
-              case "max":
-                var max = Math.max(...fieldData);
-                tableFooter.append(`<td style="text-align: center">最大值:${max || 0}</td>`);
-                break;
-              default:
-                tableFooter.append("<td></td>")
-                break;
+            case "count":
+              tableFooter.append(`<td style="text-align: center">计数:${tSumData.length || 0}</td>`);
+              break;
+            case "sum":
+              var sum = parseFloat(Number(fieldData.reduce(function (prev, cur) {
+                return prev + cur;
+              }, 0))).toFixed(2);
+              tableFooter.append(`<td style="text-align: center">合计:${sum}</td>`)
+              break;
+            case "avg":
+              var sum = parseFloat(Number(fieldData.reduce(function (prev, cur) {
+                return prev + cur;
+              }, 0))).toFixed(2);
+              var avg = parseFloat(Number(sum / (fieldData.length || 1))).toFixed(2);
+              tableFooter.append(`<td style="text-align: center">平均值:${avg}</td>`)
+              break;
+            case "min":
+              var min = Math.min(...fieldData);
+              tableFooter.append(`<td style="text-align: center">最小值:${min || 0}</td>`)
+              break;
+            case "max":
+              var max = Math.max(...fieldData);
+              tableFooter.append(`<td style="text-align: center">最大值:${max || 0}</td>`);
+              break;
+            default:
+              tableFooter.append("<td></td>")
+              break;
             }
           })
           a.append(tableFooter);
-		    }
+        }
         if (p) {
           a.append(p(n, e, o, r));
         }
@@ -2247,19 +2260,19 @@ var hiprint = function (t) {
         });
         return r;
       }, TableExcelHelper.createRowTarget = function (t, e, n, i, rowIndex) {
-          var o = $("<tr></tr>");
-          var columns = t.rowColumns.filter(function (t) {
-            return t.checked;
-          });
-            o.data("rowData", e), t.rowColumns.filter(function (t) {
-              return t.checked;
-            }).forEach(function (t, i) {
-              if (!t.checked) return;
-          var rowsColumnsMerge =''
+        var o = $("<tr></tr>");
+        var columns = t.rowColumns.filter(function (t) {
+          return t.checked;
+        });
+        o.data("rowData", e), t.rowColumns.filter(function (t) {
+          return t.checked;
+        }).forEach(function (t, i) {
+          if (!t.checked) return;
+          var rowsColumnsMerge = ''
           if (n.rowsColumnsMerge) {
             eval('rowsColumnsMerge=' + n.rowsColumnsMerge)
-            var rowsColumnsArr = rowsColumnsMerge(e,t,i) || [1,1]
-            var r = $(`<td style = 'display:${!(rowsColumnsArr[0] && rowsColumnsArr[1])?"none":""}' rowspan = '${rowsColumnsArr[0]}' colspan = '${rowsColumnsArr[1]}'></td>`);
+            var rowsColumnsArr = rowsColumnsMerge(e, t, i) || [1, 1]
+            var r = $(`<td style = 'display:${!(rowsColumnsArr[0] && rowsColumnsArr[1]) ? "none" : ""}' rowspan = '${rowsColumnsArr[0]}' colspan = '${rowsColumnsArr[1]}'></td>`);
           } else {
             var r = $("<td></td>");
           }
@@ -2270,14 +2283,14 @@ var hiprint = function (t) {
             if (n.rowsColumnsMerge) {
               if (rowsColumnsArr[1] > 1) {
                 var width = 0;
-                columns.forEach((item,index) => {
-                  if(index >= i && (index < i + rowsColumnsArr[1])){
+                columns.forEach((item, index) => {
+                  if (index >= i && (index < i + rowsColumnsArr[1])) {
                     width += item.width
                   }
                 })
               }
             }
-			      r.css("width", (width||t.width) + "pt");
+            r.css("width", (width || t.width) + "pt");
           } else {
             t.field && r.attr("field", t.field), t.align && r.css("text-align", t.align), t.vAlign && r.css("vertical-align", t.vAlign);
           }
@@ -2292,25 +2305,25 @@ var hiprint = function (t) {
               );
               try {
                 p ? (JsBarcode(r.find(".hibarcode_imgcode")[0], p, {
-                    format: t.tableBarcodeMode,
-                    width: 1,
-                    textMargin: -1,
-                    lineColor:"#000000",
-                    margin: 0,
-                    height: parseInt(10),
-                    displayValue: !1
-                  }), r.find(".hibarcode_imgcode").attr("height", t.tableColumnHeight+'pt'),r.find(".hibarcode_imgcode").css("margin",'5pt 10pt'), r.find(".hibarcode_imgcode").attr("width", "calc(100% - 20pt)")) : r.html("");
-                  // this.options.hideTitle || r.find(".hibarcode_displayValue").html(n)
+                  format: t.tableBarcodeMode,
+                  width: 1,
+                  textMargin: -1,
+                  lineColor: "#000000",
+                  margin: 0,
+                  height: parseInt(10),
+                  displayValue: !1
+                }), r.find(".hibarcode_imgcode").attr("height", t.tableColumnHeight + 'pt'), r.find(".hibarcode_imgcode").css("margin", '5pt 10pt'), r.find(".hibarcode_imgcode").attr("width", "calc(100% - 20pt)")) : r.html("");
+                // this.options.hideTitle || r.find(".hibarcode_displayValue").html(n)
               } catch (t) {
                 console.log(t), r.html("此格式不支持该文本");
               }
             }
-            if("image" ==t.tableTextType){
+            if ("image" == t.tableTextType) {
               r.html('')
-              if(p){
+              if (p) {
 
                 var imagebox = $('<div><img style = "max-width:100%;max-height:100%"/></div>')
-                imagebox.find('img').attr('src',p)
+                imagebox.find('img').attr('src', p)
                 console.log(imagebox.find('img').css('width'))
                 r.html(imagebox)
               }
@@ -2322,13 +2335,13 @@ var hiprint = function (t) {
                 var qrcodebox = $('<div></div>')
 
                 if (p) {
-                  var l = parseInt(t.width||t.targetWidth || 20),
+                  var l = parseInt(t.width || t.targetWidth || 20),
                     u = parseInt(t.tableColumnHeight || 20);
-                    qrcodebox.css('height',(l>u?u:l)+'pt')
+                  qrcodebox.css('height', (l > u ? u : l) + 'pt')
                   new QRCode(qrcodebox[0], {
-                    width: l>u?u:l,
-                    height: l>u?u:l,
-                    colorDark:"#000000",
+                    width: l > u ? u : l,
+                    height: l > u ? u : l,
+                    colorDark: "#000000",
                     useSVG: !0,
                     correctLevel: t.tableQRCodeLevel
                   }).makeCode(p);
@@ -2488,7 +2501,7 @@ var hiprint = function (t) {
       this.top = t.top, this.left = t.left, this.height = t.height, this.width = t.width, this.bottomInLastPaper = t.bottomInLastPaper, this.beginPrintPaperIndex = t.beginPrintPaperIndex, this.printTopInPaper = t.printTopInPaper, this.endPrintPaperIndex = t.endPrintPaperIndex;
     }
 
-    return t.prototype.isPositionLeftOrRight = function (t,h) {
+    return t.prototype.isPositionLeftOrRight = function (t, h) {
       return this.top <= t && this.top + h > t && this.beginPrintPaperIndex == this.endPrintPaperIndex;
     }, t;
   }();
@@ -2523,6 +2536,7 @@ var hiprint = function (t) {
       function t() {
         this.name = "fontFamily";
       }
+
       return t.prototype.createTarget = function (t) {
         var e = void 0;
         if (t && (e = t.getFontList()), e) {
@@ -2946,7 +2960,7 @@ var hiprint = function (t) {
       }
 
       return t.prototype.createTarget = function (t) {
-        var name = ['hline','vline','rect','oval'].includes(t.printElementType.type) ? '线宽' : '边框大小';
+        var name = ['hline', 'vline', 'rect', 'oval'].includes(t.printElementType.type) ? '线宽' : '边框大小';
         return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        ' + name + '\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n        <option value="0.75" >0.75pt</option>\n        <option value="1.5" >1.5pt</option>\n        <option value="2.25" >2.25pt</option>\n        <option value="3" >3pt</option>\n        <option value="3.75" >3.75pt</option>\n        <option value="4.5" >4.5pt</option>\n        <option value="5.25" >5.25pt</option>\n        <option value="6" >6pt</option>\n        <option value="6.75" >6.75pt</option>\n        </select>\n        </div>\n    </div>'), this.target;
       }, t.prototype.css = function (t, e) {
         if (t && t.length) {
@@ -3111,6 +3125,7 @@ var hiprint = function (t) {
       function t() {
         this.name = "coordinate";
       }
+
       return t.prototype.createTarget = function (t, o) {
         var n = this;
         n.target = $('<div class="hiprint-option-item hiprint-option-item-row">' +
@@ -3126,7 +3141,7 @@ var hiprint = function (t) {
       }, t.prototype.createSyncLock = function (t) {
         var n = this;
         n.lockTarget = n.syncLock ? $('<label style="margin: 0 4px;text-align:center;width: 8%" title="同步">🔗</label>') : $('<label style="margin: 0 4px;text-align:center;width: 8%" title="不同步">🔓</label>');
-        n.lockTarget.click(function() {
+        n.lockTarget.click(function () {
           if (n.syncLock) {
             n.lockTarget.text("🔓").attr("title", "不同步");
           } else {
@@ -3177,6 +3192,7 @@ var hiprint = function (t) {
       function t() {
         this.name = "widthHeight";
       }
+
       return t.prototype.createTarget = function (t, o) {
         var n = this;
         n.target = $('<div class="hiprint-option-item hiprint-option-item-row">' +
@@ -3192,7 +3208,7 @@ var hiprint = function (t) {
       }, t.prototype.createSyncLock = function (t) {
         var n = this;
         n.lockTarget = n.syncLock ? $('<label style="margin: 0 4px;text-align:center;width: 8%" title="同步">🔗</label>') : $('<label style="margin: 0 4px;text-align:center;width: 8%" title="不同步">🔓</label>');
-        n.lockTarget.click(function() {
+        n.lockTarget.click(function () {
           if (n.syncLock) {
             n.lockTarget.text("🔓").attr("title", "不同步");
           } else {
@@ -3243,12 +3259,13 @@ var hiprint = function (t) {
       function t() {
         this.name = "src";
       }
+
       return t.prototype.createTarget = function (t) {
         this.el = t;
         var e = void 0, i = this;
         this.target = $(' <div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        图片地址\n        </div>\n        <div class="hiprint-option-item-field" style="display: flex;align-items: baseline;">\n        <input type="text" placeholder="请输入图片地址" class="auto-submit" style="width:70%">\n    <button class="hiprint-option-item-settingBtn" style="padding:0 10px;margin:0 0 0 5px" type="button">选择</button>        </div>\n    </div>');
         if (t && (e = t.getOnImageChooseClick()), e) {
-          this.target.find('button').click(function() {
+          this.target.find('button').click(function () {
             e && e(i);
           })
         }
@@ -3267,7 +3284,7 @@ var hiprint = function (t) {
           if (img.complete) {
             that.updateEl(img.width, img.height, opt, cb)
           } else {
-            img.onload = function() {
+            img.onload = function () {
               that.updateEl(img.width, img.height, opt, cb)
             }
           }
@@ -3314,6 +3331,7 @@ var hiprint = function (t) {
       function t() {
         this.name = "fit";
       }
+
       return t.prototype.css = function (t, e) {
         if (t && t.length) {
           if (e) return t.find("img").css("object-fit", e), "object-fit:" + e;
@@ -3344,7 +3362,7 @@ var hiprint = function (t) {
 
         return null;
       }, t.prototype.createTarget = function (t) {
-        var name = ['hline','vline','rect','oval'].includes(t.printElementType.type) ? '颜色' : '边框颜色';
+        var name = ['hline', 'vline', 'rect', 'oval'].includes(t.printElementType.type) ? '颜色' : '边框颜色';
         return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        ' + name + '\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="text" class="auto-submit" />\n        </div>\n    </div>'), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("input").val();
@@ -3434,6 +3452,7 @@ var hiprint = function (t) {
       function t() {
         this.name = "pageBreak";
       }
+
       return t.prototype.css = function (t, e) {
         if (t && t.length) {
           if (e && 'none' == e) return t.addClass('alwaysHide');
@@ -3672,9 +3691,15 @@ var hiprint = function (t) {
 
       return t.prototype.css = function (t, e) {
         if (t && t.length) {
-		  var n = t.find(".hiprint-printElement-content").parent('.hiprint-printElement');
-		  if(!n.length && t.hasClass('hiprint-printElement-hline')){n=t};
-		  if(!n.length && t.hasClass('hiprint-printElement-image')){n=t;};
+          var n = t.find(".hiprint-printElement-content").parent('.hiprint-printElement');
+          if (!n.length && t.hasClass('hiprint-printElement-hline')) {
+            n = t
+          }
+          ;
+          if (!n.length && t.hasClass('hiprint-printElement-image')) {
+            n = t;
+          }
+          ;
           if (e) return n.css("transform", "rotate(" + e + "deg)"), n.css("-ms-transform", "rotate(" + e + "deg)"), n.css("-moz-transform", "rotate(" + e + "deg)"), n.css("-webkit-transform", "rotate(" + e + "deg)"), n.css("-o-transform", "rotate(" + e + "deg)"), "transform:rotate(" + e + "deg)";
           n.length && (n[0].style.transform = "");
         }
@@ -3934,7 +3959,7 @@ var hiprint = function (t) {
 
         return null;
       }, t.prototype.createTarget = function (t) {
-        var name = ['hline','vline','rect','oval'].includes(t.printElementType.type) ? '样式' : '边框样式';
+        var name = ['hline', 'vline', 'rect', 'oval'].includes(t.printElementType.type) ? '样式' : '边框样式';
         return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n       ' + name + '\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n            <option value="" >默认</option>\n            <option value="solid" >实线</option>\n            <option value="dashed" >长虚线</option>\n            <option value="dotted" >短虚线</option>\n        </select>\n        </div>\n    </div>'), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
@@ -4093,80 +4118,80 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
-    tablept = function() {
+    tablept = function () {
       function t() {
         this.name = "tableTextType";
       }
 
-      return t.prototype.createTarget = function() {
+      return t.prototype.createTarget = function () {
         return this.target = $(
           ' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        字段类型\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="text" >文本</option>\n <option value="sequence" >序号</option>\n       <option value="barcode" >条形码</option>\n        <option value="qrcode" >二维码</option>\n    <option value="image" >图片</option>\n        </select>\n        </div>\n    </div>'
         ), this.target;
-      }, t.prototype.getValue = function() {
+      }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
         if (t) return t;
-      }, t.prototype.setValue = function(t) {
+      }, t.prototype.setValue = function (t) {
         this.target.find("select").val(t);
-      }, t.prototype.destroy = function() {
+      }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
     }(),
-    tableE = function() {
+    tableE = function () {
       function t() {
         this.name = "tableBarcodeMode";
       }
 
-      return t.prototype.createTarget = function() {
+      return t.prototype.createTarget = function () {
         return this.target = $(
           ' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        条形码格式\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n         <option value="CODE128A" >CODE128A</option>\n        <option value="CODE128B" >CODE128B</option>\n        <option value="CODE128C" >CODE128C</option>\n        <option value="CODE39" >CODE39</option>\n        <option value="EAN-13" >EAN-13</option>\n        <option value="EAN-8" >EAN-8</option>\n        <option value="EAN-5" >EAN-5</option>\n        <option value="EAN-2" >EAN-2</option>\n        <option value="UPC（A）" >UPC（A）</option>\n        <option value="ITF" >ITF</option>\n        <option value="ITF-14" >ITF-14</option>\n        <option value="MSI" >MSI</option>\n            <option value="MSI10" >MSI10</option>\n            <option value="MSI11" >MSI11</option>\n            <option value="MSI1010" >MSI1010</option>\n            <option value="MSI1110" >MSI1110</option>\n            <option value="Pharmacode" >Pharmacode</option>\n        </select>\n        </div>\n    </div>'
         ), this.target;
-      }, t.prototype.getValue = function() {
+      }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
         return t || void 0;
-      }, t.prototype.setValue = function(t) {
+      }, t.prototype.setValue = function (t) {
         this.target.find("select").val(t);
-      }, t.prototype.destroy = function() {
+      }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
     }(),
-    tableQRCodeLevel = function() {
+    tableQRCodeLevel = function () {
       function t() {
         this.name = "tableQRCodeLevel";
       }
 
-      return t.prototype.createTarget = function() {
+      return t.prototype.createTarget = function () {
         return this.target = $(
           ' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        二维码容错率\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>\n        <option value="1" >7% L</option>\n        <option value="0" >15% M</option>\n        <option value="3" >25% Q</option>\n        <option value="2" >30% H</option>\n        </select>\n        </div>\n    </div>'
         ), this.target;
-      }, t.prototype.getValue = function() {
+      }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
         return parseInt(t || 0);
-      }, t.prototype.setValue = function(t) {
+      }, t.prototype.setValue = function (t) {
         this.target.find("select").val(t);
-      }, t.prototype.destroy = function() {
+      }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
     }(),
-    tableColumnH = function() {
+    tableColumnH = function () {
       function t() {
         this.name = "tableColumnHeight";
       }
 
-      return t.prototype.createTarget = function() {
+      return t.prototype.createTarget = function () {
         return this.target = $(
           ' <div class="hiprint-option-item ">\n        <div class="hiprint-option-item-label">\n        单元格高度\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="text" placeholder="条形码、二维码以及图片有效" class="auto-submit" >\n        </div>\n    </div>'
         ), this.target;
-      }, t.prototype.getValue = function() {
+      }, t.prototype.getValue = function () {
         var t = this.target.find("input").val();
         if (t) return t.toString();
-      }, t.prototype.setValue = function(t) {
+      }, t.prototype.setValue = function (t) {
         this.target.find("input").val(t);
-      }, t.prototype.destroy = function() {
+      }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
     }(),
     // 表格底部合计栏
-    tableSummary = function() {
+    tableSummary = function () {
       function t() {
         this.name = "tableSummary"
       }
@@ -4356,7 +4381,7 @@ var hiprint = function (t) {
         var t = this.target.find("textarea").val();
         if (t) return t;
       }, t.prototype.setValue = function (t) {
-        this.target.find("textarea").val(t?t.toString():null);
+        this.target.find("textarea").val(t ? t.toString() : null);
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
@@ -4372,7 +4397,7 @@ var hiprint = function (t) {
         var t = this.target.find("textarea").val();
         if (t) return t;
       }, t.prototype.setValue = function (t) {
-        this.target.find("textarea").val(t?t.toString():null);
+        this.target.find("textarea").val(t ? t.toString() : null);
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
@@ -4388,7 +4413,7 @@ var hiprint = function (t) {
         var t = this.target.find("textarea").val();
         if (t) return t;
       }, t.prototype.setValue = function (t) {
-        this.target.find("textarea").val(t?t.toString():null);
+        this.target.find("textarea").val(t ? t.toString() : null);
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
@@ -4404,7 +4429,7 @@ var hiprint = function (t) {
         var t = this.target.find("textarea").val();
         if (t) return t;
       }, t.prototype.setValue = function (t) {
-        this.target.find("textarea").val(t?t.toString():null);
+        this.target.find("textarea").val(t ? t.toString() : null);
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
@@ -4420,7 +4445,7 @@ var hiprint = function (t) {
         var t = this.target.find("textarea").val();
         if (t) return t;
       }, t.prototype.setValue = function (t) {
-        this.target.find("textarea").val(t?t.toString():null);
+        this.target.find("textarea").val(t ? t.toString() : null);
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
@@ -4436,7 +4461,7 @@ var hiprint = function (t) {
         var t = this.target.find("textarea").val();
         if (t) return t;
       }, t.prototype.setValue = function (t) {
-        this.target.find("textarea").val(t?t.toString():null);
+        this.target.find("textarea").val(t ? t.toString() : null);
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
@@ -4500,7 +4525,7 @@ var hiprint = function (t) {
         var t = this.target.find("textarea").val();
         if (t) return t;
       }, t.prototype.setValue = function (t) {
-        this.target.find("textarea").val(t?t.toString():null);
+        this.target.find("textarea").val(t ? t.toString() : null);
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
@@ -4516,7 +4541,7 @@ var hiprint = function (t) {
         var t = this.target.find("textarea").val();
         if (t) return t;
       }, t.prototype.setValue = function (t) {
-        this.target.find("textarea").val(t?t.toString():null);
+        this.target.find("textarea").val(t ? t.toString() : null);
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
@@ -4570,7 +4595,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(),new tableColumnH(),new tableE(), new tableQRCodeLevel(),new tablept(), new tableSummary()], t;
+    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(), new tableColumnH(), new tableE(), new tableQRCodeLevel(), new tablept(), new tableSummary()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -4627,7 +4652,7 @@ var hiprint = function (t) {
       }, t.prototype.getCellByXY = function (t, e) {
         var n;
         return this.rows.forEach(function (i, o) {
-          var r = (i.columns||[]).filter(function (column) {return column.checked}).filter(function (n) {
+          var r = (i.columns || []).filter(function (column) {return column.checked}).filter(function (n) {
             return n.isXYinCell(t, e);
           });
           r.length && (n = new p(o, r[0]));
@@ -4704,7 +4729,7 @@ var hiprint = function (t) {
 
       return a(e, t), e.prototype.getPrintElementOptionEntity = function () {
         var t = [];
-        var all = this.allColumns ? this.allColumns.filter(function(c) {return !c.checked}) : [];
+        var all = this.allColumns ? this.allColumns.filter(function (c) {return !c.checked}) : [];
         return [...this.columns, ...all].forEach(function (e) {
           t.push(e.getEntity());
         }), t;
@@ -4726,8 +4751,8 @@ var hiprint = function (t) {
 
       return t.prototype.init = function (t, e, n) {
         this.isHead = n, this.target = e || $("<tr></tr>"), this.tableOptions = t,
-          this.allColumns = (this.columns||[]),
-          this.initCells((this.columns||[]).filter(function(column) {return column.checked}));
+          this.allColumns = (this.columns || []),
+          this.initCells((this.columns || []).filter(function (column) {return column.checked}));
       }, t.prototype.getTarget = function () {
         return this.target;
       }, t.prototype.initCells = function (t) {
@@ -4756,7 +4781,7 @@ var hiprint = function (t) {
         this.columns.push(t), this.target.append(t.getTarget());
       }, t.prototype.getPrintElementOptionEntity = function () {
         var t = [];
-        return [...this.columns, ...this.allColumns.filter(function(c) {return !c.checked})].forEach(function (e) {
+        return [...this.columns, ...this.allColumns.filter(function (c) {return !c.checked})].forEach(function (e) {
           t.push(e.getEntity());
         }), t;
       }, t;
@@ -4903,7 +4928,8 @@ var hiprint = function (t) {
           r = this.createtempEmptyRowsTargetStructure(e);
         e ? this.updateTargetWidth(r) : this.updateTargetSize(r), this.css(r, i), this.css(o, i), this.getTempContainer().html(""), this.getTempContainer().append(r);
         // 页脚导致 分页高度的问题, -> 获取到表格脚高度后移除避免重复
-        var tfh = r.find('tfoot').outerHeight() || 0; r.find('tfoot').remove();
+        var tfh = r.find('tfoot').outerHeight() || 0;
+        r.find('tfoot').remove();
         for (var a, p = this.getBeginPrintTopInPaperByReferenceElement(t), s = 0, l = !1; !l;) {
           var u = 0,
             d = t.getPaperFooter(s);
@@ -4917,7 +4943,7 @@ var hiprint = function (t) {
           if (u < 0) {
             n[0].target = $('<div style="position:absolute;background: red;color: white;padding: 0px 4px;">没有足够空间进行表格分页，请调整页眉/页脚线</div>')
             n[0].printLine = p;
-            n[0].referenceElement =  new _PrintReferenceElement__WEBPACK_IMPORTED_MODULE_4__.a({
+            n[0].referenceElement = new _PrintReferenceElement__WEBPACK_IMPORTED_MODULE_4__.a({
               top: this.options.getTop(),
               left: this.options.getLeft(),
               height: this.options.getHeight(),
@@ -4953,7 +4979,7 @@ var hiprint = function (t) {
               })
             })), s++;
           }
-          e && this.updatePanelHeight(f + this.options.getHeight(),t);
+          e && this.updatePanelHeight(f + this.options.getHeight(), t);
         }
 
         return n;
@@ -5064,7 +5090,7 @@ var hiprint = function (t) {
       }, TablePrintElement.prototype.getData = function (t) {
         if (!t) return [{}];
         var f = this.getField();
-        var e = f ? f.split('.').reduce((a,c)=>a ? a[c] : t ? t[c] : "", !1) || "" : "";
+        var e = f ? f.split('.').reduce((a, c) => a ? a[c] : t ? t[c] : "", !1) || "" : "";
         return e ? JSON.parse(JSON.stringify(e)) : [];
       }, TablePrintElement.prototype.onResize = function (t, e, n, i, o) {
         _super.prototype.updateSizeAndPositionOptions.call(this, o, i, n, e), _table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.resizeTableCellWidth(this.designTarget, this.getColumns(), this.options.getWidth());
@@ -5085,7 +5111,7 @@ var hiprint = function (t) {
           onBeforeDrag: function onBeforeDrag(t) {
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_9__.a.instance.draging = !0, n.createLineOfPosition(e);
           },
-          getScale: function getScale () {
+          getScale: function getScale() {
             return n.designPaper.scale || 1;
           },
           onStopDrag: function onStopDrag(t) {
@@ -5102,7 +5128,7 @@ var hiprint = function (t) {
           onBeforeResize: function onBeforeResize() {
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_9__.a.instance.draging = !0;
           },
-          getScale: function getScale () {
+          getScale: function getScale() {
             return n.designPaper.scale || 1
           },
           onResize: function onResize(t, i, o, r, a) {
@@ -5305,7 +5331,7 @@ var hiprint = function (t) {
           n = [],
           i = $('<div class="columngrips"/>');
         i.width(this.target.width()), this.rows.forEach(function (o) {
-          (o.columns||[]).filter(function (column) {return column.checked}).forEach(function (o, a) {
+          (o.columns || []).filter(function (column) {return column.checked}).forEach(function (o, a) {
             if (o.getTarget().attr("haswidth")) {
               var p = $('<div class="columngrip"><div class="gripResizer"></div></div>');
               i.append(p);
@@ -5316,8 +5342,8 @@ var hiprint = function (t) {
                 },
                 moveUnit: "pt",
                 minMove: 1,
-                getScale: function getScale () {
-                  return ($('.hiprint-printPaper')[0].style.transform && parseFloat($('.hiprint-printPaper')[0].style.transform.slice(6,-1))) || 1;
+                getScale: function getScale() {
+                  return ($('.hiprint-printPaper')[0].style.transform && parseFloat($('.hiprint-printPaper')[0].style.transform.slice(6, -1))) || 1;
                 },
                 onBeforeDrag: function onBeforeDrag(t) {
                   if (g.a.instance.draging = !0, !s.nextGrip) return !1;
@@ -5813,7 +5839,7 @@ var hiprint = function (t) {
     r = (function () {
     }(), function () {
       return function (t) {
-        this.width = t.width, this.title = t.title, this.field = t.field, this.checked = t.checked, this.columnId = t.columnId, this.fixed = !1, this.rowspan = t.rowspan || 1, this.colspan = t.colspan || 1, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.formatter2 = t.formatter2, this.styler2 = t.styler2,this.tableColumnHeight = t.tableColumnHeight||30,this.tableTextType = t.tableTextType||'text',this.tableBarcodeMode = t.tableBarcodeMode||'CODE128A',this.tableQRCodeLevel = t.tableQRCodeLevel||0,this.tableSummary = t.tableSummary;
+        this.width = t.width, this.title = t.title, this.field = t.field, this.checked = t.checked, this.columnId = t.columnId, this.fixed = !1, this.rowspan = t.rowspan || 1, this.colspan = t.colspan || 1, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.formatter2 = t.formatter2, this.styler2 = t.styler2, this.tableColumnHeight = t.tableColumnHeight || 30, this.tableTextType = t.tableTextType || 'text', this.tableBarcodeMode = t.tableBarcodeMode || 'CODE128A', this.tableQRCodeLevel = t.tableQRCodeLevel || 0, this.tableSummary = t.tableSummary;
       };
     }()),
     a = n(5);
@@ -5848,7 +5874,7 @@ var hiprint = function (t) {
             var i = new r(t),
               o = n.getColumnByColumnId(i.columnId),
               p = o ? $.extend(o, i) : new a.a(i);
-              e.push(p);
+            e.push(p);
           }), i.columns.push(new o.a(e));
         }) : n.columns.forEach(function (t) {
           i.columns.push(new o.a(t));
@@ -5915,8 +5941,8 @@ var hiprint = function (t) {
         i = n.options,
         o = n.proxy,
         r = e.data,
-		    a = r.startLeft + (e.pageX   - r.startX) / (n.options.getScale() || 1),
-        p = r.startTop  + (e.pageY  - r.startY) / (n.options.getScale() || 1);
+        a = r.startLeft + (e.pageX - r.startX) / (n.options.getScale() || 1),
+        p = r.startTop + (e.pageY - r.startY) / (n.options.getScale() || 1);
       o && (o.parent()[0] == document.body ? (a = null != i.deltaX && null != i.deltaX ? e.pageX + i.deltaX : e.pageX - e.data.offsetWidth, p = null != i.deltaY && null != i.deltaY ? e.pageY + i.deltaY : e.pageY - e.data.offsetHeight) : (null != i.deltaX && null != i.deltaX && (a += e.data.offsetWidth + i.deltaX), null != i.deltaY && null != i.deltaY && (p += e.data.offsetHeight + i.deltaY))),
       e.data.parent != document.body && (a += t(e.data.parent).scrollLeft(), p += t(e.data.parent).scrollTop()),
         "h" == i.axis ? r.left = a : "v" == i.axis ? r.top = p : (e.shiftKey && e.altKey ? r.top = p : e.shiftKey ? r.left = a : (r.left = a, r.top = p));
@@ -5950,7 +5976,7 @@ var hiprint = function (t) {
     }
 
     function o(i) {
-		  // 移动开始动作
+      // 移动开始动作
       var o = t.data(i.data.target, "hidraggable");
       e(i);
       if (!(i.ctrlKey || i.metaKey) && (i.data.target.className.startsWith('resize-panel') || "2" == i.data.target.style.zIndex || i.data.target.className.startsWith('hiprint-printElement'))) {
@@ -5969,7 +5995,7 @@ var hiprint = function (t) {
           cPosition.hCenter = top + cPosition.height / 2;
           (() => {
             let oPositions = o.options.designTarget.panel.printElements.filter(el => el.id != o.options.designTarget.id).map(el => {
-              let { left, top, width, height } = el.options;
+              let {left, top, width, height} = el.options;
               return {
                 ...el.options,
                 bottom: top + height,
@@ -6036,7 +6062,7 @@ var hiprint = function (t) {
         var parent = data.parent.className.endsWith('design') ? data.parent : data.parent.offsetParent;
         var paperW = parent.clientWidth, paperH = parent.clientHeight;
         // 当前元素宽高
-        var elementW = data.target.clientWidth,elementH = data.target.clientHeight;
+        var elementW = data.target.clientWidth, elementH = data.target.clientHeight;
         // 左右
         if (data.left < 0) {
           data.left = 0
@@ -6127,7 +6153,7 @@ var hiprint = function (t) {
           var n = t.data(e.data.target, "hidraggable"),
             i = n.handle,
             o = t(i).offset(),
-            tr = t(i)[0].style.transform && parseInt(t(i)[0].style.transform.slice(7,-1)),
+            tr = t(i)[0].style.transform && parseInt(t(i)[0].style.transform.slice(7, -1)),
             ptr = n.options.getScale(),
             r = t(i).outerWidth();
           var a = t(i).outerHeight();
@@ -6138,7 +6164,7 @@ var hiprint = function (t) {
               sin = Math.sin(rad),
               cos = Math.cos(rad);
             r = Math.abs(width * cos) + Math.abs(height * sin),
-            a = Math.abs(width * sin) + Math.abs(height * cos)
+              a = Math.abs(width * sin) + Math.abs(height * cos)
           }
           if (ptr) {
             r *= ptr, a *= ptr;
@@ -6184,7 +6210,7 @@ var hiprint = function (t) {
                 target: e.data.target,
                 parent: t(e.data.target).parent()[0]
               };
-            var tr = p.target.style.transform && parseInt(p.target.style.transform.slice(7,-1));
+            var tr = p.target.style.transform && parseInt(p.target.style.transform.slice(7, -1));
             if (tr) {
               var rad = tr * Math.PI / 180,
                 width = t(e.data.target).outerWidth(),
@@ -6220,7 +6246,7 @@ var hiprint = function (t) {
       },
       update: function update(e, n) {
         if (n && "object" == typeof n) {
-          Object.keys(n).forEach(function (k){
+          Object.keys(n).forEach(function (k) {
             t.data(e[0], "hidraggable").options[k] = n[k]
           })
         }
@@ -6262,7 +6288,7 @@ var hiprint = function (t) {
       disabled: !1,
       edge: 0,
       axis: null,
-	    getScale: function getScale(t) {},
+      getScale: function getScale(t) {},
       onBeforeDrag: function onBeforeDrag(t) {
       },
       onStartDrag: function onStartDrag(t) {
@@ -6475,7 +6501,7 @@ var hiprint = function (t) {
           var sizeBox = t.children("div[panelindex]").find(".size-box");
           if (sizeBox) {
             sizeBox.text(style.width + ' x ' + style.height);
-            sizeBox.css('top', - (sizeBox.outerHeight()));
+            sizeBox.css('top', -(sizeBox.outerHeight()));
           }
         }
       }
@@ -6535,10 +6561,10 @@ var hiprint = function (t) {
       });
       var rt = !1; // 旋转
       t.on("mousedown", ".r", function (e) {
-        o = e.pageX, r = e.pageY, a = t.width(), p = t.height(), rt = !0, s = a/2 + u.offset().left, l = p/2 + u.offset().top;
+        o = e.pageX, r = e.pageY, a = t.width(), p = t.height(), rt = !0, s = a / 2 + u.offset().left, l = p / 2 + u.offset().top;
       });
       t.on("dblclick", ".r", function (e) {
-        u.css({ transform: "rotate(" + 0 + "deg)" });
+        u.css({transform: "rotate(" + 0 + "deg)"});
         i.options.onResize(e, void 0, void 0, void 0, void 0, 0);
       });
       var b = !1;
@@ -6560,16 +6586,16 @@ var hiprint = function (t) {
             height: i.numHandlerText(p + E)
           }), i.options.onResize(e, i.numHandler(p + E), void 0, void 0, void 0);
         } else if (rt) { // 旋转
-          t.css({ height: "100%" });
+          t.css({height: "100%"});
           var eo = e.pageX, er = e.pageY;
-		      var direct = (eo - o) * 360 / 100;
-		      o = e.pageX
-          var lastAngle = (u[0].style.transform && parseInt(u[0].style.transform.slice(7,-1))) || 0;
-          var R = lastAngle + direct ;
+          var direct = (eo - o) * 360 / 100;
+          o = e.pageX
+          var lastAngle = (u[0].style.transform && parseInt(u[0].style.transform.slice(7, -1))) || 0;
+          var R = lastAngle + direct;
           if (Math.abs(R) > 360) {
             R = R % 360
           }
-          u.css({ transform: "rotate(" + R + "deg)" });
+          u.css({transform: "rotate(" + R + "deg)"});
           i.options.onResize(e, void 0, void 0, void 0, void 0, R);
         } else if (h) { // 左
           (n = (e.pageX - o) / i.options.getScale(), t.css({
@@ -6614,10 +6640,10 @@ var hiprint = function (t) {
             // 宽高比
             var ratio = p / a;
             var width = a + n, height = p + E;
-            console.log('ratio',ratio)
+            console.log('ratio', ratio)
             height = width * ratio;
             u.css({width: i.numHandlerText(width), height: i.numHandlerText(height)});
-              i.options.onResize(e, i.numHandler(height), i.numHandler(width), void 0, void 0);
+            i.options.onResize(e, i.numHandler(height), i.numHandler(width), void 0, void 0);
           }
         } else if (y) { // 左下
           (n = (e.pageX - o) / i.options.getScale(), E = (e.pageY - r) / i.options.getScale(), t.css({
@@ -6633,7 +6659,8 @@ var hiprint = function (t) {
             left: i.numHandlerText(i.options.noDrag ? void 0 : s + n),
             top: i.numHandlerText(i.options.noDrag ? void 0 : l + E)
           }), i.options.onResize(e, void 0, void 0, i.options.noDrag ? void 0 : i.numHandler(l + E), i.options.noDrag ? void 0 : i.numHandler(s + n)))
-        };
+        }
+        ;
       }).on("mouseup", function (t) {
         // i.options.onStopResize(rt);
         // 当某个 '控制点' 按下时 (每个'控制点'按下状态是独立的)
@@ -7184,7 +7211,7 @@ var hiprint = function (t) {
         var type = this.getElementType(t);
         if (c) {
           var newType = c(type);
-          var idx =  this.allElementTypes.findIndex(function (e) {
+          var idx = this.allElementTypes.findIndex(function (e) {
             return e.tid = t;
           })
           if (idx >= 0) {
@@ -7321,7 +7348,7 @@ var hiprint = function (t) {
         return ["se", "r"];
       }, e.prototype.getData = function (t) {
         var e = "", f = this.getField();
-        t ? e = f ? f.split('.').reduce((a,c)=>a ? a[c] : t[c], !1) || "" : this.options.src || this.printElementType.getData() : e = this.options.src || this.printElementType.getData();
+        t ? e = f ? f.split('.').reduce((a, c) => a ? a[c] : t[c], !1) || "" : this.options.src || this.printElementType.getData() : e = this.options.src || this.printElementType.getData();
         var n = this.getFormatter();
         return n && (e = n(e, this.options, this._currenttemplateData)), e || "";
       }, e.prototype.createTarget = function (t, e) {
@@ -7336,8 +7363,8 @@ var hiprint = function (t) {
       }, e.prototype.updateTargetImage = function (t, e, n) {
         var i = t.find(".hiprint-printElement-image-content");
         i.find("img").length ? i.find("img").attr("src", n) : i.html('<img style="width:100%;height:100%;" src="' + n + '">');
-        if (n.length) i.find("img").css('cssText',`width:100%;height:100%;content:url("${n}")!important`)
-        else i.find("img").css('cssText','width:100%;height:100%;')
+        if (n.length) i.find("img").css('cssText', `width:100%;height:100%;content:url("${n}")!important`)
+        else i.find("img").css('cssText', 'width:100%;height:100%;')
         if (this.options.fit) i.find("img").css("object-fit", this.options.fit);
       }, e.prototype.getHtml = function (t, e, n) {
         return this.getHtml2(t, e, n);
@@ -7378,7 +7405,7 @@ var hiprint = function (t) {
     T = function () {
       function t(t, pr, scl, e, n, i, r, a, p, s, l, u, d) {
         this.panelPageRule = pr, this.scale = scl,
-        this.defaultPaperNumberFormat = "paperNo-paperCount", this.printLine = 0, this.templateId = t, this.width = o.a.mm.toPt(e), this.height = o.a.mm.toPt(n), this.mmwidth = e, this.mmheight = n, this.paperHeader = i >= 0 ? i : 0, this.paperFooter = r, this.contentHeight = r - i, this.createTarget(), this.index = u, this.paperNumberLeft = a || parseInt((this.width - 30).toString()), this.paperNumberTop = p || parseInt((this.height - 22).toString()), this.paperNumberDisabled = s, this.paperNumberFormat = l, this.referenceElement = d ? $.extend({}, d) : new E.a({
+          this.defaultPaperNumberFormat = "paperNo-paperCount", this.printLine = 0, this.templateId = t, this.width = o.a.mm.toPt(e), this.height = o.a.mm.toPt(n), this.mmwidth = e, this.mmheight = n, this.paperHeader = i >= 0 ? i : 0, this.paperFooter = r, this.contentHeight = r - i, this.createTarget(), this.index = u, this.paperNumberLeft = a || parseInt((this.width - 30).toString()), this.paperNumberTop = p || parseInt((this.height - 22).toString()), this.paperNumberDisabled = s, this.paperNumberFormat = l, this.referenceElement = d ? $.extend({}, d) : new E.a({
           top: 0,
           left: 0,
           height: 0,
@@ -7480,7 +7507,7 @@ var hiprint = function (t) {
           onBeforeDrag: function onBeforeDrag(t) {
             s.a.instance.draging = !0;
           },
-          getScale: function getScale () {
+          getScale: function getScale() {
             return i.scale || 1;
           },
           onStopDrag: function onStopDrag(t) {
@@ -7494,13 +7521,13 @@ var hiprint = function (t) {
         // 设置纸张后, 页脚线重置问题
         var paperFooter = this.paperFooter > this.height ? this.height : this.paperFooter;
         this.paperFooter = paperFooter || this.height, this.footerLinetarget.css("top", paperFooter + "pt"),
-        this.contentHeight = this.paperFooter - this.paperHeader,
-        // 设置纸张后, 页码位置重置问题
-        this.paperNumberLeft = this.paperNumberLeft > this.width ? parseInt((this.width - 30).toString()) : this.paperNumberLeft;
+          this.contentHeight = this.paperFooter - this.paperHeader,
+          // 设置纸张后, 页码位置重置问题
+          this.paperNumberLeft = this.paperNumberLeft > this.width ? parseInt((this.width - 30).toString()) : this.paperNumberLeft;
         this.paperNumberTop = this.paperNumberTop > this.height ? this.paperNumberTop = parseInt((this.height - 22).toString()) : this.paperNumberTop;
         this.paperNumberTarget.css("top", this.paperNumberTop + "pt"),
-        this.paperNumberTarget.css("left", this.paperNumberLeft + "pt"),
-        this.triggerOnPaperBaseInfoChanged("调整大小");
+          this.paperNumberTarget.css("left", this.paperNumberLeft + "pt"),
+          this.triggerOnPaperBaseInfoChanged("调整大小");
       }, t.prototype.zoom = function (s) {
         if (s) {
           this.scale = s, this.target.css("transform", "scale(" + s + ")");
@@ -7517,7 +7544,7 @@ var hiprint = function (t) {
       }, t.prototype.getContentHeight = function (t) {
         return this.getPaperFooter(t) - this.paperHeader;
       }, t.prototype.createRuler = function () {
-        this.target.append('<div class="hiprint_rul_wrapper">\n                     <img class="h_img" src="'+lImg+'" />\n                     <img class="v_img" src="'+vImg+'" />\n                    </div>');
+        this.target.append('<div class="hiprint_rul_wrapper">\n                     <img class="h_img" src="' + lImg + '" />\n                     <img class="v_img" src="' + vImg + '" />\n                    </div>');
       }, t.prototype.displayHeight = function () {
         return this.mmheight - p.a.instance.paperHeightTrim + "mm";
       }, t.prototype.displayWidth = function () {
@@ -7574,7 +7601,7 @@ var hiprint = function (t) {
         return this.options.title || this.printElementType.title;
       }, e.prototype.getData = function (t) {
         var f = this.getField();
-        var e = f ? f.split('.').reduce((a,c)=>a ? a[c] : t ? t[c] : "", !1) || "" : "";
+        var e = f ? f.split('.').reduce((a, c) => a ? a[c] : t ? t[c] : "", !1) || "" : "";
         return t ? e || "" : this.options.testData || this.printElementType.getData() || "";
       }, e.prototype.updateTargetText = function (t, e, n) {
         var i = t.find(".hiprint-printElement-longText-content"),
@@ -7648,7 +7675,7 @@ var hiprint = function (t) {
               printTopInPaper: m
             })
           })), r++;
-          e && this.updatePanelHeight(g + this.options.getHeight(),t);
+          e && this.updatePanelHeight(g + this.options.getHeight(), t);
         }
 
         return o;
@@ -7676,7 +7703,7 @@ var hiprint = function (t) {
         if (-1 == n) {
           i.find(".hiprint-printElement-longText-content").html(t.slice(0, e).join(""));
           var a = i.height();
-          return  {
+          return {
             IsPagination: !0,
             height: o.a.px.toPt(a),
             length: t.length,
@@ -7807,7 +7834,7 @@ var hiprint = function (t) {
       }, e.prototype.getData = function (t) {
         var e = void 0;
         var f = this.getField();
-        if (e = t ? f ? f.split('.').reduce((a,c)=>a ? a[c] : t ? t[c] : "", !1) || "" : "" : this.options.testData || this.printElementType.getData() || "", this.options.format) {
+        if (e = t ? f ? f.split('.').reduce((a, c) => a ? a[c] : t ? t[c] : "", !1) || "" : "" : this.options.testData || this.printElementType.getData() || "", this.options.format) {
           if ("datetime" == this.options.dataType) return o.a.dateFormat(e, this.options.format);
 
           if ("boolen" == this.options.dataType) {
@@ -7848,14 +7875,18 @@ var hiprint = function (t) {
             try {
               if (n) {
                 //去除行高对高度的影响
-                t.css('line-height',0)
+                t.css('line-height', 0)
                 //默认二维码永远居中
-                a.css('text-align','center')
+                a.css('text-align', 'center')
                 // var l = parseInt(o.a.pt.toPx(this.options.getWidth() || 20)),
                 // 	u = parseInt(o.a.pt.toPx(this.options.getHeight() || 20)),
                 var lpt = this.options.getWidth() || 20,
                   upt = this.options.getHeight() || 20
-                var box = $('<div></div>').css({"width":(lpt>upt?upt:lpt)+'pt',"height":(lpt>upt?upt:lpt)+'pt','display':'inline-block'})
+                var box = $('<div></div>').css({
+                  "width": (lpt > upt ? upt : lpt) + 'pt',
+                  "height": (lpt > upt ? upt : lpt) + 'pt',
+                  'display': 'inline-block'
+                })
                 new QRCode(box[0], {
                   width: "100%",
                   height: "100%",
@@ -8235,8 +8266,8 @@ var hiprint = function (t) {
           var t = this.designTarget.find(".hiprint-printElement-table-content"),
             e = this.getHtml(this.designPaper);
           t.html(""), t.append(e[0].target.find(".hiprint-printElement-tableTarget"));
-            // 渲染完再处理样式 ==> fix 表脚边框参数设置问题
-            this.css(this.designTarget, this.getData()),
+          // 渲染完再处理样式 ==> fix 表脚边框参数设置问题
+          this.css(this.designTarget, this.getData()),
             this.setHiReizeable();
         }
       }, e.prototype.getDesignTarget = function (t) {
@@ -8275,7 +8306,8 @@ var hiprint = function (t) {
           r = this.createTarget(this.printElementType.title, [], e);
         e ? this.updateTargetWidth(r) : this.updateTargetSize(r), this.css(r, i), this.css(o, i), this.getTempContainer().html(""), this.getTempContainer().append(r);
         // 页脚导致 分页高度的问题, -> 获取到表格脚高度后移除避免重复
-        var tfh = r.find('tfoot').outerHeight() || 0; r.find('tfoot').remove();
+        var tfh = r.find('tfoot').outerHeight() || 0;
+        r.find('tfoot').remove();
         for (var a, p = this.getBeginPrintTopInPaperByReferenceElement(t), s = 0, l = !1; !l;) {
           var u = 0,
             d = t.getPaperFooter(s);
@@ -8356,7 +8388,7 @@ var hiprint = function (t) {
       }, e.prototype.getData = function (t) {
         if (!t) return [{}];
         var f = this.getField();
-        var e = f ? f.split('.').reduce((a,c)=>a ? a[c] : t ? t[c] : "", !1) || "" : "";
+        var e = f ? f.split('.').reduce((a, c) => a ? a[c] : t ? t[c] : "", !1) || "" : "";
         return e ? JSON.parse(JSON.stringify(e)) : [];
       }, e.prototype.autoCompletion = function (t, e) {
         for (var n, i = this.getEmptyRowTarget(), o = e.outerHeight(); t > o;) {
@@ -8385,7 +8417,7 @@ var hiprint = function (t) {
           onBeforeDrag: function onBeforeDrag(t) {
             s.a.instance.draging = !0, n.createLineOfPosition(e);
           },
-          getScale: function getScale () {
+          getScale: function getScale() {
             return n.designPaper.scale || 1;
           },
           onStopDrag: function onStopDrag(t) {
@@ -8400,7 +8432,7 @@ var hiprint = function (t) {
           onBeforeResize: function onBeforeResize() {
             s.a.instance.draging = !0;
           },
-          getScale: function getScale () {
+          getScale: function getScale() {
             return n.designPaper.scale || 1
           },
           onResize: function onResize(t, i, o, r, a) {
@@ -8620,13 +8652,15 @@ var hiprint = function (t) {
               e.panelPaperRule = t.panelPaperRule, e.panelPageRule = t.panelPageRule, e.firstPaperFooter = t.firstPaperFooter, e.evenPaperFooter = t.evenPaperFooter, e.oddPaperFooter = t.oddPaperFooter, e.lastPaperFooter = t.lastPaperFooter, e.leftOffset = t.leftOffset, e.topOffset = t.topOffset, e.fontFamily = t.fontFamily, e.orient = t.orient, e.paperNumberDisabled = e.designPaper.paperNumberDisabled = !!t.paperNumberDisabled || void 0, e.paperNumberFormat = t.paperNumberFormat, e.designPaper.paperNumberFormat = t.paperNumberFormat, (t.paperNumberFormat && (e.designPaper.paperNumberTarget = e.designPaper.createPaperNumber(e.designPaper.formatPaperNumber(1, 1), true))), e.designPaper.setOffset(e.leftOffset, e.topOffset), e.css(e.target), e.designPaper.resetPaperNumber(e.designPaper.paperNumberTarget), e.designPaper.triggerOnPaperBaseInfoChanged();
             }
           });
-        }), this.bindShortcutKeyEvent(); this.bingPasteEvent(); this.bindBatchMoveElement();
+        }), this.bindShortcutKeyEvent();
+        this.bingPasteEvent();
+        this.bindBatchMoveElement();
       }, t.prototype.update = function (t) {
         try {
           console.log('update ------>')
           console.log(t)
           var start = Date.now();
-          console.log('start',start)
+          console.log('start', start)
           var e = this;
           this.index = t.index, this.width = t.width, this.height = t.height, this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter;
           this.designPaper.width = o.a.mm.toPt(t.width), this.designPaper.height = o.a.mm.toPt(this.height), this.designPaper.paperType = this.paperType, this.designPaper.paperHeader = this.paperHeader, this.designPaper.paperFooter = this.paperFooter;
@@ -8650,26 +8684,26 @@ var hiprint = function (t) {
           this.designPaper.setFooter(this.firstPaperFooter, this.evenPaperFooter, this.oddPaperFooter, this.lastPaperFooter),
             this.designPaper.setOffset(this.leftOffset, this.topOffset);
           var end = Date.now();
-          console.log('更新参数 end',end)
-          console.log('更新参数 time:',end-start)
+          console.log('更新参数 end', end)
+          console.log('更新参数 time:', end - start)
           // 清空面板
           this.printElements.forEach(function (t) {
             t.designTarget && t.designTarget.length && t.designTarget.remove();
           }), this.printElements = [];
           var end = Date.now();
-          console.log('清空面板 end',end)
-          console.log('清空面板 time:',end-start)
+          console.log('清空面板 end', end)
+          console.log('清空面板 time:', end - start)
           // 更新面板
           this.initPrintElements(t.printElements);
           var end = Date.now();
-          console.log('初始化元素 end',end)
-          console.log('初始化元素 time:',end-start)
+          console.log('初始化元素 end', end)
+          console.log('初始化元素 time:', end - start)
           this.printElements.forEach(function (n) {
             e.appendDesignPrintElement(e.designPaper, n), n.design(t, e.designPaper);
           })
           var end = Date.now();
-          console.log('插入面板 end',end)
-          console.log('插入面板 time:',end-start)
+          console.log('插入面板 end', end)
+          console.log('插入面板 time:', end - start)
         } catch (e) {
           console.log('???????')
           console.log(e)
@@ -8679,7 +8713,7 @@ var hiprint = function (t) {
         $(document).keydown(function (e) {
           if ('INPUT' == e.target.tagName) return;
           // ctrl/command + z 撤销 / ctrl/command + shift + z 重做
-          if ((e.ctrlKey || e.metaKey ) && 90 == e.keyCode) {
+          if ((e.ctrlKey || e.metaKey) && 90 == e.keyCode) {
             if (e.shiftKey) {
               o.a.event.trigger("hiprintTemplateDataShortcutKey_" + n.templateId, "redo");
             } else {
@@ -8694,7 +8728,7 @@ var hiprint = function (t) {
         n.designPaper.target.keydown(function (e) {
           // ctrl + v / command + v
           if ('INPUT' == e.target.tagName) return;
-          if ((e.ctrlKey || e.metaKey ) && 86 == e.keyCode) {
+          if ((e.ctrlKey || e.metaKey) && 86 == e.keyCode) {
             n.pasteJson(e);
             e.preventDefault();
           }
@@ -8715,7 +8749,7 @@ var hiprint = function (t) {
           // 判断是否是在元素上进行paste
           var useMouse = e.currentTarget.className != e.target.className;
           var left = (!useMouse && n.mouseOffsetX && o.a.px.toPt(n.mouseOffsetX)) || (r.left += 10);
-          var top = (!useMouse &&n.mouseOffsetY && o.a.px.toPt(n.mouseOffsetY)) || (r.top += 10);
+          var top = (!useMouse && n.mouseOffsetY && o.a.px.toPt(n.mouseOffsetY)) || (r.top += 10);
           a.options.setLeft(left);
           a.options.setTop(top);
           a.setTemplateId(n.templateId), a.setPanel(n);
@@ -8808,7 +8842,12 @@ var hiprint = function (t) {
       }, t.prototype.rotatePaper = function () {
         null == this.rotate && (this.rotate = !1), this.rotate = !this.rotate, this.resize(this.paperType, this.height, this.width, this.rotate);
       }, t.prototype.zoom = function (s, p) {
-        if (p) { this.scale = s } else { this.scale = void 0 } this.designPaper.zoom(s);
+        if (p) {
+          this.scale = s
+        } else {
+          this.scale = void 0
+        }
+        this.designPaper.zoom(s);
       }, t.prototype.getTarget = function () {
         return this.target;
       }, t.prototype.enable = function () {
@@ -8980,7 +9019,7 @@ var hiprint = function (t) {
         });
       }, t.prototype.getElementInRect = function (t) {
         var e = [];
-        return this.printElements.filter(function(n) {
+        return this.printElements.filter(function (n) {
           return n.options.draggable !== false;
         }).forEach(function (n) {
           n.inRect(t) && e.push(n);
@@ -8994,10 +9033,10 @@ var hiprint = function (t) {
             e.mouseRect.target.css({
               transform: 'unset'
             }),
-            e.mouseRect.lastLeft = e.mouseRect.lastLeft ? o.a.px.toPt(e.mouseRect.target[0].offsetLeft) : n/ptr, e.mouseRect.lastTop = e.mouseRect.lastTop ? o.a.px.toPt(e.mouseRect.target[0].offsetTop) : i/ptr
+              e.mouseRect.lastLeft = e.mouseRect.lastLeft ? o.a.px.toPt(e.mouseRect.target[0].offsetLeft) : n / ptr, e.mouseRect.lastTop = e.mouseRect.lastTop ? o.a.px.toPt(e.mouseRect.target[0].offsetTop) : i / ptr
               , (e.mouseRect.mouseRectSelectedElement || []).forEach(function (t) {
-               t.updatePositionByMultipleSelect(n - e.mouseRect.lastLeft, i - e.mouseRect.lastTop);
-            }), e.mouseRect.lastLeft = n/ptr, e.mouseRect.lastTop = i/ptr;
+              t.updatePositionByMultipleSelect(n - e.mouseRect.lastLeft, i - e.mouseRect.lastTop);
+            }), e.mouseRect.lastLeft = n / ptr, e.mouseRect.lastTop = i / ptr;
             s.a.instance.changed = !0;
           },
           moveUnit: "pt",
@@ -9005,48 +9044,53 @@ var hiprint = function (t) {
           onBeforeDrag: function onBeforeDrag(t) {
             e.mouseRect.target.focus(), s.a.instance.draging = !0, e.mouseRect.mouseRectSelectedElement || (e.mouseRect.mouseRectSelectedElement = e.getElementInRect(e.mouseRect));
           },
-          getScale: function getScale () {
+          getScale: function getScale() {
             return e.designPaper.scale || 1;
           },
           onStopDrag: function onStopDrag(t) {
             if (s.a.instance.changed) o.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "框选移动");
-            s.a.instance.draging = !1; s.a.instance.changed = !1;
+            s.a.instance.draging = !1;
+            s.a.instance.changed = !1;
           }
         }))
         if (t.ex >= t.bx && t.ey >= t.by) {// 终点大于起点
           this.mouseRect.target.css({
             height: t.maxY - t.minY + "px",
             width: t.maxX - t.minX + "px",
-            left: t.lastLeft/ptr + "pt",
-            top: t.lastTop/ptr + "pt",
+            left: t.lastLeft / ptr + "pt",
+            top: t.lastTop / ptr + "pt",
             transform: 'unset',
           });
         } else if (t.ex < t.bx && t.ey < t.by) {
-            this.mouseRect.target.css({
-              height: t.maxY - t.minY + "px",
-              width: t.maxX - t.minX + "px",
-              left: t.lastLeft/ptr + "pt",
-              top: t.lastTop/ptr + "pt",
-              transform: 'rotate(180deg)',
-              'transform-origin': '0 0'
-            });
+          this.mouseRect.target.css({
+            height: t.maxY - t.minY + "px",
+            width: t.maxX - t.minX + "px",
+            left: t.lastLeft / ptr + "pt",
+            top: t.lastTop / ptr + "pt",
+            transform: 'rotate(180deg)',
+            'transform-origin': '0 0'
+          });
         } else {
-          var r = '',f = 'rotate(180deg)';
+          var r = '', f = 'rotate(180deg)';
           if (t.startX == t.minX || t.startX == t.maxX) {
-            if (t.ey >= t.by) {f = 'scaleX(-1)',r = 'left'} else {r = 'center top'}
+            if (t.ey >= t.by) {
+              f = 'scaleX(-1)', r = 'left'
+            } else {
+              r = 'center top'
+            }
           } else if (t.startY == t.minY || t.startY == t.maxY) {
             r = t.ex >= t.bx ? 'right' : 'left'
           }
           this.mouseRect.target.css({
             height: t.maxY - t.minY + "px",
             width: t.maxX - t.minX + "px",
-            left: t.lastLeft/ptr + "pt",
-            top: t.lastTop/ptr + "pt",
+            left: t.lastLeft / ptr + "pt",
+            top: t.lastTop / ptr + "pt",
             transform: f,
             'transform-origin': r
           });
         }
-		t.target.focus()
+        t.target.focus()
       }, t.prototype.bingKeyboardMoveEvent = function (t) {
         var e = this;
         t.attr("tabindex", "1"), t.keydown(function (t) {
@@ -9054,30 +9098,30 @@ var hiprint = function (t) {
           var n = e.mouseRect.mouseRectSelectedElement || [];
 
           switch (t.keyCode) {
-            case 37:
-              e.mouseRect.updatePositionByMultipleSelect(0 - p.a.instance.movingDistance, 0), n.forEach(function (t) {
-                t.updatePositionByMultipleSelect(0 - p.a.instance.movingDistance, 0);
-              }), t.preventDefault();
-              break;
+          case 37:
+            e.mouseRect.updatePositionByMultipleSelect(0 - p.a.instance.movingDistance, 0), n.forEach(function (t) {
+              t.updatePositionByMultipleSelect(0 - p.a.instance.movingDistance, 0);
+            }), t.preventDefault();
+            break;
 
-            case 38:
-              e.mouseRect.updatePositionByMultipleSelect(0, 0 - p.a.instance.movingDistance), n.forEach(function (t) {
-                t.updatePositionByMultipleSelect(0, 0 - p.a.instance.movingDistance);
-              }), t.preventDefault();
-              break;
+          case 38:
+            e.mouseRect.updatePositionByMultipleSelect(0, 0 - p.a.instance.movingDistance), n.forEach(function (t) {
+              t.updatePositionByMultipleSelect(0, 0 - p.a.instance.movingDistance);
+            }), t.preventDefault();
+            break;
 
-            case 39:
-              e.mouseRect.updatePositionByMultipleSelect(p.a.instance.movingDistance, 0), n.forEach(function (t) {
-                t.updatePositionByMultipleSelect(p.a.instance.movingDistance, 0);
-              }), t.preventDefault();
-              break;
+          case 39:
+            e.mouseRect.updatePositionByMultipleSelect(p.a.instance.movingDistance, 0), n.forEach(function (t) {
+              t.updatePositionByMultipleSelect(p.a.instance.movingDistance, 0);
+            }), t.preventDefault();
+            break;
 
-            case 40:
-              e.mouseRect.updatePositionByMultipleSelect(0, p.a.instance.movingDistance), n.forEach(function (t) {
-                t.updatePositionByMultipleSelect(0, p.a.instance.movingDistance);
-              }), t.preventDefault();
+          case 40:
+            e.mouseRect.updatePositionByMultipleSelect(0, p.a.instance.movingDistance), n.forEach(function (t) {
+              t.updatePositionByMultipleSelect(0, p.a.instance.movingDistance);
+            }), t.preventDefault();
           }
-          if ([37,38,39,40].includes(t.keyCode)) {
+          if ([37, 38, 39, 40].includes(t.keyCode)) {
             o.a.event.trigger("hiprintTemplateDataChanged_" + e.templateId, "框选移动");
           }
         });
@@ -9161,11 +9205,11 @@ var hiprint = function (t) {
               var n = t.createTarget(i, i.options, i.printElementType);
               e.printElementOptionSettingPanel[t.name] = n, options.append(n);
               // 貌似只有这两个才需要多个参数
-              if (['columns','dataType'].includes(t.name)) {
+              if (['columns', 'dataType'].includes(t.name)) {
                 t.setValue(i.options[t.name], i.options, i.printElementType);
               } else {
                 // 传入所有参数
-                if (['coordinate','widthHeight'].includes(t.name)) {
+                if (['coordinate', 'widthHeight'].includes(t.name)) {
                   t.setValue(i.options, i)
                 } else {
                   // options 没有就取 printElementType内的 (如 table 的 footerFormatter)
@@ -9187,13 +9231,13 @@ var hiprint = function (t) {
                   }, options.append(e.createTarget(n.printTemplate, t.options, void 0)),
                     e.setValue(t.options[e.name], t.options, void 0);
                 });
-                options.bind('click.submitOption', function(){
+                options.bind('click.submitOption', function () {
                   t.callback(n.getValueByOptionItems(tableColumn));
                 })
-                options.find('.auto-submit').change(function(){
+                options.find('.auto-submit').change(function () {
                   t.callback(n.getValueByOptionItems(tableColumn))
                 })
-                options.find('.auto-submit:input').bind('keydown.submitOption', function(e){
+                options.find('.auto-submit:input').bind('keydown.submitOption', function (e) {
                   13 === e.keyCode && t.callback(n.getValueByOptionItems(tableColumn));
                 })
               })
@@ -9210,11 +9254,11 @@ var hiprint = function (t) {
             var n = t.createTarget(i, i.options, i.printElementType);
             e.printElementOptionSettingPanel[t.name] = n, r.append(n);
             // 貌似只有这两个才需要多个参数
-            if (['columns','dataType'].includes(t.name)) {
+            if (['columns', 'dataType'].includes(t.name)) {
               t.setValue(i.options[t.name], i.options, i.printElementType);
             } else {
               // 传入所有参数
-              if (['coordinate','widthHeight'].includes(t.name)) {
+              if (['coordinate', 'widthHeight'].includes(t.name)) {
                 t.setValue(i.options, i)
               } else {
                 // options 没有就取 printElementType内的 (如 table 的 footerFormatter)
@@ -9335,7 +9379,7 @@ var hiprint = function (t) {
         this.onDataChanged = n.onDataChanged;
         this.onUpdateError = n.onUpdateError;
         this.lastJson = n.template || {};
-        this.historyList = [{ id: s.a.instance.guid(), type: '初始', json: this.lastJson }];
+        this.historyList = [{id: s.a.instance.guid(), type: '初始', json: this.lastJson}];
         this.historyPos = 0;
         var i = new st(n.template || []);
         n.template && i.panels.forEach(function (t) {
@@ -9556,8 +9600,8 @@ var hiprint = function (t) {
               s.addImage(o, "JPEG", 0, 0 - p * a, r, d * a), p < d - 1 && s.addPage();
             }
             if (isDownload) {
-              i.removeTempContainer(),e.indexOf(".pdf") > -1 ? s.save(e) : s.save(e + ".pdf");
-            } else{
+              i.removeTempContainer(), e.indexOf(".pdf") > -1 ? s.save(e) : s.save(e + ".pdf");
+            } else {
               i.removeTempContainer();
               var pdfFile = s.output('blob');
               dtd.resolve(pdfFile);
@@ -9672,74 +9716,74 @@ var hiprint = function (t) {
           var minTop = Math.min.apply(null, elements.map(function (el) {return el.options.top}));
           var maxBottom = Math.max.apply(null, elements.map(function (el) {return el.options.top + el.options.height}));
           switch (e) {
-            case "left": // 左对齐
-              elements.forEach(function (el) {
-                el.updateSizeAndPositionOptions(minLeft);
+          case "left": // 左对齐
+            elements.forEach(function (el) {
+              el.updateSizeAndPositionOptions(minLeft);
+              el.designTarget.css("left", el.options.displayLeft());
+            })
+            break;
+          case "vertical": // 居中
+            var vertical = minLeft + (maxRight - minLeft) / 2;
+            elements.forEach(function (el) {
+              el.updateSizeAndPositionOptions(vertical - el.options.width / 2);
+              el.designTarget.css("left", el.options.displayLeft());
+            })
+            break;
+          case "right": // 右对齐
+            elements.forEach(function (el) {
+              el.updateSizeAndPositionOptions(maxRight - el.options.width);
+              el.designTarget.css("left", el.options.displayLeft())
+            })
+            break;
+          case "top": // 顶部对齐
+            elements.forEach(function (el) {
+              el.updateSizeAndPositionOptions(undefined, minTop);
+              el.designTarget.css("top", el.options.displayTop());
+            })
+            break;
+          case "horizontal": // 垂直居中
+            var horizontal = minTop + (maxBottom - minTop) / 2;
+            elements.forEach(function (el) {
+              el.updateSizeAndPositionOptions(undefined, horizontal - el.options.height / 2);
+              el.designTarget.css("top", el.options.displayTop());
+            })
+            break;
+          case "bottom": //底部对齐
+            elements.forEach(function (el) {
+              el.updateSizeAndPositionOptions(undefined, maxBottom - el.options.height);
+              el.designTarget.css("top", el.options.displayTop());
+            })
+            break;
+          case "distributeHor": // 横向分散
+            var sumWidth = [].reduce.call(elements, function (total, el) {
+              return total + el.options.width;
+            }, 0)
+            var distributeHor = ((maxRight - minLeft) - sumWidth) / (elements.length - 1);
+            elements.sort(function (prev, curr) {
+              return prev.options.left - curr.options.left;
+            })
+            elements.forEach(function (el, index) {
+              if (![0, elements.length - 1].includes(index)) {
+                el.updateSizeAndPositionOptions(elements[index - 1].options.left + elements[index - 1].options.width + distributeHor);
                 el.designTarget.css("left", el.options.displayLeft());
-              })
-              break;
-            case "vertical": // 居中
-              var vertical = minLeft + (maxRight - minLeft) / 2;
-              elements.forEach(function (el) {
-                el.updateSizeAndPositionOptions(vertical - el.options.width / 2);
-                el.designTarget.css("left", el.options.displayLeft());
-              })
-              break;
-            case "right": // 右对齐
-              elements.forEach(function (el) {
-                el.updateSizeAndPositionOptions(maxRight - el.options.width);
-                el.designTarget.css("left", el.options.displayLeft())
-              })
-              break;
-            case "top": // 顶部对齐
-              elements.forEach(function (el) {
-                el.updateSizeAndPositionOptions(undefined, minTop);
+              }
+            })
+            break;
+          case "distributeVer": // 纵向分散
+            var sumHeight = [].reduce.call(elements, function (total, el) {
+              return total + el.options.height;
+            }, 0)
+            var distributeVer = ((maxBottom - minTop) - sumHeight) / (elements.length - 1);
+            elements.sort(function (prev, curr) {
+              return prev.options.top - curr.options.top;
+            })
+            elements.forEach(function (el, index) {
+              if (![0, elements.length - 1].includes(index)) {
+                el.updateSizeAndPositionOptions(undefined, elements[index - 1].options.top + elements[index - 1].options.height + distributeVer);
                 el.designTarget.css("top", el.options.displayTop());
-              })
-              break;
-            case "horizontal": // 垂直居中
-              var horizontal = minTop + (maxBottom - minTop) / 2;
-              elements.forEach(function (el) {
-                el.updateSizeAndPositionOptions(undefined, horizontal - el.options.height / 2);
-                el.designTarget.css("top", el.options.displayTop());
-              })
-              break;
-            case "bottom": //底部对齐
-              elements.forEach(function (el) {
-                el.updateSizeAndPositionOptions(undefined, maxBottom - el.options.height);
-                el.designTarget.css("top", el.options.displayTop());
-              })
-              break;
-            case "distributeHor": // 横向分散
-              var sumWidth = [].reduce.call(elements, function (total, el) {
-                return total + el.options.width;
-              }, 0)
-              var distributeHor = ((maxRight - minLeft) - sumWidth) / (elements.length - 1);
-              elements.sort(function (prev, curr) {
-                return prev.options.left - curr.options.left;
-              })
-              elements.forEach(function (el, index) {
-                if(![0, elements.length - 1].includes(index)) {
-                  el.updateSizeAndPositionOptions(elements[index-1].options.left + elements[index-1].options.width + distributeHor);
-                  el.designTarget.css("left", el.options.displayLeft());
-                }
-              })
-              break;
-            case "distributeVer": // 纵向分散
-              var sumHeight = [].reduce.call(elements, function (total, el) {
-                return total + el.options.height;
-              }, 0)
-              var distributeVer = ((maxBottom - minTop) - sumHeight) / (elements.length - 1);
-              elements.sort(function (prev, curr) {
-                return prev.options.top - curr.options.top;
-              })
-              elements.forEach(function (el, index) {
-                if(![0, elements.length - 1].includes(index)) {
-                  el.updateSizeAndPositionOptions(undefined, elements[index-1].options.top + elements[index-1].options.height + distributeVer);
-                  el.designTarget.css("top", el.options.displayTop());
-                }
-              })
-              break;
+              }
+            })
+            break;
           }
         }
       }, t.prototype.setElsSpace = function (dis, isHor) {
@@ -9751,8 +9795,8 @@ var hiprint = function (t) {
               return prev.options.left - curr.options.left;
             })
             elements.forEach(function (el, index) {
-              if(index > 0) {
-                el.updateSizeAndPositionOptions(elements[index-1].options.left + elements[index-1].options.width + dis);
+              if (index > 0) {
+                el.updateSizeAndPositionOptions(elements[index - 1].options.left + elements[index - 1].options.width + dis);
                 el.designTarget.css("left", el.options.displayLeft());
               }
             })
@@ -9762,7 +9806,7 @@ var hiprint = function (t) {
             })
             elements.forEach(function (el, index) {
               if (index > 0) {
-                el.updateSizeAndPositionOptions(undefined, elements[index-1].options.top + elements[index-1].options.height + dis);
+                el.updateSizeAndPositionOptions(undefined, elements[index - 1].options.top + elements[index - 1].options.height + dis);
                 el.designTarget.css("top", el.options.displayTop());
               }
             })
@@ -9773,20 +9817,20 @@ var hiprint = function (t) {
         o.a.event.on("hiprintTemplateDataShortcutKey_" + this.id, function (key) {
           if (!t.history) return;
           switch (key) {
-            case "undo":
-              if (t.historyPos > 0) {
-                t.historyPos -= 1;
-                var cur = t.historyList[t.historyPos];
-                t.update(cur.json, cur.type);
-              }
-              break;
-            case "redo":
-              if (t.historyPos < t.historyList.length - 1) {
-                t.historyPos += 1;
-                var cur = t.historyList[t.historyPos];
-                t.update(cur.json, cur.type);
-              }
-              break;
+          case "undo":
+            if (t.historyPos > 0) {
+              t.historyPos -= 1;
+              var cur = t.historyList[t.historyPos];
+              t.update(cur.json, cur.type);
+            }
+            break;
+          case "redo":
+            if (t.historyPos < t.historyList.length - 1) {
+              t.historyPos += 1;
+              var cur = t.historyList[t.historyPos];
+              t.update(cur.json, cur.type);
+            }
+            break;
           }
         });
         o.a.event.on("hiprintTemplateDataChanged_" + this.id, function (type) {
@@ -9796,9 +9840,9 @@ var hiprint = function (t) {
             if (t.historyPos < t.historyList.length - 1) {
               t.historyList = t.historyList.slice(0, t.historyPos + 1);
             }
-            t.historyList.push({ id: s.a.instance.guid(), type: type, json: j });
+            t.historyList.push({id: s.a.instance.guid(), type: type, json: j});
             if (t.historyList.length > 50) {
-              t.historyList = t.historyList.slice(0, 1).concat(t.historyList.slice(1,50));
+              t.historyList = t.historyList.slice(0, 1).concat(t.historyList.slice(1, 50));
             } else {
               t.historyPos += 1;
             }
@@ -9855,8 +9899,7 @@ var hiprint = function (t) {
                       return e.name == o.after
                     });
                     if (idx > -1) list.splice(idx + 1, 0, o)
-                  }
-                  else list.push(o);
+                  } else list.push(o);
                 }
               })
               $.extend(p.a.instance[i].tabs[idx], {
@@ -9880,8 +9923,7 @@ var hiprint = function (t) {
                   return e.name == o.after
                 });
                 if (idx > -1) list.splice(idx + 1, 0, o)
-              }
-              else list.push(o);
+              } else list.push(o);
             }
           })
           $.extend(p.a.instance[i].supportOptions, list);
@@ -9955,14 +9997,11 @@ var hiprint = function (t) {
   }), $(document).ready(function () {
     console.log('document ready');
     console.log(window.autoConnect);
-		if (hiwebSocket.hasIo() && window.autoConnect){
-			hiwebSocket.start();
-		}
+    if (hiwebSocket.hasIo() && window.autoConnect) {
+      hiwebSocket.start();
+    }
   });
 }]);
-
-// 默认自定义拖拽列表
-import defaultTypeProvider from './etypes/default-etyps-provider'
 
 var defaultElementTypeProvider = defaultTypeProvider(hiprint)
 
