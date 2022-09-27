@@ -1778,6 +1778,10 @@
           hidden: false
         },
         {
+          name: 'tableSummaryTitle',
+          hidden: false
+        },
+        {
           name: 'tableSummary',
           hidden: false
         },
