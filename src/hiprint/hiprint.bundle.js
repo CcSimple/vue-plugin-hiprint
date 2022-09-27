@@ -6062,18 +6062,23 @@ var hiprint = function (t) {
         var parent = data.parent.className.endsWith('design') ? data.parent : data.parent.offsetParent;
         var paperW = parent.clientWidth, paperH = parent.clientHeight;
         // 当前元素宽高
-        var elementW = data.target.clientWidth, elementH = data.target.clientHeight;
+        var elementW = data.target.clientWidth, elementH = data.target.clientHeight,
+          diffLeft = 0, diffTop = 0;
+        if (o.options.designTarget.options.transform) {
+          var info = o.options.designTarget.options.getRectInfo();
+          diffLeft = window.hinnn.pt.toPx(info.diffW), diffTop = window.hinnn.pt.toPx(info.diffH);
+        }
         // 左右
-        if (data.left < 0) {
-          data.left = 0
-        } else if (data.left >= paperW - elementW) {
-          data.left = paperW - elementW
+        if (data.left < 0 - diffLeft) {
+          data.left = 0 - diffLeft
+        } else if (data.left >= paperW - elementW + diffLeft) {
+          data.left = paperW - elementW + diffLeft
         }
         // 上下
-        if (data.top < 0) {
-          data.top = 0
-        } else if (data.top >= paperH - elementH) {
-          data.top = paperH - elementH
+        if (data.top < 0 - diffTop) {
+          data.top = 0 - diffTop
+        } else if (data.top >= paperH - elementH + diffTop) {
+          data.top = paperH - elementH + diffTop
         }
         i.data = data
       }
