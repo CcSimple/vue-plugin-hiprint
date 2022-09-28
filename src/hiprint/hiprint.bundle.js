@@ -1298,25 +1298,23 @@ var hiprint = function (t) {
         var e = this, c = e.designTarget.find(".hiprint-printElement-content");
         if (e._editing) {
           c && c.css("cursor") && c.removeClass("editing") && c.removeAttr("contenteditable");
-          if (!clear) {
-            var t = c.text(), title = e.options.title + "：";
-            console.log('t',t)
-            console.log('startsWith',t.startsWith(title))
-            if (t.startsWith(title) && e.options.field) {
-              if (t.length > title.length) {
-                e.options.testData = t.split("：")[1];
-              } else {
-                e.options.title = t;
-                e.options.testData = "";
-              }
+          var t = c.text(), title = e.options.title + "：";
+          if (t.startsWith(title) && e.options.field) {
+            if (t.length > title.length) {
+              e.options.testData = t.split("：")[1];
             } else {
               e.options.title = t;
+              e.options.testData = "";
             }
+          } else {
+            e.options.title = t;
+          }
+          if (!clear) {
             _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger(e.getPrintElementSelectEventKey(), {
               printElement: e
             });
-            e.submitOption();
           }
+          e.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + e.templateId, "编辑修改");
           e._editing = false;
         }
       }, BasePrintElement.prototype.getPrintElementSelectEventKey = function () {
@@ -9235,14 +9233,8 @@ var hiprint = function (t) {
       function t(t, e) {
         var n = this;
         this.printElementOptionSettingPanel = {}, this.printTemplate = t, this.settingContainer = $(e), o.a.event.on(t.getPrintElementSelectEventKey(), function (t) {
-          if (n.lastPrintElement && n.lastPrintElement._editing) {
-            n.lastPrintElement.updateByContent(true);
-          }
           n.buildSetting(t);
         }), o.a.event.on(t.getBuildCustomOptionSettingEventKey(), function (t) {
-          if (n.lastPrintElement && n.lastPrintElement._editing) {
-            n.lastPrintElement.updateByContent(true);
-          }
           n.buildSettingByCustomOptions(t);
         }), o.a.event.on('clearSettingContainer', function () {
           n.clearSettingContainer();
