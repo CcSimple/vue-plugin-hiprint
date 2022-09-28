@@ -9243,24 +9243,7 @@ var hiprint = function (t) {
 
       return t.prototype.init = function () {
       }, t.prototype.clearSettingContainer = function () {
-        if (this.lastPrintElement) {
-          if (this.lastPrintElement._editing) {
-            this.lastPrintElement.updateByContent(true);
-          }
-          var o = this.lastPrintElement.getConfigOptions()
-          if (o && o.tabs && o.tabs.length) {
-            this.lastPrintElement.getPrintElementOptionTabs().forEach(function (t) {
-              t.list && t.list.forEach(function (e) {
-                e.destroy();
-              })
-            })
-          } else {
-            this.lastPrintElement.getPrintElementOptionItems().forEach(function (t) {
-              t.destroy();
-            })
-          }
-        }
-        this.lastPrintElement = void 0, this.settingContainer.html("");
+        this.clearLastPrintElement(), this.settingContainer.html("");
       }, t.prototype.clearLastPrintElement = function () {
         if (this.lastPrintElement) {
           if (this.lastPrintElement._editing) {
