@@ -125,6 +125,10 @@
   /*height: calc(100vh - 150px);*/
   padding: 0;
 }
+/* 元素双击编辑 */
+.design .editing {
+  border: 1px solid red !important;
+}
 
 /* hiprint-pagination */
 .hiprint-pagination {

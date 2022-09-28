@@ -1260,12 +1260,65 @@ var hiprint = function (t) {
       }, BasePrintElement.prototype.updateTargetWidth = function (t) {
         t.css("width", this.options.displayWidth());
       }, BasePrintElement.prototype.getDesignTarget = function (t) {
-        var e = this;
-        return this.designTarget = this.getHtml(t)[0].target, this.designPaper = t, this.designTarget.click(function () {
-          _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger(e.getPrintElementSelectEventKey(), {
-            printElement: e
-          });
+        var e = this, lastTimeStamp = 0;
+        return this.designTarget = this.getHtml(t)[0].target, this.designPaper = t, this.designTarget.click(function (ev) {
+          if (ev.timeStamp - lastTimeStamp > 500) {
+            _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger(e.getPrintElementSelectEventKey(), {
+              printElement: e
+            });
+          }
+          lastTimeStamp = ev.timeStamp;
+        }), this.designTarget.dblclick(function (ev) {
+          var c = e.designTarget.find(".hiprint-printElement-content");
+          if (c) {
+            var p = e.designTarget.find(".resize-panel");
+            if (e.printElementType.type == "text" && !(e.options.textType && "text" != e.options.textType)) {
+              e._editing = true;
+              c.css("cursor", "text"), c.addClass("editing");
+              c.attr("contenteditable", true), p && p.css("display", "none");
+              e.selectEnd(c);
+            }
+          }
         }), this.designTarget;
+      }, BasePrintElement.prototype.selectEnd = function (el) {
+        el.focus();
+        if (typeof window.getSelection != "undefined"
+          && typeof document.createRange != "undefined") {
+          var r = document.createRange();
+          r.selectNodeContents(el[0]);
+          r.collapse(false);
+          var sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(r);
+        } else if (typeof document.body.createTextRange != "undefined") {
+          var r = document.body.createTextRange();
+          r.moveToElementText(el[0]), r.collapse(false), r.select();
+        }
+      }, BasePrintElement.prototype.updateByContent = function (clear) {
+        var e = this, c = e.designTarget.find(".hiprint-printElement-content");
+        if (e._editing) {
+          c && c.css("cursor") && c.removeClass("editing") && c.removeAttr("contenteditable");
+          if (!clear) {
+            var t = c.text(), title = e.options.title + "：";
+            console.log('t',t)
+            console.log('startsWith',t.startsWith(title))
+            if (t.startsWith(title) && e.options.field) {
+              if (t.length > title.length) {
+                e.options.testData = t.split("：")[1];
+              } else {
+                e.options.title = t;
+                e.options.testData = "";
+              }
+            } else {
+              e.options.title = t;
+            }
+            _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger(e.getPrintElementSelectEventKey(), {
+              printElement: e
+            });
+            e.submitOption();
+          }
+          e._editing = false;
+        }
       }, BasePrintElement.prototype.getPrintElementSelectEventKey = function () {
         return "PrintElementSelectEventKey_" + this.templateId;
       }, BasePrintElement.prototype.design = function (t, e) {
@@ -1747,6 +1800,12 @@ var hiprint = function (t) {
       }, BasePrintElement.prototype.bingCopyEvent = function (t) {
         var n = this;
         t.keydown(function (r) {
+          if (n._editing) {
+            if (!(r.altKey) && 13 == r.keyCode) {
+              n.updateByContent();
+              return
+            }
+          }
           // ctrl + c / command + c
           if ((r.ctrlKey || r.metaKey) && 67 == r.keyCode) {
             n.copyJson();
@@ -1817,6 +1876,10 @@ var hiprint = function (t) {
         t.attr("tabindex", "1"), t.keydown(function (r) {
           // 处理 table / input 输入时 删除元素问题
           if ('INPUT' == r.target.tagName) {
+            return;
+          }
+          // 元素编辑
+          if (n._editing && !(r.altKey)) {
             return;
           }
           // 元素禁止移动
@@ -4203,6 +4266,7 @@ var hiprint = function (t) {
       function t() {
         this.name = "tableSummaryTitle"
       }
+
       return t.prototype.createTarget = function () {
         return this.target = $('<div class="hiprint-option-item"><div class="hiprint-option-item-label">底部聚合标题</div><div class="hiprint-option-item-field"><select class="auto-submit"><option value="">默认</option><option value="true">显示</option><option value="false">隐藏</option></select></div></div>'), this.target;
       }, t.prototype.getValue = function () {
@@ -9171,8 +9235,14 @@ var hiprint = function (t) {
       function t(t, e) {
         var n = this;
         this.printElementOptionSettingPanel = {}, this.printTemplate = t, this.settingContainer = $(e), o.a.event.on(t.getPrintElementSelectEventKey(), function (t) {
+          if (n.lastPrintElement && n.lastPrintElement._editing) {
+            n.lastPrintElement.updateByContent(true);
+          }
           n.buildSetting(t);
         }), o.a.event.on(t.getBuildCustomOptionSettingEventKey(), function (t) {
+          if (n.lastPrintElement && n.lastPrintElement._editing) {
+            n.lastPrintElement.updateByContent(true);
+          }
           n.buildSettingByCustomOptions(t);
         }), o.a.event.on('clearSettingContainer', function () {
           n.clearSettingContainer();
@@ -9182,6 +9252,9 @@ var hiprint = function (t) {
       return t.prototype.init = function () {
       }, t.prototype.clearSettingContainer = function () {
         if (this.lastPrintElement) {
+          if (this.lastPrintElement._editing) {
+            this.lastPrintElement.updateByContent(true);
+          }
           var o = this.lastPrintElement.getConfigOptions()
           if (o && o.tabs && o.tabs.length) {
             this.lastPrintElement.getPrintElementOptionTabs().forEach(function (t) {
@@ -9198,6 +9271,9 @@ var hiprint = function (t) {
         this.lastPrintElement = void 0, this.settingContainer.html("");
       }, t.prototype.clearLastPrintElement = function () {
         if (this.lastPrintElement) {
+          if (this.lastPrintElement._editing) {
+            this.lastPrintElement.updateByContent(true);
+          }
           if (this.lastPrintElement._printElementOptionTabs) {
             this.lastPrintElement._printElementOptionTabs.forEach(function (t) {
               t.list && t.list.forEach(function (e) {
