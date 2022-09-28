@@ -1,5 +1,22 @@
 版本及更新记录
 ------------------------------
+## 0.0.32 (2022-09-28)
+<details>
+  <summary>1. 🌈 新增支持 双击编辑 text 元素</summary>
+</details>
+<details>
+  <summary>2. 🌈 新增 列参数: tableSummaryTitle 设置是否显示聚合函数标题</summary>
+</details>
+<details>
+  <summary>3. 🌈 新增 参数: pageBreak 强制分页(让元素下一页开始打印)</summary>
+</details>
+<details>
+  <summary>4. 🐛 fix 旋转后 拖拽 边界限制 bug</summary>
+</details>
+<details>
+  <summary>5. 🐛 fix 表格 "一行多组" bug</summary>
+</details>
+
 ## 0.0.30 (2022-09-01)
 <details>
   <summary>1. 🌈 新增支持 选择图片后根据原始宽高自定义调整元素宽高</summary>
