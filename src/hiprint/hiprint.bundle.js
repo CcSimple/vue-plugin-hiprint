@@ -1274,7 +1274,13 @@ var hiprint = function (t) {
             var p = e.designTarget.find(".resize-panel");
             if (e.printElementType.type == "text" && !(e.options.textType && "text" != e.options.textType)) {
               e._editing = true;
+              e.designTarget.hidraggable('update', {draggable: false});
               c.css("cursor", "text"), c.addClass("editing");
+              c.click(function (ev) {
+                if (e._editing) {
+                  ev.stopPropagation();
+                }
+              })
               c.attr("contenteditable", true), p && p.css("display", "none");
               e.selectEnd(c);
             }
@@ -1297,7 +1303,7 @@ var hiprint = function (t) {
       }, BasePrintElement.prototype.updateByContent = function (clear) {
         var e = this, c = e.designTarget.find(".hiprint-printElement-content");
         if (e._editing) {
-          c && c.css("cursor") && c.removeClass("editing") && c.removeAttr("contenteditable");
+          c && c.css("cursor", "") && c.removeClass("editing") && c.removeAttr("contenteditable");
           var t = c.text(), title = e.options.title + "：";
           if (t.startsWith(title) && e.options.field) {
             if (t.length > title.length) {
@@ -1316,6 +1322,8 @@ var hiprint = function (t) {
           }
           e.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + e.templateId, "编辑修改");
           e._editing = false;
+          var draggable = e.options.draggable == undefined || true == e.options.draggable;
+          e.designTarget.hidraggable('update', {draggable: draggable});
         }
       }, BasePrintElement.prototype.getPrintElementSelectEventKey = function () {
         return "PrintElementSelectEventKey_" + this.templateId;
@@ -9095,6 +9103,9 @@ var hiprint = function (t) {
       }, t.prototype.bindBatchMoveElement = function () {
         var t = this;
         this.designPaper.getTarget().on("mousemove", function (e) {
+          if ((e.target.className && _typeof(e.target.className) == "string" && (e.target.className.includes("resize-panel") || e.target.className.includes("editing")))) {
+            return;
+          }
           if (e.currentTarget.className == t.designPaper.target[0].className) {
             t.mouseOffsetX = e.offsetX, t.mouseOffsetY = e.offsetY;
           } else {
@@ -9103,6 +9114,9 @@ var hiprint = function (t) {
           s.a.instance.draging || 1 === e.buttons && s.a.instance.rectDraging && (t.mouseRect && (t.mouseRect.updateRect(e.pageX, e.pageY), t.updateRectPanel(t.mouseRect)));
         }).on("mousedown", function (e) {
           s.a.instance.rectDraging = true;
+          if ((e.target.className && _typeof(e.target.className) == "string" && (e.target.className.includes("resize-panel") || e.target.className.includes("editing")))) {
+            return;
+          }
           s.a.instance.draging || (t.mouseRect && t.mouseRect.target && t.mouseRect.target.remove(), 1 === e.buttons && e.target.className == "hiprint-printPaper hidroppable design" && (t.mouseRect = new at(e.pageX, e.pageY, s.a.instance.dragLengthCNum(e.pageX - t.designPaper.getTarget().offset().left, p.a.instance.movingDistance), s.a.instance.dragLengthCNum(e.pageY - t.designPaper.getTarget().offset().top, p.a.instance.movingDistance))));
         }).on("mouseup", function (e) {
           s.a.instance.rectDraging = false;
