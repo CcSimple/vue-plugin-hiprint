@@ -6336,7 +6336,7 @@ var hiprint = function (t) {
       },
       update: function update(e, n) {
         if (n && "object" == typeof n) {
-          Object.keys(n).forEach(function (k) {
+          t.data(e[0], "hidraggable") && Object.keys(n).forEach(function (k) {
             t.data(e[0], "hidraggable").options[k] = n[k]
           })
         }
