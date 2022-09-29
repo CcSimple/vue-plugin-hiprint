@@ -1,5 +1,13 @@
 版本及更新记录
 ------------------------------
+## 0.0.32-fix (2022-09-29)
+<details>
+  <summary>1. 🐛 fix 双击编辑后 拖拽/选中 系列bug</summary>
+</details>
+<details>
+  <summary>2. 🐛 fix 双击编辑 回车/点击其他元素/面板 确认编辑的bug</summary>
+</details>
+
 ## 0.0.32 (2022-09-28)
 <details>
   <summary>1. 🌈 新增支持 双击编辑 text 元素</summary>
