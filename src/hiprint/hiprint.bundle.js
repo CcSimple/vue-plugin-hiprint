@@ -6149,7 +6149,7 @@ var hiprint = function (t) {
         // 当前元素宽高
         var elementW = data.target.clientWidth, elementH = data.target.clientHeight,
           diffLeft = 0, diffTop = 0;
-        if (o.options.designTarget.options.transform) {
+        if (o.options.designTarget && o.options.designTarget.options.transform) {
           var info = o.options.designTarget.options.getRectInfo();
           diffLeft = window.hinnn.pt.toPx(info.diffW), diffTop = window.hinnn.pt.toPx(info.diffH);
         }
