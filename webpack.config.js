@@ -26,13 +26,13 @@ module.exports = {
     ]),
   ],
   externals: {
-    jquery: 'jquery',
+    jquery: 'jQuery',
     '@claviska/jquery-minicolors': '@claviska/jquery-minicolors',
-    jsbarcode: 'jsbarcode',
-    'socket.io-client': 'socket.io-client',
+    jsbarcode: 'JsBarcode',
+    'socket.io-client': 'io',
     html2canvas: 'html2canvas',
     canvg: 'canvg',
-    jspdf: 'jspdf',
+    jspdf: 'jsPDF',
   },
   optimization:{
     minimizer:[

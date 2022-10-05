@@ -35,10 +35,7 @@ function _typeof(obj) {
 /**
  * import 相关资源
  */
-window.$ = window.jQuery = require('jquery')
-window.autoConnect = true;
-// 调用浏览器打印js
-import "./plugins/jquery.hiwprint.js";
+import $ from "jquery";
 // js颜色选择
 import "@claviska/jquery-minicolors/jquery.minicolors.min";
 // 条形码
@@ -58,6 +55,8 @@ import {Canvg, Document} from "canvg";
 // 默认自定义拖拽列表
 import defaultTypeProvider from "./etypes/default-etyps-provider";
 
+window.$ = window.jQuery = $;
+window.autoConnect = true;
 window.io = io;
 
 var hiprint = function (t) {

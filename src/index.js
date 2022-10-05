@@ -1,5 +1,8 @@
 import {hiprint, defaultElementTypeProvider} from './hiprint/hiprint.bundle.js'
-require('./hiprint/hiprint.config')
+// 调用浏览器打印js
+import "./hiprint/plugins/jquery.hiwprint.js";
+// 默认配置
+import "./hiprint/hiprint.config";
 // 样式
 import "./hiprint/css/hiprint.css"
 import "./hiprint/css/print-lock.css"
@@ -69,6 +72,7 @@ let hiPrintPlugin = {
   }
 }
 
+window.hiprint = hiprint;
 export {
   autoConnect,
   disAutoConnect,
