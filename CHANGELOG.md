@@ -1,5 +1,35 @@
 版本及更新记录
 ------------------------------
+## 0.0.34 (2022-10-10)
+<details>
+  <summary>1. 🐛 fix 辅助元素 错位问题</summary>
+</details>
+<details>
+  <summary>2. ✨ 调整优化 支持 cdn 引入 (非vue环境也可正常使用)</summary>
+
+```html
+<head>
+    <!-- 打印样式是必须的，你可以调整成自由链接， 注意名称 print-lock.css -->
+    <link rel="stylesheet" type="text/css" media="print" href="https://unpkg.com/vue-plugin-hiprint@0.0.34/dist/print-lock.css" />
+    <!-- 下列使用的都是 unpkg提供的 稳定性未知, 建议下载自行处理  -->
+    <!-- jquery 必须 -->
+    <script src="https://unpkg.com/jquery@3.6.1/dist/jquery.js"></script>
+    <!-- 条形码 -->
+    <script src="https://unpkg.com/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <!-- 颜色选择器 -->
+    <script src="https://unpkg.com/@claviska/jquery-minicolors@2.3.6/jquery.minicolors.min.js"></script>
+    <!-- 直接打印(print2)需要 -->
+    <script src="https://unpkg.com/socket.io-client@4.5.1/dist/socket.io.min.js"></script>
+    <!-- toPdf需要 -->
+    <script src="https://unpkg.com/browse/canvg@4.0.1/dist/index.cjs"></script>
+    <script src="https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.js"></script>
+    <!-- vue-plugin-hiprint 😃 -->
+    <script src="https://unpkg.com/vue-plugin-hiprint@0.0.34/dist/vue-plugin-hiprint.js"></script>
+</head>
+```
+</details>
+
 ## 0.0.32-fix (2022-09-29)
 <details>
   <summary>1. 🐛 fix 双击编辑后 拖拽/选中 系列bug</summary>
