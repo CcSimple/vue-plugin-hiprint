@@ -2579,7 +2579,7 @@ var hiprint = function (t) {
     }
 
     return t.prototype.isPositionLeftOrRight = function (t, h) {
-      return this.top <= t && this.top + h > t && this.beginPrintPaperIndex == this.endPrintPaperIndex;
+      return this.top <= t && this.top > t && this.beginPrintPaperIndex == this.endPrintPaperIndex;
     }, t;
   }();
 }, function (t, e, n) {
