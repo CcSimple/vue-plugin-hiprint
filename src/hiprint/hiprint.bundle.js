@@ -57,7 +57,6 @@ import defaultTypeProvider from "./etypes/default-etyps-provider";
 
 window.$ = window.jQuery = $;
 window.autoConnect = true;
-window.io = io;
 
 var hiprint = function (t) {
   var e = {};
@@ -6880,7 +6879,7 @@ var hiprint = function (t) {
       var _this = this;
 
       var t = this;
-      window.WebSocket ? this.socket || (this.socket = io(this.host, {
+      window.WebSocket ? this.socket || (this.socket = window.io(this.host, {
         reconnectionAttempts: 5
       }), this.socket.on("connect", function (e) {
         t.opened = !0, console.log("Websocket opened."), _this.socket.on("successs", function (t) {
