@@ -96,6 +96,8 @@ this.$pluginName
 
 // 引入后使用示例
 this.$pluginName.init();
+// 下列方法都是没有拖拽设计页面的, 相当于代码模式, 使用代码设计页面
+// 想要实现拖拽设计页面,请往下看 '自定义设计'
 var hiprintTemplate = new this.$pluginName.PrintTemplate();
 var panel = hiprintTemplate.addPrintPanel({ width: 100, height: 130, paperFooter: 340, paperHeader: 10 });
 //文本
@@ -130,6 +132,8 @@ disAutoConnect(); // 取消自动连接直接打印客户端
 
 // 引入后使用示例
 hiprint.init();
+// 下列方法都是没有拖拽设计页面的, 相当于代码模式, 使用代码设计页面
+// 想要实现拖拽设计页面,请往下看 '自定义设计'
 var hiprintTemplate = new hiprint.PrintTemplate();
 var panel = hiprintTemplate.addPrintPanel({ width: 100, height: 130, paperFooter: 340, paperHeader: 10 });
 //文本
@@ -147,15 +151,18 @@ hiprintTemplate.print({});
 ## 自定义设计 （详情查看demo目录）
 ```javascript
 import {hiprint,defaultElementTypeProvider} from 'vue-plugin-hiprint'
+// 初始化可拖拽的元素
 hiprint.init({
   providers: [new defaultElementTypeProvider()]
 })
+// $('.ep-draggable-item') 包含 tid, 与上边的 provider 中的 tid 对应 才能正常拖拽生成元素
 hiprint.PrintElementTypeManager.buildByHtml($('.ep-draggable-item'));
 hiprintTemplate = new hiprint.PrintTemplate({
-  template: {},
-  settingContainer: '#PrintElementOptionSetting',
-  paginationContainer: '.hiprint-printPagination'
+  template: {}, // 模板json
+  settingContainer: '#PrintElementOptionSetting', // 元素参数容器
+  paginationContainer: '.hiprint-printPagination' // 多面板的容器， 实现多面板， 需要在添加一个 <div class="hiprint-printPagination"/>
 });
+// 设计器的容器
 hiprintTemplate.design('#hiprint-printTemplate');
 ```
 
