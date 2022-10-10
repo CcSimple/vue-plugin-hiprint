@@ -349,7 +349,7 @@ export const bProvider = function (ops) {
         new hiprint.PrintElementTypeGroup("表格/其他", [
           {
             tid: 'bProviderModule.table', title: '订单数据',
-            type: 'tableCustom',
+            type: 'table',
             options: {
               field: 'table',
               fields: [

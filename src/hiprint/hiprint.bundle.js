@@ -690,87 +690,6 @@ var hiprint = function (t) {
             lineHeight: void 0,
             width: 550
           }
-        }, this.tableCustom = {
-          supportOptions: [{
-            name: "field",
-            hidden: !1
-          }, {
-            name: "fontFamily",
-            hidden: !1
-          }, {
-            name: "fontSize",
-            hidden: !1
-          }, {
-            name: "textAlign",
-            hidden: !1
-          }, {
-            name: "tableBorder",
-            hidden: !1
-          }, {
-            name: "tableHeaderBorder",
-            hidden: !1
-          }, {
-            name: "tableHeaderCellBorder",
-            hidden: !1
-          }, {
-            name: "tableHeaderRowHeight",
-            hidden: !1
-          }, {
-            name: "tableHeaderFontSize",
-            hidden: !1
-          }, {
-            name: "tableHeaderFontWeight",
-            hidden: !1
-          }, {
-            name: "tableHeaderBackground",
-            hidden: !1
-          }, {
-            name: "tableBodyRowHeight",
-            hidden: !1
-          }, {
-            name: "tableBodyRowBorder",
-            hidden: !1
-          }, {
-            name: "tableBodyCellBorder",
-            hidden: !1
-          }, {
-            name: 'tableFooterBorder',
-            hidden: !1
-          }, {
-            name: 'tableFooterCellBorder',
-            hidden: !1
-          }, {
-            name: "axis",
-            hidden: !1
-          }, {
-            name: "lHeight",
-            hidden: !1
-          }, {
-            name: "autoCompletion",
-            hidden: !1
-          }, {
-            name: "tableFooterRepeat",
-            hidden: !1
-          }],
-          default: {
-            fontFamily: void 0,
-            fontSize: void 0,
-            fontWeight: "",
-            textAlign: void 0,
-            tableBorder: void 0,
-            tableHeaderBorder: void 0,
-            tableHeaderCellBorder: void 0,
-            tableHeaderBackground: void 0,
-            tableHeaderRowHeight: void 0,
-            tableHeaderFontWeight: void 0,
-            tableBodyCellBorder: void 0,
-            tableFooterBorder: void 0,
-            tableFooterCellBorder: void 0,
-            tableBodyRowHeight: void 0,
-            letterSpacing: "",
-            lineHeight: void 0,
-            width: 550
-          }
         }, this.hline = {
           supportOptions: [{
             name: "borderColor",
@@ -5240,19 +5159,19 @@ var hiprint = function (t) {
           fields: this.options.fields,
           trs: this.designTarget.find(".hiprint-printElement-tableTarget:eq(0)").find("tbody tr"),
           handle: this.designTarget.find(".hiprint-printElement-tableTarget:eq(0)").find("thead"),
-          isEnableEdit: this.printElementType.editable,
-          columnDisplayEditable: this.printElementType.columnDisplayEditable,
-          columnDisplayIndexEditable: this.printElementType.columnDisplayIndexEditable,
-          columnResizable: this.printElementType.columnResizable,
-          columnAlignEditable: this.printElementType.columnAlignEditable,
-          isEnableEditText: this.printElementType.columnTitleEditable,
-          isEnableEditField: this.printElementType.isEnableEditField,
-          isEnableContextMenu: this.printElementType.isEnableContextMenu,
-          isEnableInsertRow: this.printElementType.isEnableInsertRow,
-          isEnableDeleteRow: this.printElementType.isEnableDeleteRow,
-          isEnableInsertColumn: this.printElementType.isEnableInsertColumn,
-          isEnableDeleteColumn: this.printElementType.isEnableDeleteColumn,
-          isEnableMergeCell: this.printElementType.isEnableMergeCell
+          isEnableEdit: this.printElementType.editable ? this.printElementType.editable : !0,
+          columnDisplayEditable: this.printElementType.columnDisplayEditable != undefined ? this.printElementType.columnDisplayEditable : !0,
+          columnDisplayIndexEditable: this.printElementType.columnDisplayIndexEditable != undefined ? this.printElementType.columnDisplayIndexEditable : !0,
+          columnResizable: this.printElementType.columnResizable != undefined ? this.printElementType.columnResizable : !0,
+          columnAlignEditable: this.printElementType.columnAlignEditable != undefined ? this.printElementType.columnAlignEditable : !0,
+          isEnableEditText: this.printElementType.columnTitleEditable != undefined ? this.printElementType.columnTitleEditable : !0,
+          isEnableEditField: this.printElementType.isEnableEditField != undefined ? this.printElementType.isEnableEditField : !0,
+          isEnableContextMenu: this.printElementType.isEnableContextMenu != undefined ? this.printElementType.isEnableContextMenu : !0,
+          isEnableInsertRow: this.printElementType.isEnableInsertRow != undefined ? this.printElementType.isEnableInsertRow : !0,
+          isEnableDeleteRow: this.printElementType.isEnableDeleteRow != undefined ? this.printElementType.isEnableDeleteRow : !0,
+          isEnableInsertColumn: this.printElementType.isEnableInsertColumn != undefined ? this.printElementType.isEnableInsertColumn : !0,
+          isEnableDeleteColumn: this.printElementType.isEnableDeleteColumn != undefined ? this.printElementType.isEnableDeleteColumn : !0,
+          isEnableMergeCell: this.printElementType.isEnableMergeCell != undefined ? this.printElementType.isEnableMergeCell : !0
         }), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.event.on("updateTable" + this.hitable.id, function () {
           t.updateDesignViewFromOptions();
         });
@@ -8329,244 +8248,6 @@ var hiprint = function (t) {
         }), e;
       }, e;
     }(g.a),
-    X = n(7),
-    Y = function () {
-      var _t15 = function t(e, n) {
-        return (_t15 = Object.setPrototypeOf || _instanceof({
-          __proto__: []
-        }, Array) && function (t, e) {
-          t.__proto__ = e;
-        } || function (t, e) {
-          for (var n in e) {
-            e.hasOwnProperty(n) && (t[n] = e[n]);
-          }
-        })(e, n);
-      };
-
-      return function (e, n) {
-        function i() {
-          this.constructor = e;
-        }
-
-        _t15(e, n), e.prototype = null === n ? Object.create(n) : (i.prototype = n.prototype, new i());
-      };
-    }(),
-    J = function (t) {
-      function e(e, n) {
-        var i = t.call(this, e) || this;
-        return i.options = new q(n), i.options.setDefault(new q(p.a.instance.tableCustom.default).getPrintElementOptionEntity()), i.columns = i.options.columns, i;
-      }
-
-      return Y(e, t), e.prototype.updateDesignViewFromOptions = function () {
-        if (this.designTarget) {
-          var t = this.designTarget.find(".hiprint-printElement-table-content"),
-            e = this.getHtml(this.designPaper);
-          t.html(""), t.append(e[0].target.find(".hiprint-printElement-tableTarget"));
-          // 渲染完再处理样式 ==> fix 表脚边框参数设置问题
-          this.css(this.designTarget, this.getData()),
-            this.setHiReizeable();
-        }
-      }, e.prototype.getDesignTarget = function (t) {
-        var e = this;
-        return this.designTarget = this.getHtml(t)[0].target, this.css(this.designTarget, this.getData()), this.designPaper = t, this.designTarget.click(function () {
-          o.a.event.trigger(e.getPrintElementSelectEventKey(), {
-            printElement: e
-          });
-        }), this.designTarget.find("td").hidroppable({
-          accept: ".rn-draggable-item",
-          onDrop: function onDrop(t, e) {
-          },
-          onDragEnter: function onDragEnter(t, e) {
-            $(e).removeClass("rn-draggable-item");
-          },
-          onDragLeave: function onDragLeave(t, e) {
-            $(e).addClass("rn-draggable-item");
-          }
-        }), this.designTarget;
-      }, e.prototype.getConfigOptions = function () {
-        return p.a.instance.tableCustom;
-      }, e.prototype.createTarget = function (t, e, n) {
-        var i = $('<div class="hiprint-printElement hiprint-printElement-table" style="position: absolute;"><div class="hiprint-printElement-table-handle"></div><div class="hiprint-printElement-table-content" style="height:100%;width:100%"></span></div>');
-        return i.find(".hiprint-printElement-table-content").append(this.getTableHtml(e, n)), i;
-      }, e.prototype.getTableHtml = function (t, e) {
-        var n = $('<table class="hiprint-printElement-tableTarget" style="border-collapse: collapse;width:100%;"></table>');
-        return n.append(X.a.createTableHead(this.columns, this.options.getWidth())), n.append(X.a.createTableRow(this.columns, t, this.options, this.printElementType)), this.printElementType.footerFormatter && ("no" == this.options.tableFooterRepeat || X.a.createTableFooter(this.printElementType.columns, t, this.options, this.printElementType, e, t)).insertBefore(n.find("tbody")), n;
-      }, e.prototype.getHtml = function (t, e) {
-        this.setCurrenttemplateData(e), this.createTempContainer();
-        var n = this.getPaperHtmlResult(t, e);
-        return this.removeTempContainer(), n;
-      }, e.prototype.getPaperHtmlResult = function (t, e) {
-        var n = [],
-          i = this.getData(e),
-          o = this.getTableHtml(i, e),
-          r = this.createTarget(this.printElementType.title, [], e);
-        e ? this.updateTargetWidth(r) : this.updateTargetSize(r), this.css(r, i), this.css(o, i), this.getTempContainer().html(""), this.getTempContainer().append(r);
-        // 页脚导致 分页高度的问题, -> 获取到表格脚高度后移除避免重复
-        var tfh = r.find('tfoot').outerHeight() || 0;
-        r.find('tfoot').remove();
-        for (var a, p = this.getBeginPrintTopInPaperByReferenceElement(t), s = 0, l = !1; !l;) {
-          var u = 0,
-            d = t.getPaperFooter(s);
-          0 == s && p > d && "none" != t.panelPageRule && (p = p - d + t.paperHeader, n.push(new P.a({
-            target: void 0,
-            printLine: void 0
-          })), s++ , u = t.getContentHeight(s) - (p - t.paperHeader), d = t.getPaperFooter(s));
-          var c = n.length > 0 ? n[n.length - 1].target : void 0,
-            h = this.getRowsInSpecificHeight(u > 0 ? u : 0 == s ? d - p : t.getContentHeight(s), r, o, s, c, e, tfh);
-          l = h.isEnd;
-          var f = void 0;
-          h.target && (h.target.css("left", this.options.displayLeft()), h.target[0].height = ""), 0 == s || u > 0 ? (h.target && (a = p, h.target.css("top", p + "pt")), f = l && null != this.options.lHeight ? p + (h.height > this.options.lHeight ? h.height : this.options.lHeight) : p + h.height) : (h.target && (a = t.paperHeader, h.target.css("top", t.paperHeader + "pt")), f = t.paperHeader + h.height), n.push(new P.a({
-            target: h.target,
-            printLine: f,
-            referenceElement: new E.a({
-              top: this.options.getTop(),
-              left: this.options.getLeft(),
-              height: this.options.getHeight(),
-              width: this.options.getWidth(),
-              beginPrintPaperIndex: t.index,
-              bottomInLastPaper: f,
-              printTopInPaper: a
-            })
-          })), s++;
-        }
-
-        return n;
-      }, e.prototype.getRowsInSpecificHeight = function (t, e, n, i, r, a, tfh) {
-        var that = this;
-        var p = void 0,
-          s = n.find("tbody"),
-          l = o.a.pt.toPx(t);
-        e.find("tbody").html("");
-
-        for (var u = e.outerHeight(), d = []; ;) {
-          if (u <= l) {
-            if (0 == s.find("tr").length) {
-              a && this.options.autoCompletion && (this.autoCompletion(l, e), u = e.outerHeight()), p = {
-                target: e.clone(),
-                length: e.find("tbody tr").length,
-                height: o.a.px.toPt(u),
-                isEnd: !0
-              }, 0 == e.find("tbody tr").length && r && (p = {
-                target: void 0,
-                length: 0,
-                height: 0,
-                isEnd: !0
-              });
-            } else {
-              var c = s.find("tr:lt(1)");
-              e.find("tbody").append(c), u = e.outerHeight();
-              var h = c.data("rowData");
-              d.push(h), u += tfh > l && (s.prepend(c), d.pop(), u = e.outerHeight(), p = {
-                target: e.clone(),
-                length: e.find("tbody tr").length,
-                height: o.a.px.toPt(u),
-                isEnd: !1
-              });
-            }
-          } else p = {
-            target: void 0,
-            length: 0,
-            height: 0,
-            isEnd: !1
-          };
-
-          if (p) {
-            if ("last" == this.options.tableFooterRepeat && !p.isEnd) break;
-            if (this.printElementType.footerFormatter) {
-              X.a.createTableFooter(this.printElementType.columns, this.getData(a), this.options, this.printElementType, a, d).insertBefore(e.find("tbody"));
-              that.css(e, a);
-            }
-            break;
-          }
-        }
-
-        return p;
-      }, e.prototype.getData = function (t) {
-        if (!t) return [{}];
-        var f = this.getField();
-        var e = f ? f.split('.').reduce((a, c) => a ? a[c] : t ? t[c] : "", !1) || "" : "";
-        return e ? JSON.parse(JSON.stringify(e)) : [];
-      }, e.prototype.autoCompletion = function (t, e) {
-        for (var n, i = this.getEmptyRowTarget(), o = e.outerHeight(); t > o;) {
-          n = i.clone(), e.find("tbody").append(n), o = e.outerHeight();
-        }
-
-        n && n.remove();
-      }, e.prototype.getEmptyRowTarget = function () {
-        return X.a.createEmptyRowTarget(this.columns);
-      }, e.prototype.onResize = function (e, n, i, o, r) {
-        t.prototype.updateSizeAndPositionOptions.call(this, r, o, i, n), X.a.resizeTableCellWidth(this.designTarget, this.columns, this.options.getWidth());
-      }, e.prototype.getReizeableShowPoints = function () {
-        return ["s", "e"];
-      }, e.prototype.design = function (t, e) {
-        var n = this;
-        this.designTarget.hidraggable({
-          handle: this.designTarget.find(".hiprint-printElement-table-handle"),
-          axis: n.options.axis ? n.options.axis : void 0,
-          onDrag: function onDrag(t, i, o) {
-            n.updateSizeAndPositionOptions(i, o), n.createLineOfPosition(e);
-            s.a.instance.changed = !0;
-          },
-          designTarget: n,
-          moveUnit: "pt",
-          minMove: p.a.instance.movingDistance,
-          onBeforeDrag: function onBeforeDrag(t) {
-            s.a.instance.draging = !0, n.createLineOfPosition(e);
-          },
-          getScale: function getScale() {
-            return n.designPaper.scale || 1;
-          },
-          onStopDrag: function onStopDrag(t) {
-            if (s.a.instance.changed) o.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "移动");
-            s.a.instance.draging = !1, s.a.instance.changed = !1, n.removeLineOfPosition();
-          }
-        }), this.setHiReizeable(), this.designTarget.hireizeable({
-          showPoints: n.getReizeableShowPoints(),
-          // 是否显示宽高box
-          showSizeBox: p.a.instance.showSizeBox,
-          noContainer: !0,
-          onBeforeResize: function onBeforeResize() {
-            s.a.instance.draging = !0;
-          },
-          getScale: function getScale() {
-            return n.designPaper.scale || 1
-          },
-          onResize: function onResize(t, i, o, r, a) {
-            n.onResize(t, i, o, r, a), n.hitable.updateColumnGrips(), n.createLineOfPosition(e);
-          },
-          onStopResize: function onStopResize(r) {
-            o.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, r ? "旋转" : "大小");
-            s.a.instance.draging = !1, n.removeLineOfPosition();
-          }
-        }), this.bingKeyboardMoveEvent(this.designTarget, e);
-      }, e.prototype.setHiReizeable = function () {
-        var t = this;
-        this.hitable = new U.a({
-          table: this.designTarget.find("table"),
-          rows: this.columns,
-          resizeRow: !1,
-          resizeColumn: !0,
-          fields: this.options.fields,
-          trs: $(this.designTarget).find("tbody tr"),
-          handle: this.designTarget.find("table thead"),
-          columnDisplayEditable: !0,
-          columnDisplayIndexEditable: !0,
-          columnResizable: !0,
-          columnAlignEditable: !0,
-          isEnableEdit: !0,
-          isEnableEditText: !0,
-          isEnableEditField: !0,
-          isEnableContextMenu: !0,
-          isEnableInsertRow: !0,
-          isEnableDeleteRow: !0,
-          isEnableInsertColumn: !0,
-          isEnableDeleteColumn: !0,
-          isEnableMergeCell: !0
-        }), o.a.event.on("updateTable" + this.hitable.id, function () {
-          t.updateDesignViewFromOptions();
-        });
-      }, e;
-    }(f.a),
     Q = function () {
       var _t16 = function t(e, n) {
         return (_t16 = Object.setPrototypeOf || _instanceof({
@@ -8588,15 +8269,6 @@ var hiprint = function (t) {
         _t16(e, n), e.prototype = null === n ? Object.create(n) : (i.prototype = n.prototype, new i());
       };
     }(),
-    Z = function (t) {
-      function e(e) {
-        return t.call(this, e) || this;
-      }
-
-      return Q(e, t), e.prototype.createPrintElement = function (t) {
-        return new J(this, t);
-      }, e;
-    }(h),
     tt = function () {
       var _t17 = function t(e, n) {
         return (_t17 = Object.setPrototypeOf || _instanceof({
@@ -8638,7 +8310,7 @@ var hiprint = function (t) {
       }
 
       return t.createPrintElementType = function (t) {
-        return t.type = t.type || "text", "text" == t.type ? new et(t) : "table" == t.type ? new h(t) : "tableCustom" == t.type ? new Z(t) : new j(t);
+        return t.type = t.type || "text", "text" == t.type ? new et(t) : "table" == t.type ? new h(t) : new j(t);
       }, t;
     }(),
     it = function () {
