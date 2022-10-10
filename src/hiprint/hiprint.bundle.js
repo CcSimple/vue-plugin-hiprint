@@ -51,7 +51,7 @@ import vImg from "./css/image/v_img.svg";
 import {jsPDF} from "jspdf";
 import html2canvas from "html2canvas";
 // 解析svg 到 canvas, 二维码条形码需要
-import {Canvg, Document} from "canvg";
+import Canvg from 'canvg';
 // 默认自定义拖拽列表
 import defaultTypeProvider from "./etypes/default-etyps-provider";
 
@@ -9383,8 +9383,9 @@ var hiprint = function (t) {
         var that = this;
         t.find("svg").each(function (t, e) {
           var n = e.parentNode, p = that.parentWidthHeight(n),
-            i = Document.createCanvas(p.width, p.height),
-            ctx = i.getContext('2d'),
+            i = document.createElement("canvas");
+          i.width = p.width, i.height = p.height;
+          var ctx = i.getContext('2d'),
             str = new XMLSerializer().serializeToString(e);
           Canvg.fromString(ctx, str).render(), $(e).before(i), n.removeChild(e);
         });

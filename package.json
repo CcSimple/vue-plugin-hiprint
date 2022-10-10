@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "@claviska/jquery-minicolors": "^2.3.6",
-    "canvg": "^4.0.0",
+    "canvg": "^3.0.10",
     "html2canvas": "^1.4.1",
     "jquery": "^3.6.0",
     "jsbarcode": "^3.11.5",
