@@ -57,6 +57,7 @@ import defaultTypeProvider from "./etypes/default-etyps-provider";
 
 window.$ = window.jQuery = $;
 window.autoConnect = true;
+window.io = io;
 
 var hiprint = function (t) {
   var e = {};
