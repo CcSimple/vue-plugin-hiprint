@@ -1,6 +1,11 @@
 版本及更新记录
 ------------------------------
-## 0.0.34 (2022-10-10)
+## 0.0.35 (2022-10-10)  beta版
+<details>
+  <summary>1. ⚠️  移除 'tableCustom' 元素 'table' 默认可编辑,插入 </summary>
+</details>
+
+## 0.0.34-fix (2022-10-10)
 <details>
   <summary>1. 🐛 fix 辅助元素 错位问题</summary>
 </details>
