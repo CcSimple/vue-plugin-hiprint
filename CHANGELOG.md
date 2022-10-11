@@ -1,5 +1,10 @@
 版本及更新记录
 ------------------------------
+## 0.0.36-fix (2022-10-11)
+<details>
+  <summary>1. 🐛️ fix webpack/vue2.x npm 引入错误</summary>
+</details>
+
 ## 0.0.36 (2022-10-10)
 <details>
   <summary>1. ⚠️  移除 'tableCustom' 元素 'table' 默认可编辑,插入 </summary>
