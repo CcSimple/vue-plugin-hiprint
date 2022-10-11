@@ -26,9 +26,19 @@ module.exports = {
     ]),
   ],
   externals: {
-    jquery: "jQuery",
+    jquery: {
+      commonjs: "jquery",
+      commonjs2: "jquery",
+      amd: "jquery",
+      root: "jQuery",
+    },
     "@claviska/jquery-minicolors": "@claviska/jquery-minicolors",
-    jsbarcode: "JsBarcode",
+    jsbarcode: {
+      commonjs: "jsbarcode",
+      commonjs2: "jsbarcode",
+      amd: "jsbarcode",
+      root: "JsBarcode",
+    },
     "socket.io-client": {
       commonjs: "socket.io-client",
       commonjs2: "socket.io-client",
