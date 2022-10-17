@@ -9349,7 +9349,7 @@ var hiprint = function (t) {
               format: this.printPanels[0].paperType ? this.printPanels[0].paperType.toLocaleLowerCase() : [r, a]
             }),
             l = this.getHtml(t, n);
-          if (n) {
+          if (n && undefined != n.isDownload) {
             isDownload = n.isDownload
           }
           this.createTempContainer();
