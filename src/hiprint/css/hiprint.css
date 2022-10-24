@@ -57,7 +57,7 @@
   border-radius: 6px 6px 0 0;
   white-space: nowrap;
   line-height: normal;
-  font-family: normal;
+  font-family: unset;
   letter-spacing: normal;
   z-index: 9;
 }
