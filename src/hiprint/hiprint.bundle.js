@@ -2175,9 +2175,10 @@ var hiprint = function (t) {
         var a = $("<tfoot></tfoot>"), p = this.getFooterFormatter(n, i);
         var tst = this.tableSummaryTitle;
         let tSumData = n.tableFooterRepeat == "last" ? e : r;
-        if (n.tableFooterRepeat != 'no' && n.columns[0].columns.some(function (column) {return column.tableSummary})) {
+        let idx = n.columns.length - 1;
+        if (n.tableFooterRepeat != 'no' && n.columns[idx].columns.some(function (column) {return column.tableSummary})) {
           var tableFooter = $("<tr></tr>");
-          n.columns[0].columns.filter(function (t) {
+          n.columns[idx].columns.filter(function (t) {
             return t.checked;
           }).forEach(function (column) {
             var fieldData = tSumData.filter(function (row) {
