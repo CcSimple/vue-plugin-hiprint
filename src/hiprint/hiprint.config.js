@@ -1687,6 +1687,10 @@
           hidden: false
         },
         {
+          name: 'tableSummaryText',
+          hidden: false
+        },
+        {
           name: 'tableSummary',
           hidden: false
         },
