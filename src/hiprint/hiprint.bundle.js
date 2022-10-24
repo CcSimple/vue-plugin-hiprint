@@ -4084,6 +4084,9 @@ var hiprint = function (t) {
         }));
       }, t.prototype.buildData = function () {
         var t = this, e = [];
+        if (t.options.columns.length > 1) {
+          return this.value;
+        }
         t.printElementType.makeColumnObj(t.allColumns);
         this.target.find("input").map(function (n, i) {
           var o = $(i).attr("column-id");
