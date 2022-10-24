@@ -4198,7 +4198,7 @@ var hiprint = function (t) {
       return t.prototype.createTarget = function () {
         return this.target = $('<div class="hiprint-option-item"><div class="hiprint-option-item-label">底部聚合标题</div><div class="hiprint-option-item-field"><select class="auto-submit"><option value="">默认</option><option value="true">显示</option><option value="false">隐藏</option></select></div></div>'), this.target;
       }, t.prototype.getValue = function () {
-        return "true" == this.target.find("select").val();
+        return !("false" == this.target.find("select").val());
       }, t.prototype.setValue = function (t) {
         this.target.find("select").val((null == t ? "" : t).toString());
       }, t.prototype.destroy = function () {
