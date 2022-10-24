@@ -1691,6 +1691,10 @@
           hidden: false
         },
         {
+          name: 'tableSummaryAlign',
+          hidden: false
+        },
+        {
           name: 'formatter2',
           hidden: false
         },
