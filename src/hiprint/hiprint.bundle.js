@@ -2176,9 +2176,10 @@ var hiprint = function (t) {
         var tst = this.tableSummaryTitle;
         let tSumData = n.tableFooterRepeat == "last" ? e : r;
         let idx = n.columns.length - 1;
-        if (n.tableFooterRepeat != 'no' && n.columns[idx].columns.some(function (column) {return column.tableSummary})) {
+        var rowColumns = this.rowColumns || n.columns[idx].columns;
+        if (n.tableFooterRepeat != 'no' && rowColumns.some(function (column) {return column.tableSummary})) {
           var tableFooter = $("<tr></tr>");
-          n.columns[idx].columns.filter(function (t) {
+          rowColumns.filter(function (t) {
             return t.checked;
           }).forEach(function (column) {
             var fieldData = tSumData.filter(function (row) {
@@ -2474,17 +2475,29 @@ var hiprint = function (t) {
         }
         return formatter;
       }, TableExcelHelper.getOrderdColumns = function (t) {
-        for (var e = {}, n = function n(_n2) {
-          t[_n2].forEach(function (t) {
-            for (var i = 0; i < t.rowspan; i++) {
-              e[_n2 + i] = e[_n2 + i] ? e[_n2 + i] : [], e[_n2 + i].push(t);
+        // 新数据
+        let newColumns = {};
+        // 遍历所有 rawData columns，先处理 colspan 防止后面 rowspan 插入取下标错误
+        for (let i = 0; i < t.totalLayer; i++) {
+          newColumns[i] = []; // 新数据中添加对应 columns
+          t[i].forEach((column, columnIdx) => {
+            newColumns[i].push(...new Array(column.colspan).fill({ ...column, colspan: 1 })); // 创建 colspan 个
+          });
+        }
+        // 再次遍历 rawData columns，处理 rowspan 给后面 columns 插入相同 column
+        for (let i = 0; i < t.totalLayer; i++) {
+          newColumns[i].forEach((column, columnIdx) => {
+            for (let n = 1; n < column.rowspan; n++) {
+              newColumns[i + n].splice(columnIdx, 0, { ...column, rowspan: 1 });
             }
           });
-        }, i = 0; i < t.totalLayer; i++) {
-          n(i);
         }
-
-        return e[t.totalLayer - 1];
+        console.log('原始数据');
+        console.log(t);
+        console.log('数据源');
+        console.log(newColumns);
+        this.rowColumns = newColumns[t.totalLayer - 1];
+        return newColumns[t.totalLayer - 1];
       }, TableExcelHelper;
     }();
 }, function (t, e, n) {
