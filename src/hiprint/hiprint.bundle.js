@@ -5229,7 +5229,7 @@ var hiprint = function (t) {
       }, TablePrintElement.prototype.setColumnsOptions = function () {
         var t = this;
         this.designTarget.find(".hiprint-printElement-tableTarget:eq(0)").find("thead td").bind("click.hiprint", function (e) {
-          var n = $(e.target).attr("column-id"),
+          var n = $(e.target).attr("column-id") || $(e.target).attr("id"),
             i = t.getColumnByColumnId(n);
 
           if (i) {
@@ -5238,12 +5238,19 @@ var hiprint = function (t) {
             _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.event.trigger(t.getPrintElementSelectEventKey(), {
               printElement: t,
               customOptionsInput: [{
-                title: i.title + "-列属性",
+                title: (i.title || `${i.id}(id)`) + "-列属性",
                 optionItems: o,
                 options: i,
                 callback: function callback(t) {
                   o.forEach(function (t) {
                     var e = t.getValue();
+                    if ("title" == t.name) {
+                      var n = e ? e.split("#") : "";
+                      i.title = n[0], n.length > 1 && (i.columnId = i.field = n[1]);
+                      i.columnId && i.target.attr("column-id", i.columnId);
+                      t.target.find("textarea").val(n[0]);
+                      return;
+                    }
                     i[t.name] = e;
                   });
                 }
@@ -5949,7 +5956,7 @@ var hiprint = function (t) {
         var t = {};
         return this.columns && this.columns.forEach(function (e) {
           e.columns.forEach(function (e) {
-            e.columnId && (t[e.columnId] = e);
+            (e.columnId || e.id) && (t[e.columnId || e.id] = e);
           });
         }), t;
       }, e.prototype.getGridColumns = function () {
