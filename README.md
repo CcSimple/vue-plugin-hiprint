@@ -36,10 +36,15 @@
 > npm_demo_v3： vue3.x + vite + npm包(0.0.18)使用 示例
 
 ### 安装使用
-> npm install vue-plugin-hiprint
+```
+npm install vue-plugin-hiprint
+```
+
 ```html
-// 在index.html 文件中添加打印所需样式: 当然你也可以调整成 相对链接/自有链接
+<!--【必须】在index.html 文件中添加打印所需样式(此cdn可能不稳定):-->
 <link rel="stylesheet" type="text/css" media="print" href="https://cdn.jsdelivr.net/npm/vue-plugin-hiprint@latest/dist/print-lock.css">
+<!-- 可以调整成 相对链接/自有链接, 【重要】名称需要一致 【print-lock.css】-->
+<link rel="stylesheet" type="text/css" media="print" href="/print-lock.css">
 ```
 
 ### <a href="https://ccsimple.gitee.io/vue-plugin-hiprint/">Gitee Demo预览</a>
