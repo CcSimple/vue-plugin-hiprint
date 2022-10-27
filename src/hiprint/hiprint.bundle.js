@@ -5018,28 +5018,26 @@ var hiprint = function (t) {
             break;
           }
           var f = void 0;
-          if (h.target) {
-            h.target.css("left", this.options.displayLeft()), h.target[0].height = "";
-            if (0 == s || u > 0) {
-              a = p, h.target.css("top", p + "pt");
-              f = l && null != this.options.lHeight ? p + (h.height > this.options.lHeight ? h.height : this.options.lHeight) : p + h.height
-            } else {
-              a = t.paperHeader, h.target.css("top", a + "pt"), f = t.paperHeader + h.height
-            }
-            n.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_2__.a({
-              target: h.target,
-              printLine: f,
-              referenceElement: new _PrintReferenceElement__WEBPACK_IMPORTED_MODULE_4__.a({
-                top: this.options.getTop(),
-                left: this.options.getLeft(),
-                height: this.options.getHeight(),
-                width: this.options.getWidth(),
-                beginPrintPaperIndex: t.index,
-                bottomInLastPaper: f,
-                printTopInPaper: a
-              })
-            })), s++;
+          h.target && (h.target.css("left", this.options.displayLeft()), h.target[0].height = "");
+          if (0 == s || u > 0) {
+            (h.target && (a = p, h.target.css("top", p + "pt")),
+            f = l && null != this.options.lHeight ? p + (h.height > this.options.lHeight ? h.height : this.options.lHeight) : p + h.height)
+          } else {
+            (h.target && (a = t.paperHeader, h.target.css("top", t.paperHeader + "pt")), f = t.paperHeader + h.height)
           }
+          n.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_2__.a({
+            target: h.target,
+            printLine: f,
+            referenceElement: new _PrintReferenceElement__WEBPACK_IMPORTED_MODULE_4__.a({
+              top: this.options.getTop(),
+              left: this.options.getLeft(),
+              height: this.options.getHeight(),
+              width: this.options.getWidth(),
+              beginPrintPaperIndex: t.index,
+              bottomInLastPaper: f,
+              printTopInPaper: a
+            })
+          })), s++;
           e && this.updatePanelHeight(f + this.options.getHeight(), t);
         }
 
