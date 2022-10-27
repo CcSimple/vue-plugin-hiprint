@@ -4999,7 +4999,7 @@ var hiprint = function (t) {
             printLine: void 0
           })), u = t.getContentHeight(s) - (p - t.paperHeader), s++ , d = t.getPaperFooter(s));
           var c = n.length > 0 ? n[n.length - 1].target : void 0,
-            h = this.getRowsInSpecificHeight(e, u > 0 ? u : 0 == s ? d - (p + t.paperHeader) : t.getContentHeight(s), r, o, s, c, tfh);
+            h = this.getRowsInSpecificHeight(e, u > 0 ? u : 0 == s ? d - p : t.getContentHeight(s), r, o, s, c, tfh);
           l = h.isEnd;
           if (u < 0) {
             n[0].target = $('<div style="position:absolute;background: red;color: white;padding: 0px 4px;">没有足够空间进行表格分页，请调整页眉/页脚线</div>')
