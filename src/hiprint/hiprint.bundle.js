@@ -1716,6 +1716,10 @@ var hiprint = function (t) {
         var t = this.options.fontList;
         return t || (t = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(this.templateId).getFontList());
       }, BasePrintElement.prototype.getFields = function () {
+        if ("table" == this.printElementType.type) {
+          var t = this.options.tableFields;
+          return t
+        }
         var t = this.options.fields;
         return t || (t = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(this.templateId).getFields());
       }, BasePrintElement.prototype.getOnImageChooseClick = function () {
