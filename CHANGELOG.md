@@ -1,5 +1,42 @@
 版本及更新记录
 ------------------------------
+## 0.0.38 (2022-10-29)
+<details>
+  <summary>1. 🌈️  新增支持 设置 table列 底部聚合文本(tableSummaryText: '自定义文本) </summary>
+</details>
+<details>
+  <summary>2. 🌈️  新增支持 设置 table列 底部聚合类型左右对齐方式(tableSummaryAlign: 'left/center/right')</summary>
+</details>
+<details>
+  <summary>3. 🌈️  新增支持 设置 table列 底部聚合小数位(tableSummaryNumFormat: '0/1/2/3/4/5/6')</summary>
+</details>
+<details>
+  <summary>4. 🌈️  新增支持 编辑查看 table "空白列"</summary>
+</details>
+<details>
+  <summary>5. ✨ 调整优化 table【多行表头合并】导致"数据错位"及"底部聚合函数"问题</summary>
+</details>
+<details>
+  <summary>6. ✨ 调整优化 table ⚠️ options: "fields"(列字段列表) "tableFields"(表格字段列表)</summary>
+</details>
+<details>
+  <summary>7. ✨ 调整优化 table列 底部聚合类型(tableSummary) 支持 text (仅显示设置的文本)</summary>
+</details>
+<details>
+  <summary>8. 🐛️ fix 模板内"多表格"分页/卡死问题</summary>
+</details>
+<details>
+  <summary>9. 🐛️ fix 一些已知bug (点击看详情)</summary>
+
+```
+1.fix toPdf options isDownload bug (toPdf 传3个参数时未正常导出pdf问题)
+2.fix size-box font-family bug
+3.fix 多行表头编辑bug
+4.fix table 卡死问题（模板内"多表格"分页问题）
+5.fix table tableSummaryTitle(底部聚合标题) 参数bug
+```
+</details>
+
 ## 0.0.36-fix (2022-10-11)
 <details>
   <summary>1. 🐛️ fix webpack/vue2.x npm 引入错误</summary>

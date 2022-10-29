@@ -21,19 +21,29 @@
 ![image](https://badgen.net/npm/dm/vue-plugin-hiprint)
 ![image](https://badgen.net/npm/dy/vue-plugin-hiprint)
 
-# vue-plugin-hiprint
+## 关于此插件
+
+vue-plugin-hiprint(基于[hiprint 2.5.4](http://hiprint.io/)) 当时只是为了方便我（并非hiprint原作者）在vue项目中引入使用，所以以此命名。
+
+此插件仅仅是一个JavaScript【工具库】而非 Vue【组件库】，所以它默认是不包含demo中所见的那些组件页面的（demo代码随便复制修改拿去用）。
+
+由于hiprint官网近1年多未更新代码【hiprint 2.5.4 是 [LGPL](#关于lgpl协议) 协议】，后在诸多使用者及反馈下进行了许多优化调整。[详情](CHANGELOG.md)（同时感谢各位群友支持和参与）
+
+## vue-plugin-hiprint
 > hiprint for Vue2.x / Vue3.x (基于jQuery, 理论上应该也是支持其他框架的)
 
-本项目使用 <a href="https://jb.gg/OpenSourceSupport"><img height="40" width="100" src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/WebStorm.svg"/></a><a href="https://jb.gg/OpenSourceSupport"><img width="50" height="50" src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/WebStorm_icon.svg"/></a> 开发
+> 0.0.36起 已支持 CDN形式引入 详见 [0.0.36更新记录](CHANGELOG.md)
+> uniapp 使用此方式可行
 
-### 分支说明
-> main： vue2.x + ant1.7.x融合版 及 npm包源代码
+## 快速链接
 
-> npm_demo： vue2.x + ant1.7.x + npm包使用 示例
+hiprint官方文档：[http://hiprint.io/docs/start](http://hiprint.io/docs/start)
 
-> npm_demo_ele： vue2.x + ElementUi 2.x + npm包使用 示例
+Demo预览：[https://ccsimple.gitee.io/vue-plugin-hiprint/](https://ccsimple.gitee.io/vue-plugin-hiprint/)
 
-> npm_demo_v3： vue3.x + vite + npm包(0.0.18)使用 示例
+更新记录：[npm包版本及更新记录](CHANGELOG.md)
+
+打印客户端：[https://gitee.com/CcSimple/electron-hiprint](https://gitee.com/CcSimple/electron-hiprint)
 
 ### 安装使用
 ```
@@ -47,34 +57,7 @@ npm install vue-plugin-hiprint
 <link rel="stylesheet" type="text/css" media="print" href="/print-lock.css">
 ```
 
-### <a href="https://ccsimple.gitee.io/vue-plugin-hiprint/">Gitee Demo预览</a>
-### <a href="http://hiprint.io/docs/start">hiprint官方文档</a>
-### [npm包版本及更新记录](CHANGELOG.md)
-
-## 配套直接打印客户端(win/mac/linux)
-### <a href="https://gitee.com/CcSimple/electron-hiprint">gitee客户端源码 / 下载</a><a style="margin-left:10px" href="https://github.com/CcSimple/electron-hiprint"> github客户端源码</a>
-<div style="color:red">如果使用npm包或者本项目,请使用如下样子的直接打印客户端</div>
-<div style="color:red">如果使用npm包或者本项目,请使用如下样子的直接打印客户端</div>
-<div style="color:red">如果使用npm包或者本项目,请使用如下样子的直接打印客户端</div>
-<div align="center">
-
-![image](./res/tool.jpeg)
-
-</div>
-<div style="color:red">本项目需要上面样式的直接打印客户端; 下载地址见下表:</div>
-
-| 版本                     | 下载地址                                                                                                                              |
-|------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| Win64                  | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.5/hiprint_win_x64-1.0.5.exe">下载(v1.0.5)</a>      |
-| Win32                  | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.5/hiprint_win_x32-1.0.5.exe">下载(v1.0.5)</a>      |
-| Linux64 (需要桌面系统)       | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.5/hiprint_linux_64-1.0.5.tar.xz">下载(v1.0.5)</a> |
-| Linux64 arm64 (需要桌面系统) | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.5/hiprint_linux_arm64-1.0.5.tar.xz">下载(v1.0.5)</a> |
-| Mac (intel)            | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.5/hiprint_mac_x64-1.0.5.dmg">下载(v1.0.5)</a>    |
-| Mac (M1)               | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.5/hiprint_mac_arm64-1.0.5.dmg">下载(v1.0.5)</a>    |
-
-
-
-## 演示/截个图咯~
+## 项目截图
 <table>
     <tr>
         <td><img src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/img_0.png"/></td>
@@ -99,6 +82,7 @@ hiPrintPlugin.disAutoConnect(); // 取消自动连接直接打印客户端
 // 然后使用
 this.$pluginName
 
+// 下列代码为示例，不要再 main.js中 使用
 // 引入后使用示例
 this.$pluginName.init();
 // 下列方法都是没有拖拽设计页面的, 相当于代码模式, 使用代码设计页面
@@ -170,6 +154,27 @@ hiprintTemplate = new hiprint.PrintTemplate({
 // 设计器的容器
 hiprintTemplate.design('#hiprint-printTemplate');
 ```
+
+## 配套直接打印客户端(win/mac/linux)
+<div style="color:red">如果使用npm包或者本项目,请使用如下样子的直接打印客户端</div>
+<div style="color:red">如果使用npm包或者本项目,请使用如下样子的直接打印客户端</div>
+<div style="color:red">如果使用npm包或者本项目,请使用如下样子的直接打印客户端</div>
+<div align="center">
+
+![image](./res/tool.jpeg)
+
+</div>
+<div style="color:red">本项目需要上面样式的直接打印客户端; 下载地址见下表:</div>
+
+| 版本                     | 下载地址                                                                                                                              |
+|------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| Win64                  | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.5/hiprint_win_x64-1.0.5.exe">下载(v1.0.5)</a>      |
+| Win32                  | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.5/hiprint_win_x32-1.0.5.exe">下载(v1.0.5)</a>      |
+| Linux64 (需要桌面系统)       | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.5/hiprint_linux_64-1.0.5.tar.xz">下载(v1.0.5)</a> |
+| Linux64 arm64 (需要桌面系统) | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.5/hiprint_linux_arm64-1.0.5.tar.xz">下载(v1.0.5)</a> |
+| Mac (intel)            | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.5/hiprint_mac_x64-1.0.5.dmg">下载(v1.0.5)</a>    |
+| Mac (M1)               | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.5/hiprint_mac_arm64-1.0.5.dmg">下载(v1.0.5)</a>    |
+
 
 ## 常见问题
 > design时怎么修改默认图片？
@@ -415,6 +420,18 @@ $('#hiwprint_iframe').css('visibility','hidden');
 第一次写插件(webpack打包这些都不太了解)，不合理的地方欢迎指正<a href="https://github.com/CcSimple/vue-plugin-hiprint/issues">issues</a>。
 简单的修改了下`hiprint.bundle.js`引入了相关资源,然后`export hiprint,defaultElementTypeProvider`
 #### 详见源码<a href="https://github.com/CcSimple/vue-plugin-hiprint">vue-plugin-hiprint</a>
+
+
+本项目使用 <a href="https://jb.gg/OpenSourceSupport"><img height="40" width="100" src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/WebStorm.svg"/></a><a href="https://jb.gg/OpenSourceSupport"><img width="50" height="50" src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/WebStorm_icon.svg"/></a> 开发
+
+### 分支说明
+> main： vue2.x + ant1.7.x融合版 及 npm包源代码
+
+> npm_demo： vue2.x + ant1.7.x + npm包使用 示例
+
+> npm_demo_ele： vue2.x + ElementUi 2.x + npm包使用 示例
+
+> npm_demo_v3： vue3.x + vite + npm包(0.0.18)使用 示例
 
 ### 关于如何融合处理
 > 自己融合请查看 vue.config.js 对比 hiprint.bundle.js
