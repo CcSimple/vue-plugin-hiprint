@@ -2239,6 +2239,9 @@ var hiprint = function (t) {
               var title = tst(column, text || "最大值:", o);
               tableFooter.append(`<td style="text-align: ${column.tableSummaryAlign || "center"}">${title}${max || 0}</td>`);
               break;
+            case "text":
+              tableFooter.append(`<td style="text-align: ${column.tableSummaryAlign || "center"}">${text || ""}</td>`);
+              break;
             default:
               tableFooter.append("<td></td>")
               break;
@@ -4305,7 +4308,7 @@ var hiprint = function (t) {
       }
 
       return t.prototype.createTarget = function () {
-        return this.target = $('<div class="hiprint-option-item"><div class="hiprint-option-item-label">底部聚合类型</div><div class="hiprint-option-item-field"><select class="auto-submit"><option value="">不聚合</option><option value="count">计数</option><option value="sum">合计</option><option value="avg">平均值</option><option value="min">最小值</option><option value="max">最大值</option></select></div></div>'), this.target;
+        return this.target = $('<div class="hiprint-option-item"><div class="hiprint-option-item-label">底部聚合类型</div><div class="hiprint-option-item-field"><select class="auto-submit"><option value="">不聚合</option><option value="count">计数</option><option value="sum">合计</option><option value="avg">平均值</option><option value="min">最小值</option><option value="max">最大值</option><option value="text">仅文本</option></select></div></div>'), this.target;
       }, t.prototype.getValue = function () {
         return this.target.find("select").val();
       }, t.prototype.setValue = function (t) {
