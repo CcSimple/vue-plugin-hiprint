@@ -303,6 +303,18 @@ var hiprint = function (t) {
       return console.log(t), "";
     }
     return "";
+  }, hinnn.numFormat = function (t, e) {
+    if (t != void 0) try {
+      var o = "string" == typeof t ? parseFloat(t) : t;
+      var l = parseInt(e);
+      if (l > 0) {
+        return o.toFixed(l);
+      }
+      return parseInt(o.toString());
+    } catch (t) {
+      return console.log(t), "";
+    }
+    return "";
   };
 }, function (t, e, n) {
   "use strict";
@@ -2027,7 +2039,7 @@ var hiprint = function (t) {
     }(),
     u = function () {
       return function (t) {
-        this.title = t.title, this.field = t.field, this.width = t.width, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.colspan = t.colspan, this.rowspan = t.rowspan, this.checked = t.checked, this.columnId = t.columnId, this.tableSummaryTitle = t.tableSummaryTitle, this.tableSummaryText = t.tableSummaryText, this.tableSummary = t.tableSummary, this.tableSummaryAlign = t.tableSummaryAlign, this.formatter2 = t.formatter2, this.styler2 = t.styler2, this.tableColumnHeight = t.tableColumnHeight, this.tableTextType = t.tableTextType, this.tableBarcodeMode = t.tableBarcodeMode, this.tableQRCodeLevel = t.tableQRCodeLevel;
+        this.title = t.title, this.field = t.field, this.width = t.width, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.colspan = t.colspan, this.rowspan = t.rowspan, this.checked = t.checked, this.columnId = t.columnId, this.tableSummaryTitle = t.tableSummaryTitle, this.tableSummaryText = t.tableSummaryText, this.tableSummary = t.tableSummary, this.tableSummaryAlign = t.tableSummaryAlign, this.tableSummaryNumFormat = t.tableSummaryNumFormat, this.formatter2 = t.formatter2, this.styler2 = t.styler2, this.tableColumnHeight = t.tableColumnHeight, this.tableTextType = t.tableTextType, this.tableBarcodeMode = t.tableBarcodeMode, this.tableQRCodeLevel = t.tableQRCodeLevel;
       };
     }(),
     d = function () {
@@ -2129,7 +2141,7 @@ var hiprint = function (t) {
     f = function (t) {
       function e(e) {
         var n = this;
-        return e = e || {}, (n = t.call(this) || this).width = e.width ? parseFloat(e.width.toString()) : 100, n.title = e.title, n.descTitle = e.descTitle, n.field = e.field, n.fixed = e.fixed, n.rowspan = e.rowspan ? parseInt(e.rowspan) : 1, n.colspan = e.colspan ? parseInt(e.colspan) : 1, n.align = e.align, n.halign = e.halign, n.vAlign = e.vAlign, n.formatter = e.formatter, n.styler = e.styler, n.formatter2 = e.formatter2, n.styler2 = e.styler2, n.checkbox = e.checkbox, n.checked = 0 != e.checked, n.columnId = e.columnId || e.field, n.tableColumnHeight = e.tableColumnHeight || 30, n.tableTextType = e.tableTextType || 'text', n.tableBarcodeMode = e.tableBarcodeMode || 'CODE128A', n.tableQRCodeLevel = e.tableQRCodeLevel, n.tableSummaryTitle = e.tableSummaryTitle, n.tableSummaryText = e.tableSummaryText, n.tableSummary = e.tableSummary, n.tableSummaryAlign = e.tableSummaryAlign, n;
+        return e = e || {}, (n = t.call(this) || this).width = e.width ? parseFloat(e.width.toString()) : 100, n.title = e.title, n.descTitle = e.descTitle, n.field = e.field, n.fixed = e.fixed, n.rowspan = e.rowspan ? parseInt(e.rowspan) : 1, n.colspan = e.colspan ? parseInt(e.colspan) : 1, n.align = e.align, n.halign = e.halign, n.vAlign = e.vAlign, n.formatter = e.formatter, n.styler = e.styler, n.formatter2 = e.formatter2, n.styler2 = e.styler2, n.checkbox = e.checkbox, n.checked = 0 != e.checked, n.columnId = e.columnId || e.field, n.tableColumnHeight = e.tableColumnHeight || 30, n.tableTextType = e.tableTextType || 'text', n.tableBarcodeMode = e.tableBarcodeMode || 'CODE128A', n.tableQRCodeLevel = e.tableQRCodeLevel, n.tableSummaryTitle = e.tableSummaryTitle, n.tableSummaryText = e.tableSummaryText, n.tableSummary = e.tableSummary, n.tableSummaryAlign = e.tableSummaryAlign, n.tableSummaryNumFormat = e.tableSummaryNumFormat, n;
       }
 
       return h(e, t), e.prototype.css = function (t) {
@@ -2192,6 +2204,7 @@ var hiprint = function (t) {
               return new RegExp("^-?(0|[1-9]\\d*)(\\.\\d+)?").test(row[column.field]) ? Number(row[column.field]) : 0;
             });
             var text = column.tableSummaryText;
+            var numF = column.tableSummaryNumFormat || 2;
             switch (column.tableSummary) {
             case "count":
               var title = tst(column, text || "计数:", o);
@@ -2200,25 +2213,29 @@ var hiprint = function (t) {
             case "sum":
               var sum = parseFloat(Number(fieldData.reduce(function (prev, cur) {
                 return prev + cur;
-              }, 0))).toFixed(2);
+              }, 0)));
+              sum = _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_1__.a.numFormat(sum, numF);
               var title = tst(column, text || "合计:", o);
               tableFooter.append(`<td style="text-align: ${column.tableSummaryAlign || "center"}">${title}${sum}</td>`)
               break;
             case "avg":
               var sum = parseFloat(Number(fieldData.reduce(function (prev, cur) {
                 return prev + cur;
-              }, 0))).toFixed(2);
-              var avg = parseFloat(Number(sum / (fieldData.length || 1))).toFixed(2);
+              }, 0)));
+              var avg = parseFloat(Number(sum / (fieldData.length || 1)));
+              avg = _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_1__.a.numFormat(avg, numF);
               var title = tst(column, text || "平均值:", o);
               tableFooter.append(`<td style="text-align: ${column.tableSummaryAlign || "center"}">${title}${avg}</td>`)
               break;
             case "min":
               var min = Math.min(...fieldData);
+              min = _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_1__.a.numFormat(min, numF);
               var title = tst(column, text || "最小值:", o);
               tableFooter.append(`<td style="text-align: ${column.tableSummaryAlign || "center"}">${title}${min || 0}</td>`)
               break;
             case "max":
               var max = Math.max(...fieldData);
+              max = _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_1__.a.numFormat(max, numF);
               var title = tst(column, text || "最大值:", o);
               tableFooter.append(`<td style="text-align: ${column.tableSummaryAlign || "center"}">${title}${max || 0}</td>`);
               break;
@@ -4255,6 +4272,32 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
+    tableSummaryNumFormat = function () {
+      function t() {
+        this.name = "tableSummaryNumFormat";
+      }
+
+      return t.prototype.createTarget = function () {
+        var list = [{t: '整数',v: '0'}], num = [1,2,3,4,5,6];
+        num.forEach(function (n) {
+          list.push({t: '保留' + n + '位', v: '' + n})
+        })
+        var n = '\n            <option value="" >默认</option>';
+        list.forEach(function (e) {
+          n += '\n            <option value="' + (e.v || "") + '">' + (e.t || "") + '</option>';
+        })
+        this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        底部聚合小数\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit"></select>\n        </div>\n    </div>')
+        this.target.find(".auto-submit").append($(n));
+        return this.target;
+      }, t.prototype.getValue = function () {
+        var t = this.target.find("select").val();
+        if (t) return t.toString();
+      }, t.prototype.setValue = function (t) {
+        this.target.find("select").val(t);
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
     // 表格底部合计栏
     tableSummary = function () {
       function t() {
@@ -4660,7 +4703,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(), new tableColumnH(), new tableE(), new tableQRCodeLevel(), new tablept(), new tableSummaryTitle(), new tableSummaryText(), new tableSummary(), new tableSummaryAlign()], t;
+    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new _t(), new wt(), new xt(), new tableColumnH(), new tableE(), new tableQRCodeLevel(), new tablept(), new tableSummaryTitle(), new tableSummaryText(), new tableSummary(), new tableSummaryAlign(), new tableSummaryNumFormat()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -5909,7 +5952,7 @@ var hiprint = function (t) {
     r = (function () {
     }(), function () {
       return function (t) {
-        this.width = t.width, this.title = t.title, this.field = t.field, this.checked = t.checked, this.columnId = t.columnId, this.fixed = !1, this.rowspan = t.rowspan || 1, this.colspan = t.colspan || 1, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.formatter2 = t.formatter2, this.styler2 = t.styler2, this.tableColumnHeight = t.tableColumnHeight || 30, this.tableTextType = t.tableTextType || 'text', this.tableBarcodeMode = t.tableBarcodeMode || 'CODE128A', this.tableQRCodeLevel = t.tableQRCodeLevel || 0, this.tableSummaryTitle = t.tableSummaryTitle, this.tableSummaryText = t.tableSummaryText, this.tableSummary = t.tableSummary, this.tableSummaryAlign = t.tableSummaryAlign;
+        this.width = t.width, this.title = t.title, this.field = t.field, this.checked = t.checked, this.columnId = t.columnId, this.fixed = !1, this.rowspan = t.rowspan || 1, this.colspan = t.colspan || 1, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.formatter2 = t.formatter2, this.styler2 = t.styler2, this.tableColumnHeight = t.tableColumnHeight || 30, this.tableTextType = t.tableTextType || 'text', this.tableBarcodeMode = t.tableBarcodeMode || 'CODE128A', this.tableQRCodeLevel = t.tableQRCodeLevel || 0, this.tableSummaryTitle = t.tableSummaryTitle, this.tableSummaryText = t.tableSummaryText, this.tableSummary = t.tableSummary, this.tableSummaryAlign = t.tableSummaryAlign, this.tableSummaryNumFormat = t.tableSummaryNumFormat;
       };
     }()),
     a = n(5);

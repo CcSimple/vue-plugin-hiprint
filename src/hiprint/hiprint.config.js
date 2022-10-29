@@ -1699,6 +1699,10 @@
           hidden: false
         },
         {
+          name: 'tableSummaryNumFormat',
+          hidden: false
+        },
+        {
           name: 'formatter2',
           hidden: false
         },
