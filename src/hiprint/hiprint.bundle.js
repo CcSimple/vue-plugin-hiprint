@@ -7958,7 +7958,7 @@ var hiprint = function (t) {
         if (e = t ? f ? f.split('.').reduce((a, c) => a ? a[c] : t ? t[c] : "", !1) || "" : "" : this.options.testData || this.printElementType.getData() || "", this.options.format) {
           if ("datetime" == this.options.dataType) return o.a.dateFormat(e, this.options.format);
 
-          if ("boolen" == this.options.dataType) {
+          if ("boolean" == this.options.dataType) {
             var n = this.options.format.split(":");
             if (n.length > 0) return !0 === e || "true" === e ? n[0] : n[1];
           }
