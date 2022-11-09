@@ -4094,7 +4094,7 @@ var hiprint = function (t) {
           return e.checked = !1, e;
         });
         this.allColumns = t[0].columns.concat(r), t && 1 == t.length && (this.target.find("ul").html(this.allColumns.map(function (t, e) {
-          return '<li  class="hiprint-option-table-selected-item"> <div class="hi-pretty p-default">\n                ' + (t.checked ? '<input type="checkbox"   checked column-id="' + (t.columnId || t.id) + '" />' : '<input type="checkbox"  column-id="' + (t.columnId || t.id) + '" />') + '\n                <div class="state">\n                    <label></label>\n                </div>\n            </div><span class="column-title">' + (t.title || t.descTitle || "") + "</span></li>";
+          return '<li  class="hiprint-option-table-selected-item"> <div class="hi-pretty p-default">\n                ' + (t.checked ? '<input type="checkbox"   checked column-id="' + (t.id || t.columnId) + '" />' : '<input type="checkbox"  column-id="' + (t.id || t.columnId) + '" />') + '\n                <div class="state">\n                    <label></label>\n                </div>\n            </div><span class="column-title">' + (t.title || t.descTitle || "") + "</span></li>";
         }).join("")), this.target.find("input").change(function (e) {
           var checked = e.target.checked, id = e.target.attributes['column-id'].nodeValue || '';
           var idx = i.allColumns.findIndex(function (e) {
@@ -5277,7 +5277,7 @@ var hiprint = function (t) {
       }, TablePrintElement.prototype.setColumnsOptions = function () {
         var t = this;
         this.designTarget.find(".hiprint-printElement-tableTarget:eq(0)").find("thead td").bind("click.hiprint", function (e) {
-          var n = $(e.target).attr("column-id") || $(e.target).attr("id"),
+          var n = $(e.target).attr("id") || $(e.target).attr("column-id"),
             i = t.getColumnByColumnId(n);
 
           if (i) {
@@ -5292,7 +5292,7 @@ var hiprint = function (t) {
                 callback: function callback(t) {
                   o.forEach(function (t) {
                     var e = t.getValue();
-                    if ("title" == t.name) {
+                    if ("title" == t.name && !e.trim().endsWith("#") && !e.trim().startsWith("#")) {
                       var n = e ? e.split("#") : "";
                       i.title = n[0], n.length > 1 && (i.columnId = i.field = n[1]);
                       i.columnId && i.target.attr("column-id", i.columnId);
@@ -6004,7 +6004,7 @@ var hiprint = function (t) {
         var t = {};
         return this.columns && this.columns.forEach(function (e) {
           e.columns.forEach(function (e) {
-            (e.columnId || e.id) && (t[e.columnId || e.id] = e);
+            (e.id || e.columnId) && (t[e.id || e.columnId] = e);
           });
         }), t;
       }, e.prototype.getGridColumns = function () {
@@ -7432,10 +7432,10 @@ var hiprint = function (t) {
       }, t.prototype.makeColumnObj = function (columns) {
         var t = {};
         return columns ? columns.forEach(function (e) {
-          (e.columnId || e.id) && (t[e.columnId || e.id] = e);
+          (e.id || e.columnId) && (t[e.id || e.columnId] = e);
         }) : this.columns && this.columns.forEach(function (e) {
           e.forEach(function (e) {
-            (e.columnId || e.id) && (t[e.columnId || e.id] = e);
+            (e.id || e.columnId) && (t[e.id || e.columnId] = e);
           });
         }), this.columnObj = t, t;
       }, t;
