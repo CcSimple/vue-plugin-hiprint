@@ -27,7 +27,7 @@ vue-plugin-hiprint(基于[hiprint 2.5.4](http://hiprint.io/)) 当时只是为了
 
 此插件仅仅是一个JavaScript【工具库】而非 Vue【组件库】，所以它默认是不包含demo中所见的那些组件页面的（demo代码随便复制修改拿去用）。
 
-由于hiprint官网近1年多未更新代码【hiprint 2.5.4 是 [LGPL](#关于lgpl协议) 协议】，后在诸多使用者及反馈下进行了许多优化调整。[详情](CHANGELOG.md)（同时感谢各位群友支持和参与）
+由于hiprint官网最后一次更新时间为2019年【hiprint 2.5.4 是 [LGPL](#关于lgpl协议) 协议】，后在诸多使用者及反馈下进行了许多优化调整。[详情](CHANGELOG.md)（同时感谢各位群友支持和参与）
 
 ## vue-plugin-hiprint
 > hiprint for Vue2.x / Vue3.x (基于jQuery, 理论上应该也是支持其他框架的)
