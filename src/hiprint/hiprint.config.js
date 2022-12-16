@@ -229,6 +229,10 @@
               hidden: false
             },
             {
+              name: 'upperCase',
+              hidden: false
+            },
+            {
               name: 'formatter',
               hidden: false
             },
@@ -1700,6 +1704,10 @@
         },
         {
           name: 'tableSummaryNumFormat',
+          hidden: false
+        },
+        {
+          name: 'upperCase',
           hidden: false
         },
         {
