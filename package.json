@@ -1,7 +1,7 @@
 {
   "name": "vue-plugin-hiprint",
   "description": "hiprint for Vue2.x / Vue3.x 支持拖拽(分页(不分页)、表头表脚、样式设置、复制粘贴、缩放、撤销重做)生成打印模板、导出json模板数据、静默打印/获取MAC地址(借助客户端)",
-  "version": "0.0.38",
+  "version": "0.0.39-beta",
   "author": "CcSimple",
   "license": "MIT",
   "main": "dist/vue-plugin-hiprint.js",
@@ -56,6 +56,7 @@
     "jquery": "^3.6.0",
     "jsbarcode": "^3.11.5",
     "jspdf": "^2.5.1",
+    "nzh": "^1.0.8",
     "socket.io-client": "^4.5.1"
   }
 }

@@ -25,6 +25,7 @@ module.exports = {
           "jquery": "^3.6.0",
           "jsbarcode": "^3.11.5",
           "jspdf": "^2.5.1",
+          "nzh": "^1.0.8",
           "socket.io-client": "^3.1.3"
         }
       }

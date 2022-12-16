@@ -48,6 +48,7 @@ module.exports = {
     html2canvas: "html2canvas",
     canvg: 'canvg',
     jspdf: "jspdf",
+    Nzh: "Nzh",
   },
   optimization:{
     minimizer:[
