@@ -5198,7 +5198,7 @@ var hiprint = function (t) {
               if (0 == trLen) c = {
                 height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
                 isEnd: !0
-              }, t && this.options.autoCompletion && (this.autoCompletion(p, d), s = n.outerHeight()); else {
+              }, t && this.options.autoCompletion && (this.autoCompletion(p, d, tfh), s = n.outerHeight()); else {
                 var f = a.find("tr:lt(1)");
                 d.find("tbody").append(f);
                 var g = f.data("rowData");
@@ -5212,7 +5212,7 @@ var hiprint = function (t) {
               if (s <= p) if (0 == a.find("tr").length) c = {
                 height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
                 isEnd: !0
-              }, t && this.options.autoCompletion && (this.autoCompletion(p, d), s = d.outerHeight()); else {
+              }, t && this.options.autoCompletion && (this.autoCompletion(p, d, tfh), s = d.outerHeight()); else {
                 var f = a.find("tr:lt(1)");
                 d.find("tbody").append(f);
                 var g = f.data("rowData");
@@ -5257,9 +5257,9 @@ var hiprint = function (t) {
           isEnd: !1
         };
         return zz;
-      }, TablePrintElement.prototype.autoCompletion = function (t, e) {
-        for (var n, i = this.getEmptyRowTarget(), o = e.outerHeight(); t > o;) {
-          n = i.clone(), e.find("tbody").append(n), o = e.outerHeight();
+      }, TablePrintElement.prototype.autoCompletion = function (t, e, tfh) {
+        for (var n, i = this.getEmptyRowTarget(), o = e.outerHeight() + tfh; t > o;) {
+          n = i.clone(), e.find("tbody").append(n), o = e.outerHeight() + tfh;
         }
 
         n && n.remove();
