@@ -1711,6 +1711,10 @@
           hidden: false
         },
         {
+          name: 'renderFormatter',
+          hidden: false
+        },
+        {
           name: 'formatter2',
           hidden: false
         },
