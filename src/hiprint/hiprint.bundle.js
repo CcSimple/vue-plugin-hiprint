@@ -8862,7 +8862,10 @@ var hiprint = function (t) {
           onDrop: function onDrop(n, i) {
             var r = s.a.instance.getDragingPrintElement(),
               a = r.printElement;
-            a.updateSizeAndPositionOptions(e.mathroundToporleft(r.left - o.a.px.toPt(e.target.offset().left)), e.mathroundToporleft(r.top - o.a.px.toPt(e.target.offset().top)));
+            var ptr = e.designPaper.scale || 1;
+            var left = (r.left - o.a.px.toPt(e.target.children(".hiprint-printPaper").offset().left)) / ptr,
+              top = (r.top - o.a.px.toPt(e.target.children(".hiprint-printPaper").offset().top)) / ptr;
+            a.updateSizeAndPositionOptions(e.mathroundToporleft(left), e.mathroundToporleft(top));
             a.setTemplateId(e.templateId), a.setPanel(e), e.appendDesignPrintElement(e.designPaper, a, !0);
             e.printElements.push(a), a.design(void 0, t);
             o.a.event.trigger("hiprintTemplateDataChanged_" + e.templateId, "新增");
