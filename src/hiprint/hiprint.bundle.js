@@ -1483,7 +1483,8 @@ var hiprint = function (t) {
         this.isHeaderOrFooter() || this.isFixed() || ("none" != t.panelPageRule && r > a && (o.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_3__.a({
           target: void 0,
           printLine: void 0
-        })), r = r - a + t.paperHeader, i++ , a = t.getPaperFooter(i)), r <= a && r + this.options.getHeight() > a && "none" != t.panelPageRule && (o.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_3__.a({
+        // (e && r + this.options.getHeight() > a) --> 设计时拖拽元素高度超过页脚线时,导致报错问题
+        })), r = r - a + t.paperHeader, i++ , a = t.getPaperFooter(i)), r <= a && (e && r + this.options.getHeight() > a) && "none" != t.panelPageRule && (o.push(new _dto_PaperHtmlResult__WEBPACK_IMPORTED_MODULE_3__.a({
           target: void 0,
           printLine: void 0
         })), r = t.paperHeader, i++ , a = t.getPaperFooter(i)));
@@ -6344,7 +6345,8 @@ var hiprint = function (t) {
 
           if (!i.hidroppable("options").disabled) {
             var o = i.offset();
-            return e.pageX > o.left && e.pageX < o.left + i.outerWidth() && e.pageY > o.top && e.pageY < o.top + i.outerHeight() ? (p.revert && t(e.data.target).css({
+            var ptr = (this.style.transform && parseFloat(this.style.transform.slice(6, -1))) || 1;
+            return e.pageX > o.left && e.pageX < o.left + (i.outerWidth() * ptr) && e.pageY > o.top && e.pageY < o.top + (i.outerHeight() * ptr) ? (p.revert && t(e.data.target).css({
               position: e.data.startPosition,
               left: e.data.startLeft,
               top: e.data.startTop
