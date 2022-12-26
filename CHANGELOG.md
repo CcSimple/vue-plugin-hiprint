@@ -1,5 +1,38 @@
 版本及更新记录
 ------------------------------
+## 0.0.40 (2022-12-26)
+<details>
+  <summary>1. 🌈️  新增支持 文本、表格聚合添加「转大小写」功能 同时提供 hinnn.toUpperCase 方法</summary>
+
+```javascript
+hinnn.toUpperCase('0',10.8) // 十点八
+hinnn.toUpperCase('5',10.8) // 人民币壹拾元捌角
+hinnn.toUpperCase('7',10.8) // 壹拾元捌角零分
+```
+</details>
+<details>
+  <summary>2. 🌈️  新增 表格列"单元格渲染函数"实现自定义单元格内容</summary>
+
+```javascript
+// eg: 自定义渲染进度条样式
+function(value,row,index,options) {
+    return `<progress value='${value}' max="1000"></progress>`;
+}
+```
+</details>
+<details>
+  <summary>3. ✨ 调整优化 放大/缩小时拖拽元素偏移问题, 缩放后拖拽不进设计器的问题</summary>
+</details>
+<details>
+  <summary>4. ✨ 调整优化 table列 编辑相关问题</summary>
+</details>
+<details>
+  <summary>5. 🐛️ fix 表格"自动补全"导致底部元素重叠bug</summary>
+</details>
+<details>
+  <summary>6. 🐛️ fix 'table' 默认可编辑,插入 bug</summary>
+</details>
+
 ## 0.0.38 (2022-10-29)
 <details>
   <summary>1. 🌈️  新增支持 设置 table列 底部聚合文本(tableSummaryText: '自定义文本) </summary>
