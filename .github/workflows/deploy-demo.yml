@@ -1,0 +1,54 @@
+name: 部署demo
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-gh-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 设置 Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: 安装依赖
+        run: npm install
+
+      - name: 构建demo
+        env:
+          NODE_OPTIONS: --max_old_space_size=8192
+        run: |-
+          npm run build-demo
+          > demo
+
+      - name: githubPage
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: demo
+
+      - name: gitee同步
+        uses: wearerequired/git-mirror-action@master
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.GITEE_KEY }}
+        with:
+          source-repo: git@github.com:CcSimple/vue-plugin-hiprint.git
+          destination-repo: git@gitee.com:CcSimple/vue-plugin-hiprint.git
+
+      - name: giteePages
+        uses: yanglbme/gitee-pages-action@master
+        with:
+          gitee-username: CcSimple
+          gitee-password: ${{ secrets.GITEE_PASSWORD }}
+          gitee-repo: CcSimple/vue-plugin-hiprint
+          branch: main
+          directory: demo
+
