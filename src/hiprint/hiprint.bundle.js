@@ -2437,15 +2437,19 @@ var hiprint = function (t) {
         }
 
         return o;
-      }, TableExcelHelper.createEmptyRowTarget = function (t) {
+      }, TableExcelHelper.createEmptyRowTarget = function (t, tableElement) {
         var e = TableExcelHelper.reconsitutionTableColumnTree(t),
-          n = $("<tr></tr>");
-        return e.rowColumns.filter(function (t) {
+            n = $("<tr></tr>");
+        e.rowColumns.filter(function (t) {
           return t.checked;
         }).forEach(function (t, e) {
           var i = $("<td></td>");
           t.field && i.attr("field", t.field), t.align && i.css("text-align", t.align), t.vAlign && i.css("vertical-align", t.vAlign), n.append(i);
-        }), n;
+        });
+        if (tableElement && tableElement.options.tableBodyRowHeight) {
+          n.find('td:not([rowspan])').css('height', tableElement.options.tableBodyRowHeight + 'pt');
+        }
+        return n;
       }, TableExcelHelper.getColumnsWidth = function (t, e) {
         var n = {},
           i = TableExcelHelper.allAutoWidth(t),
@@ -5123,7 +5127,7 @@ var hiprint = function (t) {
         var o = $('<table class="hiprint-printElement-tableTarget" style="border-collapse: collapse;"></table>');
         return o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableHead(this.getColumns(), this.options.getWidth() / this.options.getGridColumns())), o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableRow(this.getColumns(), t, this.options, this.printElementType)), "no" == this.options.tableFooterRepeat || _table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, t, this.options, this.printElementType, e, t).insertBefore(o.find("tbody")), o;
       }, TablePrintElement.prototype.getEmptyRowTarget = function () {
-        return _table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createEmptyRowTarget(this.getColumns());
+        return _table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createEmptyRowTarget(this.getColumns(), this);
       }, TablePrintElement.prototype.getHtml = function (t, e) {
         this.createTempContainer();
         var n = this.getPaperHtmlResult(t, e);
