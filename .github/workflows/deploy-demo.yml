@@ -49,6 +49,4 @@ jobs:
           gitee-username: CcSimple
           gitee-password: ${{ secrets.GITEE_PASSWORD }}
           gitee-repo: CcSimple/vue-plugin-hiprint
-          branch: main
-          directory: demo
-
+          branch: gh-pages
