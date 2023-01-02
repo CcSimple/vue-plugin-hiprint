@@ -9665,7 +9665,7 @@ var hiprint = function (t) {
         var t = this;
         var elements = [];
         // 获取选区元素
-        if (t.editingPanel.mouseRect && t.editingPanel.mouseRect.target) {
+        if (t.editingPanel.mouseRect && t.editingPanel.mouseRect.target && $(".mouseRect").length) {
           elements = t.editingPanel.getElementInRect(t.editingPanel.mouseRect);
         } else { // 获取多选元素
           elements = t.editingPanel.printElements.filter(function (el) {
