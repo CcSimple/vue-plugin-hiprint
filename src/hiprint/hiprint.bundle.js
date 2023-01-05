@@ -7715,8 +7715,9 @@ var hiprint = function (t) {
       }, t.prototype.updatePaperNumber = function (t, e, n) {
         var i = this.createPaperNumber(this.formatPaperNumber(t, e));
         this.paperNumberDisabled ? i.hide() : n && this.index % 2 == 1 && (i[0].style.left = "", i.css("right", this.paperNumberLeft + "pt"));
-      }, t.prototype.formatPaperNumber = function (t, e) {
-        return (this.paperNumberFormat ? this.paperNumberFormat : this.defaultPaperNumberFormat).replace("paperNo", t.toString()).replace("paperCount", e.toString());
+      }, t.prototype.formatPaperNumber = function (paperNo, paperCount) {
+        let footerNumber = eval("`" + (this.paperNumberFormat ? this.paperNumberFormat : this.defaultPaperNumberFormat) + "`")
+        return footerNumber.replace("paperNo",paperNo).replace("paperCount",paperCount)
       }, t.prototype.dragHeadLineOrFootLine = function (t, e, n) {
         var i = this;
         t.hidraggable({
