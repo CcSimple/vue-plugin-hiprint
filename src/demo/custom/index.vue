@@ -11,7 +11,7 @@
           </el-option>
         </el-select>
       </el-col>
-      <el-col :span="20">
+      <a-col :span="20">
           <!-- 纸张设置 -->
           <el-button-group style="margin:0 10px">
             <el-button   v-for="(value,type) in paperTypes" :type="curPaperType === type ? 'primary' : ' '" @click="setPaper(type,value)" :key="type">
@@ -34,28 +34,28 @@
           <el-button slot="reference" type="primary" style="margin:0 10px">自定义宽高</el-button>
         </el-popover>
 
-<!--          <el-button-group>-->
+<!--          <a-button-group>-->
 <!--            <template v-for="(value,type) in paperTypes">-->
-<!--              <el-button :type="curPaperType === type ? 'primary' : 'info'" @click="setPaper(type,value)" :key="type">-->
+<!--              <a-button :type="curPaperType === type ? 'primary' : 'info'" @click="setPaper(type,value)" :key="type">-->
 <!--                {{ type }}-->
-<!--              </el-button>-->
+<!--              </a-button>-->
 <!--            </template>-->
-<!--            <el-popover v-model="paperPopVisible" title="设置纸张宽高(mm)" trigger="click">-->
+<!--            <a-popover v-model="paperPopVisible" title="设置纸张宽高(mm)" trigger="click">-->
 <!--              <div slot="content">-->
-<!--                <el-input-group compact style="margin: 10px 10px">-->
-<!--                  <el-input type="number" v-model="paperWidth" style=" width: 100px; text-align: center"-->
+<!--                <a-input-group compact style="margin: 10px 10px">-->
+<!--                  <a-input type="number" v-model="paperWidth" style=" width: 100px; text-align: center"-->
 <!--                           placeholder="宽(mm)"/>-->
-<!--                  <el-input style=" width: 30px; border-left: 0; pointer-events: none; backgroundColor: #fff"-->
+<!--                  <a-input style=" width: 30px; border-left: 0; pointer-events: none; backgroundColor: #fff"-->
 <!--                           placeholder="~" disabled-->
 <!--                  />-->
-<!--                  <el-input type="number" v-model="paperHeight" style="width: 100px; text-align: center; border-left: 0"-->
+<!--                  <a-input type="number" v-model="paperHeight" style="width: 100px; text-align: center; border-left: 0"-->
 <!--                           placeholder="高(mm)"/>-->
-<!--                </el-input-group>-->
-<!--                <el-button type="primary" style="width: 100%" @click="otherPaper">确定</el-button>-->
+<!--                </a-input-group>-->
+<!--                <a-button type="primary" style="width: 100%" @click="otherPaper">确定</a-button>-->
 <!--              </div>-->
-<!--              <el-button :type="'other'==curPaperType?'primary':''">自定义纸张</el-button>-->
-<!--            </el-popover>-->
-<!--          </el-button-group>-->
+<!--              <a-button :type="'other'==curPaperType?'primary':''">自定义纸张</a-button>-->
+<!--            </a-popover>-->
+<!--          </a-button-group>-->
 
           <!-- 预览/打印 -->
           <el-button-group>
@@ -74,30 +74,30 @@
           </el-button-group>
           <!-- 保存/清空 -->
 
-      </el-col>
+      </a-col>
     </el-row>
-    <el-row :gutter="[8,0]">
-      <el-col :span="4">
-        <el-card style="height: 100vh">
-          <el-row>
-            <el-col :span="24" class="rect-printElement-types hiprintEpContainer">
-            </el-col>
-          </el-row>
-        </el-card>
-      </el-col>
-      <el-col :span="14">
-        <el-card class="card-design">
+    <a-row :gutter="[8,0]">
+      <a-col :span="4">
+        <a-card style="height: 100vh">
+          <a-row>
+            <a-col :span="24" class="rect-printElement-types hiprintEpContainer">
+            </a-col>
+          </a-row>
+        </a-card>
+      </a-col>
+      <a-col :span="14">
+        <a-card class="card-design">
           <div id="hiprint-printTemplate" class="hiprint-printTemplate"></div>
-        </el-card>
-      </el-col>
-      <el-col :span="6" class="params_setting_container">
-        <el-card>
-          <el-row class="hinnn-layout-sider">
+        </a-card>
+      </a-col>
+      <a-col :span="6" class="params_setting_container">
+        <a-card>
+          <a-row class="hinnn-layout-sider">
             <div id="PrintElementOptionSetting"></div>
-          </el-row>
-        </el-card>
-      </el-col>
-    </el-row>
+          </a-row>
+        </a-card>
+      </a-col>
+    </a-row>
     <!-- 预览 -->
     <print-preview ref="preView"/>
   </el-card>

@@ -2,7 +2,7 @@
   <el-card>
     <el-row style="margin-bottom: 10px">
       <el-col :span="24">
-        <div style="display:flex;">
+        <a-space>
           <!-- 纸张设置 -->
           <el-button-group>
             <el-button   v-for="(value,type) in paperTypes" :type="curPaperType === type ? 'primary' : ' '" @click="setPaper(type,value)" :key="type">
@@ -49,7 +49,7 @@
               清空
             </el-button >
           </el-button-group>
-        </div>
+        </a-space>
       </el-col>
     </el-row>
     <el-row >

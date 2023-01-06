@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <div style="margin-bottom: 10px">
+    <a-space style="margin-bottom: 10px">
       <el-button-group>
           <el-button   v-for="(value,type) in paperTypes" :type="curPaperType === type ? 'primary' : ' '" @click="setPaper(type,value)" :key="type">
             {{ type }}
@@ -37,7 +37,7 @@
       <el-button  type="primary" @click="setMultEleVertical">
         多选元素垂直间距10
       </el-button >
-    </div>
+    </a-space>
     <el-row >
       <el-col :span="4">
         <el-card style="height: 100vh">
@@ -53,14 +53,14 @@
                     </a>
                   </div>
                 </el-col>
-                <el-col :span="12" class="drag_item_box" tid="defaultModule.text">
+                <a-col :span="12" class="drag_item_box" tid="defaultModule.text">
                   <div>
                     <a class="ep-draggable-item" tid="defaultModule.image" style>
                       <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
                       <p class="glyphicon-class">图片</p>
                     </a>
                   </div>
-                </el-col>
+                </a-col>
               </el-row>
               <el-row style="height: 100px;">
                 <el-col :span="12" class="drag_item_box" tid="defaultModule.text">
@@ -122,16 +122,16 @@
         </el-card>
       </el-col>
       <el-col :span="15">
-        <el-card class="card-design">
+        <a-card class="card-design">
           <div id="hiprint-printTemplate" class="hiprint-printTemplate"></div>
-        </el-card>
+        </a-card>
       </el-col>
       <el-col :span="5" class="params_setting_container">
-        <el-card>
-          <el-row class="hinnn-layout-sider">
+        <a-card>
+          <a-row class="hinnn-layout-sider">
             <div id="PrintElementOptionSetting"></div>
-          </el-row>
-        </el-card>
+          </a-row>
+        </a-card>
       </el-col>
     </el-row>
     <!-- 预览 -->
