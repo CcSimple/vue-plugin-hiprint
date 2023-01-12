@@ -61,6 +61,22 @@
   letter-spacing: normal;
   z-index: 9;
 }
+
+.resize-panel .del-btn {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    line-height: 12px;
+    top: -8px;
+    right: -8px;
+    border-radius: 50%;
+    padding: 2px;
+    background: red;
+    color: white;
+    font-size: 12px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
 .resize-panel .size-box .hide {
   display: none;
 }

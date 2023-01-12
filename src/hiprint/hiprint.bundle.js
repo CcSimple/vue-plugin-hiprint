@@ -6679,6 +6679,7 @@ var hiprint = function (t) {
             target: n('<div class="r resizebtn" style="cursor:url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAABvUExURUdwTP///9XV1R0dHf///3Nzc////////////////1ZWVq+vr/T09PX19QQEBP///////8XFxf///////////wYGBv///+jo6P///4aGhqioqMzMzP///2BgYP///////////zExMf///wAAAP///xLps0AAAAAjdFJOUwCxxOdixRDmzSDMv8/Z+tz5wWpXWPk3zALCv8KnyXZVMNuNPnv3CwAAAJ1JREFUKM/NkckOwyAMRFkDBMhC9qWr+//fWCIV1WlzrjoXS36yxmMT8hdqqKoUvRAjMtw22kvecem1GjTuK1vApmI+wQMBbQFy5li+QQRaX4AtRX+vbntAJeRl9HTTx4TiwESs61DXNUPmVQeujzVrQwh43TTxpeRBslVfMUhbiXKWyiAwvnIsMcdyJkfJYdpNvG/ltDm+bjP+8KFP8ggL+zQLGxwAAAAASUVORK5CYII=\') 14 14,alias;top: -16px;margin-left: -4px;left: 50%;"></div>')
           },
           sizeBox = n('<div class="size-box" style="position: absolute;left:-2px;"></div>'),
+          deleteBtn = n('<div class="del-btn">✕</div>'),
           h = function h() {
             var t = [],
               i = e.options.showPoints;
@@ -6687,6 +6688,11 @@ var hiprint = function (t) {
             }), t;
           };
         e.refreshSizeBox(void 0, sizeBox, o);
+        o.append(deleteBtn);
+        o.on("mousedown", ".del-btn", () => {
+          var keyboardEvent = new KeyboardEvent("keydown", { bubbles: true, keyCode: 46 });
+          t.dispatchEvent(keyboardEvent);
+        });
         e.addHandlerCss(h()), e.appendHandler(h(), o), e.bindResizeEvent(o, n(this));
         var f = n(this);
         n(o).on("mousedown", ".resizebtn", function () {
