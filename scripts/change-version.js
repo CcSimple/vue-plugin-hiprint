@@ -1,5 +1,6 @@
 let path = require('path')
 const fs = require("fs");
+const exec = require('child_process').exec;
 const pkgPath = path.join(__dirname, '../package.json');
 let pkg = JSON.parse(fs.readFileSync(pkgPath));
 let version = pkg.version;
@@ -19,3 +20,9 @@ if (`${vEnd}`.includes('beta')) {
 pkg.version = version;
 let pkgStr = JSON.stringify(pkg, null, 2);
 fs.writeFileSync(pkgPath, pkgStr);
+let cmd = `git config user.name 'action-bot' && git config user.email '840054486@qq.com' && git add package.json && git commit -m 'pub-beta ${version}' && git tag ${version}`;
+exec(cmd);
+console.log('exec => cmd');
+let gitPush = `git push origin main`;
+exec(gitPush);
+console.log('exec => gitPush');
