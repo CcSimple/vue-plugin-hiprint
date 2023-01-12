@@ -26,6 +26,7 @@
     "build-demo": "vue-cli-service build",
     "build": "cross-env NODE_ENV=production webpack --progress",
     "pub": "npm run build && npm --registry https://registry.npmjs.org/ publish",
+    "up-version": "node ./scripts/change-version.js && git add package.json && git commit -m 'pub-beta'",
     "pub-beta": "npm run build && npm --registry https://registry.npmjs.org/ publish --tag beta"
   },
   "browserslist": [

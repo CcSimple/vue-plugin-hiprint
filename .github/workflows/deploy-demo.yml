@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    tags-ignore:
+      - 0.*
 
 jobs:
   deploy-gh-pages:
@@ -18,9 +20,18 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
+          registry-url: 'https://registry.npmjs.org'
 
       - name: 安装依赖
         run: npm install
+
+      - name: up-version
+        run: npm run up-version
+
+      - name: pubBeta
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: 构建demo
         env:
