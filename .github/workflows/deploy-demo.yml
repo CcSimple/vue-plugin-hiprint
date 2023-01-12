@@ -24,11 +24,11 @@ jobs:
         run: npm install
 
       - name: up-version
-        if: !startsWith(github.ref, 'refs/tags/0.')
+        if: ${{ !startsWith(github.ref, 'refs/tags/0.') }}
         run: npm run up-version
 
       - name: pubBeta
-        if: !startsWith(github.ref, 'refs/tags/0.')
+        if: ${{ !startsWith(github.ref, 'refs/tags/0.') }}
         run: npm run pub-beta
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
