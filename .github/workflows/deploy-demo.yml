@@ -25,7 +25,16 @@ jobs:
 
       - name: up-version
         if: ${{ !startsWith(github.ref, 'refs/tags/0.') }}
-        run: npm run up-version
+        run: |
+          git config --local user.email "840054486@qq.com"
+          git config --local user.name "github-actions[bot]"
+          npm run up-version
+
+      - name: push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
 
       - name: pubBeta
         if: ${{ !startsWith(github.ref, 'refs/tags/0.') }}
