@@ -21,7 +21,9 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: 安装依赖
-        run: npm install
+        run: |
+          echo "${{ github.ref }}"
+          npm install
 
       - name: up-version
         if: ${{ !startsWith(github.ref, 'refs/tags/0.') }}
@@ -31,6 +33,7 @@ jobs:
           npm run up-version
 
       - name: push changes
+        if: ${{ !startsWith(github.ref, 'refs/tags/0.') }}
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
