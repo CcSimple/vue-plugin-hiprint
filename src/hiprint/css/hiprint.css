@@ -62,7 +62,7 @@
   z-index: 9;
 }
 
-.resize-panel .del-btn {
+.hiprint-printElement.design .del-btn {
     position: absolute;
     width: 16px;
     height: 16px;
@@ -76,6 +76,7 @@
     font-size: 12px;
     box-sizing: border-box;
     cursor: pointer;
+    text-align: center;
 }
 .resize-panel .size-box .hide {
   display: none;
