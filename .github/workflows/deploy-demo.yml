@@ -2,6 +2,8 @@ name: 部署demo
 
 on:
   push:
+    tags:
+      - 0.*
     branches:
       - main
 
