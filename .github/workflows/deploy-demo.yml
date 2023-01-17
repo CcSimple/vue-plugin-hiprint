@@ -52,7 +52,7 @@ jobs:
 
       - name: pubNew
         if: ${{ startsWith(github.ref, 'refs/tags/0.') }}
-        run: npm run pub-beta
+        run: npm run pub
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
