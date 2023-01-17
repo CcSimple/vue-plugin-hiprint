@@ -1,5 +1,28 @@
 版本及更新记录
 ------------------------------
+### 💐️  GitHub 提交 PR 合并后可自动发布到 npm 仓库;
+### 💐  同时自动更新 GitHub Pages 同步 Gitee;
+### 💐  感谢各位贡献者的支持。 🔥
+## 0.0.42 (2023-01-17)
+<details>
+  <summary>1. 🌈️  选中元素新增删除按钮</summary>
+</details>
+<details>
+  <summary>2. ✨ 调整优化 页码格式 支持 ${paperNo+1} 增量页码</summary>
+</details>
+<details>
+  <summary>3. ✨ 调整优化 table列 编辑相关问题</summary>
+</details>
+<details>
+  <summary>4. ✨ 调整优化 常见错误 Error 中文提示; 如 tableCustom</summary>
+</details>
+<details>
+  <summary>5. 🐛️ fix 框选后 getSelectEls 无法获取选中元素 bug</summary>
+</details>
+<details>
+  <summary>6. 🐛️ fix table 设置表体行高 自动填充 bug</summary>
+</details>
+
 ## 0.0.40 (2022-12-26)
 <details>
   <summary>1. 🌈️  新增支持 文本、表格聚合添加「转大小写」功能 同时提供 hinnn.toUpperCase 方法</summary>
