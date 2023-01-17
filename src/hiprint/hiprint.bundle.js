@@ -8556,8 +8556,20 @@ var hiprint = function (t) {
           minMove: 4,
           onBeforeDrag: function onBeforeDrag(e) {
             s.a.instance.draging = !0;
-            var n = t.getElementType($(e.data.target).attr("tid"), $(e.data.target).attr("ptype"));
-            return s.a.instance.setDragingPrintElement(n.createPrintElement()), !0;
+            var tid = $(e.data.target).attr("tid");
+            var n = t.getElementType(tid, $(e.data.target).attr("ptype"));
+            if (!n) {
+              throw new Error(`请检查 hiprint.init 的 provider 是否配置了 [${tid}]`);
+              return !1;
+            }
+            var ele = n.createPrintElement();
+            if (!ele) {
+              if (n.type == 'tableCustom') {
+                throw new Error(`已移除"tableCustom",请替换使用"table".详情见更新记录`);
+                return !1;
+              }
+            }
+            return s.a.instance.setDragingPrintElement(ele), !0;
           },
           onDrag: function onDrag(t, e, n) {
             s.a.instance.getDragingPrintElement().updatePosition(e, n);
@@ -9470,10 +9482,14 @@ var hiprint = function (t) {
           var n = this,
             i = 0,
             o = {},
-            r = $('link[media=print][href*="print-lock.css"]').length > 0 ? $('link[media=print][href*="print-lock.css"]') : [],
+            r = $('link[media=print][href*="print-lock.css"]'),
             css = '';
           if (e.styleHandler) {
             css += e.styleHandler()
+          }
+          if (r.length <= 0) {
+            throw new Error("请在 入口文件(index.html) 中引入 print-lock.css. 注意: link[media=\"print\"]");
+            return;
           }
           r.each(function (a, p) {
             var s = new XMLHttpRequest();
