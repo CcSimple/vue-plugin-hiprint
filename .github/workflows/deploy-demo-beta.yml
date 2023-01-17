@@ -2,10 +2,10 @@ name: 部署demo-beta
 
 on:
   push:
-    branches:
-      - main
     tags-ignore:
       - 0.*
+    branches:
+      - main
 
 jobs:
   deploy-beta-gh-pages:
