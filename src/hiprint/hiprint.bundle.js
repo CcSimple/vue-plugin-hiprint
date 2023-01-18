@@ -6733,6 +6733,19 @@ var hiprint = function (t) {
           }
         }
       }
+      var style, sizeBox;
+      if (t && t.length) {
+        style = t[0].style;
+        sizeBox = t.children("div[panelindex]").find(".size-box");
+      } else if (o && o.parent()) {
+        var t = o.parent();
+        style = t[0].style;
+        sizeBox = t.children("div[panelindex]").find(".size-box");
+      }
+      if (sizeBox) {
+        sizeBox.text(style.width + ' x ' + style.height);
+        sizeBox.css('top', -(sizeBox.outerHeight() || 20));
+      }
     },
     triggerResize: function triggerResize(t, n) {
       // 处理按住 ctrl / command 点击元素 多选

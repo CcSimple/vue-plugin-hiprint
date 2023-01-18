@@ -50,6 +50,7 @@
 /* 元素宽高 */
 .resize-panel .size-box {
   border: 1px solid;
+  min-height: 19px;
   padding: 0px 4px;
   background: red;
   color: white;
