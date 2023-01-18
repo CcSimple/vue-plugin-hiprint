@@ -6723,15 +6723,6 @@ var hiprint = function (t) {
       if (!this.options.showSizeBox) return;
       if (box) {
         o.append(box);
-      } else {
-        if (t && t.length) {
-          var style = t[0].style;
-          var sizeBox = t.children("div[panelindex]").find(".size-box");
-          if (sizeBox) {
-            sizeBox.text(style.width + ' x ' + style.height);
-            sizeBox.css('top', -(sizeBox.outerHeight()));
-          }
-        }
       }
       var style, sizeBox;
       if (t && t.length) {
@@ -6750,10 +6741,12 @@ var hiprint = function (t) {
     triggerResize: function triggerResize(t, n) {
       // 处理按住 ctrl / command 点击元素 多选
       if (!(n.ctrlKey || n.metaKey)) {
+        t.siblings().children("div[panelindex]").removeClass('selected')
         t.siblings().children("div[panelindex]").css({
           display: "none"
         })
       }
+      t.children("div[panelindex]").addClass('selected')
       t.children("div[panelindex]").css({
         display: "block"
       });
@@ -6926,6 +6919,7 @@ var hiprint = function (t) {
             t.stopPropagation(), n("div[panelindex]").css({
               display: "none"
             });
+            n("div[panelindex]").removeClass("selected");
           }
         });
       }

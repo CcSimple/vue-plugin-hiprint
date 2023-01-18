@@ -62,9 +62,21 @@
   letter-spacing: normal;
   z-index: 9;
 }
-
+.hiprint-printElement:hover .resize-panel {
+  display: block !important;
+  /* hover 强制背景色 可重写 */
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+.hiprint-printElement:hover .resize-panel .resizebtn {
+  display: none;
+}
+.hiprint-printElement:hover .resize-panel.selected .resizebtn {
+  display: block;
+}
 .hiprint-printElement.design .del-btn {
     position: absolute;
+    visibility: hidden;
+    z-index: 10;
     width: 16px;
     height: 16px;
     line-height: 12px;
@@ -78,6 +90,9 @@
     box-sizing: border-box;
     cursor: pointer;
     text-align: center;
+}
+.hiprint-printElement.design:hover .del-btn {
+  visibility: visible;
 }
 .resize-panel .size-box .hide {
   display: none;
