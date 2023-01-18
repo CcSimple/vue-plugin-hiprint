@@ -3,7 +3,7 @@
 ### 💐️  GitHub 提交 PR 合并后可自动发布到 npm 仓库;
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
-## 0.0.42 (2023-01-17)
+## 0.0.44 (2023-01-18)
 <details>
   <summary>1. 🌈️  选中元素新增删除按钮</summary>
 </details>
@@ -11,16 +11,22 @@
   <summary>2. ✨ 调整优化 页码格式 支持 ${paperNo+1} 增量页码</summary>
 </details>
 <details>
-  <summary>3. ✨ 调整优化 table列 编辑相关问题</summary>
+  <summary>3. ✨ 调整优化 新拖拽元素宽高大小显示</summary>
 </details>
 <details>
-  <summary>4. ✨ 调整优化 常见错误 Error 中文提示; 如 tableCustom</summary>
+  <summary>4. ✨ 调整优化 hover元素时显示删除按钮及宽高大小</summary>
 </details>
 <details>
-  <summary>5. 🐛️ fix 框选后 getSelectEls 无法获取选中元素 bug</summary>
+  <summary>5. ✨ 调整优化 当图片元素没设置宽高时,获取宽高大小</summary>
 </details>
 <details>
-  <summary>6. 🐛️ fix table 设置表体行高 自动填充 bug</summary>
+  <summary>6. ✨ 调整优化 常见错误 Error 中文提示; 如 tableCustom</summary>
+</details>
+<details>
+  <summary>7. 🐛️ fix 框选后 getSelectEls 无法获取选中元素 bug</summary>
+</details>
+<details>
+  <summary>8. 🐛️ fix table 设置表体行高 自动填充 bug</summary>
 </details>
 
 ## 0.0.40 (2022-12-26)
