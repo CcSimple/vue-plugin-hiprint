@@ -6731,6 +6731,12 @@ var hiprint = function (t) {
       } else if (o && o.parent()) {
         var t = o.parent();
         style = t[0].style;
+        if (!style.width) {
+          style.width = hinnn.px.toPt(t[0].offsetWidth) + "pt";
+        }
+        if (!style.height) {
+          style.height = hinnn.px.toPt(t[0].offsetHeight) + "pt";
+        }
         sizeBox = t.children("div[panelindex]").find(".size-box");
       }
       if (sizeBox) {
