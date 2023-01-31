@@ -1298,7 +1298,8 @@ var hiprint = function (t) {
           onDrag: function onDrag(t, i, o) {
             // 处理按住 ctrl / command 多选元素
             var els = n.panel.printElements.filter(function (t) {
-              return 'block' == t.designTarget.children().last().css('display') && !t.printElementType.type.includes('table');
+              return ('block' == t.designTarget.children().last().css('display')
+                && t.designTarget.children().last().hasClass('selected')) && !t.printElementType.type.includes('table');
             });
             var isMultiple = els.length > 1;
             if (isMultiple) {
