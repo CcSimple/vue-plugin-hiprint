@@ -1302,6 +1302,7 @@ var hiprint = function (t) {
                 && t.designTarget.children().last().hasClass('selected')) && !t.printElementType.type.includes('table');
             });
             var isMultiple = els.length > 1;
+            var notSelected = !n.designTarget.children().last().hasClass('selected');
             if (isMultiple) {
               var left = i - n.options.left, top = o - n.options.top;
               els.forEach(function (t) {
@@ -1309,6 +1310,9 @@ var hiprint = function (t) {
                   t.designTarget.css("left", t.options.displayLeft()), t.designTarget.css("top", t.options.displayTop());
                 t.createLineOfPosition(e);
               })
+              if (notSelected) {
+                n.updateSizeAndPositionOptions(i, o), n.createLineOfPosition(e);
+              }
             } else {
               n.updateSizeAndPositionOptions(i, o), n.createLineOfPosition(e);
             }
