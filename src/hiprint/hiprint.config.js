@@ -946,6 +946,18 @@
               hidden: false
             },
             {
+              name: 'groupFieldsFormatter',
+              hidden: false
+            },
+            {
+              name: 'groupFormatter',
+              hidden: false
+            },
+            {
+              name: 'groupFooterFormatter',
+              hidden: false
+            },
+            {
               name: 'gridColumnsFooterFormatter',
               hidden: false
             }
@@ -1075,6 +1087,18 @@
         },
         {
           name: 'rowsColumnsMerge',
+          hidden: false
+        },
+        {
+          name: 'groupFieldsFormatter',
+          hidden: false
+        },
+        {
+          name: 'groupFormatter',
+          hidden: false
+        },
+        {
+          name: 'groupFooterFormatter',
           hidden: false
         },
         {
