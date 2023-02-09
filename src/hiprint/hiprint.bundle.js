@@ -2301,7 +2301,7 @@ var hiprint = function (t) {
         var o = TableExcelHelper.reconsitutionTableColumnTree(t),
           r = $("<tbody></tbody>");
         var gff = h.getGroupFieldsFormatter(n, i);
-        var groupFields = gff ? n.groupFields = gff(n, e) : [];
+        var groupFields = gff ? (n.groupFields = gff(i, n, e)) : i.groupFields ? i.groupFields : [];
         (e || (e = []), groupFields.length) ? _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_1__.a.groupBy(e, groupFields, function (t) {
           var e = {};
           return groupFields.forEach(function (n) {
@@ -2515,6 +2515,10 @@ var hiprint = function (t) {
         });
       }, TableExcelHelper.getGroupFieldsFormatter = function (options, tablePrintElementType) {
         var groupFieldsFormatter = void 0;
+        if (tablePrintElementType.groupFields && tablePrintElementType.groupFields.length) {
+          var arr = typeof tablePrintElementType.groupFields == "string" ? tablePrintElementType.groupFields : JSON.stringify(tablePrintElementType.groupFields);
+          options.groupFieldsFormatter = "function(type,options,data){ return " + arr + " }";
+        }
         if (tablePrintElementType.groupFieldsFormatter && (groupFieldsFormatter = tablePrintElementType.groupFieldsFormatter), options.groupFieldsFormatter) try {
           var s = "groupFieldsFormatter=" + options.groupFieldsFormatter;
           eval(s);
@@ -4671,7 +4675,7 @@ var hiprint = function (t) {
       }
 
       return t.prototype.createTarget = function () {
-        return this.target = $(' <div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        分组字段函数\n        </div>\n        <div class="hiprint-option-item-field">\n        <textarea style="height:80px;" placeholder="function(groupData,options){ return [] }" class="auto-submit"></textarea>\n        </div>\n    </div>'), this.target;
+        return this.target = $(' <div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        分组字段函数\n        </div>\n        <div class="hiprint-option-item-field">\n        <textarea style="height:80px;" placeholder="function(type,options,data){ return [] }" class="auto-submit"></textarea>\n        </div>\n    </div>'), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("textarea").val();
         if (t) return t;
