@@ -22,14 +22,13 @@ export default {
       "options": {
         "left": 28.5,
         "top": 34.5,
-        "height": 32,
+        "height": 120,
         "width": 120,
         "testData": "XS888888888",
         "fontSize": 12,
         "lineHeight": 18,
         "fontWeight": "700",
         "textAlign": "left",
-        "textContentVerticalAlign": "middle",
         "textType": "qrcode",
         "title": "二维码"
       }, "printElementType": {"title": "二维码", "type": "text"}
