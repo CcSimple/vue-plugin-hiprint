@@ -58,6 +58,7 @@
               </a-button>
             </a-popconfirm>
           </a-button-group>
+          <json-view :template="template"/>
         </a-space>
       </a-col>
     </a-row>
@@ -91,6 +92,7 @@
 <script>
 
 import printPreview from './preview'
+import jsonView from '../json-view.vue'
 
 import {hiprint} from '../../index'
 import TaskRunner from 'concurrent-tasks';
@@ -101,9 +103,10 @@ import printData from './print-data'
 let hiprintTemplate;
 export default {
   name: "printCustom",
-  components: {printPreview},
+  components: {printPreview, jsonView},
   data() {
     return {
+      template: null,
       // 打印数量
       count: 1,
       // 当前纸张
@@ -172,7 +175,7 @@ export default {
       hiprint.PrintElementTypeManager.build('.hiprintEpContainer', 'taskProviderModule');
       $('#hiprint-printTemplate').empty()
       let template = this.$ls.get('KEY_TEMPLATE_TASKS', panel)
-      hiprintTemplate = new hiprint.PrintTemplate({
+      this.template = hiprintTemplate = new hiprint.PrintTemplate({
         template: template,
         settingContainer: '#PrintElementOptionSetting',
         paginationContainer: '.hiprint-printPagination'

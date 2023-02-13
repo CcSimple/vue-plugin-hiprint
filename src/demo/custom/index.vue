@@ -75,6 +75,7 @@
               </a-button>
             </a-popconfirm>
           </a-button-group>
+          <json-view :template="template"/>
         </a-space>
       </a-col>
     </a-row>
@@ -108,6 +109,7 @@
 <script>
 
 import printPreview from './preview'
+import jsonView from '../json-view.vue'
 
 import {hiprint} from '../../index'
 import providers from './providers'
@@ -116,9 +118,10 @@ import printData from './print-data'
 let hiprintTemplate;
 export default {
   name: "printCustom",
-  components: {printPreview},
+  components: {printPreview, jsonView},
   data() {
     return {
+      template: null,
       // 模板选择
       mode: 0,
       modeList: [],
@@ -201,7 +204,7 @@ export default {
       $('#hiprint-printTemplate').empty()
       let templates = this.$ls.get('KEY_TEMPLATES', {})
       let template = templates[provider.value] ? templates[provider.value] : {}
-      hiprintTemplate = new hiprint.PrintTemplate({
+      this.template = hiprintTemplate = new hiprint.PrintTemplate({
         template: template,
         dataMode: 1, // 1:getJson 其他：getJsonTid 默认1
         history: false, // 是否需要 撤销重做功能
@@ -216,7 +219,6 @@ export default {
         paginationContainer: '.hiprint-printPagination'
       });
       hiprintTemplate.design('#hiprint-printTemplate');
-      console.log(hiprintTemplate);
       // 获取当前放大比例, 当zoom时传true 才会有
       this.scaleValue = hiprintTemplate.editingPanel.scale || 1;
     },
