@@ -119,7 +119,6 @@ export default {
   components: {printPreview},
   data() {
     return {
-      deactivated: false,
       // 模板选择
       mode: 0,
       modeList: [],
@@ -183,16 +182,6 @@ export default {
   mounted() {
     this.init()
     this.otherPaper()
-  },
-  activated() {
-    // 重新再实例化, 处理切换demo, 无法拖拽问题
-    if (this.deactivated) {
-      this.changeMode();
-      this.deactivated = false;
-    }
-  },
-  deactivated() {
-    this.deactivated = true;
   },
   methods: {
     init() {

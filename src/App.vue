@@ -21,7 +21,7 @@
       </a-button-group>
     </a-row>
     <!-- 动态渲染组件，懒得去弄路由了 -->
-    <keep-alive :include='keepInclude' :max="10">
+    <keep-alive>
       <component :is="curDemo"/>
     </keep-alive>
   </div>

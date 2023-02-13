@@ -104,7 +104,6 @@ export default {
   components: {printPreview},
   data() {
     return {
-      deactivated: false,
       // 打印数量
       count: 1,
       // 当前纸张
@@ -163,16 +162,6 @@ export default {
   mounted() {
     this.init()
     this.otherPaper()
-  },
-  activated() {
-    // 重新再实例化, 处理切换demo, 无法拖拽问题
-    if (this.deactivated) {
-      this.init();
-      this.deactivated = false;
-    }
-  },
-  deactivated() {
-    this.deactivated = true;
   },
   methods: {
     init() {

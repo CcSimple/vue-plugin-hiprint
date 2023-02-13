@@ -262,7 +262,6 @@ export default {
   components: {printPreview},
   data() {
     return {
-      deactivated: false,
       curPaper: {
         type: 'A4',
         width: 210,
@@ -320,15 +319,6 @@ export default {
       }
       return type
     }
-  },
-  activated() {
-    if (this.deactivated) {
-      this.init();
-      this.deactivated = false;
-    }
-  },
-  deactivated() {
-    this.deactivated = true;
   },
   mounted() {
     this.init()
