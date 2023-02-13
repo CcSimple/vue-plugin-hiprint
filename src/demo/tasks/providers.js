@@ -58,26 +58,22 @@ export const aProvider = function (ops) {
           {
             tid: 'taskProviderModule.barcode', title: '条形码', data: 'XS888888888', type: 'text',
             options: {
+              field: 'barcode',
               testData: 'XS888888888',
               height: 32,
               fontSize: 12,
               lineHeight: 18,
-              fontWeight: "700",
-              textAlign: "left",
-              textContentVerticalAlign: "middle",
               textType: "barcode"
             }
           },
           {
             tid: 'taskProviderModule.qrcode', title: '二维码', data: 'XS888888888', type: 'text',
             options: {
+              field: 'qrcode',
               testData: 'XS888888888',
               height: 32,
               fontSize: 12,
               lineHeight: 18,
-              fontWeight: "700",
-              textAlign: "left",
-              textContentVerticalAlign: "middle",
               textType: "qrcode"
             }
           },
