@@ -74,6 +74,9 @@ npm install vue-plugin-hiprint
 </table>
 
 ## 插件全局引入
+
+> 全局引入，方便在任何地方不引入直接调用打印。示例为代码模式 (拖拽设计请往下看)
+
 ```javascript
 // main.js中 引入安装
 import {hiPrintPlugin} from 'vue-plugin-hiprint'
@@ -114,6 +117,9 @@ hiprintTemplate.print2({});
 ```
 
 ## 组件内引入
+
+> 示例为代码模式 (拖拽设计请往下看)
+
 ```javascript
 import {autoConnect, disAutoConnect, hiprint, defaultElementTypeProvider} from 'vue-plugin-hiprint'
 // autoConnect(); // 默认 自动连接直接打印客户端
