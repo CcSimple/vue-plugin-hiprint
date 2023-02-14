@@ -45,6 +45,14 @@ Demo预览：[https://ccsimple.gitee.io/vue-plugin-hiprint/](https://ccsimple.gi
 
 打印客户端：[https://gitee.com/CcSimple/electron-hiprint](https://gitee.com/CcSimple/electron-hiprint)
 
+## 文章链接
+
+入门篇: [【vue-plugin-hiprint】使用-入门篇](https://mp.weixin.qq.com/s?__biz=MzUyMzg5NDU0Mg==&mid=2247484604&idx=1&sn=a26f606cea93307fb533af45558c1b65&chksm=fa34eeddcd4367cbb7b28fed888d735cd6b9b26e79c2cb460021896f5c6ece2dc1ca0c5ea581#rd)
+
+进阶篇: [【vue-plugin-hiprint】使用-进阶篇](https://mp.weixin.qq.com/s?__biz=MzUyMzg5NDU0Mg==&mid=2247484659&idx=1&sn=69592183549571aadc751f41e26e4240&chksm=fa34ee92cd43678419c82b9c35c37012546ab89e10255a8b6679a932ec3cd456c32e950961ba#rd)
+
+provider: [【vue-plugin-hiprint】如何自定义可拖拽元素 provider](https://mp.weixin.qq.com/s?__biz=MzUyMzg5NDU0Mg==&mid=2247484532&idx=1&sn=4d76bd1545113e963453d11821044043&chksm=fa34ee15cd43670346c4ad52d0bca1e88eef6eff742da6012c802bfe4edb84767f0c9612511c#rd)
+
 ### 安装使用
 ```
 npm install vue-plugin-hiprint
