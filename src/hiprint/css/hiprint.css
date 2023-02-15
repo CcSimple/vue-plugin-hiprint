@@ -199,6 +199,9 @@
                 color: red;
             }
 
+.hiprint-pagination .selected {
+  border: #2196f3 1px solid;
+}
 
 
 .hiprint-pagination-sm > li > a {

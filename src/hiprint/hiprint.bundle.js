@@ -9449,7 +9449,7 @@ var hiprint = function (t) {
           var t = r,
             e = $("<li><span>" + (t + 1) + '</span><a href="javascript:void(0);">x</a></li>');
           e.find("span").click(function () {
-            n.template.selectPanel(t), e.removeClass("selected"), $(this).parent("li").addClass("selected");
+            n.template.selectPanel(t), e.siblings().removeClass("selected"), $(this).parent("li").addClass("selected");
           }), e.find("a").click(function () {
             n.template.deletePanel(t), n.buildPagination();
           }), i.append(e);
@@ -9460,6 +9460,8 @@ var hiprint = function (t) {
         var a = $("<li><span>+</span></li>");
         i.append(a), this.jqPaginationContainer.append(i), a.click(function () {
           n.template.addPrintPanel(void 0, !0), n.buildPagination();
+          $('.hiprint-pagination li').removeClass('selected');
+          $('.hiprint-pagination li:nth-last-child(2)').addClass('selected');
         });
       }, t;
     }(),
