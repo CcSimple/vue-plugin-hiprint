@@ -6520,6 +6520,19 @@ var hiprint = function (t) {
                 target: e.data.target,
                 parent: t(e.data.target).parent()[0]
               };
+            var ops = t.data(e.data.target, "hidraggable");
+            // item禁止移动
+            if (ops.options.draggable === false) {
+              return;
+            }
+            // 旋转时不允许移动
+            if ('r resizebtn' == e.target.className) {
+              return;
+            }
+            var ptr = ops.options.getScale()
+            if (ptr) {
+              p.left /= ptr, p.top /= ptr, p.startLeft /= ptr, p.startTop /= ptr;
+            }
             var tr = p.target.style.transform && parseInt(p.target.style.transform.slice(7, -1));
             if (tr) {
               var rad = tr * Math.PI / 180,
@@ -6532,20 +6545,7 @@ var hiprint = function (t) {
               var diffW = (w - width) / 2, diffH = (h - height) / 2;
               p.left += diffW, p.top += diffH, p.startLeft += diffW, p.startTop += diffH;
             }
-            var ops = t.data(e.data.target, "hidraggable");
-            var ptr = ops.options.getScale()
-            if (ptr) {
-              p.left /= ptr, p.top /= ptr, p.startLeft /= ptr, p.startTop /= ptr;
-            }
             t.extend(e.data, p);
-            // item禁止移动
-            if (ops.options.draggable === false) {
-              return;
-            }
-            // 旋转时不允许移动
-            if ('r resizebtn' == e.target.className) {
-              return;
-            }
             0 != t.data(e.data.target, "hidraggable").options.onBeforeDrag.call(e.data.target, e) && (t(document).bind("mousedown.hidraggable", e.data, i), t(document).bind("mousemove.hidraggable", e.data, o), t(document).bind("mouseup.hidraggable", e.data, r));
           }
         });
