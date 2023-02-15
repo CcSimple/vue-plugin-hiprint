@@ -32,18 +32,20 @@
 import printDesign from '@/demo/design/index'
 import printCustom from '@/demo/custom/index'
 import printTasks from '@/demo/tasks/index'
+import printPanels from '@/demo/panels/index'
 
 export default {
   name: 'App',
-  components: {printDesign, printCustom, printTasks},
+  components: {printDesign, printCustom, printTasks, printPanels},
   data() {
     return {
       curDemo: 'printDesign',
-      keepInclude: 'printDesign,printCustom,printTasks',
+      keepInclude: 'printDesign,printCustom,printTasks,printPanels',
       demoList: [
         {name: 'printDesign', title: '默认拖拽设计'},
         {name: 'printCustom', title: '自定义设计'},
-        {name: 'printTasks', title: '队列/批量打印'}
+        {name: 'printTasks', title: '队列/批量打印'},
+        {name: 'printPanels', title: '多面板设计'}
       ]
     }
   },
@@ -73,6 +75,7 @@ export default {
     content: url("~@/assets/logo.png");
   }
 }
+
 // 修改 页眉/页脚线 样式
 .hiprint-headerLine, .hiprint-footerLine {
   border-color: red !important;
