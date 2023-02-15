@@ -6818,6 +6818,7 @@ var hiprint = function (t) {
         sizeBox = t.children("div[panelindex]").find(".size-box");
       } else if (o && o.parent()) {
         var t = o.parent();
+        if (t.hasClass("hiprint-printPaper-content")) return;
         style = t[0].style;
         if (!style.width) {
           style.width = hinnn.px.toPt(t[0].offsetWidth) + "pt";
@@ -7846,6 +7847,8 @@ var hiprint = function (t) {
           }
         });
       }, t.prototype.resize = function (t, e) {
+        console.log('t,e')
+        console.log(t,e)
         this.width = o.a.mm.toPt(t), this.height = o.a.mm.toPt(e), this.mmwidth = t, this.mmheight = e, this.target.css("width", t + "mm"), this.target.css("height", e - p.a.instance.paperHeightTrim + "mm"), this.target.attr("original-height", this.mmheight);
         // 设置纸张后, 页脚线重置问题
         var paperFooter = this.paperFooter > this.height ? this.height : this.paperFooter;
