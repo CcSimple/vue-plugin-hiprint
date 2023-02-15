@@ -9641,7 +9641,11 @@ var hiprint = function (t) {
           var n = this,
             i = 0,
             o = {},
-            r = $("link[media=print]").length > 0 ? $("link[media=print]") : $("link");
+            r = $('link[media=print][href*="print-lock.css"]');
+          if (r.length <= 0) {
+            throw new Error("请在 入口文件(index.html) 中引入 print-lock.css. 注意: link[media=\"print\"]");
+            return;
+          }
           r.each(function (a, p) {
             var l = new XMLHttpRequest();
             l.open("GET", $(p).attr("href")), l.onreadystatechange = function () {
