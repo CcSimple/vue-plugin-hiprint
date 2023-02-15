@@ -32,17 +32,25 @@ jobs:
         uses: technote-space/get-diff-action@v6
         with:
           PATTERNS: |
-            +(src/hiprint|src/demo)/
+            src/hiprint/**
+
+      - name: check diff2
+        id: check_diff2
+        uses: technote-space/get-diff-action@v6
+        with:
+          PATTERNS: |
+            src/demo/**
+            public/**
 
       - name: 设置 Node.js
-        if: steps.check_diff.outputs.diff
+        if: ${{ steps.check_diff.outputs.diff || steps.check_diff2.outputs.diff }}
         uses: actions/setup-node@v3
         with:
           node-version: 16
           registry-url: 'https://registry.npmjs.org'
 
       - name: 安装依赖
-        if: steps.check_diff.outputs.diff
+        if: ${{ steps.check_diff.outputs.diff || steps.check_diff2.outputs.diff }}
         run: |
           echo "${{ github.ref }}"
           npm install
@@ -68,7 +76,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: 构建demo
-        if: steps.check_diff.outputs.diff
+        if: ${{ steps.check_diff.outputs.diff || steps.check_diff2.outputs.diff }}
         env:
           NODE_OPTIONS: --max_old_space_size=8192
         run: |-
@@ -76,7 +84,7 @@ jobs:
           > demo/.nojekyll
 
       - name: githubPage
-        if: steps.check_diff.outputs.diff
+        if: ${{ steps.check_diff.outputs.diff || steps.check_diff2.outputs.diff }}
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
@@ -91,7 +99,7 @@ jobs:
           destination-repo: git@gitee.com:CcSimple/vue-plugin-hiprint.git
 
       - name: giteePages
-        if: steps.check_diff.outputs.diff
+        if: ${{ steps.check_diff.outputs.diff || steps.check_diff2.outputs.diff }}
         uses: yanglbme/gitee-pages-action@master
         with:
           gitee-username: CcSimple
