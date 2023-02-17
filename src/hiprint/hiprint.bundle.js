@@ -8579,6 +8579,13 @@ var hiprint = function (t) {
         return this.printElements.forEach(function (e) {
           e.options && e.options.field ? t.push(e.options.field) : e.printElementType.field && t.push(e.printElementType.field);
         }), t;
+      }, t.prototype.getTestData = function () {
+        var t = {};
+        return this.printElements.forEach(function (e) {
+          if ("table" != e.printElementType.type) {
+            e.options && e.options.field ? t[e.options.field] = e.options.testData : e.printElementType.field ? t[e.printElementType.field] = e.printElementType.data || e.options.testData : void 0;
+          }
+        }), t;
       }, t.prototype.bindBatchMoveElement = function () {
         var t = this;
         this.designPaper.getTarget().on("mousemove", function (e) {
@@ -9258,6 +9265,11 @@ var hiprint = function (t) {
         var t = [];
         return this.printPanels.forEach(function (e) {
           t = t.concat(e.getFieldsInPanel());
+        }), t;
+      }, t.prototype.getTestData = function () {
+        var t = {};
+        return this.printPanels.forEach(function (e) {
+          t = Object.assign(t, e.getTestData());
         }), t;
       }, t.prototype.update = function (t) {
         var e = this;
