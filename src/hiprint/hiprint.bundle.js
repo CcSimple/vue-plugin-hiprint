@@ -895,6 +895,9 @@ var hiprint = function (t) {
           }, {
             name: "styler2",
             hidden: !1
+          },{
+            name: "stylerHeader",
+            hidden: !1
           }, {
             name: 'tableTextType',
             hidden: !1
@@ -2076,7 +2079,7 @@ var hiprint = function (t) {
     }(),
     u = function () {
       return function (t) {
-        this.title = t.title, this.field = t.field, this.width = t.width, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.colspan = t.colspan, this.rowspan = t.rowspan, this.checked = t.checked, this.columnId = t.columnId, this.tableSummaryTitle = t.tableSummaryTitle, this.tableSummaryText = t.tableSummaryText, this.tableSummary = t.tableSummary, this.tableSummaryAlign = t.tableSummaryAlign, this.tableSummaryNumFormat = t.tableSummaryNumFormat, this.upperCase = t.upperCase, this.renderFormatter = t.renderFormatter, this.formatter2 = t.formatter2, this.styler2 = t.styler2, this.tableColumnHeight = t.tableColumnHeight, this.tableTextType = t.tableTextType, this.tableBarcodeMode = t.tableBarcodeMode, this.tableQRCodeLevel = t.tableQRCodeLevel;
+        this.title = t.title, this.field = t.field, this.width = t.width, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.colspan = t.colspan, this.rowspan = t.rowspan, this.checked = t.checked, this.columnId = t.columnId, this.tableSummaryTitle = t.tableSummaryTitle, this.tableSummaryText = t.tableSummaryText, this.tableSummary = t.tableSummary, this.tableSummaryAlign = t.tableSummaryAlign, this.tableSummaryNumFormat = t.tableSummaryNumFormat, this.upperCase = t.upperCase, this.renderFormatter = t.renderFormatter, this.formatter2 = t.formatter2, this.styler2 = t.styler2, this.stylerHeader = t.stylerHeader, this.tableColumnHeight = t.tableColumnHeight, this.tableTextType = t.tableTextType, this.tableBarcodeMode = t.tableBarcodeMode, this.tableQRCodeLevel = t.tableQRCodeLevel;
       };
     }(),
     d = function () {
@@ -2178,7 +2181,7 @@ var hiprint = function (t) {
     f = function (t) {
       function e(e) {
         var n = this;
-        return e = e || {}, (n = t.call(this) || this).width = e.width ? parseFloat(e.width.toString()) : 100, n.title = e.title, n.descTitle = e.descTitle, n.field = e.field, n.fixed = e.fixed, n.rowspan = e.rowspan ? parseInt(e.rowspan) : 1, n.colspan = e.colspan ? parseInt(e.colspan) : 1, n.align = e.align, n.halign = e.halign, n.vAlign = e.vAlign, n.formatter = e.formatter, n.styler = e.styler, n.renderFormatter = e.renderFormatter, n.formatter2 = e.formatter2, n.styler2 = e.styler2, n.checkbox = e.checkbox, n.checked = 0 != e.checked, n.columnId = e.columnId || e.field, n.tableColumnHeight = e.tableColumnHeight || 30, n.tableTextType = e.tableTextType || 'text', n.tableBarcodeMode = e.tableBarcodeMode || 'CODE128A', n.tableQRCodeLevel = e.tableQRCodeLevel, n.tableSummaryTitle = e.tableSummaryTitle, n.tableSummaryText = e.tableSummaryText, n.tableSummary = e.tableSummary, n.tableSummaryAlign = e.tableSummaryAlign, n.tableSummaryNumFormat = e.tableSummaryNumFormat, n.upperCase = e.upperCase, n;
+        return e = e || {}, (n = t.call(this) || this).width = e.width ? parseFloat(e.width.toString()) : 100, n.title = e.title, n.descTitle = e.descTitle, n.field = e.field, n.fixed = e.fixed, n.rowspan = e.rowspan ? parseInt(e.rowspan) : 1, n.colspan = e.colspan ? parseInt(e.colspan) : 1, n.align = e.align, n.halign = e.halign, n.vAlign = e.vAlign, n.formatter = e.formatter, n.styler = e.styler, n.renderFormatter = e.renderFormatter, n.formatter2 = e.formatter2, n.styler2 = e.styler2,n.stylerHeader = e.stylerHeader, e.checkbox = e.checkbox, n.checked = 0 != e.checked, n.columnId = e.columnId || e.field, n.tableColumnHeight = e.tableColumnHeight || 30, n.tableTextType = e.tableTextType || 'text', n.tableBarcodeMode = e.tableBarcodeMode || 'CODE128A', n.tableQRCodeLevel = e.tableQRCodeLevel, n.tableSummaryTitle = e.tableSummaryTitle, n.tableSummaryText = e.tableSummaryText, n.tableSummary = e.tableSummary, n.tableSummaryAlign = e.tableSummaryAlign, n.tableSummaryNumFormat = e.tableSummaryNumFormat, n.upperCase = e.upperCase, n;
       }
 
       return h(e, t), e.prototype.css = function (t) {
@@ -2216,6 +2219,15 @@ var hiprint = function (t) {
             return t.checked;
           }).forEach(function (t) {
             var n = $("<td></td>");
+
+            var s = TableExcelHelper.getHeaderStyler(t);
+            if (s) {
+              var l = s(t);
+              if (l) Object.keys(l).forEach(function (t) {
+                n.css(t, l[t]);
+              });
+            }
+
             t.id && n.attr("id", t.id), t.columnId && n.attr("column-id", t.columnId), (t.align || t.halign) && n.css("text-align", t.halign || t.align), t.vAlign && n.css("vertical-align", t.vAlign), t.colspan > 1 && n.attr("colspan", t.colspan), t.rowspan > 1 && n.attr("rowspan", t.rowspan), n.html(t.title), o[t.id] ? (t.hasWidth = !0, t.targetWidth = o[t.id], n.attr("haswidth", "haswidth"), n.css("width", o[t.id] + "pt")) : t.hasWidth = !1, e.append(n);
           }), i.append(e);
         }, a = 0; a < n.totalLayer; a++) {
@@ -2562,6 +2574,20 @@ var hiprint = function (t) {
           console.log(t);
         }
         return rowStyler;
+      }, TableExcelHelper.getHeaderStyler = function (column) {
+        var styler = void 0;
+        if ( typeof column.stylerHeader == "string") try {
+          var s = "styler=" + column.stylerHeader;
+          eval(s);
+        } catch (t) {
+          console.log(t);
+        }
+        if ( typeof column.stylerHeader == "function") try {
+          styler = column.stylerHeader
+        } catch (t) {
+          console.log(t);
+        }
+        return styler;
       }, TableExcelHelper.getColumnStyler = function (column) {
         var styler = void 0;
         if (column.styler && (styler = column.styler), column.styler2) try {
@@ -2932,7 +2958,7 @@ var hiprint = function (t) {
         if (t.find("thead tr td").length) {
           if (e) return t.find("thead tr td:not([rowspan])").css("height", e + "pt"), "height:" + e + "pt";
           t.find("thead tr td").map(function (t, e) {
-            e.style.height = "";
+            // e.style.height = "";
           });
         }
 
@@ -6143,7 +6169,7 @@ var hiprint = function (t) {
     r = (function () {
     }(), function () {
       return function (t) {
-        this.width = t.width, this.title = t.title, this.field = t.field, this.checked = t.checked, this.columnId = t.columnId, this.fixed = !1, this.rowspan = t.rowspan || 1, this.colspan = t.colspan || 1, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.renderFormatter = t.renderFormatter, this.formatter2 = t.formatter2, this.styler2 = t.styler2, this.tableColumnHeight = t.tableColumnHeight || 30, this.tableTextType = t.tableTextType || 'text', this.tableBarcodeMode = t.tableBarcodeMode || 'CODE128A', this.tableQRCodeLevel = t.tableQRCodeLevel || 0, this.tableSummaryTitle = t.tableSummaryTitle, this.tableSummaryText = t.tableSummaryText, this.tableSummary = t.tableSummary, this.tableSummaryAlign = t.tableSummaryAlign, this.tableSummaryNumFormat = t.tableSummaryNumFormat, this.upperCase = t.upperCase;
+        this.width = t.width, this.title = t.title, this.field = t.field, this.checked = t.checked, this.columnId = t.columnId, this.fixed = !1, this.rowspan = t.rowspan || 1, this.colspan = t.colspan || 1, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.renderFormatter = t.renderFormatter, this.formatter2 = t.formatter2, this.styler2 = t.styler2,this.stylerHeader = t.stylerHeader, this.tableColumnHeight = t.tableColumnHeight || 30, this.tableTextType = t.tableTextType || 'text', this.tableBarcodeMode = t.tableBarcodeMode || 'CODE128A', this.tableQRCodeLevel = t.tableQRCodeLevel || 0, this.tableSummaryTitle = t.tableSummaryTitle, this.tableSummaryText = t.tableSummaryText, this.tableSummary = t.tableSummary, this.tableSummaryAlign = t.tableSummaryAlign, this.tableSummaryNumFormat = t.tableSummaryNumFormat, this.upperCase = t.upperCase;
       };
     }()),
     a = n(5);
