@@ -1542,8 +1542,7 @@ var hiprint = function (t) {
         }
       }, BasePrintElement.prototype.getBeginPrintTopInPaperByReferenceElement = function (t) {
         var e = this.options.getTop();
-        var h = this.options.getHeight();
-        return this.isHeaderOrFooter() || this.isFixed() ? e : t.referenceElement.isPositionLeftOrRight(e, h) ? t.referenceElement.printTopInPaper + (e - t.referenceElement.top) : t.referenceElement.bottomInLastPaper + (e - (t.referenceElement.top + t.referenceElement.height));
+        return this.isHeaderOrFooter() || this.isFixed() ? e : t.referenceElement.isPositionLeftOrRight(e) ? t.referenceElement.printTopInPaper + (e - t.referenceElement.top) : t.referenceElement.bottomInLastPaper + (e - (t.referenceElement.top + t.referenceElement.height));
       }, BasePrintElement.prototype.css = function (t, e) {
         var n = this,
           i = [],
@@ -2627,8 +2626,8 @@ var hiprint = function (t) {
       this.top = t.top, this.left = t.left, this.height = t.height, this.width = t.width, this.bottomInLastPaper = t.bottomInLastPaper, this.beginPrintPaperIndex = t.beginPrintPaperIndex, this.printTopInPaper = t.printTopInPaper, this.endPrintPaperIndex = t.endPrintPaperIndex;
     }
 
-    return t.prototype.isPositionLeftOrRight = function (t, h) {
-      return this.top <= t && this.top > t && this.beginPrintPaperIndex == this.endPrintPaperIndex;
+    return t.prototype.isPositionLeftOrRight = function (t) {
+      return this.top <= t && this.top + this.height > t;
     }, t;
   }();
 }, function (t, e, n) {
@@ -8894,7 +8893,7 @@ var hiprint = function (t) {
         }).forEach(function (e) {
           var n = [],
             i = p[p.length - 1];
-          if (i.referenceElement.isPositionLeftOrRight(e.options.getTop(), e.options.getHeight())) {
+          if (i.referenceElement.isPositionLeftOrRight(e.options.getTop())) {
             l = p[i.referenceElement.beginPrintPaperIndex];
           } else {
             l = p[i.referenceElement.endPrintPaperIndex];
