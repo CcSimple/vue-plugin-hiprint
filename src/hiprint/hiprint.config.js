@@ -1745,7 +1745,11 @@
         {
           name: 'styler2',
           hidden: false
-        }
+        },
+        {
+          name: 'stylerHeader',
+          hidden: false
+        },
       ],
       default: {
         height: 90,
