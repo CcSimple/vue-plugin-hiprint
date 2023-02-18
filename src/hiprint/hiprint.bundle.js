@@ -4957,7 +4957,7 @@ var hiprint = function (t) {
                 callback: function callback(t) {
                   o.forEach(function (t) {
                     var e = t.getValue();
-                    if ("title" == t.name && !e.trim().endsWith("#") && !e.trim().startsWith("#")) {
+                    if ("title" == t.name && e && !e.trim().endsWith("#") && !e.trim().startsWith("#")) {
                       var n = e ? e.split("#") : "";
                       i.title = n[0], n.length > 1 && (i.columnId = i.field = n[1]);
                       i.columnId && i.target.attr("column-id", i.columnId);
