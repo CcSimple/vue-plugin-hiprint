@@ -8947,6 +8947,13 @@ var hiprint = function (t) {
           $('.hiprint-pagination li').removeClass('selected');
           $('.hiprint-pagination li:nth-last-child(2)').addClass('selected');
         });
+      }, t.prototype.selectPanel = function (idx) {
+        var i = idx || this.template.editingPanel.index;
+        var li = $('.hiprint-pagination li:nth(' + i + ')');
+        if (li.length) {
+          li.siblings().removeClass('selected');
+          li.addClass("selected");
+        }
       }, t;
     }(),
     ct = function () {
@@ -9016,8 +9023,9 @@ var hiprint = function (t) {
         return t && (t.index = this.printPanels.length), e && (this.container.append(n.getTarget()), n.design()), this.printPanels.push(n), e && this.selectPanel(n.index), n;
       }, t.prototype.selectPanel = function (t) {
         var e = this;
+        if (t > e.printPanels.length - 1) t = e.printPanels.length - 1;
         this.printPanels.forEach(function (n, i) {
-          t == i ? (n.enable(), e.editingPanel = n) : n.disable();
+          t == i ? (n.enable(), e.editingPanel = n, e.printPaginationCreator.selectPanel(t)) : n.disable();
         });
       }, t.prototype.deletePanel = function (t) {
         this.printPanels[t].clear(), this.printPanels[t].getTarget().remove(), this.printPanels.splice(t, 1);
@@ -9271,12 +9279,23 @@ var hiprint = function (t) {
         return this.printPanels.forEach(function (e) {
           t = Object.assign(t, e.getTestData());
         }), t;
-      }, t.prototype.update = function (t) {
+      }, t.prototype.update = function (t, idx) {
         var e = this;
         try {
-          if (t && "object" == _typeof(t)) {
-            var temp = new rt(t.panels[0])
-            e.editingPanel.update(temp);
+          if (t && "object" == _typeof(t) && t.panels.length > 0) {
+            var curLen = e.printPanels.length - 1;
+            t.panels.forEach(function(panel, index) {
+              if (index > curLen) {
+                e.printPanels.push(new pt(panel, s.a.instance.guid()));
+                var t = e.printPanels[index];
+                e.container.append(t.getTarget()), index > 0 && t.disable(), t.design({});
+                e.printPaginationCreator.buildPagination();
+              }
+              var temp = new rt(panel);
+              e.editingPanel = e.printPanels[index];
+              e.editingPanel.update(temp);
+            })
+            e.selectPanel(idx || 0);
           }
         } catch (er) {
           console.log(er);
