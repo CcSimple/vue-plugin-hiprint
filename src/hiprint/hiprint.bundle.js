@@ -7324,11 +7324,11 @@ var hiprint = function (t) {
           }
         });
       }, t.prototype.resize = function (t, e) {
-        console.log('t,e')
-        console.log(t,e)
+        // 获取页脚高度比例
+        var parperFooterRatio = this.paperFooter / this.height;
         this.width = o.a.mm.toPt(t), this.height = o.a.mm.toPt(e), this.mmwidth = t, this.mmheight = e, this.target.css("width", t + "mm"), this.target.css("height", e - p.a.instance.paperHeightTrim + "mm"), this.target.attr("original-height", this.mmheight);
-        // 设置纸张后, 页脚线重置问题
-        var paperFooter = this.paperFooter > this.height ? this.height : this.paperFooter;
+        // 按比例计算页脚高度
+        var paperFooter = this.height * parperFooterRatio;
         this.paperFooter = paperFooter || this.height, this.footerLinetarget.css("top", paperFooter + "pt"),
           this.contentHeight = this.paperFooter - this.paperHeader,
           // 设置纸张后, 页码位置重置问题
