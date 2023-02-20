@@ -9142,7 +9142,7 @@ var hiprint = function (t) {
         var e = this;
         if (t > e.printPanels.length - 1) t = e.printPanels.length - 1;
         this.printPanels.forEach(function (n, i) {
-          t == i ? (n.enable(), e.editingPanel = n, e.printPaginationCreator.selectPanel(t)) : n.disable();
+          t == i ? (n.enable(), e.editingPanel = n, e.printPaginationCreator && e.printPaginationCreator.selectPanel(t)) : n.disable();
         });
       }, t.prototype.deletePanel = function (t) {
         this.printPanels[t].clear(), this.printPanels[t].getTarget().remove(), this.printPanels.splice(t, 1);
@@ -9406,7 +9406,7 @@ var hiprint = function (t) {
                 e.printPanels.push(new pt(panel, s.a.instance.guid()));
                 var t = e.printPanels[index];
                 e.container.append(t.getTarget()), index > 0 && t.disable(), t.design({});
-                e.printPaginationCreator.buildPagination();
+                e.printPaginationCreator && e.printPaginationCreator.buildPagination();
               }
               var temp = new rt(panel);
               e.editingPanel = e.printPanels[index];
