@@ -7,6 +7,9 @@
     positionLineMode: false, //坐标显示在线上的
     positionUnit: true, //显示坐标单位
     showSizeBox: true, //显示宽高box
+    adsorbMin: 3, //吸附最小距离pt
+    showAdsorbLine: true, //显示吸附线
+    adsorbLineMin: 6, //吸附线显示最小距离pt
     panel: {
       supportOptions: [
         {

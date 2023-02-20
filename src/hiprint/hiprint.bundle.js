@@ -5756,6 +5756,46 @@ var hiprint = function (t) {
       return p || (r.proxy ? (p = "clone" == r.proxy ? t(i.data.target).clone().insertAfter(i.data.target) : r.proxy.call(i.data.target, i.data.target), o.proxy = p) : p = t(i.data.target)), p.css("position", "absolute"), e(i), n(i), r.onStartDrag.call(i.data.target, i), !1;
     }
 
+    function createVerLine(op, cp, t, tt, h, pc) {
+      if (Math.abs(op[t] - cp[tt]) <= HIPRINT_CONFIG.adsorbLineMin) {
+        if (op.v.length) {
+          op.v.css("left", op[t] + "pt");
+        } else {
+          op.v = $("<div class='verLine id-" + op.id + "'></div>")
+          op.v.css("height", h + "pt");
+          op.v.css("left", op[t] + "pt");
+          pc.append(op.v);
+        }
+      } else {
+        op.v && op.v.remove();
+      }
+    }
+
+    function removeVerLine(op) {
+      if (op) op.v && op.v.remove();
+      $(".verLine").remove();
+    }
+
+    function createHorLine(op, cp, t, tt, w, pc) {
+      if (Math.abs(op[t] - cp[tt]) <= HIPRINT_CONFIG.adsorbLineMin) {
+        if (op.h.length) {
+          op.h.css("top", op[t] + "pt");
+        } else {
+          op.h = $("<div class='horLine id-" + op.id + "'></div>")
+          op.h.css("width", w + "pt");
+          op.h.css("top", op[t] + "pt");
+          pc.append(op.h);
+        }
+      } else {
+        op.h && op.h.remove();
+      }
+    }
+
+    function removeHorLine(op) {
+      if (op) op.h && op.h.remove();
+      $(".horLine").remove();
+    }
+
     function o(i) {
       // 移动开始动作
       var o = t.data(i.data.target, "hidraggable");
@@ -5777,64 +5817,140 @@ var hiprint = function (t) {
           (() => {
             let oPositions = o.options.designTarget.panel.printElements.filter(el => el.id != o.options.designTarget.id).map(el => {
               let {left, top, width, height} = el.options;
+              let right = left + width, vCenter = left + width / 2, hCenter = top + height / 2;
+              let cVCenter = cPosition.left + cPosition.width / 2, cHCenter = cPosition.top + cPosition.height / 2,
+                cRight = cPosition.left + cPosition.width;
+              let distance, d1, d2, d3;
+              d1 = Math.sqrt(Math.pow(left - cPosition.left, 2) + Math.pow(hCenter - cHCenter, 2));
+              d2 = Math.sqrt(Math.pow(vCenter - cVCenter, 2) + Math.pow(hCenter - cHCenter, 2));
+              d3 = Math.sqrt(Math.pow(right - cRight, 2) + Math.pow(hCenter - cHCenter, 2));
+              distance = Math.min(d1, d2, d3);
               return {
                 ...el.options,
+                distance,
+                h: $(".horLine.id-" + el.id),
+                v: $(".verLine.id-" + el.id),
                 bottom: top + height,
                 right: left + width,
-                vCenter: left + width / 2,
-                hCenter: top + height / 2
+                vCenter,
+                hCenter
               }
-            })
-            for (let idx in oPositions) {
+            }).sort((a, b) => a.distance - b.distance).slice(0,1)
+            let paper = o.options.designTarget.designPaper;
+            let paperContent = paper.target.find(".hiprint-printPaper-content");
+            let paperW = paper.width, paperH = paper.height;
+            let showAline = HIPRINT_CONFIG.showAdsorbLine, aMin = HIPRINT_CONFIG.adsorbMin, aLMin = HIPRINT_CONFIG.adsorbLineMin;
+            oPositions.forEach((item,idx) => {
               // 元素左边线
-              if (Math.abs(oPositions[idx].left - cPosition.left) <= 3) {
+              if (Math.abs(oPositions[idx].left - cPosition.left) <= aMin) {
                 cPosition.left = oPositions[idx].left;
-              } else if (Math.abs(oPositions[idx].vCenter - cPosition.left) <= 3) {
+                removeVerLine(oPositions[idx]);
+              } else if (Math.abs(oPositions[idx].vCenter - cPosition.left) <= aMin) {
                 cPosition.left = oPositions[idx].vCenter;
-              } else if (Math.abs(oPositions[idx].right - cPosition.left) <= 3) {
+                removeVerLine(oPositions[idx]);
+              } else if (Math.abs(oPositions[idx].right - cPosition.left) <= aMin) {
                 cPosition.left = oPositions[idx].right;
+                removeVerLine(oPositions[idx]);
               }
               // 元素垂直中线
-              if (Math.abs(oPositions[idx].left - cPosition.vCenter) <= 3) {
+              if (Math.abs(oPositions[idx].left - cPosition.vCenter) <= aMin) {
                 cPosition.left = oPositions[idx].left - cPosition.width / 2;
-              } else if (Math.abs(oPositions[idx].vCenter - cPosition.vCenter) <= 3) {
+                removeVerLine(oPositions[idx]);
+              } else if (Math.abs(oPositions[idx].vCenter - cPosition.vCenter) <= aMin) {
                 cPosition.left = oPositions[idx].vCenter - cPosition.width / 2;
-              } else if (Math.abs(oPositions[idx].right - cPosition.vCenter) <= 3) {
+                removeVerLine(oPositions[idx]);
+              } else if (Math.abs(oPositions[idx].right - cPosition.vCenter) <= aMin) {
                 cPosition.left = oPositions[idx].right - cPosition.width / 2;
+                removeVerLine(oPositions[idx]);
               }
               // 元素右边线
-              if (Math.abs(oPositions[idx].left - cPosition.right) <= 3) {
+              if (Math.abs(oPositions[idx].left - cPosition.right) <= aMin) {
                 cPosition.left = oPositions[idx].left - cPosition.width;
-              } else if (Math.abs(oPositions[idx].vCenter - cPosition.right) <= 3) {
+                removeVerLine(oPositions[idx]);
+              } else if (Math.abs(oPositions[idx].vCenter - cPosition.right) <= aMin) {
                 cPosition.left = oPositions[idx].vCenter - cPosition.width;
-              } else if (Math.abs(oPositions[idx].right - cPosition.right) <= 3) {
+                removeVerLine(oPositions[idx]);
+              } else if (Math.abs(oPositions[idx].right - cPosition.right) <= aMin) {
                 cPosition.left = oPositions[idx].right - cPosition.width;
+                removeVerLine(oPositions[idx]);
               }
               // 元素顶边线
-              if (Math.abs(oPositions[idx].top - cPosition.top) <= 3) {
+              if (Math.abs(oPositions[idx].top - cPosition.top) <= aMin) {
                 cPosition.top = oPositions[idx].top;
-              } else if (Math.abs(oPositions[idx].hCenter - cPosition.top) <= 3) {
+                removeHorLine(oPositions[idx]);
+              } else if (Math.abs(oPositions[idx].hCenter - cPosition.top) <= aMin) {
                 cPosition.top = oPositions[idx].hCenter;
-              } else if (Math.abs(oPositions[idx].bottom - cPosition.top) <= 3) {
+                removeHorLine(oPositions[idx]);
+              } else if (Math.abs(oPositions[idx].bottom - cPosition.top) <= aMin) {
                 cPosition.top = oPositions[idx].bottom;
+                removeHorLine(oPositions[idx]);
               }
               // 元素水平中线
-              if (Math.abs(oPositions[idx].top - cPosition.hCenter) <= 3) {
+              if (Math.abs(oPositions[idx].top - cPosition.hCenter) <= aMin) {
                 cPosition.top = oPositions[idx].top - cPosition.height / 2;
-              } else if (Math.abs(oPositions[idx].hCenter - cPosition.hCenter) <= 3) {
+                removeHorLine(oPositions[idx]);
+              } else if (Math.abs(oPositions[idx].hCenter - cPosition.hCenter) <= aMin) {
                 cPosition.top = oPositions[idx].hCenter - cPosition.height / 2;
-              } else if (Math.abs(oPositions[idx].bottom - cPosition.hCenter) <= 3) {
+                removeHorLine(oPositions[idx]);
+              } else if (Math.abs(oPositions[idx].bottom - cPosition.hCenter) <= aMin) {
                 cPosition.top = oPositions[idx].bottom - cPosition.height / 2;
+                removeHorLine(oPositions[idx]);
               }
               // 元素底边线
-              if (Math.abs(oPositions[idx].top - cPosition.bottom) <= 3) {
+              if (Math.abs(oPositions[idx].top - cPosition.bottom) <= aMin) {
                 cPosition.top = oPositions[idx].top - cPosition.height;
-              } else if (Math.abs(oPositions[idx].hCenter - cPosition.bottom) <= 3) {
+                removeHorLine(oPositions[idx]);
+              } else if (Math.abs(oPositions[idx].hCenter - cPosition.bottom) <= aMin) {
                 cPosition.top = oPositions[idx].hCenter - cPosition.height;
-              } else if (Math.abs(oPositions[idx].bottom - cPosition.bottom) <= 3) {
+                removeHorLine(oPositions[idx]);
+              } else if (Math.abs(oPositions[idx].bottom - cPosition.bottom) <= aMin) {
                 cPosition.top = oPositions[idx].bottom - cPosition.height;
+                removeHorLine(oPositions[idx]);
               }
-            }
+
+              if (showAline) {
+                if (Math.abs(oPositions[idx].left - cPosition.left) > aMin && Math.abs(oPositions[idx].left - cPosition.left) <= aLMin) { // 左
+                  createVerLine(oPositions[idx], cPosition, "left", "left", paperH, paperContent);
+                } else if (Math.abs(oPositions[idx].vCenter - cPosition.left) > aMin && Math.abs(oPositions[idx].vCenter - cPosition.left) <= aLMin) {
+                  createVerLine(oPositions[idx], cPosition, "vCenter", "left", paperH, paperContent);
+                } else if (Math.abs(oPositions[idx].right - cPosition.left) > aMin && Math.abs(oPositions[idx].right - cPosition.left) <= aLMin) {
+                  createVerLine(oPositions[idx], cPosition, "right", "left", paperH, paperContent);
+                } else if (Math.abs(oPositions[idx].left - cPosition.vCenter) > aMin && Math.abs(oPositions[idx].left - cPosition.vCenter) <= aLMin) { // 中
+                  createVerLine(oPositions[idx], cPosition, "left", "vCenter", paperH, paperContent);
+                } else if (Math.abs(oPositions[idx].vCenter - cPosition.vCenter) > aMin && Math.abs(oPositions[idx].vCenter - cPosition.vCenter) <= aLMin) {
+                  createVerLine(oPositions[idx], cPosition, "vCenter", "vCenter", paperH, paperContent);
+                } else if (Math.abs(oPositions[idx].right - cPosition.vCenter) > aMin && Math.abs(oPositions[idx].right - cPosition.vCenter) <= aLMin) {
+                  createVerLine(oPositions[idx], cPosition, "right", "vCenter", paperH, paperContent);
+                } else if (Math.abs(oPositions[idx].left - cPosition.right) > aMin && Math.abs(oPositions[idx].left - cPosition.right) <= aLMin) { // 右
+                  createVerLine(oPositions[idx], cPosition, "left", "right", paperH, paperContent);
+                } else if (Math.abs(oPositions[idx].vCenter - cPosition.right) > aMin && Math.abs(oPositions[idx].vCenter - cPosition.right) <= aLMin) {
+                  createVerLine(oPositions[idx], cPosition, "vCenter", "right", paperH, paperContent);
+                } else if (Math.abs(oPositions[idx].right - cPosition.right) > aMin && Math.abs(oPositions[idx].right - cPosition.right) <= aLMin) {
+                  createVerLine(oPositions[idx], cPosition, "right", "right", paperH, paperContent);
+                } else if (Math.abs(oPositions[idx].top - cPosition.top) > aMin && Math.abs(oPositions[idx].top - cPosition.top) <= aLMin) { // 上
+                  createHorLine(oPositions[idx], cPosition, "top", "top", paperW, paperContent);
+                } else if (Math.abs(oPositions[idx].hCenter - cPosition.top) > aMin && Math.abs(oPositions[idx].hCenter - cPosition.top) <= aLMin) {
+                  createHorLine(oPositions[idx], cPosition, "hCenter", "top", paperW, paperContent);
+                } else if (Math.abs(oPositions[idx].bottom - cPosition.top) > aMin && Math.abs(oPositions[idx].bottom - cPosition.top) <= aLMin) {
+                  createHorLine(oPositions[idx], cPosition, "bottom", "top", paperW, paperContent);
+                } else if (Math.abs(oPositions[idx].top - cPosition.hCenter) > aMin && Math.abs(oPositions[idx].top - cPosition.hCenter) <= aLMin) { // 中
+                  createHorLine(oPositions[idx], cPosition, "top", "hCenter", paperW, paperContent);
+                } else if (Math.abs(oPositions[idx].hCenter - cPosition.hCenter) > aMin && Math.abs(oPositions[idx].hCenter - cPosition.hCenter) <= aLMin) {
+                  createHorLine(oPositions[idx], cPosition, "hCenter", "hCenter", paperW, paperContent);
+                } else if (Math.abs(oPositions[idx].bottom - cPosition.hCenter) > aMin && Math.abs(oPositions[idx].bottom - cPosition.hCenter) <= aLMin) {
+                  createHorLine(oPositions[idx], cPosition, "bottom", "hCenter", paperW, paperContent);
+                } else if (Math.abs(oPositions[idx].top - cPosition.bottom) > aMin && Math.abs(oPositions[idx].top - cPosition.bottom) <= aLMin) { // 下
+                  createHorLine(oPositions[idx], cPosition, "top", "bottom", paperW, paperContent);
+                } else if (Math.abs(oPositions[idx].hCenter - cPosition.bottom) > aMin && Math.abs(oPositions[idx].hCenter - cPosition.bottom) <= aLMin) {
+                  createHorLine(oPositions[idx], cPosition, "hCenter", "bottom", paperW, paperContent);
+                } else if (Math.abs(oPositions[idx].bottom - cPosition.bottom) > aMin && Math.abs(oPositions[idx].bottom - cPosition.bottom) <= aLMin) {
+                  createHorLine(oPositions[idx], cPosition, "bottom", "bottom", paperW, paperContent);
+                } else {
+                  removeVerLine(oPositions[idx]);
+                  removeHorLine(oPositions[idx]);
+                }
+              }
+            })
           })()
           i.data.left = window.hinnn.pt.toPx(cPosition.left);
           i.data.top = window.hinnn.pt.toPx(cPosition.top);
@@ -5878,6 +5994,7 @@ var hiprint = function (t) {
     function r(e) {
       // 这里原 mouseup时, 回调了 o(e) ==> onDrag
       t.fn.hidraggable.isDragging = !1;
+      removeVerLine(), removeHorLine();
       var n,
         i,
         r = t.data(e.data.target, "hidraggable"),
