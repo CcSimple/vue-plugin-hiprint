@@ -7399,7 +7399,7 @@ var hiprint = function (t) {
         t >= this.printLine && (this.printLine = t);
       }, t.prototype.design = function (t) {
         var e = this;
-        this.createHeaderLine(), this.createFooterLine(), this.target.addClass("design"), this.paperNumberTarget = this.createPaperNumber(this.formatPaperNumber(1, 1), true), this.createRuler(), this.resetPaperNumber(this.paperNumberTarget), $(this.paperNumberTarget).bind("dblclick.hiprint", function () {
+        this.createHeaderLine(), this.createFooterLine(), this.target.addClass("design"), t && t.grid && this.target.addClass("grid"), this.paperNumberTarget = this.createPaperNumber(this.formatPaperNumber(1, 1), true), this.createRuler(), this.resetPaperNumber(this.paperNumberTarget), $(this.paperNumberTarget).bind("dblclick.hiprint", function () {
           null == e.paperNumberDisabled && (e.paperNumberDisabled = !1), e.paperNumberDisabled = !e.paperNumberDisabled, e.resetPaperNumber(e.paperNumberTarget), e.triggerOnPaperBaseInfoChanged("初始");
         }), $(this.paperNumberTarget).bind("click.hiprint", function () {
           o.a.event.trigger("BuildCustomOptionSettingEventKey_" + e.templateId, {

@@ -497,7 +497,7 @@ export default {
         settingContainer: '#PrintElementOptionSetting',
         paginationContainer: '.hiprint-printPagination'
       });
-      hiprintTemplate.design('#hiprint-printTemplate');
+      hiprintTemplate.design('#hiprint-printTemplate',{ grid: true });
       console.log(hiprintTemplate);
       // 获取当前放大比例, 当zoom时传true 才会有
       this.scaleValue = hiprintTemplate.editingPanel.scale || 1;
