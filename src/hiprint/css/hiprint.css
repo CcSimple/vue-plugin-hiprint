@@ -79,7 +79,7 @@
   letter-spacing: normal;
   z-index: 9;
 }
-.hiprint-printElement:hover .resize-panel {
+.hiprint-printElement:not(.editing):hover .resize-panel {
   display: block !important;
   /* hover 强制背景色 可重写 */
   background-color: rgba(0, 0, 0, 0.5) !important;

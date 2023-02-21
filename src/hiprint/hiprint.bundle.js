@@ -682,6 +682,7 @@ var hiprint = function (t) {
               e._editing = true;
               e.designTarget.hidraggable('update', {draggable: false});
               c.css("cursor", "text"), c.addClass("editing");
+              e.designTarget.addClass("editing");
               c.click(function (ev) {
                 if (e._editing) {
                   ev.stopPropagation();
@@ -710,6 +711,7 @@ var hiprint = function (t) {
         var e = this, c = e.designTarget.find(".hiprint-printElement-content");
         if (e._editing) {
           c && c.css("cursor", "") && c.removeClass("editing") && c.removeAttr("contenteditable");
+          e.designTarget.removeClass("editing");
           var t = c.text(), title = e.options.title + "：";
           if (t.startsWith(title) && e.options.field) {
             if (t.length > title.length) {
