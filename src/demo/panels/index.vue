@@ -210,10 +210,22 @@ export default {
     buildTemplate() {
       $('#hiprint-printTemplate').empty()
       let templates = this.$ls.get('KEY_TEMPLATES_PANELS', {})
+      let that = this;
       this.template = hiprintTemplate = new hiprint.PrintTemplate({
         template: templates,
         settingContainer: '#PrintElementOptionSetting',
-        paginationContainer: '.hiprint-printPagination'
+        paginationContainer: '.hiprint-printPagination',
+        defaultPanelName: '默认面板名称',
+        onPanelAddClick: (panel, createPanel) => {
+          panel.name = '新面板' + (panel.index+1);
+          that.$message.success('弹出个东西,让你们知道,在这里可以自定义面板名称');
+          that.$notification.success({
+            placement: 'topRight',
+            message: '弹出个东西,让你们知道,在这里可以自定义面板名称',
+            description: '自定义面板名称',
+          });
+          createPanel(panel);
+        },
       });
       hiprintTemplate.design('#hiprint-printTemplate');
       // 获取当前放大比例, 当zoom时传true 才会有

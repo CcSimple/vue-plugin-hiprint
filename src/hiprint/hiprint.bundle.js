@@ -8292,7 +8292,7 @@ var hiprint = function (t) {
     }(),
     rt = function () {
       return function (t) {
-        if (this.index = t.index, this.paperType = t.paperType, this.paperType) {
+        if (this.index = t.index, this.name = t.name, this.paperType = t.paperType, this.paperType) {
           var e = s.a.instance[this.paperType];
           t.height ? (this.height = t.height, this.width = t.width) : (this.height = e.height, this.width = e.width);
         } else this.height = t.height, this.width = t.width;
@@ -8316,7 +8316,7 @@ var hiprint = function (t) {
     }(),
     pt = function () {
       function t(t, e) {
-        this.templateId = e, this.index = t.index, this.width = t.width, this.height = t.height, this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter, this.initPrintElements(t.printElements), this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat, this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter, this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.leftOffset = t.leftOffset, this.fontFamily = t.fontFamily, this.orient = t.orient, this.target = this.createTarget(), this.rotate = t.rotate, this.scale = t.scale;
+        this.templateId = e, this.index = t.index, this.name = t.name, this.width = t.width, this.height = t.height, this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter, this.initPrintElements(t.printElements), this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat, this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter, this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.leftOffset = t.leftOffset, this.fontFamily = t.fontFamily, this.orient = t.orient, this.target = this.createTarget(), this.rotate = t.rotate, this.scale = t.scale;
       }
 
       return t.prototype.design = function (t) {
@@ -8355,7 +8355,7 @@ var hiprint = function (t) {
           var start = Date.now();
           console.log('start', start)
           var e = this;
-          this.index = t.index, this.width = t.width, this.height = t.height, this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter;
+          this.index = t.index, this.name = t.name, this.width = t.width, this.height = t.height, this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter;
           this.designPaper.width = o.a.mm.toPt(t.width), this.designPaper.height = o.a.mm.toPt(this.height), this.designPaper.paperType = this.paperType, this.designPaper.paperHeader = this.paperHeader, this.designPaper.paperFooter = this.paperFooter;
           this.designPaper.mmheight = t.height, this.designPaper.mmwidth = t.width;
           // 页眉线
@@ -8553,6 +8553,7 @@ var hiprint = function (t) {
           e.push(n.getPrintElementEntity(t));
         }), new rt({
           index: this.index,
+          name: this.name || this.index + 1,
           width: this.width,
           height: this.height,
           paperType: this.paperType,
@@ -9050,7 +9051,8 @@ var hiprint = function (t) {
 
         for (var i = $('<ul class="hiprint-pagination"></ul>'), o = function o() {
           var t = r,
-            e = $("<li><span>" + (t + 1) + '</span><a href="javascript:void(0);">x</a></li>');
+            name = n.template.printPanels[t].name || (t + 1),
+            e = $("<li><span>" + name + '</span><a href="javascript:void(0);">x</a></li>');
           e.find("span").click(function () {
             n.template.selectPanel(t), e.siblings().removeClass("selected"), $(this).parent("li").addClass("selected");
           }), e.find("a").click(function () {
@@ -9062,9 +9064,20 @@ var hiprint = function (t) {
 
         var a = $("<li><span>+</span></li>");
         i.append(a), this.jqPaginationContainer.append(i), a.click(function () {
-          n.template.addPrintPanel(void 0, !0), n.buildPagination();
-          $('.hiprint-pagination li').removeClass('selected');
-          $('.hiprint-pagination li:nth-last-child(2)').addClass('selected');
+          var createPanel = function(t) {
+            n.template.addPrintPanel(t || void 0, !0), n.buildPagination();
+            $('.hiprint-pagination li').removeClass('selected');
+            $('.hiprint-pagination li:nth-last-child(2)').addClass('selected');
+          };
+          if (n.template.onPanelAddClick) {
+            var panel = {
+              index: n.template.printPanels.length,
+              paperType: "A4"
+            }
+            n.template.onPanelAddClick(panel, createPanel);
+          } else {
+            createPanel();
+          }
         });
       }, t.prototype.selectPanel = function (idx) {
         var i = idx || this.template.editingPanel.index;
@@ -9088,10 +9101,12 @@ var hiprint = function (t) {
         this.lastJson = n.template || {};
         this.historyList = [{id: s.a.instance.guid(), type: '初始', json: this.lastJson}];
         this.historyPos = 0;
+        this.defaultPanelName = n.defaultPanelName;
         var i = new st(n.template || []);
         n.template && i.panels.forEach(function (t) {
           e.printPanels.push(new pt(t, e.id));
         }), n.fontList && (this.fontList = n.fontList), n.fields && (this.fields = n.fields), n.onImageChooseClick && (this.onImageChooseClick = n.onImageChooseClick),
+          n.onPanelAddClick && (this.onPanelAddClick = n.onPanelAddClick),
         n.settingContainer && new ut(this, n.settingContainer), n.paginationContainer && (this.printPaginationCreator = new dt(n.paginationContainer, this), this.printPaginationCreator.buildPagination()), this.initAutoSave();
       }
 
@@ -9153,6 +9168,7 @@ var hiprint = function (t) {
       }, t.prototype.createDefaultPanel = function () {
         return new pt(new rt({
           index: this.printPanels.length,
+          name: this.defaultPanelName,
           paperType: "A4"
         }), this.id);
       }, t.prototype.createContainer = function (t) {
