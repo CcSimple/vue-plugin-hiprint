@@ -9570,14 +9570,14 @@ var hiprint = function (t) {
             if (t.historyPos > 0) {
               t.historyPos -= 1;
               var cur = t.historyList[t.historyPos];
-              t.update(cur.json, cur.type);
+              t.update(cur.json);
             }
             break;
           case "redo":
             if (t.historyPos < t.historyList.length - 1) {
               t.historyPos += 1;
               var cur = t.historyList[t.historyPos];
-              t.update(cur.json, cur.type);
+              t.update(cur.json);
             }
             break;
           }
