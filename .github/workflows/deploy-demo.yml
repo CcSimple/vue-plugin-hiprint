@@ -31,6 +31,7 @@ jobs:
         with:
           PATTERNS: |
             src/hiprint/**
+            CHANGELOG.md
           FILES: |
             CHANGELOG.md
 

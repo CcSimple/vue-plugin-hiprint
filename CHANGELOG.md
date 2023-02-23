@@ -100,7 +100,7 @@ hiprintTemplate.design('#id',{ grid: true });
   <summary>15. 🐛️ fix 框选时遇hover停滞问题</summary>
 </details>
 <details>
-  <summary>16. 🐛️ fix 其他一些小bug</summary>
+  <summary>16. 🐛️ fix 其他一些已知小bug</summary>
 </details>
 
 ## 0.0.44 (2023-01-18)
