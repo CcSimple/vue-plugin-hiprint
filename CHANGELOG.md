@@ -3,6 +3,7 @@
 ### 💐️  GitHub 提交 PR 合并后可自动发布到 npm 仓库;
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
+
 ## 0.0.46 (2023-02-23)
 <details>
   <summary>01. 🌈️ 新增支持 多面板名称自定义功能(创建模板添加 "onPanelAddClick" 和 "defaultPanelName" 属性)</summary>
