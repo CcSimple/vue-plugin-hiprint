@@ -3,6 +3,106 @@
 ### 💐️  GitHub 提交 PR 合并后可自动发布到 npm 仓库;
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
+## 0.0.46 (2023-02-23)
+<details>
+  <summary>01. 🌈️ 新增支持 多面板名称自定义功能(创建模板添加 "onPanelAddClick" 和 "defaultPanelName" 属性)</summary>
+
+```javascript
+let hiprintTemplate = new hiprint.PrintTemplate({
+  template: {},
+  settingContainer: '#PrintElementOptionSetting',
+  paginationContainer: '.hiprint-printPagination',
+  defaultPanelName: '默认面板名称', // 默认面板名称(当面板没有 name 属性时)
+  onPanelAddClick: (panel, createPanel) => {
+    // 修改名称, 可以弹出输入框, 也可以直接修改
+    panel.name = '新面板' + (panel.index+1);
+    // 记得 调用 createPanel 创建面板
+    createPanel(panel);
+  },
+});
+```
+</details>
+<details>
+  <summary>02. 🌈️ 新增支持 吸附线功能 && 优化调整吸附功能 支持设置 吸附阈值等 adsorbMin、showAdsorbLine、adsorbLineMin</summary>
+
+```javascript
+hiprint.setConfig({
+  adsorbMin: 3, //吸附最小距离pt
+  showAdsorbLine: true, //显示吸附线
+  adsorbLineMin: 6, //吸附线显示最小距离pt
+})
+```
+</details>
+<details>
+  <summary>03. 🌈️ 新增支持 table 分组字段函数 和 分组头/脚格式化函数</summary>
+
+```javascript
+{
+    options: {
+      // 分组统计字段
+      groupFieldsFormatter: function(groupData,options) {
+          return ["name"];
+      }
+      // 分组表头
+      groupFormatter: function(groupData,options) {
+          return '<td></td>';
+      }
+      // 分组表脚
+      groupFooterFormatter: function(groupData,options) {
+          return '<td></td>';
+      }
+    }
+}
+```
+</details>
+<details>
+  <summary>04. 🌈️ 新增支持 design 显示网格 -> design('#id',{ grid: true })</summary>
+
+```javascript
+let hiprintTemplate = new hiprint.PrintTemplate({
+  template: {},
+  settingContainer: '#PrintElementOptionSetting',
+});
+hiprintTemplate.design('#id',{ grid: true });
+```
+</details>
+<details>
+  <summary>05. 🌈️ 新增支持 模板获取测试数据Api getTestData</summary>
+</details>
+<details>
+  <summary>06. 🌈 新增支持 表格列 表格头样式函数 @PromiseAll</summary>
+</details>
+<details>
+  <summary>07. ✨ 调整优化 update功能,支持更新多面板,并选中默认面板 eg: update({},1)</summary>
+</details>
+<details>
+  <summary>08. ✨ 调整优化 更改纸张大小时,按比例设置页脚线高度</summary>
+</details>
+<details>
+  <summary>09. ✨ 调整优化 双击编辑文本时 hover 显示问题</summary>
+</details>
+<details>
+  <summary>10. ✨ 调整优化 多面板 样式美化</summary>
+</details>
+<details>
+  <summary>11. 🐛️ fix 多表格 并排问题</summary>
+</details>
+<details>
+  <summary>12. 🐛️ fix 页眉线/页尾线 宽度问题</summary>
+</details>
+<details>
+  <summary>13. 🐛️ fix 多选元素 拖拽未选中元素 bug</summary>
+</details>
+<details>
+  <summary>14. 🐛️ fix 元素旋转 缩放后 点击跳动问题</summary>
+</details>
+<details>
+  <summary>15. 🐛️ fix 框选时遇hover停滞问题</summary>
+</details>
+<details>
+  <summary>16. 🐛️ fix 其他一些小bug</summary>
+</details>
+
 ## 0.0.44 (2023-01-18)
 <details>
   <summary>1. 🌈️  选中元素新增删除按钮</summary>
