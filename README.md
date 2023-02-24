@@ -33,7 +33,7 @@ vue-plugin-hiprint(基于[hiprint 2.5.4](http://hiprint.io/)) 当时只是为了
 > hiprint for Vue2.x / Vue3.x (基于jQuery, 理论上应该也是支持其他框架的)
 
 > 0.0.36起 已支持 CDN形式引入 详见 [0.0.36更新记录](CHANGELOG.md)
-> uniapp 使用此方式可行
+> **uniapp / jQuery** 项目 使用此方式可行
 
 ## 快速链接
 
