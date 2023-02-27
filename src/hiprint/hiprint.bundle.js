@@ -852,6 +852,7 @@ var hiprint = function (t) {
         var n = this, e = this.designPaper;
         this.designTarget.hireizeable({
           showPoints: n.getReizeableShowPoints(),
+          draggable: n.options.draggable, // 元素是否可拖拽、删除
           // 是否显示宽高box
           showSizeBox: _HiPrintConfig__WEBPACK_IMPORTED_MODULE_1__.a.instance.showSizeBox,
           getScale: function getScale() {
@@ -6372,11 +6373,14 @@ var hiprint = function (t) {
             }), t;
           };
         e.refreshSizeBox(void 0, sizeBox, o);
-        o.append(deleteBtn);
-        o.on("mousedown", ".del-btn", () => {
-          var keyboardEvent = new KeyboardEvent("keydown", { bubbles: true, keyCode: 46 });
-          t.dispatchEvent(keyboardEvent);
-        });
+        // draggable 为 false 时不显示 resizebox 右上角删除按钮
+        if (e.options.draggable != false) {
+          o.append(deleteBtn);
+          o.on("mousedown", ".del-btn", () => {
+            var keyboardEvent = new KeyboardEvent("keydown", { bubbles: true, keyCode: 46 });
+            t.dispatchEvent(keyboardEvent);
+          });
+		    }
         e.addHandlerCss(h()), e.appendHandler(h(), o), e.bindResizeEvent(o, n(this));
         var f = n(this);
         n(o).on("mousedown", ".resizebtn", function () {
@@ -8968,7 +8972,8 @@ var hiprint = function (t) {
         }
         var a = $('<button class="hiprint-option-item-settingBtn hiprint-option-item-submitBtn"\n        type="button">确定</button>'),
           p = $('<button  class="hiprint-option-item-settingBtn hiprint-option-item-deleteBtn"\n        type="button">删除</button>');
-        r.append(a), r.append(p);
+        r.append(a);
+        i.options.draggable != false && r.append(p); // draggable 为 false 时不显示参数面板 删除 按钮
         if (tabs.length) {
           r.on('click', '.prop-tab-item', function () {
             var $li = $(this);
