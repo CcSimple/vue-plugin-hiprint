@@ -9625,7 +9625,7 @@ var hiprint = function (t) {
   }
 
   function mt(t) {
-    p.a.instance.init(t), p.a.instance.providers.forEach(function (t) {
+    p.a.instance.init(t), p.a.instance.providers && p.a.instance.providers.forEach(function (t) {
       t.addElementTypes(a.instance);
     });
   }
