@@ -9107,6 +9107,7 @@ var hiprint = function (t) {
         this.historyList = [{id: s.a.instance.guid(), type: '初始', json: this.lastJson}];
         this.historyPos = 0;
         this.defaultPanelName = n.defaultPanelName;
+        this.designOptions = {};
         var i = new st(n.template || []);
         n.template && i.panels.forEach(function (t) {
           e.printPanels.push(new pt(t, e.id));
@@ -9124,6 +9125,7 @@ var hiprint = function (t) {
         }
 
         if (!t) throw new Error("options.container can not be empty");
+        n.designOptions = e;
         this.createContainer(t), this.printPanels.forEach(function (t, i) {
           n.container.append(t.getTarget()), i > 0 && t.disable(), t.design(e);
         }), this.selectPanel(0);
@@ -9159,7 +9161,7 @@ var hiprint = function (t) {
         this.editingPanel.zoom(s, p);
       }, t.prototype.addPrintPanel = function (t, e) {
         var n = t ? new pt(new rt(t), this.id) : this.createDefaultPanel();
-        return t && (t.index = this.printPanels.length), e && (this.container.append(n.getTarget()), n.design()), this.printPanels.push(n), e && this.selectPanel(n.index), n;
+        return t && (t.index = this.printPanels.length), e && (this.container.append(n.getTarget()), n.design(this.designOptions)), this.printPanels.push(n), e && this.selectPanel(n.index), n;
       }, t.prototype.selectPanel = function (t) {
         var e = this;
         if (t > e.printPanels.length - 1) t = e.printPanels.length - 1;
@@ -9428,7 +9430,7 @@ var hiprint = function (t) {
               if (index > curLen) {
                 e.printPanels.push(new pt(panel, s.a.instance.guid()));
                 var t = e.printPanels[index];
-                e.container.append(t.getTarget()), index > 0 && t.disable(), t.design({});
+                e.container.append(t.getTarget()), index > 0 && t.disable(), t.design(e.designOptions);
                 e.printPaginationCreator && e.printPaginationCreator.buildPagination();
               }
               var temp = new rt(panel);

@@ -217,7 +217,7 @@ export default {
         paginationContainer: '.hiprint-printPagination',
         defaultPanelName: '默认面板名称',
         onPanelAddClick: (panel, createPanel) => {
-          panel.name = '新面板' + (panel.index+1);
+          panel.name = '新面板' + (panel.index + 1);
           that.$message.success('弹出个东西,让你们知道,在这里可以自定义面板名称');
           that.$notification.success({
             placement: 'topRight',
@@ -227,7 +227,7 @@ export default {
           createPanel(panel);
         },
       });
-      hiprintTemplate.design('#hiprint-printTemplate');
+      hiprintTemplate.design('#hiprint-printTemplate', {grid: true});
       // 获取当前放大比例, 当zoom时传true 才会有
       this.scaleValue = hiprintTemplate.editingPanel.scale || 1;
     },
