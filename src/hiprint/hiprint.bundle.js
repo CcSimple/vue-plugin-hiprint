@@ -3282,7 +3282,7 @@ var hiprint = function (t) {
       return t.prototype.css = function (t, e) {
         if (t && t.length) {
           var n = t.find(".hiprint-printElement-content").parent('.hiprint-printElement');
-          if (!n.length && t.hasClass('hiprint-printElement-hline')) {
+          if (!n.length && (t.hasClass('hiprint-printElement-hline') || t.hasClass('hiprint-printElement-vline'))) {
             n = t
           }
           ;
