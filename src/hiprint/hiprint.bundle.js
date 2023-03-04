@@ -6704,10 +6704,10 @@ var hiprint = function (t) {
         console.log("ippRequest error:" + JSON.stringify(e));
       }
     },
-    setHost: function (host) {
+    setHost: function (host, cb) {
       this.host = host
       this.stop()
-      this.start()
+      this.start(cb)
     },
     start: function start(cb) {
       var _this = this;
