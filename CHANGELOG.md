@@ -4,6 +4,30 @@
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
 
+## 0.0.48 (2023-03-09)
+<details>
+  <summary>1. ✨ 调整优化 setHost 支持回调</summary>
+
+```javascript
+hiprint.hiwebSocket.setHost('http://localhost:17521',(connected, e) => {
+  console.log('connected', connected);
+  console.log('e', e);
+})
+```
+</details>
+<details>
+  <summary>2. ✨ 调整优化 参数 draggable:false 时，不显示删除按钮</summary>
+</details>
+<details>
+  <summary>3. ✨ 调整优化 design 网格线支持多面板</summary>
+</details>
+<details>
+  <summary>4. 🐛️ fix 竖线无法旋转 bug</summary>
+</details>
+<details>
+  <summary>5. 🐛️ fix hiprint.init error</summary>
+</details>
+
 ## 0.0.46 (2023-02-23)
 <details>
   <summary>01. 🌈️ 新增支持 多面板名称自定义功能(创建模板添加 "onPanelAddClick" 和 "defaultPanelName" 属性)</summary>
