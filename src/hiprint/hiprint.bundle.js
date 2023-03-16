@@ -2071,6 +2071,25 @@ var hiprint = function (t) {
             }
           });
         }
+        // 把上层/其他层的 field 赋值给最下层
+        let lastColumns = [];
+        for (let i = 0; i < t.totalLayer; i++) {
+          if (i >= t.totalLayer - 1) {
+            newColumns[i].forEach((column, columnIdx) => {
+              if (!column.field) {
+                 column.field = lastColumns[columnIdx];
+              }
+            })
+          } else {
+            newColumns[i].forEach((column, columnIdx) => {
+              if (i == 0) {
+                lastColumns.push(column.field || "");
+              } else {
+                column.field && (lastColumns[columnIdx] = column.field);
+              }
+            })
+          }
+        }
         console.log('原始数据');
         console.log(t);
         console.log('数据源');
