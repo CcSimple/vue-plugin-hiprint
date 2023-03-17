@@ -1924,7 +1924,11 @@ var hiprint = function (t) {
           if (t.fixed) n[t.id] = t.width; else {
             var r = e - o,
               a = t.width / i * (r > 0 ? r : 0);
-            n[t.id] = a;
+            if (n[t.id]) {
+              n[t.id] = n[t.id] + a;
+            } else {
+              n[t.id] = a
+            }
           }
         }), n;
       }, TableExcelHelper.resizeTableCellWidth = function (t, e, n) {
@@ -1936,18 +1940,20 @@ var hiprint = function (t) {
           $(e).css("width", i + "pt");
         });
       }, TableExcelHelper.allAutoWidth = function (t) {
-        var e = 0;
+        var e = 0, n = {};
         return t.rowColumns.filter(function (t) {
           return t.checked;
         }).forEach(function (t) {
-          e += t.fixed ? 0 : t.width;
+          n[t.id] ? n[t.id] = 0 : n[t.id] = t.width;
+          e += t.fixed ? 0 : n[t.id];
         }), e;
       }, TableExcelHelper.allFixedWidth = function (t) {
-        var e = 0;
+        var e = 0, n = {};;
         return t.rowColumns.filter(function (t) {
           return t.checked;
         }).forEach(function (t) {
-          e += t.fixed ? t.width : 0;
+          n[t.id] ? n[t.id] = 0 : n[t.id] = t.width;
+          e += t.fixed ? n[t.id] : 0;
         }), e;
       }, TableExcelHelper.reconsitutionTableColumnTree = function (t, e, n) {
         var i = e || new _ReconsitutionTableColumns__WEBPACK_IMPORTED_MODULE_0__.a();
@@ -1965,7 +1971,7 @@ var hiprint = function (t) {
       }, TableExcelHelper.syncTargetWidthToOption = function (t) {
         t.forEach(function (t) {
           t.columns.forEach(function (t) {
-            t.hasWidth && (t.width = t.targetWidth);
+            t.hasWidth && (t.width = t.width);
           });
         });
       }, TableExcelHelper.getGroupFieldsFormatter = function (options, tablePrintElementType) {
