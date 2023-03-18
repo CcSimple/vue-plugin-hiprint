@@ -256,6 +256,8 @@ import panel from './panel'
 import printData from './print-data'
 import printPreview from './preview'
 import jsonView from "../json-view.vue";
+import fontSize from "./font-size.js";
+import scale from "./scale.js";
 // disAutoConnect();
 
 let hiprintTemplate;
@@ -337,28 +339,8 @@ export default {
       // 替换配置
       hiprint.setConfig({
         optionItems: [
-          function () {
-            function t() {
-              // json模板 options 对应键值
-              this.name = "scale";
-            }
-
-            return t.prototype.css = function (t, e) { // t: 元素对象， e 参数值
-              if (t && t.length) {
-                if (e) return t.css('transform', 'scale(' + e + ')');
-              }
-              return null;
-            }, t.prototype.createTarget = function (t, i, e) { //  t: 元素对象，i: 元素options, e: 元素printElementType
-              return this.target = $('<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        缩放\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="number" class="auto-submit"/>\n        </div>\n    </div>'), this.target;
-            }, t.prototype.getValue = function () {
-              var t = this.target.find("input").val();
-              if (t) return parseFloat(t.toString());
-            }, t.prototype.setValue = function (t) { //  t: options 对应键的值
-              this.target.find("input").val(t);
-            }, t.prototype.destroy = function () {
-              this.target.remove();
-            }, t;
-          }(),
+          fontSize,
+          scale,
           function () {
             function t() {
               this.name = "zIndex";
@@ -385,18 +367,10 @@ export default {
         text: {
           tabs: [
             // 隐藏部分
-            // {
-            //   name: '测试', options: [
-            //     {
-            //       name: 'title',
-            //       hidden: false
-            //     },
-            //     {
-            //       name: 'field',
-            //       hidden: true
-            //     },
-            //   ]
-            // },
+            {
+              // name: '测试', // tab名称 可忽略
+              options: [] // 必须包含 options
+            },// 当修改第二个 tabs 时,必须把他之前的 tabs 都列举出来.
             {
               name: '样式', options: [
                 {
