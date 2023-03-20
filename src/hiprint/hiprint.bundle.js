@@ -42,6 +42,8 @@ import "@claviska/jquery-minicolors/jquery.minicolors.min";
 import JsBarcode from "jsbarcode";
 // 二维码
 import "./plugins/qrcode.js";
+// 水印
+import watermark from "./plugins/watermark.js";
 // 直接打印需要
 import {io} from "socket.io-client";
 //引入标尺
@@ -2991,6 +2993,40 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
+    watermarkOptions = function () {
+      function t() {
+        this.name = "watermarkOptions";
+      }
+      return t.prototype.createTarget = function () {
+        this.target = $(' <div class="hiprint-option-item hiprint-option-item-row"><div class="hiprint-option-item-label">水印功能</div></div>');
+        this.content = $('<div class="hiprint-option-item-field" style="display: flex;align-items: baseline;"><div style="width:25%">水印内容:</div><input style="width:75%" type="text" placeholder="水印内容" class="auto-submit"></div>');
+        this.rotate = $('<div class="hiprint-option-item-field" style="display: flex;align-items: center;"><div style="width:25%">旋转角度:</div><input style="width:75%" type="range" min="0" max="180" placeholder="旋转角度" class="auto-submit"></div>');
+        this.timestamp = $('<div class="hiprint-option-item-field" style="display: flex;align-items: center;"><div style="width:25%">水印时间:</div><input style="width:18px;height:18px;margin:0 0 4px 0;" type="checkbox" placeholder="水印时间" class="auto-submit"></div>');
+        this.format = $('<div class="hiprint-option-item-field" style="display: flex;align-items: baseline;"><div style="width:25%">时间格式:</div><input style="width:75%" type="text" placeholder="YYYY-MM-DD HH:mm" class="auto-submit"></div>');
+        this.target.append(this.content);
+        this.target.append(this.rotate);
+        this.target.append(this.timestamp);
+        this.target.append(this.format);
+        return this.target;
+      }, t.prototype.getValue = function () {
+        let opt = {
+          content: this.content.find('input').val(),
+          rotate: parseInt(this.rotate.find('input').val() || "25"),
+          timestamp: this.timestamp.find('input').is(':checked'),
+          format: this.format.find('input').val() == "" ? "YYYY-MM-DD HH:mm" : this.format.find('input').val()
+        }
+        let options = Object.assign({}, this.options, opt);
+        return options;
+      }, t.prototype.setValue = function (t) {
+        this.options = t;
+        this.content.find("input").val(t.content || "");
+        this.rotate.find("input").val(t.rotate || 25);
+        this.timestamp.find("input").attr("checked", t.timestamp == void 0 ? false : t.timestamp);
+        this.format.find("input").val(t.format || "YYYY-MM-DD HH:mm");
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
     H = function () {
       function t() {
         this.name = "paperNumberFormat";
@@ -4399,7 +4435,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new groupFieldsFormatter(), new groupFormatter(), new groupFooterFormatter(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new stylerHeader(), new renderFormatter(), new _t(), new wt(), new xt(), new tableColumnH(), new tableE(), new tableQRCodeLevel(), new tablept(), new tableSummaryTitle(), new tableSummaryText(), new tableSummary(), new tableSummaryAlign(), new tableSummaryNumFormat(), new upperCase()], t;
+    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new watermarkOptions(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new groupFieldsFormatter(), new groupFormatter(), new groupFooterFormatter(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new stylerHeader(), new renderFormatter(), new _t(), new wt(), new xt(), new tableColumnH(), new tableE(), new tableQRCodeLevel(), new tablept(), new tableSummaryTitle(), new tableSummaryText(), new tableSummary(), new tableSummaryAlign(), new tableSummaryNumFormat(), new upperCase()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -7358,9 +7394,9 @@ var hiprint = function (t) {
     }(g.a),
     E = n(8),
     T = function () {
-      function t(t, pr, scl, e, n, i, r, a, p, s, l, u, d) {
-        this.panelPageRule = pr, this.scale = scl,
-          this.defaultPaperNumberFormat = "${paperNo}-${paperCount}", this.printLine = 0, this.templateId = t, this.width = o.a.mm.toPt(e), this.height = o.a.mm.toPt(n), this.mmwidth = e, this.mmheight = n, this.paperHeader = i >= 0 ? i : 0, this.paperFooter = r, this.contentHeight = r - i, this.createTarget(), this.index = u, this.paperNumberLeft = a || parseInt((this.width - 30).toString()), this.paperNumberTop = p || parseInt((this.height - 22).toString()), this.paperNumberDisabled = s, this.paperNumberFormat = l, this.referenceElement = d ? $.extend({}, d) : new E.a({
+      function t(t, idx, watermarkOptions, pr, scl, e, n, i, r, a, p, s, l, u, d) {
+        this.panelPageRule = pr, this.scale = scl, this.watermarkOptions = watermarkOptions,
+          this.defaultPaperNumberFormat = "${paperNo}-${paperCount}", this.printLine = 0, this.templateId = t, this.panelIdx = idx, this.width = o.a.mm.toPt(e), this.height = o.a.mm.toPt(n), this.mmwidth = e, this.mmheight = n, this.paperHeader = i >= 0 ? i : 0, this.paperFooter = r, this.contentHeight = r - i, this.createTarget(), this.index = u, this.paperNumberLeft = a || parseInt((this.width - 30).toString()), this.paperNumberTop = p || parseInt((this.height - 22).toString()), this.paperNumberDisabled = s, this.paperNumberFormat = l, this.referenceElement = d ? $.extend({}, d) : new E.a({
           top: 0,
           left: 0,
           height: 0,
@@ -7430,7 +7466,7 @@ var hiprint = function (t) {
         t >= this.printLine && (this.printLine = t);
       }, t.prototype.design = function (t) {
         var e = this;
-        this.createHeaderLine(), this.createFooterLine(), this.target.addClass("design"), t && t.grid && this.target.addClass("grid"), this.paperNumberTarget = this.createPaperNumber(this.formatPaperNumber(1, 1), true), this.createRuler(), this.resetPaperNumber(this.paperNumberTarget), $(this.paperNumberTarget).bind("dblclick.hiprint", function () {
+        this.createHeaderLine(), this.createFooterLine(), this.target.addClass("design"), t && t.grid && this.target.addClass("grid"), this.paperNumberTarget = this.createPaperNumber(this.formatPaperNumber(1, 1), true), this.createRuler(), this.createWaterMark(true), this.resetPaperNumber(this.paperNumberTarget), $(this.paperNumberTarget).bind("dblclick.hiprint", function () {
           null == e.paperNumberDisabled && (e.paperNumberDisabled = !1), e.paperNumberDisabled = !e.paperNumberDisabled, e.resetPaperNumber(e.paperNumberTarget), e.triggerOnPaperBaseInfoChanged("初始");
         }), $(this.paperNumberTarget).bind("click.hiprint", function () {
           o.a.event.trigger("BuildCustomOptionSettingEventKey_" + e.templateId, {
@@ -7449,6 +7485,7 @@ var hiprint = function (t) {
         var i = this.createPaperNumber(this.formatPaperNumber(t, e));
         this.paperNumberDisabled ? i.hide() : n && this.index % 2 == 1 && (i[0].style.left = "", i.css("right", this.paperNumberLeft + "pt"));
       }, t.prototype.formatPaperNumber = function (t, e) {
+        this.createWaterMark(false, t, this.watermarkOptions);
         return eval("`" + (this.paperNumberFormat ? this.paperNumberFormat : this.defaultPaperNumberFormat).replace("paperNo",t).replace("paperCount",e) + "`");
       }, t.prototype.dragHeadLineOrFootLine = function (t, e, n) {
         var i = this;
@@ -7502,6 +7539,16 @@ var hiprint = function (t) {
         return this.getPaperFooter(t) - this.paperHeader;
       }, t.prototype.createRuler = function () {
         this.target.append('<div class="hiprint_rul_wrapper">\n                     <img class="h_img" src="' + lImg + '" />\n                     <img class="v_img" src="' + vImg + '" />\n                    </div>');
+      }, t.prototype.createWaterMark = function (watch, idx, opts) {
+        var e = this;
+        var options = Object.assign({}, opts || {}, {
+          id: `${e.templateId}_${e.panelIdx}_${idx || 1}_${watch ? 'design' : e.index}`,
+          watch: watch,
+          container: e.target[0],
+        });
+        if (options.container && options.content) {
+          watermark.createWatermark(options);
+        }
       }, t.prototype.displayHeight = function () {
         return this.mmheight - p.a.instance.paperHeightTrim + "mm";
       }, t.prototype.displayWidth = function () {
@@ -8326,7 +8373,7 @@ var hiprint = function (t) {
           t.height ? (this.height = t.height, this.width = t.width) : (this.height = e.height, this.width = e.width);
         } else this.height = t.height, this.width = t.width;
 
-        this.paperHeader = t.paperHeader || 0, this.paperFooter = t.paperFooter || o.a.mm.toPt(this.height), this.printElements = t.printElements || [], this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat, this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.rotate = t.rotate || void 0, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter, this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.fontFamily = t.fontFamily, this.leftOffset = t.leftOffset, this.orient = t.orient, this.scale = t.scale;
+        this.paperHeader = t.paperHeader || 0, this.paperFooter = t.paperFooter || o.a.mm.toPt(this.height), this.printElements = t.printElements || [], this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat, this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.rotate = t.rotate || void 0, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter, this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.fontFamily = t.fontFamily, this.leftOffset = t.leftOffset, this.orient = t.orient, this.scale = t.scale, this.watermarkOptions= t.watermarkOptions;
       };
     }(),
     at = function () {
@@ -8345,7 +8392,7 @@ var hiprint = function (t) {
     }(),
     pt = function () {
       function t(t, e) {
-        this.templateId = e, this.index = t.index, this.name = t.name, this.width = t.width, this.height = t.height, this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter, this.initPrintElements(t.printElements), this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat, this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter, this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.leftOffset = t.leftOffset, this.fontFamily = t.fontFamily, this.orient = t.orient, this.target = this.createTarget(), this.rotate = t.rotate, this.scale = t.scale;
+        this.templateId = e, this.index = t.index, this.name = t.name, this.width = t.width, this.height = t.height, this.paperType = t.paperType, this.paperHeader = t.paperHeader, this.paperFooter = t.paperFooter, this.initPrintElements(t.printElements), this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat, this.panelPaperRule = t.panelPaperRule, this.panelPageRule = t.panelPageRule, this.firstPaperFooter = t.firstPaperFooter, this.evenPaperFooter = t.evenPaperFooter, this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.leftOffset = t.leftOffset, this.fontFamily = t.fontFamily, this.orient = t.orient, this.target = this.createTarget(), this.rotate = t.rotate, this.scale = t.scale, this.watermarkOptions = t.watermarkOptions || {};
       }
 
       return t.prototype.design = function (t) {
@@ -8368,9 +8415,11 @@ var hiprint = function (t) {
               fontFamily: e.fontFamily,
               orient: e.orient,
               paperNumberDisabled: e.paperNumberDisabled,
-              paperNumberFormat: e.paperNumberFormat
+              paperNumberFormat: e.paperNumberFormat,
+              watermarkOptions: e.watermarkOptions || {}
             },
             callback: function callback(t) {
+              e.watermarkOptions = t.watermarkOptions || void 0, (t.watermarkOptions && e.designPaper.createWaterMark(true, 1, t.watermarkOptions))
               e.panelPaperRule = t.panelPaperRule, e.panelPageRule = t.panelPageRule, e.firstPaperFooter = t.firstPaperFooter, e.evenPaperFooter = t.evenPaperFooter, e.oddPaperFooter = t.oddPaperFooter, e.lastPaperFooter = t.lastPaperFooter, e.leftOffset = t.leftOffset, e.topOffset = t.topOffset, e.fontFamily = t.fontFamily, e.orient = t.orient, e.paperNumberDisabled = e.designPaper.paperNumberDisabled = !!t.paperNumberDisabled || void 0, e.paperNumberFormat = t.paperNumberFormat, e.designPaper.paperNumberFormat = t.paperNumberFormat, (t.paperNumberFormat && (e.designPaper.paperNumberTarget = e.designPaper.createPaperNumber(e.designPaper.formatPaperNumber(1, 1), true))), e.designPaper.setOffset(e.leftOffset, e.topOffset), e.css(e.target), e.designPaper.resetPaperNumber(e.designPaper.paperNumberTarget), e.designPaper.triggerOnPaperBaseInfoChanged();
             }
           });
@@ -8393,6 +8442,8 @@ var hiprint = function (t) {
           // 页脚线
           this.designPaper.footerLinetarget.css("top", parseInt(this.paperFooter.toString()) + "pt"),
           this.paperFooter == this.height && (this.designPaper.footerLinetarget.css("top", t.height - p.a.instance.paperHeightTrim + "mm"));
+          // 水印参数
+          this.watermarkOptions = t.watermarkOptions || {};
           // 页码
           this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberFormat = t.paperNumberFormat;
           this.designPaper.paperNumberLeft = this.paperNumberLeft, this.designPaper.paperNumberTop = this.paperNumberTop, this.designPaper.paperNumberDisabled = this.paperNumberDisabled, this.designPaper.paperNumberFormat = this.paperNumberFormat;
@@ -8604,6 +8655,7 @@ var hiprint = function (t) {
           fontFamily: this.fontFamily,
           orient: this.orient,
           scale: this.scale,
+          watermarkOptions: this.watermarkOptions ? this.watermarkOptions : void 0,
           leftOffset: this.leftOffset
         });
       }, t.prototype.createTarget = function () {
@@ -8643,7 +8695,7 @@ var hiprint = function (t) {
         var i = e.getDesignTarget(t);
         i.addClass("design"), n && e.initSizeByHtml(i), t.append(i);
       }, t.prototype.createNewPage = function (t, e) {
-        var n = new T(this.templateId, this.panelPageRule, this.scale, this.width, this.height, this.paperHeader, this.paperFooter, this.paperNumberLeft, this.paperNumberTop, this.paperNumberDisabled, this.paperNumberFormat, t, e);
+        var n = new T(this.templateId, this.index, this.watermarkOptions, this.panelPageRule, this.scale, this.width, this.height, this.paperHeader, this.paperFooter, this.paperNumberLeft, this.paperNumberTop, this.paperNumberDisabled, this.paperNumberFormat, t, e);
         return n.setFooter(this.firstPaperFooter, this.evenPaperFooter, this.oddPaperFooter, this.lastPaperFooter), n.setOffset(this.leftOffset, this.topOffset), n;
       }, t.prototype.orderPrintElements = function () {
         this.printElements = o.a.orderBy(this.printElements, function (t) {

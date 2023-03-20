@@ -60,6 +60,10 @@
           name: 'paperNumberFormat',
           hidden: false
         },
+        {
+          name: 'watermarkOptions',
+          hidden: false
+        }
       ],
       default: {}
     },
