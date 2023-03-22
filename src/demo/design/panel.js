@@ -5,6 +5,12 @@ export default {
     "width": 210,
     "paperHeader": 49.5,
     "paperFooter": 780,
+    "watermarkOptions": {
+      "content": "vue-plugin-hiprint",
+      "rotate": 25,
+      "timestamp": true,
+      "format": "YYYY-MM-DD HH:mm"
+    },
     "printElements": [{
       "options": {
         "left": 175.5,
