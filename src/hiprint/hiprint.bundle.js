@@ -2524,7 +2524,7 @@ var hiprint = function (t) {
 
       return t.prototype.css = function (t, e) {
         if (t.find("tbody tr td").length) {
-          if (e) return t.find("tbody tr td:not([rowspan])").css("height", e + "pt"), "height:" + e + "pt";
+          if (e) return t.find("tbody tr td").css("height", e + "pt"), "height:" + e + "pt";
           t.find("tbody tr td").map(function (t, e) {
             e.style.height = "";
           });
