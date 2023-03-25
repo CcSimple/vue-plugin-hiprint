@@ -3,7 +3,7 @@ export const desc = '这是模板说明'
 export const author = 'CcSimple'
 export const link = 'https://github.com/CcSimple'
 // url 或者 base64 或者 require('../../../assets/logo.png')
-export const preview = 'https://img1.baidu.com/it/u=3573056321,2239143646&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500';
+export const preview = 'https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/template1.png';
 export const printData = {
   name: '黄磊',
   logoTest: 'https://portrait.gitee.com/uploads/avatars/user/1800/5400665_CcSimple_1591166830.png!avatar60',
