@@ -953,6 +953,10 @@
               hidden: false
             },
             {
+              name: 'rowsColumnsMergeClean',
+              hidden: false
+            },
+            {
               name: 'groupFieldsFormatter',
               hidden: false
             },
