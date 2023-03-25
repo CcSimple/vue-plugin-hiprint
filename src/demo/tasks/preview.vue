@@ -49,7 +49,7 @@ export default {
     show(hiprintTemplate, printData, width = '210') {
       this.visible = true
       this.spinning = true
-      this.width = width
+      this.width = hiprintTemplate.editingPanel ? hiprintTemplate.editingPanel.width : width;
       this.hiprintTemplate = hiprintTemplate
       this.printData = printData
       setTimeout(() => {
