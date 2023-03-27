@@ -1518,6 +1518,7 @@ var hiprint = function (t) {
             var n = e.split("#");
             t.title = this.title = n[0], n.length > 0 && (t.columnId = t.field = this.field = n[1]);
             t.id && t.target.attr("id", t.id), t.columnId && t.target.attr("column-id", t.columnId);
+            hinnn.event.trigger("hiprintTemplateDataChanged_" + this.tableOptions.options.templateId, "调整表格列字段");
           } else t.title = this.title = e;
         } else this.tableOptions.options.isEnableEditField ? (t.title = this.title = "", t.field = this.field = "") : t.title = this.title = "";
         this.editor.destroy(), t.getTarget().html(this.title);
@@ -5032,6 +5033,7 @@ var hiprint = function (t) {
       }, TablePrintElement.prototype.setHitable = function () {
         var t = this;
         this.hitable = new _hitable_HiTale__WEBPACK_IMPORTED_MODULE_7__.a({
+          templateId: t.templateId,
           table: this.designTarget.find(".hiprint-printElement-tableTarget:eq(0)"),
           rows: this.getColumns(),
           resizeRow: !1,
@@ -5054,6 +5056,7 @@ var hiprint = function (t) {
           isEnableMergeCell: this.printElementType.isEnableMergeCell != undefined ? this.printElementType.isEnableMergeCell : !0
         }), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.event.on("updateTable" + this.hitable.id, function () {
           t.updateDesignViewFromOptions();
+          _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.event.trigger("hiprintTemplateDataChanged_" + t.templateId, "调整表头");
         });
       }, TablePrintElement.prototype.setColumnsOptions = function () {
         var t = this;
@@ -5120,7 +5123,7 @@ var hiprint = function (t) {
 
   var i = function () {
       return function (t) {
-        this.table = t.table, this.fields = t.fields, this.isEnableEdit = t.isEnableEdit, this.trs = t.trs, this.resizeRow = t.resizeRow, this.resizeColumn = t.resizeColumn, this.isEnableEditField = t.isEnableEditField, this.isEnableContextMenu = t.isEnableContextMenu, this.isEnableEditField = t.isEnableEditField, this.isEnableInsertRow = t.isEnableInsertRow, this.isEnableDeleteRow = t.isEnableDeleteRow, this.isEnableInsertColumn = t.isEnableInsertColumn, this.isEnableDeleteColumn = t.isEnableDeleteColumn, this.isEnableMergeCell = t.isEnableMergeCell, this.columnResizable = t.columnResizable, this.columnAlignEditable = t.columnAlignEditable;
+        this.table = t.table, this.templateId = t.templateId, this.fields = t.fields, this.isEnableEdit = t.isEnableEdit, this.trs = t.trs, this.resizeRow = t.resizeRow, this.resizeColumn = t.resizeColumn, this.isEnableEditField = t.isEnableEditField, this.isEnableContextMenu = t.isEnableContextMenu, this.isEnableEditField = t.isEnableEditField, this.isEnableInsertRow = t.isEnableInsertRow, this.isEnableDeleteRow = t.isEnableDeleteRow, this.isEnableInsertColumn = t.isEnableInsertColumn, this.isEnableDeleteColumn = t.isEnableDeleteColumn, this.isEnableMergeCell = t.isEnableMergeCell, this.columnResizable = t.columnResizable, this.columnAlignEditable = t.columnAlignEditable;
       };
     }(),
     o = function () {
