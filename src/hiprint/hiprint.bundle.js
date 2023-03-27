@@ -7599,6 +7599,11 @@ var hiprint = function (t) {
           container: e.target[0],
         });
         if (options.container && options.content) {
+          if (watch) {
+            watermark.destroyWatermark(Object.assign({}, options, {
+              id: `${e.templateId}_${e.panelIdx}_${idx || 1}_${e.index}`,
+            }));
+          }
           watermark.createWatermark(options);
         }
       }, t.prototype.displayHeight = function () {
