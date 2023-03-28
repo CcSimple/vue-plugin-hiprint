@@ -1628,7 +1628,7 @@ var hiprint = function (t) {
     f = function (t) {
       function e(e) {
         var n = this;
-        return e = e || {}, (n = t.call(this) || this).width = e.width ? parseFloat(e.width.toString()) : 100, n.title = e.title, n.descTitle = e.descTitle, n.field = e.field, n.fixed = e.fixed, n.rowspan = e.rowspan ? parseInt(e.rowspan) : 1, n.colspan = e.colspan ? parseInt(e.colspan) : 1, n.align = e.align, n.halign = e.halign, n.vAlign = e.vAlign, n.formatter = e.formatter, n.styler = e.styler, n.renderFormatter = e.renderFormatter, n.formatter2 = e.formatter2, n.styler2 = e.styler2, n.stylerHeader = e.stylerHeader, n.checkbox = e.checkbox, n.checked = 0 != e.checked, n.columnId = e.columnId || e.field, n.tableColumnHeight = e.tableColumnHeight || 30, n.tableTextType = e.tableTextType || 'text', n.tableBarcodeMode = e.tableBarcodeMode || 'CODE128A', n.tableQRCodeLevel = e.tableQRCodeLevel, n.tableSummaryTitle = e.tableSummaryTitle, n.tableSummaryText = e.tableSummaryText, n.tableSummary = e.tableSummary, n.tableSummaryAlign = e.tableSummaryAlign, n.tableSummaryNumFormat = e.tableSummaryNumFormat, n.upperCase = e.upperCase, n;
+        return e = e || {}, (n = t.call(this) || this).width = e.width ? parseFloat(e.width.toString()) : 100, n.title = e.title, n.descTitle = e.descTitle, n.field = e.field, n.fixed = e.fixed, n.rowspan = e.rowspan ? parseInt(e.rowspan) : 1, n.colspan = e.colspan ? parseInt(e.colspan) : 1, n.align = e.align, n.halign = e.halign, n.vAlign = e.vAlign, n.formatter = e.formatter, n.styler = e.styler, n.renderFormatter = e.renderFormatter, n.formatter2 = e.formatter2, n.styler2 = e.styler2, n.stylerHeader = e.stylerHeader, n.checkbox = e.checkbox, n.checked = 0 != e.checked, n.columnId = e.columnId || e.field, n.tableColumnHeight = e.tableColumnHeight, n.tableTextType = e.tableTextType, n.tableBarcodeMode = e.tableBarcodeMode, n.tableQRCodeLevel = e.tableQRCodeLevel, n.tableSummaryTitle = e.tableSummaryTitle, n.tableSummaryText = e.tableSummaryText, n.tableSummary = e.tableSummary, n.tableSummaryAlign = e.tableSummaryAlign, n.tableSummaryNumFormat = e.tableSummaryNumFormat, n.upperCase = e.upperCase, n;
       }
 
       return h(e, t), e.prototype.css = function (t) {
@@ -1825,7 +1825,7 @@ var hiprint = function (t) {
           if (rf) {
             r.html(rf(e[t.field], e, i, n))
           //表格内容插入二维码等
-          } else if ("text" == t.tableTextType) r.html(p);
+          } else if ("text" == t.tableTextType || t.tableTextType == void 0) r.html(p);
           else {
             if ("barcode" == t.tableTextType) {
               r.html(
@@ -1833,14 +1833,14 @@ var hiprint = function (t) {
               );
               try {
                 p ? (JsBarcode(r.find(".hibarcode_imgcode")[0], p, {
-                  format: t.tableBarcodeMode,
+                  format: t.tableBarcodeMode || "CODE128A",
                   width: 1,
                   textMargin: -1,
                   lineColor: "#000000",
                   margin: 0,
                   height: parseInt(10),
                   displayValue: !1
-                }), r.find(".hibarcode_imgcode").attr("height", t.tableColumnHeight + 'pt'), r.find(".hibarcode_imgcode").css("margin", '5pt 10pt'), r.find(".hibarcode_imgcode").attr("width", "calc(100% - 20pt)")) : r.html("");
+                }), r.find(".hibarcode_imgcode").attr("height", t.tableColumnHeight || 30 + 'pt'), r.find(".hibarcode_imgcode").css("margin", '5pt 10pt'), r.find(".hibarcode_imgcode").attr("width", "calc(100% - 20pt)")) : r.html("");
                 // this.options.hideTitle || r.find(".hibarcode_displayValue").html(n)
               } catch (t) {
                 console.log(t), r.html("此格式不支持该文本");
@@ -1871,7 +1871,7 @@ var hiprint = function (t) {
                     height: l > u ? u : l,
                     colorDark: "#000000",
                     useSVG: !0,
-                    correctLevel: t.tableQRCodeLevel
+                    correctLevel: t.tableQRCodeLevel || 0,
                   }).makeCode(p);
                   r.html(qrcodebox)
                 }
@@ -3798,7 +3798,7 @@ var hiprint = function (t) {
 
       return t.prototype.createTarget = function () {
         return this.target = $(
-          ' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        字段类型\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="text" >文本</option>\n <option value="sequence" >序号</option>\n       <option value="barcode" >条形码</option>\n        <option value="qrcode" >二维码</option>\n    <option value="image" >图片</option>\n        </select>\n        </div>\n    </div>'
+          ' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        字段类型\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认(文本)</option>\n        <option value="text" >文本</option>\n <option value="sequence" >序号</option>\n       <option value="barcode" >条形码</option>\n        <option value="qrcode" >二维码</option>\n    <option value="image" >图片</option>\n        </select>\n        </div>\n    </div>'
         ), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
@@ -3816,7 +3816,7 @@ var hiprint = function (t) {
 
       return t.prototype.createTarget = function () {
         return this.target = $(
-          ' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        条形码格式\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n         <option value="CODE128A" >CODE128A</option>\n        <option value="CODE128B" >CODE128B</option>\n        <option value="CODE128C" >CODE128C</option>\n        <option value="CODE39" >CODE39</option>\n        <option value="EAN-13" >EAN-13</option>\n        <option value="EAN-8" >EAN-8</option>\n        <option value="EAN-5" >EAN-5</option>\n        <option value="EAN-2" >EAN-2</option>\n        <option value="UPC（A）" >UPC（A）</option>\n        <option value="ITF" >ITF</option>\n        <option value="ITF-14" >ITF-14</option>\n        <option value="MSI" >MSI</option>\n            <option value="MSI10" >MSI10</option>\n            <option value="MSI11" >MSI11</option>\n            <option value="MSI1010" >MSI1010</option>\n            <option value="MSI1110" >MSI1110</option>\n            <option value="Pharmacode" >Pharmacode</option>\n        </select>\n        </div>\n    </div>'
+          ' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        条形码格式\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n         <option value="" >默认(CODE128A)</option>\n         <option value="CODE128A" >CODE128A</option>\n        <option value="CODE128B" >CODE128B</option>\n        <option value="CODE128C" >CODE128C</option>\n        <option value="CODE39" >CODE39</option>\n        <option value="EAN-13" >EAN-13</option>\n        <option value="EAN-8" >EAN-8</option>\n        <option value="EAN-5" >EAN-5</option>\n        <option value="EAN-2" >EAN-2</option>\n        <option value="UPC（A）" >UPC（A）</option>\n        <option value="ITF" >ITF</option>\n        <option value="ITF-14" >ITF-14</option>\n        <option value="MSI" >MSI</option>\n            <option value="MSI10" >MSI10</option>\n            <option value="MSI11" >MSI11</option>\n            <option value="MSI1010" >MSI1010</option>\n            <option value="MSI1110" >MSI1110</option>\n            <option value="Pharmacode" >Pharmacode</option>\n        </select>\n        </div>\n    </div>'
         ), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
@@ -5757,7 +5757,7 @@ var hiprint = function (t) {
     r = (function () {
     }(), function () {
       return function (t) {
-        this.width = t.width, this.title = t.title, this.field = t.field, this.checked = t.checked, this.columnId = t.columnId, this.fixed = !1, this.rowspan = t.rowspan || 1, this.colspan = t.colspan || 1, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.renderFormatter = t.renderFormatter, this.formatter2 = t.formatter2, this.styler2 = t.styler2, this.stylerHeader = t.stylerHeader, this.tableColumnHeight = t.tableColumnHeight || 30, this.tableTextType = t.tableTextType || 'text', this.tableBarcodeMode = t.tableBarcodeMode || 'CODE128A', this.tableQRCodeLevel = t.tableQRCodeLevel || 0, this.tableSummaryTitle = t.tableSummaryTitle, this.tableSummaryText = t.tableSummaryText, this.tableSummary = t.tableSummary, this.tableSummaryAlign = t.tableSummaryAlign, this.tableSummaryNumFormat = t.tableSummaryNumFormat, this.upperCase = t.upperCase;
+        this.width = t.width, this.title = t.title, this.field = t.field, this.checked = t.checked, this.columnId = t.columnId, this.fixed = !1, this.rowspan = t.rowspan || 1, this.colspan = t.colspan || 1, this.align = t.align, this.halign = t.halign, this.vAlign = t.vAlign, this.renderFormatter = t.renderFormatter, this.formatter2 = t.formatter2, this.styler2 = t.styler2, this.stylerHeader = t.stylerHeader, this.tableColumnHeight = t.tableColumnHeight, this.tableTextType = t.tableTextType, this.tableBarcodeMode = t.tableBarcodeMode, this.tableQRCodeLevel = t.tableQRCodeLevel, this.tableSummaryTitle = t.tableSummaryTitle, this.tableSummaryText = t.tableSummaryText, this.tableSummary = t.tableSummary, this.tableSummaryAlign = t.tableSummaryAlign, this.tableSummaryNumFormat = t.tableSummaryNumFormat, this.upperCase = t.upperCase;
       };
     }()),
     a = n(5);
