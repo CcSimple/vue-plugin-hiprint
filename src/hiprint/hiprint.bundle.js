@@ -9061,7 +9061,7 @@ var hiprint = function (t) {
               o.forEach(function (t) {
                 var n2 = t.callback;
                 t.callback = function (t) {
-                  n2 && (n2(t), i.submitOption());
+                  n2 && (n2(t));
                 };
                 var tableColumn = t.optionItems;
                 t.title && options.append('<div class="hiprint-option-item hiprint-option-item-row">\n            <div class="hiprint-option-item-label hiprint-option-title">\n              ' + t.title + "\n            </div>\n        </div>");
@@ -9071,9 +9071,6 @@ var hiprint = function (t) {
                   }, options.append(e.createTarget(n.printTemplate, t.options, void 0)),
                     e.setValue(t.options[e.name], t.options, void 0);
                 });
-                options.bind('click.submitOption', function () {
-                  t.callback(n.getValueByOptionItems(tableColumn));
-                })
                 options.find('.auto-submit').change(function () {
                   t.callback(n.getValueByOptionItems(tableColumn))
                 })
