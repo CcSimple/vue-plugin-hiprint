@@ -1927,11 +1927,7 @@ var hiprint = function (t) {
           if (t.fixed) n[t.id] = t.width; else {
             var r = e - o,
               a = t.width / i * (r > 0 ? r : 0);
-            if (n[t.id]) {
-              n[t.id] = n[t.id] + a;
-            } else {
-              n[t.id] = a
-            }
+            n[t.id] = a;
           }
         }), n;
       }, TableExcelHelper.resizeTableCellWidth = function (t, e, n) {
@@ -1974,7 +1970,7 @@ var hiprint = function (t) {
       }, TableExcelHelper.syncTargetWidthToOption = function (t) {
         t.forEach(function (t) {
           t.columns.forEach(function (t) {
-            t.hasWidth && (t.width = t.width);
+            t.hasWidth && (t.width = t.targetWidth);
           });
         });
       }, TableExcelHelper.getGroupFieldsFormatter = function (options, tablePrintElementType) {
