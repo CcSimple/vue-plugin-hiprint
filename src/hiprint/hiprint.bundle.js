@@ -2997,18 +2997,30 @@ var hiprint = function (t) {
       return t.prototype.createTarget = function () {
         this.target = $(' <div class="hiprint-option-item hiprint-option-item-row"><div class="hiprint-option-item-label">水印功能</div></div>');
         this.content = $('<div class="hiprint-option-item-field" style="display: flex;align-items: baseline;"><div style="width:25%">水印内容:</div><input style="width:75%" type="text" placeholder="水印内容" class="auto-submit"></div>');
+        this.fillStyle = $('<div class="hiprint-option-item-field" style="display: flex;align-items: center;margin-top: 4px"><div style="width:25%">字体颜色:</div><input style="width:110%" data-format="rgb" data-opacity="0.3" type="text" placeholder="字体颜色" class="auto-submit"></div>');
+        this.fontSize = $('<div class="hiprint-option-item-field" style="display: flex;align-items: center;"><div style="width:25%">字体大小:</div><input style="width:75%" type="range" min="10" max="80" placeholder="字体大小" class="auto-submit"></div>');
         this.rotate = $('<div class="hiprint-option-item-field" style="display: flex;align-items: center;"><div style="width:25%">旋转角度:</div><input style="width:75%" type="range" min="0" max="180" placeholder="旋转角度" class="auto-submit"></div>');
+        this.width = $('<div class="hiprint-option-item-field" style="display: flex;align-items: center;"><div style="width:25%">水平密度:</div><input style="width:75%" type="range" min="100" max="800" placeholder="水平密度" class="auto-submit"></div>');
+        this.height = $('<div class="hiprint-option-item-field" style="display: flex;align-items: center;"><div style="width:25%">垂直密度:</div><input style="width:75%" type="range" min="100" max="800" placeholder="垂直密度" class="auto-submit"></div>');
         this.timestamp = $('<div class="hiprint-option-item-field" style="display: flex;align-items: center;"><div style="width:25%">水印时间:</div><input style="width:18px;height:18px;margin:0 0 4px 0;" type="checkbox" placeholder="水印时间" class="auto-submit"></div>');
         this.format = $('<div class="hiprint-option-item-field" style="display: flex;align-items: baseline;"><div style="width:25%">时间格式:</div><input style="width:75%" type="text" placeholder="YYYY-MM-DD HH:mm" class="auto-submit"></div>');
         this.target.append(this.content);
+        this.target.append(this.fillStyle);
+        this.target.append(this.fontSize);
         this.target.append(this.rotate);
+        this.target.append(this.width);
+        this.target.append(this.height);
         this.target.append(this.timestamp);
         this.target.append(this.format);
         return this.target;
       }, t.prototype.getValue = function () {
         let opt = {
           content: this.content.find('input').val(),
+          fillStyle: this.fillStyle.find('input').val() || "rgba(184, 184, 184, 0.3)",
+          fontSize: parseInt(this.fontSize.find('input').val() || "14") + "px",
           rotate: parseInt(this.rotate.find('input').val() || "25"),
+          width: parseInt(this.width.find('input').val() || "200"),
+          height: parseInt(this.height.find('input').val() || "200"),
           timestamp: this.timestamp.find('input').is(':checked'),
           format: this.format.find('input').val() == "" ? "YYYY-MM-DD HH:mm" : this.format.find('input').val()
         }
@@ -3017,7 +3029,17 @@ var hiprint = function (t) {
       }, t.prototype.setValue = function (t) {
         this.options = t;
         this.content.find("input").val(t.content || "");
+        this.fillStyle.find("input").val(t.fillStyle || "rgba(184, 184, 184, 0.3)");
+        this.fillStyle.find("input").minicolors({
+          format: "rgb",
+          opacity: true,
+          theme: "bootstrap"
+        });
+        const fontSize = parseInt(t.fontSize || "14");
+        this.fontSize.find("input").val(fontSize);
         this.rotate.find("input").val(t.rotate || 25);
+        this.width.find("input").val(t.width || 200);
+        this.height.find("input").val(t.height || 200);
         this.timestamp.find("input").attr("checked", t.timestamp == void 0 ? false : t.timestamp);
         this.format.find("input").val(t.format || "YYYY-MM-DD HH:mm");
       }, t.prototype.destroy = function () {
