@@ -3003,7 +3003,21 @@ var hiprint = function (t) {
         this.width = $('<div class="hiprint-option-item-field" style="display: flex;align-items: center;"><div style="width:25%">水平密度:</div><input style="width:75%" type="range" min="100" max="800" placeholder="水平密度" class="auto-submit"></div>');
         this.height = $('<div class="hiprint-option-item-field" style="display: flex;align-items: center;"><div style="width:25%">垂直密度:</div><input style="width:75%" type="range" min="100" max="800" placeholder="垂直密度" class="auto-submit"></div>');
         this.timestamp = $('<div class="hiprint-option-item-field" style="display: flex;align-items: center;"><div style="width:25%">水印时间:</div><input style="width:18px;height:18px;margin:0 0 4px 0;" type="checkbox" placeholder="水印时间" class="auto-submit"></div>');
-        this.format = $('<div class="hiprint-option-item-field" style="display: flex;align-items: baseline;"><div style="width:25%">时间格式:</div><input style="width:75%" type="text" placeholder="YYYY-MM-DD HH:mm" class="auto-submit"></div>');
+        let formatlist = [
+          "YYYY-MM-DD HH:mm:ss",
+          "YYYY-MM-DD HH:mm",
+          "YYYY-MM-DD HH",
+          "YYYY-MM-DD",
+          "YYYY-MMMM",
+          "YYYY-MM",
+          "YYYY",
+        ];
+        let timeFormatList = '\n            <option value="" >默认(YYYY-MM-DD HH:mm)</option>';
+        formatlist.forEach(function (e) {
+          timeFormatList += '\n            <option value="' + e + '">' + e + '</option>';
+        })
+        this.format = $('<div class="hiprint-option-item-field" style="display: flex;align-items: baseline;"><div style="width:25%">时间格式:</div><select style="width:75%" class="auto-submit"></select></div>');
+        this.format.find(".auto-submit").append($(timeFormatList));
         this.target.append(this.content);
         this.target.append(this.fillStyle);
         this.target.append(this.fontSize);
@@ -3022,7 +3036,7 @@ var hiprint = function (t) {
           width: parseInt(this.width.find('input').val() || "200"),
           height: parseInt(this.height.find('input').val() || "200"),
           timestamp: this.timestamp.find('input').is(':checked'),
-          format: this.format.find('input').val() == "" ? "YYYY-MM-DD HH:mm" : this.format.find('input').val()
+          format: this.format.find('select').val() == "" ? "YYYY-MM-DD HH:mm" : this.format.find('select').val()
         }
         let options = Object.assign({}, this.options, opt);
         return options;
@@ -3041,7 +3055,7 @@ var hiprint = function (t) {
         this.width.find("input").val(t.width || 200);
         this.height.find("input").val(t.height || 200);
         this.timestamp.find("input").attr("checked", t.timestamp == void 0 ? false : t.timestamp);
-        this.format.find("input").val(t.format || "YYYY-MM-DD HH:mm");
+        this.format.find("select").val(t.format || "YYYY-MM-DD HH:mm");
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
