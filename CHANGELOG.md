@@ -4,6 +4,50 @@
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
 
+## 0.0.50 (2023-03-31)
+<details>
+  <summary>1. 🌈️ 新增支持 水印功能</summary>
+
+```javascript
+let json = {
+    panels:[
+      // 面板设置 水印参数
+      // 更多参数可查看本项目 src/hiprint/plugins/watermark.js
+      "watermarkOptions": {
+        "content": "vue-plugin-hiprint",
+          "rotate": 25,
+          "timestamp": true,
+          "format": "YYYY-MM-DD HH:mm"
+      },
+    ]
+}
+```
+</details>
+<details>
+  <summary>2. ✨ 调整优化 多行表头字段渲染问题</summary>
+</details>
+<details>
+  <summary>3. ✨ 调整优化 表头合并问题</summary>
+</details>
+<details>
+  <summary>4. ✨ 调整优化 表格列 部分参数返回默认值问题(getJson不需要返回的值)</summary>
+</details>
+<details>
+  <summary>5. ✨ 调整优化 支持撤销重做 调整表头/调整列字段 操作</summary>
+</details>
+<details>
+  <summary>6. ✨ 调整优化 "行/列合并函数" 添加"rowIndex" 行下标回调</summary>
+</details>
+<details>
+  <summary>7. 🐛️ fix 当有"行/列合并函数" 设置表体行高无效问题</summary>
+</details>
+<details>
+  <summary>8. 🐛️ fix "行/列合并函数" 分页列缺少/塌陷问题 并支持设置 分页是否清除合并内容</summary>
+</details>
+<details>
+  <summary>9. 🐛️ fix tableColumn 参数多次提交问题</summary>
+</details>
+
 ## 0.0.48 (2023-03-09)
 <details>
   <summary>1. ✨ 调整优化 setHost 支持回调</summary>
