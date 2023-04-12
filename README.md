@@ -23,9 +23,9 @@
 
 ## 关于此插件
 
-vue-plugin-hiprint(基于[hiprint 2.5.4](http://hiprint.io/)) 当时只是为了方便我（并非hiprint原作者）在vue项目中引入使用，所以以此命名。
+vue-plugin-hiprint(基于[hiprint 2.5.4](http://hiprint.io/)) 当时只是为了方便<span style="color: red">我（并非hiprint原作者）</span> 在vue项目中引入使用，所以以此命名。
 
-此插件仅仅是一个JavaScript【工具库】而非 Vue【组件库】，所以它默认是不包含demo中所见的那些组件页面的（demo代码随便复制修改拿去用）。
+此<span style="color: red">插件</span>仅仅是一个<span style="color: red">JavaScript【工具库】</span>而非 <span style="color: yellow">Vue【组件库】</span>，所以它默认是不包含demo中所见的那些组件页面的（demo代码随便复制修改拿去用）。
 
 由于hiprint官网最后一次更新时间为2019年【hiprint 2.5.4 是 [LGPL](#关于lgpl协议) 协议】，后在诸多使用者及反馈下进行了许多优化调整。[详情](CHANGELOG.md)（同时感谢各位群友支持和参与）
 
@@ -35,9 +35,16 @@ vue-plugin-hiprint(基于[hiprint 2.5.4](http://hiprint.io/)) 当时只是为了
 > 0.0.36起 已支持 CDN形式引入 详见 [0.0.36更新记录](CHANGELOG.md)
 > **uniapp / jQuery** 项目 使用此方式可行
 
-## 快速链接
+## 注意事项!!
 
-hiprint官方文档：[http://hiprint.io/docs/start](http://hiprint.io/docs/start)
+- <div style="color: red">不要用本项目设计导出的模板,在官网提供的版本中使用!</div>
+- <div style="color: red">不要用本项目设计导出的模板,在官网提供的版本中使用!</div>
+- <div style="color: red">不要用本项目设计导出的模板,在官网提供的版本中使用!</div>
+- <div style="color: orange">请使用我提供的打印客户端,或者自行修改打印客户端的源码,以适配本项目的模板!</div>
+- <div style="color: orange">请使用我提供的打印客户端,或者自行修改打印客户端的源码,以适配本项目的模板!</div>
+- <div style="color: orange">请使用我提供的打印客户端,或者自行修改打印客户端的源码,以适配本项目的模板!</div>
+
+## 快速链接
 
 Demo预览：[https://ccsimple.gitee.io/vue-plugin-hiprint/](https://ccsimple.gitee.io/vue-plugin-hiprint/)
 
@@ -56,6 +63,14 @@ provider: [【vue-plugin-hiprint】如何自定义可拖拽元素 provider](http
 打印篇: [【vue-plugin-hiprint】使用-打印篇](https://mp.weixin.qq.com/s/P-Zz8YfELmRNi4EuED4QmA)
 
 参数篇: [【vue-plugin-hiprint】使用-参数篇](https://mp.weixin.qq.com/s/vfgSG62tAXn7Ot7y3x68fw)
+
+实战动态provider: [【vue-plugin-hiprint】实战-动态provider](https://mp.weixin.qq.com/s/UVkhul1tynjaUjdC_NaHfw)
+
+## 更多参数的文档请仔细查阅文档
+
+hiprint官方文档：[http://hiprint.io/docs/start](http://hiprint.io/docs/start)
+
+本人写的部分文档: [https://ccsimple.gitee.io/sv-print-docs/config/start.html](https://ccsimple.gitee.io/sv-print-docs/config/start.html)
 
 ### 安装使用
 ```
@@ -94,8 +109,6 @@ npm install vue-plugin-hiprint
 import {hiPrintPlugin} from 'vue-plugin-hiprint'
 Vue.use(hiPrintPlugin, '$pluginName')
 hiPrintPlugin.disAutoConnect(); // 取消自动连接直接打印客户端
-// 然后使用
-this.$pluginName
 
 // 下列代码为示例，不要再 main.js中 使用
 // 引入后使用示例
@@ -269,6 +282,7 @@ hiprintTemplate.print(this.printData, {}, {
   }
 })
 // 直接打印
+// 打印机名称: 通过 hiprintTemplate.getPrinterList() 获取 其中的 name
 hiprintTemplate.print2(printData, {printer: '打印机名称', title: '打印标题'})
 hiprintTemplate.on('printSuccess', function (data) {
   console.log('打印完成')
