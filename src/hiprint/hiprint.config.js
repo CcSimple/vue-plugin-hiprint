@@ -839,6 +839,10 @@
               hidden: false
             },
             {
+              name: 'maxRows',
+              hidden: false
+            },
+            {
               name: 'columns',
               hidden: false
             },
@@ -1074,6 +1078,10 @@
         },
         {
           name: 'autoCompletion',
+          hidden: false
+        },
+        {
+          name: 'maxRows',
           hidden: false
         },
         {

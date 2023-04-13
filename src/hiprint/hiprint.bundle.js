@@ -4449,6 +4449,22 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
+    maxRows = function () {
+      function t() {
+        this.name = "maxRows";
+      }
+
+      return t.prototype.createTarget = function () {
+        return this.target = $('<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        每页最大行数\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="number" value="1" step="1" min="1" class="auto-submit"/>\n        </div>\n    </div>'), this.target;
+      }, t.prototype.getValue = function () {
+        var t = this.target.find("input").val();
+        if (t) return parseInt(t.toString());
+      }, t.prototype.setValue = function (t) {
+        this.target.find("input").val(t);
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
     xt = function () {
       function t() {
         this.name = "tableFooterRepeat";
@@ -4483,7 +4499,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new watermarkOptions(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new rowsColumnsMergeClean(), new groupFieldsFormatter(), new groupFormatter(), new groupFooterFormatter(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new stylerHeader(), new renderFormatter(), new _t(), new wt(), new xt(), new tableColumnH(), new tableE(), new tableQRCodeLevel(), new tablept(), new tableSummaryTitle(), new tableSummaryText(), new tableSummary(), new tableSummaryAlign(), new tableSummaryNumFormat(), new upperCase()], t;
+    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new watermarkOptions(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new rowsColumnsMergeClean(), new groupFieldsFormatter(), new groupFormatter(), new groupFooterFormatter(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new stylerHeader(), new renderFormatter(), new _t(), new wt(), new maxRows(), new xt(), new tableColumnH(), new tableE(), new tableQRCodeLevel(), new tablept(), new tableSummaryTitle(), new tableSummaryText(), new tableSummary(), new tableSummaryAlign(), new tableSummaryNumFormat(), new upperCase()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -4929,7 +4945,7 @@ var hiprint = function (t) {
                 }
                 d.find("tbody").append(f);
                 var g = f.data("rowData");
-                l.push(g), h.push(g), (s = d.outerHeight(), s += tfh) > p && (a.prepend(f), l.pop(), h.pop(), s = d.outerHeight(), c = {
+                l.push(g), h.push(g), (((s = d.outerHeight(), s += tfh) > p) || (this.options.maxRows && h.length > +this.options.maxRows)) && (a.prepend(f), l.pop(), h.pop(), s = d.outerHeight(), c = {
                   height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
                   isEnd: !1
                 });
