@@ -7306,7 +7306,7 @@ var hiprint = function (t) {
         if (c) {
           var newType = c(type);
           var idx = this.allElementTypes.findIndex(function (e) {
-            return e.tid = t;
+            return e.tid == t;
           })
           if (idx >= 0) {
             this.allElementTypes.splice(idx, 1, newType);
