@@ -167,7 +167,7 @@ export const panelsProvider1 = function (ops) {
                 {title: '金额', align: 'center', field: 'JE', width: 100, checked: false},
               ],
             ],
-            rowsColumnsMerge: function (data, row, index) {
+            rowsColumnsMerge: function (data, col, index) {
               // 返回一个数组,参数一为行（rowspan）合并数,参数二为列（colspan）合并数, 被合并的行或者列值设为0
               if (index == 0) {
                 return [1, data.INDEX % 2 == 1 ? 2 : 1]
