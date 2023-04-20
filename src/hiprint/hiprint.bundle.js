@@ -5021,8 +5021,12 @@ var hiprint = function (t) {
         })
         return tr;
       }, TablePrintElement.prototype.autoCompletion = function (t, e, tfh) {
+        var that = this;
         for (var n, i = this.getEmptyRowTarget(), o = e.outerHeight() + tfh; t > o;) {
           n = i.clone(), e.find("tbody").append(n), o = e.outerHeight() + tfh;
+          if (that.options.maxRows && e.find("tbody").children().length > that.options.maxRows) {
+            break;
+          }
         }
 
         n && n.remove();
