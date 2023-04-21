@@ -9111,6 +9111,12 @@ var hiprint = function (t) {
                   t.setValue(i.options[t.name] || i.printElementType[t.name])
                 }
               }
+              n.find("textarea").bind("dblclick.textarea", function (event) {
+                if (!$(this).val()) {
+                  var placeholder = event.target.placeholder || "";
+                  $(this).val(placeholder);
+                };
+              });
             })
             if (tab.list.length == 0 && o && o.length) {
               o.forEach(function (t) {
