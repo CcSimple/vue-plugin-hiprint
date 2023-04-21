@@ -43,6 +43,10 @@ vue-plugin-hiprint(基于[hiprint 2.5.4](http://hiprint.io/)) 当时只是为了
 - <div style="color: orange">请使用我提供的打印客户端,或者自行修改打印客户端的源码,以适配本项目的模板!</div>
 - <div style="color: orange">请使用我提供的打印客户端,或者自行修改打印客户端的源码,以适配本项目的模板!</div>
 - <div style="color: orange">请使用我提供的打印客户端,或者自行修改打印客户端的源码,以适配本项目的模板!</div>
+- 使用直接客户端时,本地开发连接没问题,部署到线上出现跨域无法连接打印客户端问题:
+- [线上跨域问题,请升级 https! 说明:https://www.cnblogs.com/daysme/p/15493523.html](https://www.cnblogs.com/daysme/p/15493523.html)
+- [线上跨域问题,请升级 https! 说明:https://www.cnblogs.com/daysme/p/15493523.html](https://www.cnblogs.com/daysme/p/15493523.html)
+- [线上跨域问题,请升级 https! 说明:https://www.cnblogs.com/daysme/p/15493523.html](https://www.cnblogs.com/daysme/p/15493523.html)
 
 ## 快速链接
 
@@ -251,6 +255,9 @@ hiprintTemplate.design('#hiprint-printTemplate');
 | Mac (intel)            | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.6/hiprint_mac_x64-1.0.6.dmg">下载(v1.0.6)</a>    |
 | Mac (M1)               | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.6/hiprint_mac_arm64-1.0.6.dmg">下载(v1.0.6)</a>    |
 
+- [线上跨域问题,请升级 https! 说明:https://www.cnblogs.com/daysme/p/15493523.html](https://www.cnblogs.com/daysme/p/15493523.html)
+- [线上跨域问题,请升级 https! 说明:https://www.cnblogs.com/daysme/p/15493523.html](https://www.cnblogs.com/daysme/p/15493523.html)
+- [线上跨域问题,请升级 https! 说明:https://www.cnblogs.com/daysme/p/15493523.html](https://www.cnblogs.com/daysme/p/15493523.html)
 
 ## 常见问题
 > design时怎么修改默认图片？
