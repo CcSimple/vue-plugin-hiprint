@@ -8936,9 +8936,6 @@ var hiprint = function (t) {
         var ptr = this.designPaper.scale || 1;
         this.mouseRect.target || (this.mouseRect.target = $('<div tabindex="1" class="mouseRect" style="z-index:2;position: absolute;opacity:0.2;border: 1px dashed #000;background-color:#31676f;"><span></span></div>'), n.find(".hiprint-printPaper-content").append(this.mouseRect.target), this.bingKeyboardMoveEvent(this.mouseRect.target), this.mouseRect.target.hidraggable({
           onDrag: function onDrag(t, n, i) {
-            e.mouseRect.target.css({
-              transform: 'unset'
-            }),
               e.mouseRect.lastLeft = e.mouseRect.lastLeft ? o.a.px.toPt(e.mouseRect.target[0].offsetLeft) : n / ptr, e.mouseRect.lastTop = e.mouseRect.lastTop ? o.a.px.toPt(e.mouseRect.target[0].offsetTop) : i / ptr
               , (e.mouseRect.mouseRectSelectedElement || []).forEach(function (t) {
               t.updatePositionByMultipleSelect(n - e.mouseRect.lastLeft, i - e.mouseRect.lastTop);
@@ -8949,6 +8946,9 @@ var hiprint = function (t) {
           minMove: p.a.instance.movingDistance,
           onBeforeDrag: function onBeforeDrag(t) {
             e.mouseRect.target.focus(), s.a.instance.draging = !0, e.mouseRect.mouseRectSelectedElement || (e.mouseRect.mouseRectSelectedElement = e.getElementInRect(e.mouseRect));
+            e.mouseRect.target.css({
+              transform: 'unset'
+            });
           },
           getScale: function getScale() {
             return e.designPaper.scale || 1;
