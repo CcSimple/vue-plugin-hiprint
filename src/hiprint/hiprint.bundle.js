@@ -1700,13 +1700,14 @@ var hiprint = function (t) {
             });
             var text = column.tableSummaryText;
             var numF = column.tableSummaryNumFormat || 2;
+            var style = `text-align: ${column.tableSummaryAlign || "center"}`;
             var upperCaseType = column.upperCase;
             let {toUpperCase, numFormat} = _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_1__.a;
             switch (column.tableSummary) {
             case "count":
               var title = tst(column, text || "计数:", o);
               var count = toUpperCase(upperCaseType,tSumData.length || 0);
-              tableFooter.append(`<td style="text-align: ${column.tableSummaryAlign || "center"}">${title}${count}</td>`);
+              tableFooter.append(`<td style="${style}">${title}${count}</td>`);
               break;
             case "sum":
               var sum = parseFloat(Number(fieldData.reduce(function (prev, cur) {
@@ -1714,7 +1715,7 @@ var hiprint = function (t) {
               }, 0)));
               sum = toUpperCase(upperCaseType,numFormat(sum, numF));
               var title = tst(column, text || "合计:", o);
-              tableFooter.append(`<td style="text-align: ${column.tableSummaryAlign || "center"}">${title}${sum}</td>`)
+              tableFooter.append(`<td style="${style}">${title}${sum}</td>`)
               break;
             case "avg":
               var sum = parseFloat(Number(fieldData.reduce(function (prev, cur) {
@@ -1723,22 +1724,22 @@ var hiprint = function (t) {
               var avg = parseFloat(Number(sum / (fieldData.length || 1)));
               avg = toUpperCase(upperCaseType,numFormat(avg, numF));
               var title = tst(column, text || "平均值:", o);
-              tableFooter.append(`<td style="text-align: ${column.tableSummaryAlign || "center"}">${title}${avg}</td>`)
+              tableFooter.append(`<td style="${style}">${title}${avg}</td>`)
               break;
             case "min":
               var min = Math.min(...fieldData);
               min = toUpperCase(upperCaseType,numFormat(min, numF));
               var title = tst(column, text || "最小值:", o);
-              tableFooter.append(`<td style="text-align: ${column.tableSummaryAlign || "center"}">${title}${min || 0}</td>`)
+              tableFooter.append(`<td style="${style}">${title}${min || 0}</td>`)
               break;
             case "max":
               var max = Math.max(...fieldData);
               max = toUpperCase(upperCaseType,numFormat(max, numF));
               var title = tst(column, text || "最大值:", o);
-              tableFooter.append(`<td style="text-align: ${column.tableSummaryAlign || "center"}">${title}${max || 0}</td>`);
+              tableFooter.append(`<td style="${style}">${title}${max || 0}</td>`);
               break;
             case "text":
-              tableFooter.append(`<td style="text-align: ${column.tableSummaryAlign || "center"}">${text || ""}</td>`);
+              tableFooter.append(`<td style="${style}">${text || ""}</td>`);
               break;
             default:
               tableFooter.append("<td></td>")
