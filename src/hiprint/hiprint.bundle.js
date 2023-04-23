@@ -4908,6 +4908,18 @@ var hiprint = function (t) {
           }
         }
         var noPaging = "none" == this.panel.panelPageRule;
+        // 不分页, 且不是设计时, 移除 thead
+        var headTr;
+        if (t && noPaging) {
+          var headStyle = n.find(".hiprint-printElement-tableTarget thead").attr("style");
+          headTr = n.find(".hiprint-printElement-tableTarget thead tr").clone();
+          if (headStyle) {
+            headTr.attr("style", headStyle);
+          } else {
+            headTr.css({"background": "#e8e8e8"});
+          }
+          n.find(".hiprint-printElement-tableTarget thead").remove();
+        }
         var s = n.outerHeight();
         if (!noPaging && s > p) return {
           target: void 0,
@@ -4926,6 +4938,9 @@ var hiprint = function (t) {
                 isEnd: !0
               }, t && this.options.autoCompletion && (this.autoCompletion(p, d, tfh), s = n.outerHeight()); else {
                 var f = a.find("tr:lt(1)");
+                if (h.length == 0 && headTr) {
+                  d.find("tbody").append(headTr);
+                }
                 d.find("tbody").append(f);
                 var g = f.data("rowData");
                 l.push(g), h.push(g), s = n.outerHeight();
@@ -4956,7 +4971,11 @@ var hiprint = function (t) {
               // 这里是table 没有tfoot, 后面再看什么原因...
               if ("last" == this.options.tableFooterRepeat && !c.isEnd) break;
               if ("no" !== this.options.tableFooterRepeat) {
-                _table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, this.getData(t), this.options, this.printElementType, t, h).insertBefore(d.find("tbody"));
+                if (noPaging) {
+                  d.find("tbody").append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, this.getData(t), this.options, this.printElementType, t, h).children())
+                } else {
+                  _table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, this.getData(t), this.options, this.printElementType, t, h).insertBefore(d.find("tbody"));
+                }
                 that.css(d, t);
               }
               break;
