@@ -1738,6 +1738,10 @@
           hidden: false
         },
         {
+          name: 'tableSummaryColspan',
+          hidden: false
+        },
+        {
           name: 'tableSummary',
           hidden: false
         },
