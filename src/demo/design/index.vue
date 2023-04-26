@@ -176,6 +176,16 @@
               <a-row style="height: 100px;">
                 <a-col :span="12" class="drag_item_box">
                   <div>
+                    <a class="ep-draggable-item" tid="defaultModule.emptyTable" style>
+                      <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+                      <p class="glyphicon-class">空白表格</p>
+                    </a>
+                  </div>
+                </a-col>
+              </a-row>
+              <a-row style="height: 100px;">
+                <a-col :span="12" class="drag_item_box">
+                  <div>
                     <a class="ep-draggable-item" tid="defaultModule.html" style="">
                       <span class="glyphicon glyphicon-header" aria-hidden="true"></span>
                       <p class="glyphicon-class">html</p>
