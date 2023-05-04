@@ -207,7 +207,7 @@ export const json = {
         "hCenter": 69,
         "tableHeaderRowHeight": 30,
         "tableBodyRowHeight": 30,
-        "rowsColumnsMerge": "function (data, col, colIndex, rowIndex) {\n  console.log('data', data);\n  console.log('row', row);\n  console.log('colIndex', colIndex);\n  console.log('rowIndex', rowIndex);\n  // 返回一个数组,参数一为行（rowspan）合并数,参数二为列（colspan）合并数, 被合并的行或者列值设为0\n  if (rowIndex >= 0 && rowIndex < 8) {\n    return colIndex == 0 ? [rowIndex == 0 ? 8 - 0 : 0, 1] : [1, 1];\n  } else if (rowIndex >= 8 && rowIndex < 10) {\n    return colIndex == 0 ? [rowIndex == 8 ? 10 - 8 : 0, 1] : [1, 1];\n  } else if (rowIndex >= 10 && rowIndex < 13) {\n    return colIndex == 0 ? [rowIndex == 10 ? 13 - 10 : 0, 1] : [1, 1];\n  } else {\n    return [1, 1]\n  }\n}",
+        "rowsColumnsMerge": "function (data, col, colIndex, rowIndex) {\n  console.log('data', data);\n  console.log('col', col);\n  console.log('colIndex', colIndex);\n  console.log('rowIndex', rowIndex);\n  // 返回一个数组,参数一为行（rowspan）合并数,参数二为列（colspan）合并数, 被合并的行或者列值设为0\n  if (rowIndex >= 0 && rowIndex < 8) {\n    return colIndex == 0 ? [rowIndex == 0 ? 8 - 0 : 0, 1] : [1, 1];\n  } else if (rowIndex >= 8 && rowIndex < 10) {\n    return colIndex == 0 ? [rowIndex == 8 ? 10 - 8 : 0, 1] : [1, 1];\n  } else if (rowIndex >= 10 && rowIndex < 13) {\n    return colIndex == 0 ? [rowIndex == 10 ? 13 - 10 : 0, 1] : [1, 1];\n  } else {\n    return [1, 1]\n  }\n}",
         "rowsColumnsMergeClean": true,
         "tableHeaderRepeat": "first",
         "columns": [[{
