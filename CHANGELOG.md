@@ -4,6 +4,38 @@
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
 
+## 0.0.52 (2023-05-08)
+<details>
+  <summary>1. 🌈 新增支持 表格设置"每页最大行数"功能</summary>
+</details>
+<details>
+  <summary>2. 🌈 新增支持 双击"格式化函数"等, 填充placeholder</summary>
+</details>
+<details>
+  <summary>3. 🌈 新增支持 "底部聚合合并列数"参数,实现自定义合并列</summary>
+</details>
+<details>
+  <summary>4. ✨ 调整优化 分页规则:不分页时, 移除thead,tfoot. 直接插入到tbody</summary>
+</details>
+<details>
+  <summary>5. ✨ 调整优化 默认provider 新增defaultModule.emptyTable</summary>
+</details>
+<details>
+  <summary>6. 🐛️ fix 框选框 点击时跳位的问题</summary>
+</details>
+<details>
+  <summary>7. 🐛️ fix updateElementType 错误</summary>
+</details>
+<details>
+  <summary>8. 🐛️ fix 设计时 清空水印内容 水印未销毁问题</summary>
+</details>
+<details>
+  <summary>9. 🐛️ fix 行/列合并函数 placeholder 错误</summary>
+</details>
+<details>
+  <summary>10. 🐛️ fix provider 配置表格列,样式函数等参数是函数时,默认getJson未返回其值的问题</summary>
+</details>
+
 ## 0.0.50 (2023-03-31)
 <details>
   <summary>1. 🌈️ 新增支持 水印功能</summary>
