@@ -9177,6 +9177,12 @@ var hiprint = function (t) {
                 options.find('.auto-submit:input').bind('keydown.submitOption', function (e) {
                   13 === e.keyCode && t.callback(n.getValueByOptionItems(tableColumn));
                 })
+                options.find("textarea").bind("dblclick.textarea", function (event) {
+                  if (!$(this).val()) {
+                    var placeholder = event.target.placeholder || "";
+                    $(this).val(placeholder);
+                  };
+                });
               })
             }
             r.append(options)
