@@ -70,6 +70,10 @@ provider: [【vue-plugin-hiprint】如何自定义可拖拽元素 provider](http
 
 实战动态provider: [【vue-plugin-hiprint】实战-动态provider](https://mp.weixin.qq.com/s/UVkhul1tynjaUjdC_NaHfw)
 
+实战动态模板: [【vue-plugin-hiprint】实战-动态模板](https://mp.weixin.qq.com/s/JXXC9Fyy_PgPXrwh1mDBTQ)
+
+常见问题汇总①: [【vue-plugin-hiprint】常见问题汇总①](https://mp.weixin.qq.com/s/E-ZfuKLH3-GvKn4AosRvaw)
+
 ## 更多参数的文档请仔细查阅文档
 
 hiprint官方文档：[http://hiprint.io/docs/start](http://hiprint.io/docs/start)
