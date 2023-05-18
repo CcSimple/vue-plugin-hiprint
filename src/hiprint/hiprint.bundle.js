@@ -9878,7 +9878,7 @@ var hiprint = function (t) {
         if (i == "optionItems" && t.optionItems && t.optionItems.length) {
           p.a.instance.registerItems(t.optionItems);
         }
-        if (t[i].tabs && t[i].tabs.length) {
+        else if (t[i].tabs && t[i].tabs.length) {
           t[i].tabs.forEach(function (tab, idx) {
             if (tab.replace) {
               $.extend(p.a.instance[i].tabs[idx], tab);
@@ -9906,7 +9906,7 @@ var hiprint = function (t) {
           })
           delete t[i].tabs;
         }
-        if (t[i].supportOptions) {
+        else if (t[i].supportOptions) {
           var options = t[i].supportOptions, list = p.a.instance[i].supportOptions;
           options.forEach(function (o) {
             var idx = list.findIndex(function (e) {
@@ -9924,8 +9924,11 @@ var hiprint = function (t) {
           })
           $.extend(p.a.instance[i].supportOptions, list);
           delete t[i].supportOptions;
+        } else {
+          var keyMap = {};
+          keyMap[i] = t[i];
+          $.extend(p.a.instance, keyMap);
         }
-        $.extend(p.a.instance[i], t[i]);
       });
     } else {
       $.extend(p.a.instance, HIPRINT_CONFIG);
