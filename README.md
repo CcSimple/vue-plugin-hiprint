@@ -74,6 +74,8 @@ provider: [【vue-plugin-hiprint】如何自定义可拖拽元素 provider](http
 
 常见问题汇总①: [【vue-plugin-hiprint】常见问题汇总①](https://mp.weixin.qq.com/s/E-ZfuKLH3-GvKn4AosRvaw)
 
+常见问题汇总②: [【vue-plugin-hiprint】常见问题汇总②](https://mp.weixin.qq.com/s/UEnr24bB_P6KmpZ7iZmYvA)
+
 ## 更多参数的文档请仔细查阅文档
 
 hiprint官方文档：[http://hiprint.io/docs/start](http://hiprint.io/docs/start)
