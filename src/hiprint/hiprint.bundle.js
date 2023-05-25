@@ -1728,13 +1728,15 @@ var hiprint = function (t) {
               tableFooter.append(`<td style="${style}" colspan="${colspan}">${title}${avg}</td>`)
               break;
             case "min":
-              var min = Math.min(...fieldData);
+              var min = Math.min(...fieldData) || 0;
+              min == Infinity && (min = 0);
               min = toUpperCase(upperCaseType,numFormat(min, numF));
               var title = tst(column, text || "最小值:", o);
               tableFooter.append(`<td style="${style}" colspan="${colspan}">${title}${min || 0}</td>`)
               break;
             case "max":
               var max = Math.max(...fieldData);
+              max == -Infinity && (max = 0);
               max = toUpperCase(upperCaseType,numFormat(max, numF));
               var title = tst(column, text || "最大值:", o);
               tableFooter.append(`<td style="${style}" colspan="${colspan}">${title}${max || 0}</td>`);
