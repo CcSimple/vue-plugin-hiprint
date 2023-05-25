@@ -870,3 +870,77 @@ text元素修改为barcode/qrcode时调整控制按钮
 从右侧参数栏快速从右往左选择时鼠标移动到design内时框选框的大小问题
 ```
 </details>
+
+## 0.0.23 (2022-06-15) 之前已调整优化部分
+
+- [x] `vue 插件` 发布npm包,方便直接使用
+- [x] `Ant Design Vue demo` 默认拖拽设计、自定义设计、队列打印
+- [x] `优化删除元素功能` 支持 backSpace/delete 按键删除
+- [x] `优化拖动功能` 调整优化 不允许元素拖出窗口 按住ctrl/command允许拖出窗口外
+- [x] `优化框选功能` fix 原只能从上往下框选问题
+- [x] `支持修改默认直接打印主机` window.hiwebSocket.setHost("xxx:17521")
+- [x] `print优化调整` 支持设置callback 见demo的preview.vue
+- [x] `table/tableCustom优化调整` 支持设置options.fields 双击选择字段,
+- [x] `table优化调整` 支持设置isEnableInsertColumn/isEnableDeleteColumn等参数，支持插入/删除列
+- [x] `table/tableCustom优化调整` 支持设置options.tableHeaderRepeat/tableFooterRepeat 表头/表脚显示模式
+- [x] `table优化调整` 支持设置 不显示表头
+- [x] `条形码优化调整` fix 条码格式错误的问题（EAN-13、ITF、UPC等）
+- [x] `字段名优化调整` 元素的字段名(field) 支持嵌套（eg: a.b.c.d）
+- [x] `新增支持不分页(小票打印)` 可设置不分页 table、longText处理
+- [x] `新增支持复制/粘贴` 支持 基本元素的ctrl+c/v(复制/粘贴)
+- [x] `新增支持设置是否自动连接客户端` 支持 不自动连接'直接打印'客户端
+- [x] `新增支持表格设置列显示类型` 支持 设置表格列显示图片、二维码、条形码
+- [x] `调整优化表格列拖拽列宽限制` fix 设置旋转角度后 拖拽、跳动、辅助线相关问题
+- [x] `npm包新增提供Api打印方法` main.js引入时，Vue原型添加print、print2Api，方便直接打印
+- [x] `新增支持多选功能` 按住ctrl/command 多选元素 键盘/鼠标拖动 移动
+- [x] `调整优化元素设置旋转角度问题` fix 设置旋转角度后 拖拽、跳动、辅助线相关问题
+- [x] `新增支持元素拖拽旋转` 基本元素上新增旋转控制点，拖拽旋转、双击还原
+- [x] `调整优化标尺` 使用svg替换原图片标尺，让标尺更清晰
+- [x] `新增支持放大缩小功能` 提供模板新增zoom方法(transform：scale)，放大缩小拖动不乱跳
+- [x] `调整优化以支持Vue3.x` 调整qrcode.js fix vite项目报错问题
+- [x] `元素添加禁止拖拽` panels[n]printElements[m]options.draggable true、false
+- [x] `添加对齐api` hiprintTemplate.setElsAlign
+- [x] `表格字段添加聚合功能` 表格字段配置 options.columns[n]tableSummary
+- [x] `新增支持操作历史记录` 支持ctrl/command+(shift)+z 撤销重做, 并提供hiprintTemplate的undo,redo方法
+- [x] `新增坐标位置参数设置` 参数面板新增坐标位置参数,支持同步设置XY坐标,并提供coordinateSync设置默认同步与否
+- [x] `新增宽高大小参数设置` 参数面板新增宽高大小参数,支持同步设置宽高,并提供widthHeightSync设置默认同步与否
+- [x] `新增显示元素坐标位置` 拖拽时显示XY坐标位置,并支持两种显示默认,设置positionLineMode,坐标显示在辅助线上
+- [x] `新增显示元素宽高大小` 点击元素时显示宽高大小,支持重新样式(.resize-panel .size-box)
+- [x] `新增设置元素距离api` 多选元素后设置每个元素的间隔(垂直/水平) hiprintTemplate.setElsSpace(10,true)
+- [x] `调整优化table表头`  支持动态显示/隐藏表头列, getJson时也返回了所有设置的列
+- [x] `新增支持更新拖拽元素api` 通过tid获取拖拽元素/更新拖拽元素 hiprint.updateElementType(tid,(e)=>e)
+- [x] `新增支持不打印功能`   设置元素 showInPage: 'none' 打印时不打印
+- [x] `新增刷新获取打印机列表api` 连接上客户端时 通过 hiprint.refreshPrinterList 获取最新打印机列表
+- [x] `新增获取IP、IPv6、MAC的api` 连接上客户端时 通过 hiprint.getAddress('mac',(data)=>{}) 获取MAC地址
+- [x] `新增支持设置元素层级` 设置元素 zIndex: 10 调整元素层级
+- [x] `调整优化元素设置fields问题` 设置元素 options.fields: [{"text":'id',"field":'id']; getJson将返回此列表
+- [x] `新增支持图片地址选择按钮` new PrintTemplate时 指定 onImageChooseClick: (target) => {target.refresh('url')} 更新图片地址
+- [x] `新增支持图片元素设置缩放格式fit`  object-fix: fill|contain|cover|none
+- [x] `新增支持text元素修改为barcode/qrcode时调整控制按钮`  右和下控制点 变成 右下控制点(等比缩放)
+- [x] `调整优化控制点等比缩放功能`  右下控制点拖动时等比缩放, 按住shift时可自由缩放
+- [x] `调整优化元素框选功能`  从右侧参数栏快速从右往左选择时鼠标移动到design内时框选框的大小问题
+
+|setElsAlign 参数说明|说明|
+|---|---|
+|left|左对齐|
+|vertical|居中|
+|right|右对齐|
+|top|顶部对齐|
+|horizontal|垂直居中|
+|bottom|底部对齐|
+|distributeHor|横向分散|
+|distributeVer|纵向分散|
+
+|tableSummary 参数说明|说明|
+|---|---|
+|-(缺省或不匹配)|不聚合|
+|count|计数|
+|sum|合计|
+|avg|平均值|
+|min|最小值|
+|max|最大值|
+
+|setElsSpace 使用示例|说明|
+|---|---|
+|.setElsSpace(10)|垂直距离10(pt)|
+|.setElsSpace(10,true)|水平距离10(pt)|
