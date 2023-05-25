@@ -32,7 +32,6 @@ vue-plugin-hiprint(基于[hiprint 2.5.4](http://hiprint.io/)) 当时只是为了
 ## vue-plugin-hiprint
 > hiprint for Vue2.x / Vue3.x (基于jQuery, 理论上应该也是支持其他框架的)
 
-> 0.0.36起 已支持 CDN形式引入 详见 [0.0.36更新记录](CHANGELOG.md)
 > **jQuery/uniapp** 项目 见下方 [jQuery/uniapp 项目使用](#jQuery/uniapp 项目使用)
 
 ## 注意事项!!
@@ -76,6 +75,8 @@ provider: [【vue-plugin-hiprint】如何自定义可拖拽元素 provider](http
 常见问题汇总①: [【vue-plugin-hiprint】常见问题汇总①](https://mp.weixin.qq.com/s/E-ZfuKLH3-GvKn4AosRvaw)
 
 常见问题汇总②: [【vue-plugin-hiprint】常见问题汇总②](https://mp.weixin.qq.com/s/UEnr24bB_P6KmpZ7iZmYvA)
+
+常见问题汇总③: [【vue-plugin-hiprint】常见问题汇总③](https://mp.weixin.qq.com/s/lRimQ-cjuwN3mg6RicPyag)
 
 ## 更多参数的文档请仔细查阅文档
 
