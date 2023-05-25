@@ -83,7 +83,7 @@ hiprint官方文档：[http://hiprint.io/docs/start](http://hiprint.io/docs/star
 
 本人写的部分文档: [https://ccsimple.gitee.io/sv-print-docs/config/hiprint.html](https://ccsimple.gitee.io/sv-print-docs/config/hiprint.html)
 
-### 安装使用
+## 安装使用
 ```
 npm install vue-plugin-hiprint
 ```
@@ -461,7 +461,10 @@ $('#hiwprint_iframe').css('visibility','hidden');
 
 > 群人数已超过200 请 '加我好友' 备注加群, 邀你进群
 
-#### 支持一下项目, 或者请作者喝杯咖啡☕️
+## 捐赠支持, 或者请我喝杯咖啡☕️
+
+> 如果对您有帮助，请点击右上角⭐Star关注或扫码捐赠，感谢支持开源！
+
 <table>
     <tr>
         <td><img src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/zWechat.png"/></td>
@@ -471,10 +474,9 @@ $('#hiwprint_iframe').css('visibility','hidden');
 
 ## 状态/调整/优化 请查看[更新记录](CHANGELOG.md)
 
-
 本项目使用 <a href="https://jb.gg/OpenSourceSupport"><img height="40" width="100" src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/WebStorm.svg"/></a><a href="https://jb.gg/OpenSourceSupport"><img width="50" height="50" src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/WebStorm_icon.svg"/></a> 开发
 
-### 分支说明
+## 分支说明
 > main： vue2.x + ant1.7.x融合版 及 npm包源代码
 
 > npm_demo： vue2.x + ant1.7.x + npm包使用 示例
@@ -483,12 +485,12 @@ $('#hiwprint_iframe').css('visibility','hidden');
 
 > npm_demo_v3： vue3.x + vite + npm包(0.0.18)使用 示例
 
-### 关于如何融合处理
+## 关于如何融合处理
 > 自己融合请查看 vue.config.js 对比 hiprint.bundle.js
 
 > webpack.config.js，是npm打包需要处理的
 
-### 开源使用说明
+## 开源使用说明
 > npm包是基于hiprint官网2.5.4版本基础做的调整及优化;<br/>
 > 本人对开源协议理解有限,如有侵权不合理的地方,请联系告知我;<br/>
 
@@ -505,7 +507,7 @@ hiprint 开源协议如下:
  */
 ```
 
-### 关于LGPL协议
+## 关于LGPL协议
 
 ```
 LGPL是GPL的一个为主要为类库使用设计的开源协议。和GPL要求任何使用/修改/衍生之GPL类库的的软件必须采用GPL协议不同。
