@@ -3381,15 +3381,10 @@ var hiprint = function (t) {
 
       return t.prototype.css = function (t, e) {
         if (t && t.length) {
-          var n = t.find(".hiprint-printElement-content").parent('.hiprint-printElement');
-          if (!n.length && (t.hasClass('hiprint-printElement-hline') || t.hasClass('hiprint-printElement-vline'))) {
-            n = t
-          }
-          ;
-          if (!n.length && t.hasClass('hiprint-printElement-image')) {
+          var n = t.find(".hiprint-printElement-content").parent(".hiprint-printElement");
+          if (!n.length) {
             n = t;
           }
-          ;
           if (e) return n.css("transform", "rotate(" + e + "deg)"), n.css("-ms-transform", "rotate(" + e + "deg)"), n.css("-moz-transform", "rotate(" + e + "deg)"), n.css("-webkit-transform", "rotate(" + e + "deg)"), n.css("-o-transform", "rotate(" + e + "deg)"), "transform:rotate(" + e + "deg)";
           n.length && (n[0].style.transform = "");
         }
