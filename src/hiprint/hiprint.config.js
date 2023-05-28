@@ -446,6 +446,10 @@
               hidden: false
             },
             {
+              name: 'unShowInPage',
+              hidden: false
+            },
+            {
               name: 'fixed',
               hidden: false
             },
@@ -507,6 +511,10 @@
         },
         {
           name: 'showInPage',
+          hidden: false
+        },
+        {
+          name: 'unShowInPage',
           hidden: false
         },
         {
