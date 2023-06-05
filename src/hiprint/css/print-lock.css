@@ -245,6 +245,25 @@
   align-items: flex-end;
 }
 
+.hiprint-text-content-wrap {
+}
+
+.hiprint-text-content-wrap .hiprint-text-content-wrap-nowrap {
+  white-space: nowrap;
+}
+
+.hiprint-text-content-wrap .hiprint-text-content-wrap-clip {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
+.hiprint-text-content-wrap .hiprint-text-content-wrap-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /*hi-grid-row */
 .hi-grid-row {
   position: relative;

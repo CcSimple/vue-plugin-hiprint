@@ -144,6 +144,10 @@
               hidden: false
             },
             {
+              name: 'textContentWrap',
+              hidden: false
+            },
+            {
               name: 'lineHeight',
               hidden: false
             },
@@ -305,6 +309,10 @@
         },
         {
           name: 'textContentVerticalAlign',
+          hidden: false
+        },
+        {
+          name: 'textContentWrap',
           hidden: false
         },
         {
@@ -938,9 +946,7 @@
         },
         // 留空即显示 表格 列 属性
         {
-          name: '列', options: [
-
-          ]
+          name: '列', options: []
         },
         {
           name: '高级', options: [
