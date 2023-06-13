@@ -183,37 +183,37 @@
   font-size: 9pt;*/
 }
 
-.hiprint-printElement-tableTarget-header-border-all {
+.hiprint-printElement-tableTarget-border-all {
   border: 1px solid;
 }
-.hiprint-printElement-tableTarget-header-border-none {
+.hiprint-printElement-tableTarget-border-none {
   border: 0px solid;
 }
-.hiprint-printElement-tableTarget-header-border-lr {
+.hiprint-printElement-tableTarget-border-lr {
   border-left: 1px solid;
   border-right: 1px solid;
 }
-.hiprint-printElement-tableTarget-header-border-left {
+.hiprint-printElement-tableTarget-border-left {
   border-left: 1px solid;
 }
-.hiprint-printElement-tableTarget-header-border-right {
+.hiprint-printElement-tableTarget-border-right {
   border-right: 1px solid;
 }
-.hiprint-printElement-tableTarget-header-border-tb {
+.hiprint-printElement-tableTarget-border-tb {
   border-top: 1px solid;
   border-bottom: 1px solid;
 }
-.hiprint-printElement-tableTarget-header-border-top {
+.hiprint-printElement-tableTarget-border-top {
   border-top: 1px solid;
 }
-.hiprint-printElement-tableTarget-header-border-bottom {
+.hiprint-printElement-tableTarget-border-bottom {
   border-top: 1px solid;
 }
 
-.hiprint-printElement-tableTarget-header-border-td-none td {
+.hiprint-printElement-tableTarget-border-td-none td {
   border: 0px solid;
 }
-.hiprint-printElement-tableTarget-header-border-td-all td:not(:last-child) {
+.hiprint-printElement-tableTarget-border-td-all td:not(:last-child) {
   border-right: 1px solid;
 }
 

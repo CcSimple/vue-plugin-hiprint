@@ -2324,8 +2324,8 @@ var hiprint = function (t) {
 
       return t.prototype.css = function (t, e) {
         if (t.find("thead tr").length) {
-          if ("border" == e || void 0 == e) return t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-all");
-          "noBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-none") : "leftBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-left") : "rightBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-right") : "leftRightBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-lr") : "topBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-top") : "bottomBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-bottom") : "topBottomBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-tb") : t.find("thead tr").removeClass();
+          if ("border" == e || void 0 == e) return t.find("thead tr").addClass("hiprint-printElement-tableTarget-border-all");
+          "noBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-border-none") : "leftBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-border-left") : "rightBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-border-right") : "leftRightBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-border-lr") : "topBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-border-top") : "bottomBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-border-bottom") : "topBottomBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-border-tb") : t.find("thead tr").removeClass();
         }
 
         return null;
@@ -2347,8 +2347,8 @@ var hiprint = function (t) {
 
       return t.prototype.css = function (t, e) {
         if (t.find("thead tr").length) {
-          if ("border" == e || void 0 == e) return t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-td-all");
-          "noBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-td-none") : t.find("thead tr").removeClass();
+          if ("border" == e || void 0 == e) return t.find("thead tr").addClass("hiprint-printElement-tableTarget-border-td-all");
+          "noBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-border-td-none") : t.find("thead tr").removeClass();
         }
 
         return null;

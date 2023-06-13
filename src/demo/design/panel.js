@@ -156,6 +156,9 @@ export default {
         "width": 511.5,
         "field": "table",
         "tableFooterRepeat": "",
+        "tableBorder": "noBorder",
+        "tableHeaderBorder": "topBorder",
+        "tableHeaderCellBorder": "border",
         "fields": [{"text":'id',"field":'id'},{"text":'姓名',"field":'name'},{"text":'性别',"field":'gender'},{"text":'数量',"field":'count'}],
         "columns": [[{"width": 85.25, "colspan": 1, "rowspan": 1, "checked": true}, {
           "title": "性别",
