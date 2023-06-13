@@ -2497,11 +2497,9 @@ var hiprint = function (t) {
       }
 
       return t.prototype.css = function (t, e) {
-        if (t.find("tbody tr td").length) {
-          if ("border" == e || void 0 == e) return t.find("tbody tr td").css("border", "1px solid"), "border:1px solid";
-          "noBorder" == e ? t.find("tbody tr td").css("border", "0px solid") : t.find("tbody tr td").map(function (t, e) {
-            e.style.border = "";
-          });
+        if (t.find("tbody tr").length) {
+          if ("border" == e || void 0 == e) return t.find("tbody tr").addClass("hiprint-printElement-tableTarget-border-td-all");
+          "noBorder" == e ? t.find("tbody tr").addClass("hiprint-printElement-tableTarget-border-td-none") : t.find("tbody tr").removeClass();
         }
 
         return null;
@@ -3352,15 +3350,13 @@ var hiprint = function (t) {
 
       return t.prototype.css = function (t, e) {
         if (t.find("tbody tr").length) {
-          if ("border" == e || void 0 == e) return t.find("tbody tr").css("border", "1px solid"), "border:1pt solid";
-          "noBorder" == e ? t.find("tbody tr").css("border", "0px solid") : "topBorder" == e ? (t.find("tbody tr").css("border", "0px solid"), t.find("tbody tr").css("border-top", "1px solid")) : "bottomBorder" == e ? (t.find("tbody tr").css("border", "0px solid"), t.find("tbody tr").css("border-bottom", "1px solid")) : "topBottomBorder" == e ? (t.find("tbody tr").css("border", "0px solid"), t.find("tbody tr").css("border-top", "1px solid"), t.find("tbody tr").css("border-bottom", "1px solid")) : t.find("tbody tr").map(function (t, e) {
-            e.style.border = "";
-          });
+          if ("border" == e || void 0 == e) return t.find("tbody tr").addClass("hiprint-printElement-tableTarget-border-all");
+          "noBorder" == e ? t.find("tbody tr").addClass("hiprint-printElement-tableTarget-border-none") : "leftBorder" == e ? t.find("tbody tr").addClass("hiprint-printElement-tableTarget-border-left") : "rightBorder" == e ? t.find("tbody tr").addClass("hiprint-printElement-tableTarget-border-right") : "leftRightBorder" == e ? t.find("tbody tr").addClass("hiprint-printElement-tableTarget-border-lr") : "topBorder" == e ? t.find("tbody tr").addClass("hiprint-printElement-tableTarget-border-top") : "bottomBorder" == e ? t.find("tbody tr").addClass("hiprint-printElement-tableTarget-border-bottom") : "topBottomBorder" == e ? t.find("tbody tr").addClass("hiprint-printElement-tableTarget-border-tb") : t.find("tbody tr").removeClass();
         }
 
         return null;
       }, t.prototype.createTarget = function () {
-        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        表体行边框\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>    \n        <option value="border" >有边框</option>\n        <option value="noBorder" >无边框</option>\n        <option value="topBorder" >上边框</option>\n        <option value="bottomBorder" >下边框</option>\n        <option value="topBottomBorder" >上下边框</option>\n        </select>\n        </div>\n    </div>'), this.target;
+        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        表体行边框\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>    \n        <option value="border" >有边框</option>\n        <option value="noBorder" >无边框</option>\n        <option value="leftBorder" >左边框</option>\n        <option value="rightBorder" >右边框</option>\n        <option value="leftRightBorder" >左右边框</option>\n        <option value="topBorder" >上边框</option>\n        <option value="bottomBorder" >下边框</option>\n        <option value="topBottomBorder" >上下边框</option>\n        </select>\n        </div>\n    </div>'), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
         if (t) return t.toString();
