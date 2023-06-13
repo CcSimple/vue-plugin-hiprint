@@ -64,6 +64,26 @@
         <json-view :template="template"/>
       </a-space>
       <a-space style="margin-bottom: 10px">
+        <a-button type="primary" @click="exportPdf('')">
+          导出获取pdf(Blob)
+        </a-button>
+        <a-button type="primary" @click="exportPdf('arraybuffer')">
+          导出获取pdf(ArrayBuffer)
+        </a-button>
+        <a-button type="primary" @click="exportPdf('dataurl')">
+          导出获取pdf(DataUrl)
+        </a-button>
+        <a-button type="primary" @click="exportPdf('bloburl')">
+          导出获取pdf(BlobUrl)
+        </a-button>
+        <a-button type="primary" @click="exportPdf('dataurlstring')">
+          导出获取pdf(DataUrlString)
+        </a-button>
+        <a-button type="primary" @click="exportPdf('pdfobjectnewwindow')">
+          导出查看pdf(PdfObjectNewWindow)
+        </a-button>
+      </a-space>
+      <a-space style="margin-bottom: 10px">
         <a-button type="primary" @click="ippPrintAttr">
           ipp获取 打印机 参数情况
         </a-button>
@@ -481,7 +501,7 @@ export default {
         settingContainer: '#PrintElementOptionSetting',
         paginationContainer: '.hiprint-printPagination'
       });
-      hiprintTemplate.design('#hiprint-printTemplate',{ grid: true });
+      hiprintTemplate.design('#hiprint-printTemplate', {grid: true});
       console.log(hiprintTemplate);
       // 获取当前放大比例, 当zoom时传true 才会有
       this.scaleValue = hiprintTemplate.editingPanel.scale || 1;
@@ -622,6 +642,12 @@ export default {
       } catch (error) {
         this.$message.error(`操作失败: ${error}`);
       }
+    },
+    exportPdf(type) {
+      hiprintTemplate.toPdf(printData, '测试导出pdf', {isDownload: false, type: type}).then((res) => {
+        console.log('type:', type);
+        console.log(res);
+      });
     },
     ippPrintAttr() {
       // 不知道打印机 ipp 情况， 可通过 '客户端' 获取一下
