@@ -166,8 +166,8 @@
 
 .hiprint-printElement-tableTarget, .hiprint-printElement-tableTarget tr, .hiprint-printElement-tableTarget td {
   border-color: rgb(0, 0, 0);
-  border-style: none;
-  border: 1px solid rgb(0, 0, 0);
+  /*border-style: none;*/
+  /*border: 1px solid rgb(0, 0, 0);*/
   font-weight: normal;
   direction: ltr;
   padding-bottom: 0pt;
@@ -181,6 +181,40 @@
   word-break: break-all;
   /*line-height: 9.75pt;
   font-size: 9pt;*/
+}
+
+.hiprint-printElement-tableTarget-header-border-all {
+  border: 1px solid;
+}
+.hiprint-printElement-tableTarget-header-border-none {
+  border: 0px solid;
+}
+.hiprint-printElement-tableTarget-header-border-lr {
+  border-left: 1px solid;
+  border-right: 1px solid;
+}
+.hiprint-printElement-tableTarget-header-border-left {
+  border-left: 1px solid;
+}
+.hiprint-printElement-tableTarget-header-border-right {
+  border-right: 1px solid;
+}
+.hiprint-printElement-tableTarget-header-border-tb {
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+}
+.hiprint-printElement-tableTarget-header-border-top {
+  border-top: 1px solid;
+}
+.hiprint-printElement-tableTarget-header-border-bottom {
+  border-top: 1px solid;
+}
+
+.hiprint-printElement-tableTarget-header-border-td-none td {
+  border: 0px solid;
+}
+.hiprint-printElement-tableTarget-header-border-td-all td:not(:last-child) {
+  border-right: 1px solid;
 }
 
 /*.hiprint-printElement-tableTarget tr,*/

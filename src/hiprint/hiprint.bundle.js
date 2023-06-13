@@ -2324,15 +2324,13 @@ var hiprint = function (t) {
 
       return t.prototype.css = function (t, e) {
         if (t.find("thead tr").length) {
-          if ("border" == e || void 0 == e) return t.find("thead tr").css("border", "1px solid"), "border:1pt solid";
-          "noBorder" == e ? t.find("thead tr").css("border", "0px solid") : "topBorder" == e ? (t.find("thead tr").css("border", "0px solid"), t.find("thead tr").css("border-top", "1px solid")) : "bottomBorder" == e ? (t.find("thead tr").css("border", "0px solid"), t.find("thead tr").css("border-bottom", "1px solid")) : "topBottomBorder" == e ? (t.find("thead tr").css("border", "0px solid"), t.find("thead tr").css("border-top", "1px solid"), t.find("thead tr").css("border-bottom", "1px solid")) : t.find("thead tr").map(function (t, e) {
-            e.style.border = "";
-          });
+          if ("border" == e || void 0 == e) return t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-all");
+          "noBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-none") : "leftBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-left") : "rightBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-right") : "leftRightBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-lr") : "topBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-top") : "bottomBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-bottom") : "topBottomBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-tb") : t.find("thead tr").removeClass();
         }
 
         return null;
       }, t.prototype.createTarget = function () {
-        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        表头边框\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>    \n        <option value="border" >有边框</option>\n        <option value="noBorder" >无边框</option>\n        <option value="topBorder" >上边框</option>\n        <option value="bottomBorder" >下边框</option>\n        <option value="topBottomBorder" >上下边框</option>\n        </select>\n        </div>\n    </div>'), this.target;
+        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        表头边框\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >默认</option>    \n        <option value="border" >有边框</option>\n        <option value="noBorder" >无边框</option>\n        <option value="leftBorder" >左边框</option>\n        <option value="rightBorder" >右边框</option>\n        <option value="leftRightBorder" >左右边框</option>\n        <option value="topBorder" >上边框</option>\n        <option value="bottomBorder" >下边框</option>\n        <option value="topBottomBorder" >上下边框</option>\n        </select>\n        </div>\n    </div>'), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
         if (t) return t.toString();
@@ -2348,11 +2346,9 @@ var hiprint = function (t) {
       }
 
       return t.prototype.css = function (t, e) {
-        if (t.find("thead tr td").length) {
-          if ("border" == e || void 0 == e) return t.find("thead tr td").css("border", "1px solid"), "border:1px solid";
-          "noBorder" == e ? t.find("thead tr td").css("border", "0px solid") : t.find("thead tr td").map(function (t, e) {
-            e.style.border = "";
-          });
+        if (t.find("thead tr").length) {
+          if ("border" == e || void 0 == e) return t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-td-all");
+          "noBorder" == e ? t.find("thead tr").addClass("hiprint-printElement-tableTarget-header-border-td-none") : t.find("thead tr").removeClass();
         }
 
         return null;
