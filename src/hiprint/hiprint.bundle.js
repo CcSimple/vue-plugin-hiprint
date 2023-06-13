@@ -9567,7 +9567,7 @@ var hiprint = function (t) {
         t.map(function (t, n) {
           e.imageToBase64($(n));
         });
-      }, t.prototype.toPdf = function (t, e, n) {
+      }, t.prototype.toPdf = function (t, e, options) {
         var i = this;
         var dtd = $.Deferred();
         var isDownload = true;
@@ -9580,15 +9580,15 @@ var hiprint = function (t) {
               x: 0,
               y: 0,
               useCORS: !0
-            }, n || {}),
+            }, options || {}),
             s = new jsPDF({
               orientation: 1 == this.getOrient(0) ? "portrait" : "landscape",
               unit: "pt",
               format: this.printPanels[0].paperType ? this.printPanels[0].paperType.toLocaleLowerCase() : [r, a]
             }),
-            l = this.getHtml(t, n);
-          if (n && undefined != n.isDownload) {
-            isDownload = n.isDownload
+            l = this.getHtml(t, options);
+          if (options && undefined != options.isDownload) {
+            isDownload = options.isDownload
           }
           this.createTempContainer();
           var u = this.getTempContainer();
@@ -9605,7 +9605,8 @@ var hiprint = function (t) {
               i.removeTempContainer(), e.indexOf(".pdf") > -1 ? s.save(e) : s.save(e + ".pdf");
             } else {
               i.removeTempContainer();
-              var pdfFile = s.output('blob');
+              let type = options.type || 'blob';
+              var pdfFile = s.output(type);
               dtd.resolve(pdfFile);
             }
           });
