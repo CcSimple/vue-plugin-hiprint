@@ -267,7 +267,7 @@
 }
 
 .hiprint-text-content-middle > div {
-  display: flex;
+  display: grid;
   align-items: center;
 }
 
@@ -275,7 +275,7 @@
 }
 
 .hiprint-text-content-bottom > div {
-  display: flex;
+  display: grid;
   align-items: flex-end;
 }
 
