@@ -9342,6 +9342,7 @@ var hiprint = function (t) {
           li.siblings().removeClass('selected');
           li.addClass("selected");
         }
+		 hinnn.event.trigger("onSelectPanel", this.template.editingPanel, i, li);
       }, t;
     }(),
     ct = function () {
