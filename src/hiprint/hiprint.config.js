@@ -10,6 +10,7 @@
     adsorbMin: 3, //吸附最小距离pt
     showAdsorbLine: true, //显示吸附线
     adsorbLineMin: 6, //吸附线显示最小距离pt
+    paperNumberContinue: true, //连续打印页码
     panel: {
       supportOptions: [
         {
@@ -54,6 +55,10 @@
         },
         {
           name: 'paperNumberDisabled',
+          hidden: false
+        },
+        {
+          name: 'paperNumberContinue',
           hidden: false
         },
         {
