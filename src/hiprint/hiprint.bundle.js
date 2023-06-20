@@ -9324,9 +9324,6 @@ var hiprint = function (t) {
             n.template.addPrintPanel(t || void 0, !0), n.buildPagination();
             $('.hiprint-pagination li').removeClass('selected');
             $('.hiprint-pagination li:nth-last-child(2)').addClass('selected');
-            var i = idx || n.template.editingPanel.index;
-            var li = $('.hiprint-pagination li:nth(' + i + ')');
-	    hinnn.event.trigger("onSelectPanel", n.template.editingPanel, i, li);
           };
           if (n.template.onPanelAddClick) {
             var panel = {
