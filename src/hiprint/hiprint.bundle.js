@@ -1760,7 +1760,7 @@ var hiprint = function (t) {
       }, TableExcelHelper.tableSummaryTitle = function (column, title, data) {
         var s = column.tableSummaryTitle == undefined || column.tableSummaryTitle == true;
         return s ? `${title}` : data ? `` : `<span style="color:firebrick">${title}</span>`;
-      }, TableExcelHelper.createTableRow = function (t, e, n, i) {
+      }, TableExcelHelper.createTableRow = function (t, e, printData, n, i) {
         var h = this;
         var o = TableExcelHelper.reconsitutionTableColumnTree(t),
           r = $("<tbody></tbody>");
@@ -1778,19 +1778,20 @@ var hiprint = function (t) {
             e.find("td").append(groupFormatter(t, n)), r.append(e);
           }
           var groupFooterFormatter = h.getGroupFooterFormatter(n, i);
-          if (t.rows.forEach(function (t, rowIndex) {
-            var e = TableExcelHelper.createRowTarget(o, t, n, i, rowIndex);
+          var groupData = t;
+          if (groupData.rows.forEach(function (t, rowIndex) {
+            var e = TableExcelHelper.createRowTarget(o, t, n, i, rowIndex, groupData.rows, printData);
             r.append(e);
           }), groupFooterFormatter) {
             var a = $("<tr><td colspan=" + o.colspan + "></td></tr>");
             a.find("td").append(groupFooterFormatter(t, n)), r.append(a);
           }
         }) : e.forEach(function (t, rowIndex) {
-          var e = TableExcelHelper.createRowTarget(o, t, n, i, rowIndex);
-          r.append(e);
+          var row = TableExcelHelper.createRowTarget(o, t, n, i, rowIndex, e, printData);
+          r.append(row);
         });
         return r;
-      }, TableExcelHelper.createRowTarget = function (t, e, n, i, rowIndex) {
+      }, TableExcelHelper.createRowTarget = function (t, e, n, i, rowIndex, tableData, printData) {
         var o = $("<tr></tr>");
         var columns = t.rowColumns.filter(function (t) {
           return t.checked;
@@ -1802,7 +1803,7 @@ var hiprint = function (t) {
           var rowsColumnsMerge = ''
           if (n.rowsColumnsMerge) {
             eval('rowsColumnsMerge=' + n.rowsColumnsMerge)
-            var rowsColumnsArr = rowsColumnsMerge(e, t, i, rowIndex) || [1, 1]
+            var rowsColumnsArr = rowsColumnsMerge(e, t, i, rowIndex, tableData, printData) || [1, 1]
             var r = $(`<td style = 'display:${!(rowsColumnsArr[0] && rowsColumnsArr[1]) ? "none" : ""}' rowspan = '${rowsColumnsArr[0]}' colspan = '${rowsColumnsArr[1]}'></td>`);
           } else {
             var r = $("<td></td>");
@@ -4247,7 +4248,7 @@ var hiprint = function (t) {
       }
 
       return t.prototype.createTarget = function () {
-        return this.target = $(' <div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        行/列合并函数\n        </div>\n        <div class="hiprint-option-item-field">\n        <textarea style="height:80px;" placeholder="function(data, col, colIndex, rowIndex){ return [1,1] }" class="auto-submit"></textarea>\n        </div>\n    </div>'), this.target;
+        return this.target = $(' <div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        行/列合并函数\n        </div>\n        <div class="hiprint-option-item-field">\n        <textarea style="height:80px;" placeholder="function(data, col, colIndex, rowIndex, tableData, printData){ return [1,1] }" class="auto-submit"></textarea>\n        </div>\n    </div>'), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("textarea").val();
         if (t) return t;
@@ -4864,7 +4865,7 @@ var hiprint = function (t) {
         if (!this.getField() && this.options.content) return (n = $("<div></div>")).append(this.options.content), (i = n.find("table")).addClass("hiprint-printElement-tableTarget"), i;
         if (this.printElementType.formatter) return (n = $("<div></div>")).append(this.printElementType.formatter(t)), (i = n.find("table")).addClass("hiprint-printElement-tableTarget"), i;
         var o = $('<table class="hiprint-printElement-tableTarget" style="border-collapse: collapse;"></table>');
-        return o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableHead(this.getColumns(), this.options.getWidth() / this.options.getGridColumns())), o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableRow(this.getColumns(), t, this.options, this.printElementType)), "no" == this.options.tableFooterRepeat || _table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, t, this.options, this.printElementType, e, t).insertBefore(o.find("tbody")), o;
+        return o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableHead(this.getColumns(), this.options.getWidth() / this.options.getGridColumns())), o.append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableRow(this.getColumns(), t, e, this.options, this.printElementType)), "no" == this.options.tableFooterRepeat || _table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, t, this.options, this.printElementType, e, t).insertBefore(o.find("tbody")), o;
       }, TablePrintElement.prototype.getEmptyRowTarget = function () {
         return _table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createEmptyRowTarget(this.getColumns(), this);
       }, TablePrintElement.prototype.getHtml = function (t, e) {
