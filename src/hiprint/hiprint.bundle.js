@@ -5034,6 +5034,19 @@ var hiprint = function (t) {
           v = this.getGridColumnsFooterFormatter();
         v && n.find(this.gridColumnsFooterCss).html(v(this.options, this.getData(t), t, l));
         s = n.outerHeight();
+        // 当每一页数据,都无法容纳表格行内容时:
+        let curRow = a.find("tr:lt(1)");
+        if (m == 0 && g == curRow.data("rowData")) {
+          d.find("tbody").append(curRow);
+          let height = d.find("tbody tr").outerHeight();
+          a.prepend(curRow);
+          return {
+            target: $('<div style="position:absolute;background: red;color: white;padding: 0px 4px;">没有足够空间,显示下方内容, 可分页高度: '+ p +'px < 当前需要高度: '+ height +'px</div>').append(curRow.css("background", "blue")),
+            length: m,
+            height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
+            isEnd: !1
+          }
+        }
         // 方便调试看 值...
         var zz = 0 == a.find("tr").length ? 0 == m && r ? {
           target: void 0,
