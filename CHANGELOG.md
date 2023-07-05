@@ -4,6 +4,55 @@
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
 
+## 0.0.54 (2023-07-05)
+> 使用此版本 请更新最新的 print-lock.css
+<details>
+  <summary>01. 🌈 新增支持 文本换行参数(不换行、隐藏、省略)</summary>
+</details>
+<details>
+  <summary>02. 🌈 新增支持 多面板/批量打印 页码续排/重排 选项</summary>
+</details>
+<details>
+  <summary>03. 🌈 新增支持 多面板选中回调 onSelectPanel 使用场景：当选择回调的时候刷新相关界面设置。</summary>
+
+```javascript
+hinnn.event.clear("onSelectPanel");
+hinnn.event.on("onSelectPanel", (panel, index, li) => {
+  console.log("onSelectPanel", panel, index, li);
+});
+```
+</details>
+<details>
+  <summary>04. ✨ 调整优化 toPdf 支持导出 指定类型(blob、bloburi、dataurl等)见 demo 示例</summary>
+</details>
+<details>
+  <summary>05. ✨ 调整优化 当表格某一行数据超出最大分页高度时, 无限循环卡死问题(同时给出提示)</summary>
+</details>
+<details>
+  <summary>06. ✨ 调整优化 行/列合并函数 回调新增 tableData, printData</summary>
+</details>
+<details>
+  <summary>07. ✨ 调整优化 表格表头 边框参数</summary>
+</details>
+<details>
+  <summary>08. ✨ 调整优化 旋转角度, input类型为number</summary>
+</details>
+<details>
+  <summary>09. ✨ 调整优化 文本 上下对齐 参数(改用 grid 实现)</summary>
+</details>
+<details>
+  <summary>10. ✨ 调整优化 图片元素 显示 隐藏规则 参数</summary>
+</details>
+<details>
+  <summary>11. 🐛️ fix 缩放后 撤销/重做 再点击元素位置跳动问题</summary>
+</details>
+<details>
+  <summary>12. 🐛️ fix setConfig 参数不生效 bug</summary>
+</details>
+<details>
+  <summary>13. 🐛️ fix 聚合函数 最大/小值 显示 Infinity 问题</summary>
+</details>
+
 ## 0.0.52 (2023-05-08)
 <details>
   <summary>1. 🌈 新增支持 表格设置"每页最大行数"功能</summary>
