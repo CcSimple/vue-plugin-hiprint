@@ -56,12 +56,15 @@ export default {
       // 数据
       name: '名称',
       json: {},
-      printData: {}
+      printData: {},
+      // 扩展 css
+      extendCss: ''
     }
   },
   methods: {
     hideModal() {
       this.visible = false
+      $("link[media=print]").empty();
     },
     show(template) {
       let that = this;
@@ -71,6 +74,10 @@ export default {
       this.name = template.name
       this.json = template.json
       this.printData = template.printData
+      this.extendCss = template.extendCss || "";
+      if (this.extendCss.length > 1) {
+        $(this.extendCss).appendTo($("link[media=print]"));
+      }
       let isMounted = $('#template-preview').length <= 0 || $('#template-preview-setting').length <= 0;
       do {
         setTimeout(() => {
@@ -89,20 +96,33 @@ export default {
       } while (isMounted)
     },
     print() {
+      let that = this;
       this.waitShowPrinter = true
       this.hiprintTemplate.print(this.printData, {}, {
         callback: () => {
           this.waitShowPrinter = false
+        },
+        styleHandler: () => {
+          return that.extendCss
         }
       })
     },
     toPdf() {
-      this.hiprintTemplate.toPdf(this.printData, this.name);
+      let that = this;
+      this.hiprintTemplate.toPdf(this.printData, this.name, {
+        styleHandler: () => {
+          return that.extendCss
+        }
+      });
     },
     print2() {
       if (hiprint.hiwebSocket.opened) {
+        let that = this;
         this.hiprintTemplate.print2(this.printData, {
           printer: '', title: this.name,
+          styleHandler: () => {
+            return that.extendCss
+          }
         })
       } else
         this.$message.error('请先连接直接打印客户端')
