@@ -5036,7 +5036,7 @@ var hiprint = function (t) {
         s = n.outerHeight();
         // 当每一页数据,都无法容纳表格行内容时:
         let curRow = a.find("tr:lt(1)");
-        if (m == 0 && g == curRow.data("rowData")) {
+        if (m == 0 && curRow.length && g == curRow.data("rowData")) {
           d.find("tbody").append(curRow);
           let height = d.find("tbody tr").outerHeight();
           a.prepend(curRow);
