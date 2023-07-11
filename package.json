@@ -35,7 +35,7 @@
     "not ie <= 8"
   ],
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.5.15",
+    "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-service": "^4.5.15",
     "ant-design-vue": "^1.7.8",
     "bootstrap": "^3.3.7",
