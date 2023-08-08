@@ -2,7 +2,7 @@
  * @Author: 54xavier
  * @LastEditors: admin@54xavier.cn
  * @Date: 2023-02-28 14:00:03
- * @LastEditTime: 2023-08-05 15:13:28
+ * @LastEditTime: 2023-08-08 19:33:15
  */
 export const name = "DM码实现";
 export const desc = "通过HTML元素实现DM码";
@@ -31,8 +31,12 @@ export const json = {
             top: 0,
             height: 1,
             width: 1,
-            formatter:
-              'function(t, e, printData) {\n  var script = document.createElement("script");\n  script.setAttribute("type", "text/javascript");\n  script.setAttribute(\n    "src",\n    "https://datalog.github.io/demo/datamatrix-svg/datamatrix.min.js"\n  );\n  return script;\n}',
+            formatter: `function(t, e, printData) {
+                var script = document.createElement("script");
+                script.setAttribute("type", "text/javascript");
+                script.setAttribute("src", "https://datalog.github.io/demo/datamatrix-svg/datamatrix.min.js");
+                return script;
+            }`,
           },
           printElementType: {
             // 此元素为 DATAMatrix 依赖，此方法仅浏览器打印(print)生效，print2可能会无法加载依赖，需要手动在electron-hiprint项目中引入依赖
@@ -47,8 +51,12 @@ export const json = {
             top: 0,
             height: 1,
             width: 1,
-            formatter:
-              'function(t, e, printData) {\n  var script = document.createElement("script");\n  script.setAttribute("type", "text/javascript");\n  script.setAttribute(\n    "src",\n    "https://cdnjs.cloudflare.com/ajax/libs/bwip-js/4.0.0/bwip-js-min.js"\n  );\n  return script;\n}',
+            formatter: `function(t, e, printData) {
+                var script = document.createElement("script");
+                script.setAttribute("type", "text/javascript");
+                script.setAttribute("src", "https://cdnjs.cloudflare.com/ajax/libs/bwip-js/4.0.0/bwip-js-min.js");
+                return script;
+            }`,
           },
           printElementType: {
             // 此元素为 bwip-js 依赖，此方法仅浏览器打印(print)生效，print2可能会无法加载依赖，需要手动在electron-hiprint项目中引入依赖
@@ -63,8 +71,14 @@ export const json = {
             top: 12,
             height: 200,
             width: 200,
-            formatter:
-              'function(t, e, printData) {\n  if (window.DATAMatrix) {\n    var svgNode = DATAMatrix({msg: printData?.DMCode1 || "testData", dim: 267});\n    return svgNode;\n  } else {\n    return "<div style=\'width: 267px;height: 267px;border: 1px solid;\'>点击打印预览查看</div>";\n  }\n}',
+            formatter: `function(t, e, printData) {
+              if (window.DATAMatrix) {
+                var svgNode = DATAMatrix({msg: printData?.DMCode1 || "testData", dim: 267});
+                return svgNode;
+              } else {
+                return "<div style='width: 267px;height: 267px;border: 1px solid;'>点击打印预览查看</div>";
+              }
+            }`,
             coordinateSync: false,
             widthHeightSync: false,
           },
@@ -76,8 +90,21 @@ export const json = {
             top: 12,
             height: 200,
             width: 200,
-            formatter:
-              'function(t, e, printData) {\n  if (window.bwipjs) {\n    var canvas = document.createElement("canvas");\n    var _bwip = bwipjs.toCanvas(canvas, {\n      bcid: "datamatrix",\n      text: printData?.DMCode2 || "testData",\n      scale: 3,\n      width: 30,\n      height: 30,\n    });\n    return `<img src="${_bwip.toDataURL()}"/>`;\n  } else {\n    return "<div style=\'width: 267px;height: 267px;border: 1px solid;\'>点击打印预览查看</div>";\n  }\n}',
+            formatter: `function(t, e, printData) {
+              if (window.bwipjs) {
+                var canvas = document.createElement("canvas");
+                var _bwip = bwipjs.toCanvas(canvas, {
+                  bcid: "datamatrix",
+                  text: printData?.DMCode2 || "testData",
+                  scale: 3,
+                  width: 30,
+                  height: 30,
+                });
+                return \`<img src="\${_bwip.toDataURL()}" />\`;
+              } else {
+                return "<div style='width: 267px;height: 267px;border: 1px solid;'>点击打印预览查看</div>";
+              }
+            }`,
             right: 566.24609375,
             bottom: 221.24609375,
             vCenter: 466.24609375,
@@ -122,6 +149,17 @@ export const json = {
             qrCodeLevel: 0,
           },
           printElementType: { title: "自定义文本", type: "text" },
+        },
+        {
+          options: {
+            left: 12,
+            top: 230,
+            height: 12,
+            width: 418,
+            title:
+              "说明：此处模版以不可见 html 元素加载 datamatrix-svg 及 bwip-js ，故第一次打开无法显示预览，但后续的 print api 能够正常显示，你可以在你的项目中全局加载所需依赖，保证设计、预览时能加载到，即可删除用于引入依赖的html元素。使用 print2 需要在 electron-hiprint 项目渲染层中添加该依赖，否则客户端首次打印都无法正常渲染对应的元素",
+          },
+          printElementType: { title: "说明", type: "text" },
         },
       ],
       paperNumberLeft: 565.5,
