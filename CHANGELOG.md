@@ -4,6 +4,12 @@
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
 
+## 0.0.55-beta3(2023-08-16)
+<details>
+  <summary>01. 🌈 新增 条形码、二维码独立元素，使用 bwip-js 库生成 svg </summary>
+解决原 text 元素中的条形码、二维码 类型不全，生成条码、二维码不清晰的问题
+</details>
+
 ## 0.0.54 (2023-07-05)
 > 使用此版本 请更新最新的 print-lock.css
 <details>

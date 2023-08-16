@@ -42,6 +42,7 @@ import "@claviska/jquery-minicolors/jquery.minicolors.min";
 import JsBarcode from "jsbarcode";
 // 二维码
 import "./plugins/qrcode.js";
+import bwipjs from "bwip-js"
 // 水印
 import watermark from "./plugins/watermark.js";
 // 直接打印需要
@@ -288,6 +289,7 @@ var hiprint = function (t) {
     if (t) try {
       var o = "string" == typeof t ? new Date(t) : t;
       var n = {
+        "y+": o.getFullYear(),
         "M+": o.getMonth() + 1,
         "d+": o.getDate(),
         "H+": o.getHours(),
@@ -513,6 +515,9 @@ var hiprint = function (t) {
 
     return t.prototype.setDefault = function (t) {
       this.defaultOptions = t, this.initSize();
+      Object.keys(this.defaultOptions).forEach(key => {
+        this[key] = this[key] || this.defaultOptions[key];
+      })
     }, t.prototype.initSize = function () {
       this.width || this.setWidth(this.defaultOptions.width), this.height || this.setHeight(this.defaultOptions.height);
     }, t.prototype.initSizeByHtml = function (t, e) {
@@ -2606,6 +2611,512 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
+    barcodeType = function() {
+      function t() {
+        this.name = "barcodeType"
+      }
+
+      return t.prototype.createTarget = function () {
+        var options = [{
+          label: "默认(Code 128)",
+          value: "",
+        },
+        {
+          label: "商品条码",
+          children: [
+            {
+              label: "EAN-13",
+              value: "ean13",
+            },
+            {
+              label: "EAN-8",
+              value: "ean8",
+            },
+            {
+              label: "UPC-A",
+              value: "upca",
+            },
+            {
+              label: "UPC-E",
+              value: "upce",
+            },
+            {
+              label: "ISBN",
+              value: "isbn",
+            },
+            {
+              label: "ISMN",
+              value: "ismn",
+            },
+            {
+              label: "ISSN",
+              value: "issn",
+            },
+          ],
+        },
+        {
+          label: "条形码",
+          children: [
+            {
+              label: "Code 39",
+              value: "code39",
+            },
+            {
+              label: "Code 39 Extended",
+              value: "code39ext",
+            },
+            {
+              label: "Code 93",
+              value: "code93",
+            },
+            {
+              label: "Code 93 Extended",
+              value: "code93ext",
+            },
+            {
+              label: "Code 128",
+              value: "code128",
+            },
+            {
+              label: "Interleaved 2 of 5 (ITF)",
+              value: "interleaved2of5",
+            },
+          ],
+        },
+        {
+          label: "物流",
+          children: [
+            {
+              label: "EAN-14",
+              value: "ean14",
+            },
+            {
+              label: "GS1-128",
+              value: "gs1-128",
+            },
+            {
+              label: "ITF-14",
+              value: "itf14",
+            },
+            {
+              label: "SSCC-18",
+              value: "sscc18",
+            },
+          ],
+        },
+        {
+          label: "GS1 DataBar",
+          children: [
+            {
+              label: "扩展式 GS1 DataBar",
+              value: "databarexpanded",
+            },
+            {
+              label: "层排扩展式 GS1 DataBar",
+              value: "databarexpandedstacked",
+            },
+            {
+              label: "限定式 GS1 DataBar",
+              value: "databarlimited",
+            },
+            {
+              label: "全向式 GS1 DataBar",
+              value: "databaromni",
+            },
+            {
+              label: "层排式 GS1 DataBar",
+              value: "databarstacked",
+            },
+            {
+              label: "全向层排式 GS1 DataBar",
+              value: "databarstackedomni",
+            },
+            {
+              label: "截短式 GS1 DataBar",
+              value: "databartruncated",
+            },
+            {
+              label: "GS1 北美优惠券码",
+              value: "gs1northamericancoupon",
+            },
+          ],
+        },
+        {
+          label: "邮政和快递编码",
+          children: [
+            {
+              label: "AusPost 4 State Customer Code",
+              value: "auspost",
+            },
+            {
+              label: "Deutsche Post Identcode",
+              value: "identcode",
+            },
+            {
+              label: "Deutsche Post Leitcode",
+              value: "leitcode",
+            },
+            {
+              label: "Japan Post 4 State Customer Code",
+              value: "japanpost",
+            },
+            {
+              label: "Royal TNT Post",
+              value: "kix",
+            },
+            {
+              label: "Royal Mail 4 State Customer Code",
+              value: "royalmail",
+            },
+            {
+              label: "Royal Mail Mailmark",
+              value: "mailmark",
+            },
+            {
+              label: "MaxiCode",
+              value: "maxicode",
+            },
+            {
+              label: "USPS FIM symbols",
+              value: "symbol",
+            },
+            {
+              label: "USPS Intelligent Mail",
+              value: "onecode",
+            },
+            {
+              label: "USPS PLANET",
+              value: "planet",
+            },
+            {
+              label: "USPS POSTNET",
+              value: "postnet",
+            },
+          ],
+        },
+        {
+          label: "医疗产品编码",
+          children: [
+            {
+              label: "Italian Pharmacode",
+              value: "code32",
+            },
+            {
+              label: "Pharmaceutical Binary Code",
+              value: "pharmacode",
+            },
+            {
+              label: "Pharmazentralnummer (PZN)",
+              value: "pzn",
+            },
+            {
+              label: "Two-track Pharmacode",
+              value: "pharmacode2",
+            },
+            {
+              label: "HIBC Aztec Code",
+              value: "hibcazteccode",
+            },
+            {
+              label: "HIBC Codablock F",
+              value: "hibccodablockf",
+            },
+            {
+              label: "HIBC Code 128",
+              value: "hibccode128",
+            },
+            {
+              label: "HIBC Code 39",
+              value: "hibccode39",
+            },
+          ],
+        },
+        {
+          label: "不常用编码",
+          children: [
+            {
+              label: "Code 11",
+              value: "code11",
+            },
+            {
+              label: "Code 16K",
+              value: "code16k",
+            },
+            {
+              label: "Code 2 of 5",
+              value: "code2of5",
+            },
+            {
+              label: "Code 49",
+              value: "code49",
+            },
+            {
+              label: "Code One",
+              value: "codeone",
+            },
+            {
+              label: "Codabar",
+              value: "rationalizedCodabar",
+            },
+            {
+              label: "Codablock F",
+              value: "codablockf",
+            },
+            {
+              label: "BC412",
+              value: "bc412",
+            },
+            {
+              label: "COOP 2 of 5",
+              value: "coop2of5",
+            },
+            {
+              label: "Channel Code",
+              value: "channelcode",
+            },
+            {
+              label: "Datalogic 2 of 5",
+              value: "datalogic2of5",
+            },
+            {
+              label: "DotCode",
+              value: "dotcode",
+            },
+            {
+              label: "IATA 2 of 5",
+              value: "iata2of5",
+            },
+            {
+              label: "MSI Plessey",
+              value: "msi",
+            },
+            {
+              label: "Matrix 2 of 5",
+              value: "matrix2of5",
+            },
+            {
+              label: "Plessey UK",
+              value: "plessey",
+            },
+            {
+              label: "PosiCode",
+              value: "posicode",
+            },
+            {
+              label: "Telepen",
+              value: "telepen",
+            },
+            {
+              label: "Telepen Numeric",
+              value: "telepennumeric",
+            },
+          ],
+        },
+        {
+          label: "GS1 复合编码",
+          children: [
+            {
+              label: "复合 EAN-13",
+              value: "ean13composite",
+            },
+            {
+              label: "复合 EAN-8",
+              value: "ean8composite",
+            },
+            {
+              label: "复合 UPC-A",
+              value: "upcacomposite",
+            },
+            {
+              label: "复合 UPC-E",
+              value: "upcecomposite",
+            },
+            {
+              label: "层排扩展式复合 GS1 DataBar",
+              value: "databarexpandedstackedcomposite",
+            },
+            {
+              label: "扩展式复合 GS1 DataBar",
+              value: "databarexpandedcomposite",
+            },
+            {
+              label: "限定式复合 GS1 DataBar",
+              value: "databarlimitedcomposite",
+            },
+            {
+              label: "全向式复合 GS1 DataBar",
+              value: "databaromnicomposite",
+            },
+            {
+              label: "层排式复合 GS1 DataBar",
+              value: "databarstackedcomposite",
+            },
+            {
+              label: "全向层排式复合 GS1 DataBar",
+              value: "databarstackedomnicomposite",
+            },
+            {
+              label: "截短式复合 GS1 DataBar",
+              value: "databartruncatedcomposite",
+            },
+            {
+              label: "复合 GS1-128",
+              value: "gs1-128composite",
+            },
+          ],
+        },
+        {
+          label: "附加组件",
+          children: [
+            {
+              label: "EAN-2 (2 位附加码)",
+              value: "ean2",
+            },
+            {
+              label: "EAN-5 (5 位附加码)",
+              value: "ean5",
+            },
+            {
+              label: "GS1 复合 2D 组件",
+              value: "gs1-cc",
+            },
+          ],
+        },
+        {
+          label: "实验编码",
+          children: [
+            {
+              label: "Raw",
+              value: "raw",
+            },
+            {
+              label: "Custom 4 state symbology",
+              value: "daft",
+            },
+            {
+              label: "Flattermarken",
+              value: "flattermarken",
+            },
+          ],
+        }]
+        this.target = $(`<div class="hiprint-option-item hiprint-option-item-row"><div class="hiprint-option-item-label">条码类型</div><div class="hiprint-option-item-field"><select class="auto-submit"></select></div></div>`)
+        var select = this.target.find('select.auto-submit')
+        options.forEach(item => {
+          if (item.children) {
+            var optgroup = $(`<optgroup label="${item.label}"></optgroup`)
+            item.children.forEach(chil => {
+              optgroup.append($(`<option value="${chil.value}">${chil.label}</option>`))
+            })
+            select.append(optgroup)
+          } else {
+            select.append(`<option value="${item.value}">${item.label}</option>`)
+          }
+        })
+        return this.target
+      }, t.prototype.getValue = function () {
+        return this.target.find("select").val() || void 0;
+      }, t.prototype.setValue = function (t) {
+        this.target.find("select").val(t);
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
+    qrcodeType = function() {
+      function t() {
+        this.name = "qrcodeType"
+      }
+
+      return t.prototype.createTarget = function () {
+        var options = [{
+          label: "默认(qrcode)",
+          value: "",
+        },
+        {
+          label: "QR Code",
+          value: "qrcode",
+        },
+        {
+          label: "Micro QR Code",
+          value: "microqrcode",
+        },
+        {
+          label: "Swiss QR Code",
+          value: "swissqrcode",
+        },
+        {
+          label: "Rectangular Micro QR Code",
+          value: "rectangularmicroqrcode",
+        },
+        {
+          label: "Aztec Code",
+          value: "azteccode",
+        },
+        {
+          label: "Aztec Runes",
+          value: "aztecrune",
+        },
+        {
+          label: "Compact Aztec Code",
+          value: "azteccodecompact",
+        },
+        {
+          label: "Data Matrix",
+          value: "datamatrix",
+        },
+        {
+          label: "Data Matrix Rectangular",
+          value: "datamatrixrectangular",
+        },
+        {
+          label: "汉信码",
+          value: "hanxin",
+        },
+        {
+          label: "GS1 Data Matrix",
+          value: "gs1datamatrix",
+        },
+        {
+          label: "GS1 Data Matrix Rectangular",
+          value: "gs1datamatrixrectangular",
+        },
+        {
+          label: "GS1 QR Code",
+          value: "gs1qrcode",
+        },
+        {
+          label: "HIBC Data Matrix",
+          value: "hibcdatamatrix",
+        },
+        {
+          label: "HIBC Data Matrix Rectangular",
+          value: "hibcdatamatrixrectangular",
+        },
+        {
+          label: "HIBC MicroPDF417",
+          value: "hibcmicropdf417",
+        },
+        {
+          label: "HIBC PDF417",
+          value: "hibcpdf417",
+        },
+        {
+          label: "HIBC QR Code",
+          value: "hibcqrcode",
+        }]
+        this.target = $(`<div class="hiprint-option-item hiprint-option-item-row"><div class="hiprint-option-item-label">二维码类型</div><div class="hiprint-option-item-field"><select class="auto-submit"></select></div></div>`)
+        var select = this.target.find('select.auto-submit')
+        options.forEach(item => {
+          select.append(`<option value="${item.value}">${item.label}</option>`)
+        })
+        return this.target
+      }, t.prototype.getValue = function () {
+        return this.target.find("select").val() || void 0;
+      }, t.prototype.setValue = function (t) {
+        this.target.find("select").val(t);
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
     qrCodeLevel = function () {
       function t() {
         this.name = "qrCodeLevel";
@@ -4546,7 +5057,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new paperNumberContinue(), new watermarkOptions(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(),new textWrap(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new rowsColumnsMergeClean(), new groupFieldsFormatter(), new groupFormatter(), new groupFooterFormatter(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new stylerHeader(), new renderFormatter(), new _t(), new wt(), new maxRows(), new xt(), new tableColumnH(), new tableE(), new tableQRCodeLevel(), new tablept(), new tableSummaryTitle(), new tableSummaryText(), new tableSummaryColspan(), new tableSummary(), new tableSummaryAlign(), new tableSummaryNumFormat(), new upperCase()], t;
+    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new paperNumberContinue(), new watermarkOptions(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(),new textWrap(), new at(), new lt(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new rowsColumnsMergeClean(), new groupFieldsFormatter(), new groupFormatter(), new groupFooterFormatter(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new stylerHeader(), new renderFormatter(), new _t(), new wt(), new maxRows(), new xt(), new tableColumnH(), new tableE(), new tableQRCodeLevel(), new tablept(), new tableSummaryTitle(), new tableSummaryText(), new tableSummaryColspan(), new tableSummary(), new tableSummaryAlign(), new tableSummaryNumFormat(), new upperCase(), new barcodeType(), new qrcodeType()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -8042,7 +8553,6 @@ var hiprint = function (t) {
             if (n.length > 0) return !0 === e || "true" === e ? n[0] : n[1];
           }
         }
-
         return e;
       }, e.prototype.updateTargetText = function (t, e, n, i, rowIndex) {
         var r = this.getFormatter(),
@@ -8356,12 +8866,112 @@ var hiprint = function (t) {
         return this.getHtml2(t, e, n);
       }, e;
     }(f.a),
+    barcode = function(t) {
+      function e(e, n) {
+        var i = t.call(this, e) || this;
+        return i.options = new g.a(n), i.options.setDefault(new g.a(p.a.instance.barcode.default).getPrintElementOptionEntity()), i;
+      }
+      return N(e, t), e.prototype.updateDesignViewFromOptions = function () {
+        if (this.designTarget) {
+          var t = this.getData();
+          this.css(this.designTarget, t), this.initBarcode(this.designTarget, this.getTitle(), this.getData());
+        }
+      }, e.prototype.getConfigOptions = function () {
+        return p.a.instance.barcode;
+      }, e.prototype.onResize = function (e, n, i, o, r) {
+        t.prototype.onResize.call(this, e, n, i, o, r);
+        this.initBarcode(this.designTarget, this.getTitle(), this.getData())
+      }, e.prototype.getTitle = function () {
+        return this.options.title || this.printElementType.title;
+      }, e.prototype.getData = function (t) {
+        var e = void 0;
+        var f = this.getField();
+        e = t ? f ? f.split('.').reduce((a, c) => a ? a[c] : t ? t[c] : "", !1) || "" : "" : this.options.testData || this.printElementType.getData() || ""
+        return e;
+      }, e.prototype.initBarcode = function (designTarget, title, text) {
+        designTarget = designTarget || this.designTarget
+        var content = designTarget.find('.hiprint-printElement-barcode-content')
+        try {
+          var barcode = bwipjs.toSVG({
+            bcid: this.options.barcodeType || 'code128',
+            text: text || this.options.testData || this.options.title,
+            scale: 1,
+            width: parseInt(o.a.pt.toPx(this.options.getWidth()) / 2.835),
+            height: parseInt(o.a.pt.toPx(this.options.getHeight()) / 2.835),
+            includetext: false
+          })
+          content.html($(barcode))
+          if (!this.options.hideTitle) {
+            content.append($(`<div class="hiprint-printElement-barcode-content-title" style="text-align: center">${ title ? title + ( text ? ":" : '' ) : "" }${ text }</div>`))
+          }
+        } catch (error) {
+          console.error(error)
+          content.html($('<div>条形码生成失败</div>'))
+        }
+      }, e.prototype.createTarget = function (title, data) {
+        var designTarget = $('<div class="hiprint-printElement hiprint-printElement-barcode" style="position: absolute;"><div class="hiprint-printElement-barcode-content" style="height:100%;width:100%"></div></div>');
+        this.initBarcode(designTarget, title, data);
+        return designTarget;
+      }, e.prototype.getHtml = function (t, e, n) {
+        return this.getHtml2(t, e, n)
+      }, e;
+    }(f.a),
+    qrcode = function(t) {
+      function e(e, n) {
+        var i = t.call(this, e) || this;
+        return i.options = new g.a(n), i.options.setDefault(new g.a(p.a.instance.qrcode.default).getPrintElementOptionEntity()), i;
+      }
+      return N(e, t), e.prototype.updateDesignViewFromOptions = function () {
+        if (this.designTarget) {
+          var t = this.getData();
+          this.css(this.designTarget, t), this.initQrcode(this.designTarget, this.getTitle(), this.getData());
+        }
+      }, e.prototype.getConfigOptions = function () {
+        return p.a.instance.qrcode;
+      }, e.prototype.onResize = function (e, n, i, o, r) {
+        t.prototype.onResize.call(this, e, n, i, o, r);
+        this.initQrcode(this.designTarget, this.getTitle(), this.getData())
+      }, e.prototype.getTitle = function () {
+        return this.options.title || this.printElementType.title;
+      }, e.prototype.getData = function (t) {
+        var e = void 0;
+        var f = this.getField();
+        e = t ? f ? f.split('.').reduce((a, c) => a ? a[c] : t ? t[c] : "", !1) || "" : "" : this.options.testData || this.printElementType.getData() || ""
+        return e;
+      }, e.prototype.initQrcode = function (designTarget, title, text) {
+        designTarget = designTarget || this.designTarget
+        var content = designTarget.find('.hiprint-printElement-qrcode-content')
+        try {
+          var qrcode = bwipjs.toSVG({
+            bcid: this.options.qrcodeType || 'qrcode',
+            text: text || this.options.testData || this.options.title,
+            scale: 1,
+            width: parseInt(o.a.pt.toPx(this.options.getWidth()) / 2.835),
+            height: parseInt(o.a.pt.toPx(this.options.getHeight()) / 2.835),
+            includetext: false
+          })
+          content.html($(qrcode))
+          if (!this.options.hideTitle) {
+            content.append($(`<div class="hiprint-printElement-qrcode-content-title" style="text-align: center">${ title ? title + ( text ? ":" : '' ) : "" }${ text }</div>`))
+          }
+        } catch (error) {
+          console.error(error)
+          content.html($('<div>二维码生成失败</div>'))
+        }
+      }, e.prototype.createTarget = function (title, data) {
+        var designTarget = $('<div class="hiprint-printElement hiprint-printElement-qrcode" style="position: absolute;"><div class="hiprint-printElement-qrcode-content" style="height:100%;width:100%"></div></div>');
+        this.initQrcode(designTarget, title, data);
+        return designTarget;
+      }, e.prototype.getHtml = function (t, e, n) {
+        return this.getHtml2(t, e, n)
+      }, e;
+    }(f.a),
     W = function () {
       function t() {
       }
 
       return t.createPrintElement = function (t, e) {
-        return "text" == t.type ? new D(t, e) : "image" == t.type ? new v(t, e) : "longText" == t.type ? new w(t, e) : "table" == t.type ? new d.a(t, e) : "html" == t.type ? new S(t, e) : "vline" == t.type ? new F(t, e) : "hline" == t.type ? new A(t, e) : "rect" == t.type ? new k(t, e) : "oval" == t.type ? new V(t, e) : void 0;
+        return "text" == t.type ? new D(t, e) : "image" == t.type ? new v(t, e) : "longText" == t.type ? new w(t, e) : "table" == t.type ? new d.a(t, e) : "html" == t.type ? new S(t, e) : "vline" == t.type ? new F(t, e) : "hline" == t.type ? new A(t, e) : "rect" == t.type ? new k(t, e) : "oval" == t.type ? new V(t, e) : "barcode" == t.type ? new barcode(t, e) : "qrcode" == t.type ? new qrcode(t, e) : void 0;
       }, t;
     }(),
     j = function () {

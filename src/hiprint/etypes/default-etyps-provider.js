@@ -132,6 +132,16 @@ export default function (hiprint) {
             tid: "defaultModule.oval",
             title: "椭圆",
             type: "oval"
+          },
+          {
+            tid: 'defaultModule.barcode',
+            title: '条形码',
+            type: 'barcode',
+          },
+          {
+            tid: 'defaultModule.qrcode',
+            title: '二维码',
+            type: 'qrcode',
           }
         ])
       ]);

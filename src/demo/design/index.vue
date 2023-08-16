@@ -258,6 +258,24 @@
                   </div>
                 </a-col>
               </a-row>
+              <a-row style="height: 100px;">
+                <a-col :span="12" class="drag_item_box">
+                  <div>
+                    <a class="ep-draggable-item" tid="defaultModule.barcode">
+                      <span class="glyphicon glyphicon-barcode" aria-hidden="true"></span>
+                      <p class="glyphicon-class">条形码</p>
+                    </a>
+                  </div>
+                </a-col>
+                <a-col :span="12" class="drag_item_box">
+                  <div>
+                    <a class="ep-draggable-item" tid="defaultModule.qrcode">
+                      <span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span>
+                      <p class="glyphicon-class">二维码</p>
+                    </a>
+                  </div>
+                </a-col>
+              </a-row>
             </a-col>
           </a-row>
         </a-card>
