@@ -213,6 +213,16 @@ export const aProvider = function (ops) {
             tid: 'aProviderModule.oval',
             title: '椭圆',
             type: 'oval'
+          },
+          {
+            tid: 'aProviderModule.barcode',
+            title: '条形码',
+            type: 'barcode',
+          },
+          {
+            tid: 'aProviderModule.qrcode',
+            title: '二维码',
+            type: 'qrcode',
           }
         ])
       ]

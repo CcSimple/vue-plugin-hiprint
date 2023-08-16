@@ -83,7 +83,7 @@ export default {
     }, {
       "options": {
         "left": 60,
-        "top": 132,
+        "top": 110,
         "height": 19,
         "width": 213,
         "title": "所有打印元素都可已拖拽的方式来改变元素大小",
@@ -91,6 +91,34 @@ export default {
         "textAlign": "center",
         "lineHeight": 18
       }, "printElementType": {"title": "自定义文本", "type": "text"}
+    }, {
+      "options": {
+        "left": 60,
+        "top": 130,
+        "height": 40,
+        "width": 40,
+        "title": "qrcode",
+        "field": "qrcode",
+        "testData": "qrcode",
+      },
+      "printElementType": {
+        "title": "二维码",
+        "type": "qrcode",
+      }
+    }, {
+      "options": {
+        "left": 160,
+        "top": 130,
+        "height": 40,
+        "width": 80,
+        "title": "barcode",
+        "field": "barcode",
+        "testData": "barcode",
+      },
+      "printElementType": {
+        "title": "条形码",
+        "type": "barcode",
+      }
     }, {
       "options": {
         "left": 153,
