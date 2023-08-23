@@ -7472,6 +7472,7 @@ var hiprint = function (t) {
 
       var t = this;
       window.WebSocket ? this.socket || (this.socket = window.io(this.host, {
+	transports: ['websocket'],
         reconnectionAttempts: 5
       }), this.socket.on("connect", function (e) {
         t.opened = !0, console.log("Websocket opened."), _this.socket.on("successs", function (t) {
