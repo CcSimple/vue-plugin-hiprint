@@ -4,6 +4,37 @@
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
 
+## 0.0.55-beta5(2023-09-06)
+<details>
+  <summary>01. ✨ 调整优化 与打印服务链接添加 token 可选项</summary>
+该功能需要 v1.0.7 之后的 <a href="https://gitee.com/CcSimple/electron-hiprint/releases">客户端(electron-hiprint)</a> 配合使用
+
+```js
+// 无需自定义 token
+hiprint.hiwebSocket.setHost('http://localhost:17521',(connected, e) => {
+  console.log('connected', connected);
+  console.log('e', e);
+})
+
+// 添加自定义 token
+hiprint.hiwebSocket.setHost('http://localhost:17521', 'token',(connected, e) => {
+  console.log('connected', connected);
+  console.log('e', e);
+})
+```
+</details>
+<details>
+  <summary>02. ✨ 调整优化 hiprint.init 初始化 可以传入 host 、token</summary>
+
+```js
+hiprint.init({
+  providers: [provider.f],
+  host: 'http://localhost:17521', // 可在此处设置连接地址与端口号
+  token: 'token' // 可在此处设置连接 token
+});
+```
+</details>
+
 ## 0.0.55-beta3(2023-08-16)
 <details>
   <summary>01. 🌈 新增 条形码、二维码独立元素，使用 bwip-js 库生成 svg </summary>

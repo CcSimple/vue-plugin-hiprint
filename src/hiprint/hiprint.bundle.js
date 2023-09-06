@@ -53,6 +53,7 @@ import vImg from "./css/image/v_img.svg";
 // pdf
 import {jsPDF} from "jspdf";
 import html2canvas from "html2canvas";
+// 数字转中文,大写,金额
 import Nzh from "nzh/dist/nzh.min.js"
 // 解析svg 到 canvas, 二维码条形码需要
 import Canvg from 'canvg';
@@ -7415,6 +7416,7 @@ var hiprint = function (t) {
     opened: !1,
     name: "webSockets",
     host: "http://localhost:17521",
+    token: null,
     reconnectTimeout: 6e4,
     reconnectWindowSetTimeout: null,
     reconnectDelay: 2e3,
@@ -7462,8 +7464,13 @@ var hiprint = function (t) {
         console.log("ippRequest error:" + JSON.stringify(e));
       }
     },
-    setHost: function (host, cb) {
+    setHost: function (host, token, cb) {
+      if (typeof token === "function") {
+        cb = token
+        token = undefined
+      }
       this.host = host
+      this.token = token
       this.stop()
       this.start(cb)
     },
@@ -7472,8 +7479,11 @@ var hiprint = function (t) {
 
       var t = this;
       window.WebSocket ? this.socket || (this.socket = window.io(this.host, {
-	transports: ['websocket'],
-        reconnectionAttempts: 5
+        transports: ['websocket'],
+        reconnectionAttempts: 5,
+        auth: {
+          token: this.token
+        }
       }), this.socket.on("connect", function (e) {
         t.opened = !0, console.log("Websocket opened."), _this.socket.on("successs", function (t) {
           hinnn.event.trigger("printSuccess_" + t.templateId, t);
@@ -7492,6 +7502,9 @@ var hiprint = function (t) {
           hinnn.event.trigger("ippRequestCallback", {'err': err, 'res': res});
         }), t.state = n;
         cb && cb(true, e);
+      }), this.socket.on("connect_error", function (e) {
+        console.error(e)
+        hinnn.event.trigger("connect_error", e)
       }), this.socket.on("disconnect", function () {
         t.opened = !1;
         cb && cb(false);
@@ -10557,6 +10570,12 @@ var hiprint = function (t) {
     p.a.instance.init(t), p.a.instance.providers && p.a.instance.providers.forEach(function (t) {
       t.addElementTypes(a.instance);
     });
+    if (p.a.instance.host != hiwebSocket.host || p.a.instance.token != hiwebSocket.token) {
+      hiwebSocket.stop()
+      p.a.instance.host && (hiwebSocket.host = p.a.instance.host);
+      p.a.instance.token && (hiwebSocket.token = p.a.instance.token);
+      hiwebSocket.start()
+    }
   }
 
   function cig(t) {
