@@ -4,6 +4,20 @@
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
 
+## 0.0.55-beta6(2023-09-11)
+<details>
+  <summary>01. 🌈 添加国际化支持，目前已支持 英语(机翻待订正)，更多语言期待大家的 pr </summary>
+
+```js
+hiprint.init({
+  providers: [provider.f],
+  host: 'http://localhost:17521', // 可在此处设置连接地址与端口号
+  token: 'token', // 可在此处设置连接 token
+  lang: 'en', // 设置语言 ['cn', 'en'] TODO: ['de', 'es', 'fr', 'ja', 'ko', 'ru']
+});
+```
+</details>
+
 ## 0.0.55-beta5(2023-09-06)
 <details>
   <summary>01. ✨ 调整优化 与打印服务链接添加 token 可选项</summary>
