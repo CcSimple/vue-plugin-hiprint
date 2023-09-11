@@ -38,8 +38,6 @@ function _typeof(obj) {
 import $ from "jquery";
 // js颜色选择
 import "@claviska/jquery-minicolors/jquery.minicolors.min";
-// i18n
-import { I18n } from "i18n";
 // 条形码
 import JsBarcode from "jsbarcode";
 // 二维码
@@ -66,13 +64,35 @@ window.$ = window.jQuery = $;
 window.autoConnect = true;
 window.io = io;
 
-const i18n = new I18n({
-  staticCatalog: {
-    cn: require('../i18n/cn.json'),
-    en: require('../i18n/en.json'),
-  },
-  defaultLocale: 'cn'
+var languages = {}
+const ctx = require.context("../i18n", true, /\.json$/);
+ctx.keys().forEach(key => {
+  languages[key.match(/\.\/([^.]+)/)[1]] = ctx(key)
 })
+
+var i18n = {
+  lang: 'cn',
+  languages,
+  __: function(key, params) {
+    var str = this.languages[this.lang][key]
+    if (params && params instanceof Object) {
+      Object.keys(params).forEach(key => {
+        str = str.replace(new RegExp(`{{${key}}}`, 'g'), params[key])
+      })
+      return str
+    } else if (params) {
+      str= str.replace(/%s/g, params)
+      return str
+    } else {
+      return str
+    }
+  },
+  __n: function(key, val) {
+    var str = this.languages[this.lang][key]
+    str = str.replace(/%s/g, val)
+    return str
+  },
+}
 
 var hiprint = function (t) {
   var e = {};
@@ -2588,7 +2608,7 @@ var hiprint = function (t) {
 
       return t.prototype.createTarget = function (t) {
         var name = ['hline', 'vline', 'rect', 'oval'].includes(t.printElementType.type) ? `${i18n.__('线宽')}` : `${i18n.__('边框大小')}`;
-        return this.target = $(`<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        ' + name + '\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >${i18n.__('默认')}</option>\n        <option value="0.75" >0.75pt</option>\n        <option value="1.5" >1.5pt</option>\n        <option value="2.25" >2.25pt</option>\n        <option value="3" >3pt</option>\n        <option value="3.75" >3.75pt</option>\n        <option value="4.5" >4.5pt</option>\n        <option value="5.25" >5.25pt</option>\n        <option value="6" >6pt</option>\n        <option value="6.75" >6.75pt</option>\n        </select>\n        </div>\n    </div>`), this.target;
+        return this.target = $(`<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        ${name}\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >${i18n.__('默认')}</option>\n        <option value="0.75" >0.75pt</option>\n        <option value="1.5" >1.5pt</option>\n        <option value="2.25" >2.25pt</option>\n        <option value="3" >3pt</option>\n        <option value="3.75" >3.75pt</option>\n        <option value="4.5" >4.5pt</option>\n        <option value="5.25" >5.25pt</option>\n        <option value="6" >6pt</option>\n        <option value="6.75" >6.75pt</option>\n        </select>\n        </div>\n    </div>`), this.target;
       }, t.prototype.css = function (t, e) {
         if (t && t.length) {
           if (e) return t.css("border-width", e + "pt"), "border-width:" + e + "pt";
@@ -3496,7 +3516,7 @@ var hiprint = function (t) {
         return null;
       }, t.prototype.createTarget = function (t) {
         var name = ['hline', 'vline', 'rect', 'oval'].includes(t.printElementType.type) ? `${i18n.__('颜色')}` : `${i18n.__('边框颜色')}`;
-        return this.target = $(' <div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        ' + name + '\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="text" class="auto-submit" />\n        </div>\n    </div>'), this.target;
+        return this.target = $(`<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        ${name}\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="text" class="auto-submit" />\n        </div>\n    </div>`), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("input").val();
         if (t) return t.toString();
@@ -4171,7 +4191,7 @@ var hiprint = function (t) {
         return null;
       }, t.prototype.createTarget = function (t) {
         var name = ['hline', 'vline', 'rect', 'oval'].includes(t.printElementType.type) ? `${i18n.__('样式')}` : `${i18n.__('边框样式')}`;
-        return this.target = $(`<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n       ' + name + '\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n            <option value="" >${i18n.__('默认')}</option>\n            <option value="solid" >${i18n.__('实线')}</option>\n            <option value="dashed" >${i18n.__('长虚线')}</option>\n            <option value="dotted" >${i18n.__('短虚线')}</option>\n        </select>\n        </div>\n    </div>`), this.target;
+        return this.target = $(`<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n       ${name}\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n            <option value="" >${i18n.__('默认')}</option>\n            <option value="solid" >${i18n.__('实线')}</option>\n            <option value="dashed" >${i18n.__('长虚线')}</option>\n            <option value="dotted" >${i18n.__('短虚线')}</option>\n        </select>\n        </div>\n    </div>`), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("select").val();
         if (t) return t;
@@ -10586,10 +10606,10 @@ var hiprint = function (t) {
       p.a.instance.token && (hiwebSocket.token = p.a.instance.token);
       hiwebSocket.start()
     }
-    if (p.a.instance.lang && ['cn', 'en'].includes(p.a.instance.lang)) {
-      i18n.setLocale(p.a.instance.lang)
+    if (p.a.instance.lang && Object.keys(languages).includes(p.a.instance.lang)) {
+      i18n.lang = p.a.instance.lang;
     } else {
-      i18n.setLocale('cn')
+      i18n.lang = 'cn'
     }
   }
 
