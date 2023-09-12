@@ -1743,7 +1743,7 @@ var hiprint = function (t) {
             switch (column.tableSummary) {
             case "count":
               var title = tst(column, text || `${i18n.__('计数')}:`, o);
-              var count = toUpperCase(upperCaseType,tSumData.length || 0);
+              var count = toUpperCase(upperCaseType,tSumData.filter(i => i).length || 0);
               tableFooter.append(`<td style="${style}" colspan="${colspan}">${title}${count}</td>`);
               break;
             case "sum":
