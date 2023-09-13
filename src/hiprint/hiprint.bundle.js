@@ -5549,7 +5549,7 @@ var hiprint = function (t) {
                 }
                 d.find("tbody").append(f);
                 var g = f.data("rowData");
-                l.push(g), h.push(g), (((s = d.outerHeight(), s += tfh) > p) || (this.options.maxRows && h.length > +this.options.maxRows)) && (a.prepend(f), l.pop(), h.pop(), s = d.outerHeight(), c = {
+                l.push(g), h.push(g), (((s = d.outerHeight(), "last" == this.options.tableFooterRepeat ? s : s += tfh) > p) || (this.options.maxRows && h.length > +this.options.maxRows)) && (a.prepend(f), l.pop(), h.pop(), s = d.outerHeight(), c = {
                   height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
                   isEnd: !1
                 });
