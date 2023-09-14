@@ -1743,7 +1743,7 @@ var hiprint = function (t) {
             switch (column.tableSummary) {
             case "count":
               var title = tst(column, text || `${i18n.__('计数')}:`, o);
-              var count = toUpperCase(upperCaseType,tSumData.length || 0);
+              var count = toUpperCase(upperCaseType,tSumData.filter(i => i).length || 0);
               tableFooter.append(`<td style="${style}" colspan="${colspan}">${title}${count}</td>`);
               break;
             case "sum":
@@ -1866,7 +1866,7 @@ var hiprint = function (t) {
             p = a ? a(e[t.field], e, i, n) : e[t.field];
           var rf = TableExcelHelper.getColumnRenderFormatter(t);
           if (rf) {
-            r.html(rf(e[t.field], e, i, n))
+            r.html(rf(e[t.field], e, i, n, rowIndex))
           //表格内容插入二维码等
           } else if ("text" == t.tableTextType || t.tableTextType == void 0) r.html(p);
           else {
@@ -5013,7 +5013,7 @@ var hiprint = function (t) {
       }
 
       return t.prototype.createTarget = function () {
-        return this.target = $(`<div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        ${i18n.__('单元格渲染函数')}\n        </div>\n        <div class="hiprint-option-item-field">\n        <textarea style="height:80px;" placeholder="function(value,row,index,options){ return \'<td></td>\'; }" class="auto-submit"></textarea>\n        </div>\n    </div>`), this.target;
+        return this.target = $(`<div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        ${i18n.__('单元格渲染函数')}\n        </div>\n        <div class="hiprint-option-item-field">\n        <textarea style="height:80px;" placeholder="function(value,row,colIndex,options,rowIndex){ return \'<td></td>\'; }" class="auto-submit"></textarea>\n        </div>\n    </div>`), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("textarea").val();
         if (t) return t;

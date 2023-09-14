@@ -200,11 +200,13 @@ hiprintTemplate.print({});
 
 ## i18n 设置
 
-可在 init 时传入语言进行设置，默认为 `cn` , 更多语言期待社区共同维护。
+原生为简体中文，英语、德语、西班牙语、法语、意大利语、日语、俄语、繁体中文皆为 AI 机翻，欢迎帮助 [订正](https://github.com/CcSimple/vue-plugin-hiprint/tree/main/src/i18n)。
+
+可在 init 时传入语言进行设置，默认为 `cn` 。
 
 ```js
 hiprint.init({
-  lang: 'en', // 设置语言 ['cn', 'en'] TODO: ['de', 'es', 'fr', 'ja', 'ko', 'ru']
+  lang: 'en', // 设置语言 ['cn', 'en', 'de', 'es', 'fr', 'it', 'ja', 'ru', 'cn_tw']
 });
 ```
 
