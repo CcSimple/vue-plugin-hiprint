@@ -93,6 +93,34 @@ export default {
       }, "printElementType": {"title": "自定义文本", "type": "text"}
     }, {
       "options": {
+        "left": 60,
+        "top": 130,
+        "height": 40,
+        "width": 40,
+        "title": "qrcode",
+        "field": "qrcode",
+        "testData": "qrcode",
+      },
+      "printElementType": {
+        "title": "二维码",
+        "type": "qrcode",
+      }
+    }, {
+      "options": {
+        "left": 160,
+        "top": 130,
+        "height": 40,
+        "width": 80,
+        "title": "barcode",
+        "field": "barcode",
+        "testData": "barcode",
+      },
+      "printElementType": {
+        "title": "条形码",
+        "type": "barcode",
+      }
+    }, {
+      "options": {
         "left": 153,
         "top": 189,
         "height": 13,

@@ -7,6 +7,8 @@ import "./hiprint/hiprint.config";
 import "./hiprint/css/hiprint.css"
 import "./hiprint/css/print-lock.css"
 
+import {version} from '../package.json'
+
 /**
  * 自动连接 / 连接
  * cb: 连接回调， (status, msg) {
@@ -71,6 +73,8 @@ let hiPrintPlugin = {
 	 }
   }
 }
+
+hiprint.version = version
 
 window.hiprint = hiprint;
 export {
