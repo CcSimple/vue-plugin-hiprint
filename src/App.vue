@@ -128,14 +128,13 @@ export default {
   },
   computed: {
     i18nSupport() {
-      console.log(this.version, decodeVer(this.version))
       return (
-        this.version == "development" || decodeVer(this.version).verVal >= 55.8
+        this.version == "development" || (this.version && decodeVer(this.version).verVal >= 55.8)
       );
     },
   },
   created() {
-    this.version = sessionStorage.getItem("version");
+    this.version = sessionStorage.getItem("version") || 'development';
     this.lang = sessionStorage.getItem("lang") || "cn";
     this.getVersion();
   },
