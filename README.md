@@ -198,6 +198,27 @@ panel.addPrintLongText({ options: { width: 180, height: 35, top: 90, left: 20, t
 hiprintTemplate.print({});
 ```
 
+## i18n 设置
+
+原生为简体中文，英语、德语、西班牙语、法语、意大利语、日语、俄语、繁体中文皆为 AI 机翻，欢迎帮助 [订正](https://github.com/CcSimple/vue-plugin-hiprint/tree/main/src/i18n)。
+
+可在 init 时传入语言进行设置，默认为 `cn` 。
+
+```js
+hiprint.init({
+  lang: 'en', // 设置语言 ['cn', 'en', 'de', 'es', 'fr', 'it', 'ja', 'ru', 'cn_tw']
+});
+```
+
+## 直接打印 地址端口 与 Token 设置
+
+```js
+hiprint.init({
+  host: 'http://localhost:17521', // 可在此处设置连接地址与端口号
+  token: 'token', // 可在此处设置连接 token 可缺省
+});
+```
+
 ## vue/vue3 全局引入
 
 > 全局引入，方便在任何地方不引入直接调用打印。示例为代码模式 (拖拽设计请往下看)

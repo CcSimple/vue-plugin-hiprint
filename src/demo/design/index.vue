@@ -258,7 +258,7 @@
                   </div>
                 </a-col>
               </a-row>
-              <a-row style="height: 100px;">
+              <a-row v-if="currVerInfo.verVal >= 55.3" style="height: 100px;">
                 <a-col :span="12" class="drag_item_box">
                   <div>
                     <a class="ep-draggable-item" tid="defaultModule.barcode">
@@ -298,16 +298,18 @@
   </a-card>
 </template>
 
-<script>
-import {defaultElementTypeProvider, hiprint} from '../../index'
-import panel from './panel'
+<script defer>
+// import {defaultElementTypeProvider, hiprint} from '../../index'
+import * as vuePluginHiprint from '../../index'
+// import panel from './panel'
 import printData from './print-data'
 import printPreview from './preview'
 import jsonView from "../json-view.vue";
 import fontSize from "./font-size.js";
 import scale from "./scale.js";
+import { decodeVer } from '@/utils'
 // disAutoConnect();
-
+var hiprint, defaultElementTypeProvider, panel;
 let hiprintTemplate;
 
 export default {
@@ -372,15 +374,87 @@ export default {
         }
       }
       return type
+    },
+    /**
+     * @description: 当前版本信息，用于 demo 页面根据版本控制功能
+     * @return {Object}
+     */    
+    currVerInfo() {
+      if (this.$parent.version && this.$parent.version != "development") {
+        return decodeVer(this.$parent.version)
+      } else if (hiprint?.version) {
+        return decodeVer(hiprint.version)
+      } else {
+        return {
+          verVal: 9999
+        }
+      }
     }
   },
   mounted() {
-    this.init()
+    this.getPanel()
+    // 存在一个固定版本号，并且不是开发版本
+    if (this.$parent.version && this.$parent.version != "development") {
+      // 加载对应版本的 hiprint
+      this.getVersion(this.$parent.version)
+    }
+    // 不存在固定版本，加载当前代码中的 hiprint
+    else {
+      hiprint = vuePluginHiprint.hiprint
+      defaultElementTypeProvider = vuePluginHiprint.defaultElementTypeProvider
+      this.init()
+    }
   },
   methods: {
+    /**
+     * @description: 加载 panel
+     */
+    getPanel() {
+      // 加载所有 panel
+      const panels = require.context('./', true, /panel.*\.js$/)
+      // 对所有 panel 进行版本解析
+      var panelInfos = panels.keys().map(key => ({
+        ...decodeVer(key.replace(/(\.\/panel-?)|(\.js)/g, '')),
+        key
+      }))
+      // 存在一个固定版本号，并且不是开发版本
+      if (this.$parent.version && this.$parent.version != "development") {
+        // 解析对应版本信息
+        var currVerInfo = decodeVer(this.$parent.version)
+        // 查找小于等于当前版本的 panel
+        var newVers = panelInfos.filter(({verVal}) => verVal <= currVerInfo.verVal)
+          // 对版本号进行倒叙
+          .sort((acc, curr) => curr.verVal - acc.verVal)
+        // 获取最大版本号面板 json
+        panel = panels(newVers[0].key).default
+      }
+      // 不存在固定版本，加载默认面板 json
+      else {
+        panel = panels('./panel.js').default
+      }
+    },
+    /**
+     * @description: 加载版本
+     * @param {string} version 版本号
+     */    
+    getVersion(version) {
+      const script = document.createElement("script");
+      script.setAttribute("type", "text/javascript");
+      script.setAttribute(
+        "src",
+        `https://cdn.jsdelivr.net/npm/vue-plugin-hiprint@${version}/dist/vue-plugin-hiprint.js`
+      );
+      script.addEventListener("load", () => {
+        hiprint = window['vue-plugin-hiprint'].hiprint
+        defaultElementTypeProvider = window['vue-plugin-hiprint'].defaultElementTypeProvider
+        this.init()
+      })
+      document.body.append(script)
+    },
     init() {
       hiprint.init({
-        providers: [new defaultElementTypeProvider()]
+        providers: [new defaultElementTypeProvider()],
+        lang: this.$parent.lang
       });
       // 还原配置
       hiprint.setConfig()
