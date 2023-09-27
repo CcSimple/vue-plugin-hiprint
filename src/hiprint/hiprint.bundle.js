@@ -667,7 +667,7 @@ var hiprint = function (t) {
         if (t && t.length) {
           this.createTempContainer();
           var e = t.clone();
-          this.getTempContainer().append(e), this.options.initSizeByHtml(parseInt(_assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.px.toPt(e.width()).toString()), parseInt(_assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.px.toPt(e.height()).toString())), this.removeTempContainer();
+          this.getTempContainer().append(e), this.options.initSizeByHtml(parseInt(hinnn.px.toPt(e.width()).toString()), parseInt(hinnn.px.toPt(e.height()).toString())), this.removeTempContainer();
         }
       }, BasePrintElement.prototype.updateTargetSize = function (t) {
         t.css("width", this.options.displayWidth()), t.css("height", this.options.displayHeight());
@@ -677,7 +677,7 @@ var hiprint = function (t) {
         var e = this, lastTimeStamp = 0;
         return this.designTarget = this.getHtml(t)[0].target, this.designPaper = t, this.designTarget.click(function (ev) {
           if (ev.timeStamp - lastTimeStamp > 500) {
-            _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger(e.getPrintElementSelectEventKey(), {
+            hinnn.event.trigger(e.getPrintElementSelectEventKey(), {
               printElement: e
             });
           }
@@ -732,11 +732,11 @@ var hiprint = function (t) {
             e.options.title = t;
           }
           if (!clear) {
-            _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger(e.getPrintElementSelectEventKey(), {
+            hinnn.event.trigger(e.getPrintElementSelectEventKey(), {
               printElement: e
             });
           }
-          e.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + e.templateId, "编辑修改");
+          e.updateDesignViewFromOptions(), hinnn.event.trigger("hiprintTemplateDataChanged_" + e.templateId, "编辑修改");
           e._editing = false;
           var draggable = e.options.draggable == undefined || true == e.options.draggable;
           e.designTarget.hidraggable('update', {draggable: draggable});
@@ -783,7 +783,7 @@ var hiprint = function (t) {
           },
           onStopDrag: function onStopDrag(t) {
             // 普通元素拖动结束事件history
-            if (_HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.changed) _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "移动");
+            if (_HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.changed) hinnn.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "移动");
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !1,
               _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.changed = !1;
             var els = n.panel.printElements.filter(function (t) {
@@ -830,7 +830,7 @@ var hiprint = function (t) {
             }
           });
         }
-        this.updateDesignViewFromOptions(), _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "元素修改");
+        this.updateDesignViewFromOptions(), hinnn.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "元素修改");
       }, BasePrintElement.prototype.updateOption = function (o, v, b) {
         try {
           var e = this.getConfigOptions();
@@ -848,7 +848,7 @@ var hiprint = function (t) {
             this.options[o] = v;
             this.updateDesignViewFromOptions();
             if (!b) {
-              _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "参数修改");
+              hinnn.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "参数修改");
             }
           }
         } catch (e) {
@@ -878,7 +878,7 @@ var hiprint = function (t) {
             n.createLineOfPosition(e);
           },
           onStopResize: function onStopResize(r) {
-            _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, r ? "旋转" : "大小");
+            hinnn.event.trigger("hiprintTemplateDataChanged_" + n.templateId, r ? "旋转" : "大小");
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !1, n.removeLineOfPosition();
           }
         })
@@ -988,7 +988,7 @@ var hiprint = function (t) {
         return o;
       }, BasePrintElement.prototype.updatePanelHeight = function (h, p) {
         if ("none" == this.panel.panelPageRule) {
-          var nmh = _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.pt.toMm(h);
+          var nmh = hinnn.pt.toMm(h);
           // 更改模板高度 paperType, width(mm), height(mm), rotate
           // this.panel.resize(void 0, t.mmwidth, nmh, !1);
           // 这个会更新模板的高度...
@@ -1330,8 +1330,8 @@ var hiprint = function (t) {
           case 46:
             var templete = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(n.templateId)
             templete.deletePrintElement(n)
-            _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "删除");
-            _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("clearSettingContainer")
+            hinnn.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "删除");
+            hinnn.event.trigger("clearSettingContainer")
             break
           case 37:
             i = n.options.getLeft();
@@ -1381,7 +1381,7 @@ var hiprint = function (t) {
             r.preventDefault();
           }
           if ([37, 38, 39, 40].includes(r.keyCode)) {
-            _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_4__.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "键盘移动");
+            hinnn.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "键盘移动");
           }
         });
       }, BasePrintElement.prototype.inRect = function (t) {
@@ -9925,6 +9925,7 @@ var hiprint = function (t) {
         a.bind("click.submitOption", function () {
           i.submitOption();
         }), p.bind("click.deleteBtn", function () {
+          hinnn.event.trigger("hiprintTemplateDataChanged_" + i.templateId, "删除");
           n.printTemplate.deletePrintElement(i);
           e.clearSettingContainer();
         }), r.find(".auto-submit").change(function (t) {
@@ -10570,7 +10571,7 @@ var hiprint = function (t) {
     p.a.instance.init(t), p.a.instance.providers && p.a.instance.providers.forEach(function (t) {
       t.addElementTypes(a.instance);
     });
-    if (p.a.instance.host != hiwebSocket.host || p.a.instance.token != hiwebSocket.token) {
+    if (window.autoConnect && (p.a.instance.host != hiwebSocket.host || p.a.instance.token != hiwebSocket.token)) {
       hiwebSocket.stop()
       p.a.instance.host && (hiwebSocket.host = p.a.instance.host);
       p.a.instance.token && (hiwebSocket.token = p.a.instance.token);
