@@ -4,6 +4,73 @@
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
 
+## 0.0.55-beta14
+<details>
+  <summary>01. 🌈 添加对中转服务 node-hiprint-transit 的支持</summary>
+
+  [中转服务 node-hiprint-transit](https://github.com/Xavier9896/node-hiprint-transit)
+
+  ```js
+  import { hiprint } from 'vue-plugin-hiprint'
+
+  hiprint.init({
+      host: 'https://printjs.cn:17521', // 此处输入服务启动后的地址
+      token: 'vue-plugin-hiprint',     // 用于鉴权的token
+  });
+
+  // or
+
+  hiwebSocket.setHost("https://printjs.cn:17521", "vue-plugin-hiprint")
+
+  console.log(hiwebSocket.clients, hiwebSocket.printerList)
+
+  // 中转服务专有的 api，可获取所有连接中转服务的客户端 v1.0.7
+  hiprint.getClients()
+  hiwebSocket.getClients()
+  ```
+  详情转至 [文档说明](./README.md#使用-中转服务-node-hiprint-transit-实现代理)
+</details>
+<details>
+  <summary>02. 🌈 新的客户端信息获取</summary>
+
+原本你可以通过 hiprint.getAddress 或 hiwebSocket.getAddress 获取客户端的 ip、ipv6、mac、dns、all、interface、vboxnext 信息，但是需要你主动调用方法去获取。
+
+在 v1.0.7 中我们仍然保留该方式，但移除了用处不大的 dns、interface、vboxnext 类型，同时在连接成功后自动返回客户端 clientInfo 信息
+
+```js
+// 手动获取方法
+hiprint.getClientInfo()
+// or
+hiwebSocket.getClientInfo()
+```
+```js
+console.log(hiwebSocket.clientInfo)
+
+{
+  arch: "x64",
+  clientUrl: "http://192.168.0.2:17521",
+  ip: "192.168.0.2",
+  ipv6: "fe80::13f:eb0f:e426:7c92",
+  mac: "a1:a2:a3:a4:a5:a6",
+  machineId: "12c90ff9-b9f4-4178-9099-9dd326b70c2e",
+  platform: "win32",
+  printerList: [{
+    description: "",
+    displayName: "Microsoft Print to PDF",
+    isDefault: true,
+    name: "Microsoft Print to PDF",
+    options: {,
+      "printer-location": "",
+      "printer-make-and-model": "Microsoft Print To PDF",
+      "system_driverinfo": "Microsoft Print To PDF;10.0.19041.3570 (WinBuild.160101.0800);Microsoft® Windows® Operating System;10.0.19041.3570"
+    },
+    status: 0
+  }, {…}, {…}, {…}, {…}, {…}],
+  version: "1.0.7",
+}
+```
+</details>
+
 ## 0.0.55-beta8(2023-09-12)
 <details>
   <summary>01. 🌈 添加国际化 i18n 支持 </summary>

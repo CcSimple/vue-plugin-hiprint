@@ -324,6 +324,82 @@ hiprintTemplate.print2({});
 - [线上跨域问题,请升级 https! 说明:https://www.cnblogs.com/daysme/p/15493523.html](https://www.cnblogs.com/daysme/p/15493523.html)
 - [线上跨域问题,请升级 https! 说明:https://www.cnblogs.com/daysme/p/15493523.html](https://www.cnblogs.com/daysme/p/15493523.html)
 
+### URLScheme `hiprint://`
+> 安装客户端时请 `以管理员身份运行` ，才能成功添加 URLScheme
+
+使用：浏览器地址栏输入 `hiprint://` 并回车
+
+![URLScheme](./res/URLScheme.png)
+
+```js
+// js
+window.open("hiprint://")
+
+// element-ui
+this.$alert(`连接【${hiwebSocket.host}】失败！<br>请确保目标服务器已<a href="https://gitee.com/CcSimple/electron-hiprint/releases" target="_blank"> 下载 </a> 并 <a href="hiprint://" target="_blank"> 运行 </a> 打印服务！`, "客户端未连接", {dangerouslyUseHtmlString: true})
+
+// ant-design
+this.$error({
+  title: "客户端未连接",
+  content: (h) => (
+    <div>
+      连接【{hiwebSocket.host}】失败！
+      <br />
+      请确保目标服务器已
+      <a
+        href="https://gitee.com/CcSimple/electron-hiprint/releases"
+        target="_blank"
+      >
+        下载
+      </a>
+      并
+      <a href="hiprint://" target="_blank">
+        运行
+      </a>
+      打印服务！
+    </div>
+  ),
+});
+```
+
+## 使用 [中转服务 node-hiprint-transit](https://github.com/Xavier9896/node-hiprint-transit) 实现代理
+
+配套客户端打印一直存在跨域、无法连接局域网其余打印机、跨网段无法连接的问题，所以诞生了这个中转代理服务。在 `electron-hiprint` [v1.0.0.7](https://gitee.com/CcSimple/electron-hiprint/releases) 版本中添加了连接中转服务代理的设置，将会在 `electron-hiprint` 与 `node-hiprint-transit` 间建立通信，`vue-plugin-hiprint` 只需连接中转服务就能获取到所有连接中转服务的打印端信息，并且选择任意打印机进行打印。
+
+连接中转服务只需要修改 host， 添加 token
+
+```js
+import { hiprint } from 'vue-plugin-hiprint'
+
+hiprint.init({
+    host: 'https://printjs.cn:17521', // 此处输入服务启动后的地址
+    token: 'vue-plugin-hiprint',     // 用于鉴权的token
+});
+
+// or
+
+hiwebSocket.setHost("https://printjs.cn:17521", "vue-plugin-hiprint")
+```
+
+具体使用请转至 [node-hiprint-transit](https://github.com/Xavier9896/node-hiprint-transit)
+
+为此你需要作出这些改变：
+
+1. 你可以从 `hiwebSocket` 中获取到 `clients`、`printerList` ，里面都将包含 `client` 信息
+2. print2、ippRequest、ippRequest api options 中需要添加 `client` 指定客户端
+
+    eg:
+    ```js
+    var clientId = "AlBaUCNs3AIMFPLZAAAh"
+    var client = hiwebSocket.clients[clientId]
+    var printer = hiwebSocket.printerList[0]
+
+    hiprintTemplate.print2(printData, { client: clientId, printer: client.printerList[n].name, title: 'hiprint测试打印' });
+
+    hiprintTemplate.print2(printData, { client: printer.clientId, printer: printer.name, title: 'hiprint测试打印' });
+    ```
+  > 如果你不提供 client 中转服务将抛出一个 error
+
 ## 常见问题
 > design时怎么修改默认图片？
 ```vue
