@@ -3283,9 +3283,9 @@ var hiprint = function (t) {
         var n = this;
         n.target = $(`<div class="hiprint-option-item hiprint-option-item-row">
           <div class="hiprint-option-item-label">\n        ${i18n.__('位置坐标')}\n        </div>
-          <div class="hiprint-option-item-field" style="display: flex;align-items: baseline;">\n        
-          <input type="number" style="width:48%" placeholder="${i18n.__('X位置(左)')}" class="auto-submit" />\n        
-          <input type="number" style="width:48%" placeholder="${i18n.__('Y位置(上)')}" class="auto-submit" />\n        
+          <div class="hiprint-option-item-field" style="display: flex;align-items: baseline;">\n
+          <input type="number" style="width:48%" placeholder="${i18n.__('X位置(左)')}" class="auto-submit" />\n
+          <input type="number" style="width:48%" placeholder="${i18n.__('Y位置(上)')}" class="auto-submit" />\n
           </div>\n
           </div>`);
         n.syncLock = o.coordinateSync || false;
@@ -3350,9 +3350,9 @@ var hiprint = function (t) {
         var n = this;
         n.target = $(`<div class="hiprint-option-item hiprint-option-item-row">
           <div class="hiprint-option-item-label">\n        ${i18n.__('宽高大小')}\n        </div>
-          <div class="hiprint-option-item-field" style="display: flex;align-items: baseline;">\n        
-          <input type="number" style="width:48%" placeholder="${i18n.__('宽')}" class="auto-submit" />\n        
-          <input type="number" style="width:48%" placeholder="${i18n.__('高')}" class="auto-submit" />\n        
+          <div class="hiprint-option-item-field" style="display: flex;align-items: baseline;">\n
+          <input type="number" style="width:48%" placeholder="${i18n.__('宽')}" class="auto-submit" />\n
+          <input type="number" style="width:48%" placeholder="${i18n.__('高')}" class="auto-submit" />\n
           </div>\n
           </div>`);
         n.syncLock = o.widthHeightSync || false;
@@ -10399,7 +10399,7 @@ var hiprint = function (t) {
             var curLen = e.printPanels.length - 1;
             t.panels.forEach(function(panel, index) {
               if (index > curLen) {
-                e.printPanels.push(new pt(panel, s.a.instance.guid()));
+                e.printPanels.push(new pt(panel, e.id));
                 var t = e.printPanels[index];
                 e.container.append(t.getTarget()), index > 0 && t.disable(), t.design(e.designOptions);
                 e.printPaginationCreator && e.printPaginationCreator.buildPagination();
