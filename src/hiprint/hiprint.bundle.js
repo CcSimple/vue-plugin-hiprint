@@ -7473,6 +7473,13 @@ var hiprint = function (t) {
         console.log("refreshPrinterList error:" + JSON.stringify(e));
       }
     },
+    getClients: function getClients() {
+      try {
+        this.socket.emit("getClients");
+      } catch (e) {
+        console.log("getClients error:" + JSON.stringify(e));
+      }
+    },
     getAddress: function getAddress(type, ...args) {
       try {
         this.socket.emit("address", type, ...args);
@@ -7519,6 +7526,12 @@ var hiprint = function (t) {
           hinnn.event.trigger("printSuccess_" + t.templateId, t);
         }), _this.socket.on("error", function (t) {
           hinnn.event.trigger("printError_" + t.templateId, t);
+        }), _this.socket.on("clients", function(clients) {
+          t.clients = clients;
+          hinnn.event.trigger("clients", clients)
+        }), _this.socket.on("clientInfo", function(clientInfo) {
+          t.clientInfo = clientInfo
+          hinnn.event.trigger("clientInfo", clientInfo)
         }), _this.socket.on("printerList", function (e) {
           t.printerList = e;
           hinnn.event.trigger("printerList", e);
@@ -10688,6 +10701,18 @@ var hiprint = function (t) {
     hiwebSocket.refreshPrinterList();
   }
 
+  function getClients(c) {
+    p.a.instance.clear("clients");
+    p.a.instance.on("clients", c);
+    hiwebSocket.getClients();
+  }
+
+  function getClientInfo(c) {
+    p.a.instance.clear("clientInfo");
+    p.a.instance.on("getClientInfo", c);
+    hiwebSocket.getClientInfo()
+  }
+
   function getAddr(type, c, ...args) {
     p.a.instance.clear("address_" + type);
     p.a.instance.on("address_" + type, c);
@@ -10715,9 +10740,13 @@ var hiprint = function (t) {
   }), n.d(e, "updateElementType", function () {
     return uep;
   }), n.d(e, "hiwebSocket", function () {
-    return hiwebSocket
+    return hiwebSocket;
   }), n.d(e, "refreshPrinterList", function () {
     return rpl;
+  }), n.d(e, "getClients", function() {
+    return getClients;
+  }), n.d(e, "getClientInfo", function() {
+    return getClientInfo;
   }), n.d(e, "getAddress", function () {
     return getAddr;
   }), n.d(e, "ippPrint", function () {
