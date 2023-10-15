@@ -9299,6 +9299,7 @@ var hiprint = function (t) {
           this.paperFooter == this.height && (this.designPaper.footerLinetarget.css("top", t.height - p.a.instance.paperHeightTrim + "mm"));
           // 水印参数
           this.watermarkOptions = t.watermarkOptions || {};
+          this.designPaper.createWaterMark(true, this.index, this.watermarkOptions);
           // 页码
           this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberContinue = t.paperNumberContinue, this.paperNumberFormat = t.paperNumberFormat;
           this.designPaper.paperNumberLeft = this.paperNumberLeft, this.designPaper.paperNumberTop = this.paperNumberTop, this.designPaper.paperNumberDisabled = this.paperNumberDisabled, this.designPaper.paperNumberContinue = this.paperNumberContinue, this.designPaper.paperNumberFormat = this.paperNumberFormat;
