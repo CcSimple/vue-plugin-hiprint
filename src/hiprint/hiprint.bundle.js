@@ -74,7 +74,7 @@ var i18n = {
   lang: 'cn',
   languages,
   __: function(key, params) {
-    var str = this.languages[this.lang][key]
+    var str = this.languages[this.lang][key] || key
     if (params && params instanceof Object) {
       Object.keys(params).forEach(key => {
         str = str.replace(new RegExp(`{{${key}}}`, 'g'), params[key])
