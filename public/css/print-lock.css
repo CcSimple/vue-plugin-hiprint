@@ -164,6 +164,10 @@
   font-weight: 700;
 }
 
+table.hiprint-printElement-tableTarget {
+  width: 100%;
+}
+
 .hiprint-printElement-tableTarget, .hiprint-printElement-tableTarget tr, .hiprint-printElement-tableTarget td {
   border-color: rgb(0, 0, 0);
   /*border-style: none;*/

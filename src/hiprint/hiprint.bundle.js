@@ -3283,9 +3283,9 @@ var hiprint = function (t) {
         var n = this;
         n.target = $(`<div class="hiprint-option-item hiprint-option-item-row">
           <div class="hiprint-option-item-label">\n        ${i18n.__('位置坐标')}\n        </div>
-          <div class="hiprint-option-item-field" style="display: flex;align-items: baseline;">\n        
-          <input type="number" style="width:48%" placeholder="${i18n.__('X位置(左)')}" class="auto-submit" />\n        
-          <input type="number" style="width:48%" placeholder="${i18n.__('Y位置(上)')}" class="auto-submit" />\n        
+          <div class="hiprint-option-item-field" style="display: flex;align-items: baseline;">\n
+          <input type="number" style="width:48%" placeholder="${i18n.__('X位置(左)')}" class="auto-submit" />\n
+          <input type="number" style="width:48%" placeholder="${i18n.__('Y位置(上)')}" class="auto-submit" />\n
           </div>\n
           </div>`);
         n.syncLock = o.coordinateSync || false;
@@ -3350,9 +3350,9 @@ var hiprint = function (t) {
         var n = this;
         n.target = $(`<div class="hiprint-option-item hiprint-option-item-row">
           <div class="hiprint-option-item-label">\n        ${i18n.__('宽高大小')}\n        </div>
-          <div class="hiprint-option-item-field" style="display: flex;align-items: baseline;">\n        
-          <input type="number" style="width:48%" placeholder="${i18n.__('宽')}" class="auto-submit" />\n        
-          <input type="number" style="width:48%" placeholder="${i18n.__('高')}" class="auto-submit" />\n        
+          <div class="hiprint-option-item-field" style="display: flex;align-items: baseline;">\n
+          <input type="number" style="width:48%" placeholder="${i18n.__('宽')}" class="auto-submit" />\n
+          <input type="number" style="width:48%" placeholder="${i18n.__('高')}" class="auto-submit" />\n
           </div>\n
           </div>`);
         n.syncLock = o.widthHeightSync || false;
@@ -7473,6 +7473,13 @@ var hiprint = function (t) {
         console.log("refreshPrinterList error:" + JSON.stringify(e));
       }
     },
+    getClients: function getClients() {
+      try {
+        this.socket.emit("getClients");
+      } catch (e) {
+        console.log("getClients error:" + JSON.stringify(e));
+      }
+    },
     getAddress: function getAddress(type, ...args) {
       try {
         this.socket.emit("address", type, ...args);
@@ -7519,6 +7526,12 @@ var hiprint = function (t) {
           hinnn.event.trigger("printSuccess_" + t.templateId, t);
         }), _this.socket.on("error", function (t) {
           hinnn.event.trigger("printError_" + t.templateId, t);
+        }), _this.socket.on("clients", function(clients) {
+          t.clients = clients;
+          hinnn.event.trigger("clients", clients)
+        }), _this.socket.on("clientInfo", function(clientInfo) {
+          t.clientInfo = clientInfo
+          hinnn.event.trigger("clientInfo", clientInfo)
         }), _this.socket.on("printerList", function (e) {
           t.printerList = e;
           hinnn.event.trigger("printerList", e);
@@ -9299,6 +9312,7 @@ var hiprint = function (t) {
           this.paperFooter == this.height && (this.designPaper.footerLinetarget.css("top", t.height - p.a.instance.paperHeightTrim + "mm"));
           // 水印参数
           this.watermarkOptions = t.watermarkOptions || {};
+          this.designPaper.createWaterMark(true, this.index, this.watermarkOptions);
           // 页码
           this.paperNumberLeft = t.paperNumberLeft, this.paperNumberTop = t.paperNumberTop, this.paperNumberDisabled = t.paperNumberDisabled, this.paperNumberContinue = t.paperNumberContinue, this.paperNumberFormat = t.paperNumberFormat;
           this.designPaper.paperNumberLeft = this.paperNumberLeft, this.designPaper.paperNumberTop = this.paperNumberTop, this.designPaper.paperNumberDisabled = this.paperNumberDisabled, this.designPaper.paperNumberContinue = this.paperNumberContinue, this.designPaper.paperNumberFormat = this.paperNumberFormat;
@@ -10399,7 +10413,7 @@ var hiprint = function (t) {
             var curLen = e.printPanels.length - 1;
             t.panels.forEach(function(panel, index) {
               if (index > curLen) {
-                e.printPanels.push(new pt(panel, s.a.instance.guid()));
+                e.printPanels.push(new pt(panel, e.id));
                 var t = e.printPanels[index];
                 e.container.append(t.getTarget()), index > 0 && t.disable(), t.design(e.designOptions);
                 e.printPaginationCreator && e.printPaginationCreator.buildPagination();
@@ -10687,6 +10701,18 @@ var hiprint = function (t) {
     hiwebSocket.refreshPrinterList();
   }
 
+  function getClients(c) {
+    p.a.instance.clear("clients");
+    p.a.instance.on("clients", c);
+    hiwebSocket.getClients();
+  }
+
+  function getClientInfo(c) {
+    p.a.instance.clear("clientInfo");
+    p.a.instance.on("getClientInfo", c);
+    hiwebSocket.getClientInfo()
+  }
+
   function getAddr(type, c, ...args) {
     p.a.instance.clear("address_" + type);
     p.a.instance.on("address_" + type, c);
@@ -10714,9 +10740,13 @@ var hiprint = function (t) {
   }), n.d(e, "updateElementType", function () {
     return uep;
   }), n.d(e, "hiwebSocket", function () {
-    return hiwebSocket
+    return hiwebSocket;
   }), n.d(e, "refreshPrinterList", function () {
     return rpl;
+  }), n.d(e, "getClients", function() {
+    return getClients;
+  }), n.d(e, "getClientInfo", function() {
+    return getClientInfo;
   }), n.d(e, "getAddress", function () {
     return getAddr;
   }), n.d(e, "ippPrint", function () {

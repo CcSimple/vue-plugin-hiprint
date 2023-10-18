@@ -864,10 +864,12 @@ font-weight: normal;*/
         left: 15px;
         width: 400mm;
         height: 15px;
+        max-width: none;
     }
 
     .hiprint_rul_wrapper .v_img {
         width: 400mm;
+        max-width: none;
         transform: rotate(90deg);
         transform-origin: 0 100%;
         height: 15px;
