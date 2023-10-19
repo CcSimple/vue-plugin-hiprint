@@ -8,22 +8,19 @@ export default function (hiprint) {
             tid: "defaultModule.text",
             title: "文本",
             data: "",
-            type: "text",
-            options
+            type: "text"
           },
           {
             tid: "defaultModule.image",
             title: "图片",
             data: "",
-            type: "image",
-            options
+            type: "image"
           },
           {
             tid: "defaultModule.longText",
             title: "长文",
             data: "155123456789",
-            type: "longText",
-            options
+            type: "longText"
           },
           {
             tid: "defaultModule.table",
@@ -79,7 +76,6 @@ export default function (hiprint) {
             isEnableInsertColumn: true, //插入列
             isEnableDeleteColumn: true, //删除列
             isEnableMergeCell: true, //合并单元格
-            options
           },
           {
             tid: "defaultModule.emptyTable",
@@ -99,7 +95,6 @@ export default function (hiprint) {
                 }
               ]
             ],
-            options
           },
           {
             tid: "defaultModule.html",
@@ -107,16 +102,14 @@ export default function (hiprint) {
             formatter: function (data, options) {
               return '<div style="height:50pt;width:50pt;background:red;border-radius: 50%;"></div>';
             },
-            type: "html",
-            options
+            type: "html"
           },
           {
             tid: "defaultModule.customText",
             title: "自定义文本",
             customText: "自定义文本",
             custom: true,
-            type: "text",
-            options
+            type: "text"
           }
         ]),
         new hiprint.PrintElementTypeGroup("辅助", [
