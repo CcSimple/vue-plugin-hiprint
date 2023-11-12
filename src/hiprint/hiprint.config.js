@@ -840,6 +840,10 @@
               hidden: false
             },
             {
+              name: 'testData',
+              hidden: false
+            },
+            {
               name: 'coordinate',
               hidden: false
             },

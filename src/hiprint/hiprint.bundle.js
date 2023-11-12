@@ -5683,7 +5683,16 @@ var hiprint = function (t) {
 
         n && n.remove();
       }, TablePrintElement.prototype.getData = function (t) {
-        if (!t) return [{}];
+        if (!t) {
+          // 设计时表格 测试数据
+          try {
+            let testData = this.options.testData || '[{}]';
+            return JSON.parse(testData);
+          } catch (e) {
+            console.log('table testData parse error', e);
+            return [{}];
+          }
+        };
         var f = this.getField();
         var e = f ? f.split('.').reduce((a, c) => a ? a[c] : t ? t[c] : "", !1) || "" : "";
         return e ? JSON.parse(JSON.stringify(e)) : [];
