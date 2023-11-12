@@ -1816,8 +1816,8 @@ var hiprint = function (t) {
         }).forEach(function (t) {
           var groupFormatter = h.getGroupFormatter(n, i);
           if (groupFormatter) {
-            var e = $("<tr><td colspan=" + o.colspan + "></td></tr>");
-            e.find("td").append(groupFormatter(t, n)), r.append(e);
+            var ee = $("<tr></tr>");
+            ee.append(groupFormatter(o.colspan, e, printData, t, n)), r.append(ee);
           }
           var groupFooterFormatter = h.getGroupFooterFormatter(n, i);
           var groupData = t;
@@ -1825,8 +1825,8 @@ var hiprint = function (t) {
             var e = TableExcelHelper.createRowTarget(o, t, n, i, rowIndex, groupData.rows, printData);
             r.append(e);
           }), groupFooterFormatter) {
-            var a = $("<tr><td colspan=" + o.colspan + "></td></tr>");
-            a.find("td").append(groupFooterFormatter(t, n)), r.append(a);
+            var a = $("<tr></tr>");
+            a.append(groupFooterFormatter(o.colspan, e, printData, t, n)), r.append(a);
           }
         }) : e.forEach(function (t, rowIndex) {
           var row = TableExcelHelper.createRowTarget(o, t, n, i, rowIndex, e, printData);
@@ -4884,7 +4884,7 @@ var hiprint = function (t) {
       }
 
       return t.prototype.createTarget = function () {
-        return this.target = $(`<div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        ${i18n.__('分组头格式化函数')}\n        </div>\n        <div class="hiprint-option-item-field">\n        <textarea style="height:80px;" placeholder="function(groupData,options){ return \'${i18n.__('分组头信息')}(html)\' }" class="auto-submit"></textarea>\n        </div>\n    </div>`), this.target;
+        return this.target = $(`<div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        ${i18n.__('分组头格式化函数')}\n        </div>\n        <div class="hiprint-option-item-field">\n        <textarea style="height:80px;" placeholder="function(colTotal,tableData,printData,groupData,options){ return \'${i18n.__('分组头信息')}(html)\' }" class="auto-submit"></textarea>\n        </div>\n    </div>`), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("textarea").val();
         if (t) return t;
@@ -4900,7 +4900,7 @@ var hiprint = function (t) {
       }
 
       return t.prototype.createTarget = function () {
-        return this.target = $(`<div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        ${i18n.__('分组脚格式化函数')}\n        </div>\n        <div class="hiprint-option-item-field">\n        <textarea style="height:80px;" placeholder="function(groupData,options){ return \'${i18n.__('分组脚信息')}(html)\' }" class="auto-submit"></textarea>\n        </div>\n    </div>`), this.target;
+        return this.target = $(`<div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        ${i18n.__('分组脚格式化函数')}\n        </div>\n        <div class="hiprint-option-item-field">\n        <textarea style="height:80px;" placeholder="function(colTotal,tableData,printData,groupData,options){ return \'${i18n.__('分组脚信息')}(html)\' }" class="auto-submit"></textarea>\n        </div>\n    </div>`), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("textarea").val();
         if (t) return t;

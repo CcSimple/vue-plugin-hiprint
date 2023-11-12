@@ -223,6 +223,9 @@ table.hiprint-printElement-tableTarget {
 .hiprint-printElement-tableTarget-border-td-all td:last-child {
   border-left: 1px solid;
 }
+.hiprint-printElement-tableTarget-border-td-all td:last-child:first-child {
+  border-left: none;
+}
 
 /*.hiprint-printElement-tableTarget tr,*/
 .hiprint-printElement-tableTarget td {
