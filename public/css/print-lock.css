@@ -217,8 +217,11 @@ table.hiprint-printElement-tableTarget {
 .hiprint-printElement-tableTarget-border-td-none td {
   border: 0px solid;
 }
-.hiprint-printElement-tableTarget-border-td-all td:not(:last-child) {
+.hiprint-printElement-tableTarget-border-td-all td:not(:nth-last-child(-n+2)) {
   border-right: 1px solid;
+}
+.hiprint-printElement-tableTarget-border-td-all td:last-child {
+  border-left: 1px solid;
 }
 
 /*.hiprint-printElement-tableTarget tr,*/
