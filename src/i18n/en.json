@@ -172,6 +172,7 @@
   "整数": "Integer",
   "保留%s位": "Keep %s Decimal",
   "底部聚合小数": "Summary Decimal",
+  "底部聚合格式化函数": "Summary Format Function",
   "转大小写": "UpperCase or LowerCase",
   "底部聚合类型": "Summary Type",
   "不聚合": "No Summary",

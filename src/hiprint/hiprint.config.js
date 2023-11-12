@@ -1773,6 +1773,10 @@
           hidden: false
         },
         {
+          name: 'tableSummaryFormatter',
+          hidden: false
+        },
+        {
           name: 'upperCase',
           hidden: false
         },
