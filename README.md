@@ -27,26 +27,22 @@ vue-plugin-hiprint(基于[hiprint 2.5.4](http://hiprint.io/)) 当时只是为了
 
 此<span style="color: red">插件</span>仅仅是一个<span style="color: red">JavaScript【工具库】</span>而非 <span style="color: yellow">Vue【组件库】</span>，所以它默认是不包含demo中所见的那些组件页面的（demo代码随便复制修改拿去用）。
 
-由于hiprint官网最后一次更新时间为2019年【hiprint 2.5.4 是 [LGPL](#关于lgpl协议) 协议】，后在诸多使用者及反馈下进行了许多优化调整。[详情](CHANGELOG.md)（同时感谢各位群友支持和参与）
+由于hiprint官网最后一次更新时间为2019年【hiprint 2.5.4 是 [LGPL](#关于lgpl协议) 协议】，后在诸多使用者及反馈下进行了许多优化调整。[更新日志](CHANGELOG.md)（同时感谢各位群友支持和参与）
 
-## vue-plugin-hiprint
+## vue-plugin-hiprint [更新日志](CHANGELOG.md)
 > hiprint for Vue2.x / Vue3.x (基于jQuery, 理论上应该也是支持其他框架的)
 
 > **jQuery/uniapp** 项目 见下方 [jQuery/uniapp 项目使用](#jQuery/uniapp 项目使用)
 
 ## 注意事项!!
 
-- <div style="color: red">不要用本项目设计导出的模板,在官网提供的版本中使用!</div>
-- <div style="color: red">不要用本项目设计导出的模板,在官网提供的版本中使用!</div>
-- <div style="color: red">不要用本项目设计导出的模板,在官网提供的版本中使用!</div>
-- <div style="color: orange">请使用我提供的打印客户端,或者自行修改打印客户端的源码,以适配本项目的模板!</div>
-- <div style="color: orange">请使用我提供的打印客户端,或者自行修改打印客户端的源码,以适配本项目的模板!</div>
+- <div style="color: red">【vue-plugin-hiprint】与【hiprint.io官网】差异甚多,请忽混用!请忽混用!请忽混用!</div>
 - <div style="color: orange">请使用我提供的打印客户端,或者自行修改打印客户端的源码,以适配本项目的模板!</div>
 - 主分支是融合版本的最新代码,如果你不需要修改 hiprint 相关代码. 请使用 npm 包的方式安装.
 - 使用直接客户端时,本地开发连接没问题,部署到线上出现跨域无法连接打印客户端问题:
 - [线上跨域问题,请升级 https! 说明:https://www.cnblogs.com/daysme/p/15493523.html](https://www.cnblogs.com/daysme/p/15493523.html)
-- [线上跨域问题,请升级 https! 说明:https://www.cnblogs.com/daysme/p/15493523.html](https://www.cnblogs.com/daysme/p/15493523.html)
-- [线上跨域问题,请升级 https! 说明:https://www.cnblogs.com/daysme/p/15493523.html](https://www.cnblogs.com/daysme/p/15493523.html)
+- 如需提交 PR 请前往 github 合并后可自动发布npm包并同步代码到 gitee
+- vue-plugin-hiprint 包不包含UI界面,需要自行处理。如果想更快速引入请查看 [sv-print组件库](https://ccsimple.gitee.io/sv-print-docs/)
 
 ## 快速链接
 
