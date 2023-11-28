@@ -296,29 +296,16 @@ hiprintTemplate.print2({});
 </body>
 ```
 
-## 配套直接打印客户端(win/mac/linux)
-<div style="color:red">如果使用npm包或者本项目,请使用如下样子的直接打印客户端</div>
-<div style="color:red">如果使用npm包或者本项目,请使用如下样子的直接打印客户端</div>
+## 配套直接打印客户端(win/mac/linux)[源码链接](https://gitee.com/CcSimple/electron-hiprint)
 <div style="color:red">如果使用npm包或者本项目,请使用如下样子的直接打印客户端</div>
 <div align="center">
 
 ![image](./res/tool.jpeg)
 
 </div>
-<div style="color:red">本项目需要上面样式的直接打印客户端; 下载地址见下表:</div>
+<div style="color:red">本项目需要上面样式的直接打印客户端; 下载地址:</div>
 
-| 版本                     | 下载地址                                                                                                                              |
-|------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| Win64                  | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.6/hiprint_win_x64-1.0.6.exe">下载(v1.0.6)</a>      |
-| Win32                  | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.6/hiprint_win_x32-1.0.6.exe">下载(v1.0.6)</a>      |
-| Linux64 (需要桌面系统)       | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.6/hiprint_linux_64-1.0.6.tar.xz">下载(v1.0.6)</a> |
-| Linux64 arm64 (需要桌面系统) | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.6/hiprint_linux_arm64-1.0.6.tar.xz">下载(v1.0.6)</a> |
-| Mac (intel)            | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.6/hiprint_mac_x64-1.0.6.dmg">下载(v1.0.6)</a>    |
-| Mac (M1)               | <a href="https://gitee.com/CcSimple/electron-hiprint/releases/download/1.0.6/hiprint_mac_arm64-1.0.6.dmg">下载(v1.0.6)</a>    |
-
-- [线上跨域问题,请升级 https! 说明:https://www.cnblogs.com/daysme/p/15493523.html](https://www.cnblogs.com/daysme/p/15493523.html)
-- [线上跨域问题,请升级 https! 说明:https://www.cnblogs.com/daysme/p/15493523.html](https://www.cnblogs.com/daysme/p/15493523.html)
-- [线上跨域问题,请升级 https! 说明:https://www.cnblogs.com/daysme/p/15493523.html](https://www.cnblogs.com/daysme/p/15493523.html)
+> [https://gitee.com/CcSimple/electron-hiprint/releases](https://gitee.com/CcSimple/electron-hiprint/releases)
 
 ### URLScheme `hiprint://`
 > 安装客户端时请 `以管理员身份运行` ，才能成功添加 URLScheme
@@ -397,6 +384,15 @@ hiwebSocket.setHost("https://printjs.cn:17521", "vue-plugin-hiprint")
   > 如果你不提供 client 中转服务将抛出一个 error
 
 ## 常见问题
+
+> 可能花几分钟读一读下面的文章就能找到你遇到的问题:
+
+常见问题汇总①: [【vue-plugin-hiprint】常见问题汇总①](https://mp.weixin.qq.com/s/E-ZfuKLH3-GvKn4AosRvaw)
+
+常见问题汇总②: [【vue-plugin-hiprint】常见问题汇总②](https://mp.weixin.qq.com/s/UEnr24bB_P6KmpZ7iZmYvA)
+
+常见问题汇总③: [【vue-plugin-hiprint】常见问题汇总③](https://mp.weixin.qq.com/s/lRimQ-cjuwN3mg6RicPyag)
+
 > design时怎么修改默认图片？
 ```vue
 <!-- 组件内, 显示的图片-->
