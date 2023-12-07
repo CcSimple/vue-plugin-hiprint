@@ -68,7 +68,11 @@
         {
           name: 'watermarkOptions',
           hidden: false
-        }
+        },
+        {
+          name: 'panelLayoutOptions',
+          hidden: false
+        },
       ],
       default: {}
     },
