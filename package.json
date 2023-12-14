@@ -38,6 +38,7 @@
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-service": "^4.5.15",
     "ant-design-vue": "^1.7.8",
+    "babel-loader": "^8.1.0",
     "bootstrap": "^3.3.7",
     "concurrent-tasks": "^1.0.7",
     "copy-webpack-plugin": "^5.1.2",
