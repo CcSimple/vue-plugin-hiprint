@@ -3983,6 +3983,27 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
+    borderRadius = function () {
+      function t() {
+        this.name = "borderRadius";
+      }
+
+      return t.prototype.css = function (t, e) {
+        if (t && t.length) {
+          if (e) return t.css('border-raduis', e);
+        }
+        return null;
+      }, t.prototype.createTarget = function () {
+        return this.target = $(`<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        ${i18n.__('边框圆角')}\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="text" class="auto-submit"/>\n        </div>\n    </div>`), this.target;
+      }, t.prototype.getValue = function () {
+        var t = this.target.find("input").val();
+        if (t) return t;
+      }, t.prototype.setValue = function (t) {
+        this.target.find("input").val(t);
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
     K = function () {
       function t() {
         this.name = "optionsGroup";
@@ -5149,7 +5170,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new paperNumberContinue(), new watermarkOptions(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(),new textWrap(), new at(), new lt(), new panelLayoutOptions(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new rowsColumnsMergeClean(), new groupFieldsFormatter(), new groupFormatter(), new groupFooterFormatter(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new stylerHeader(), new renderFormatter(), new _t(), new wt(), new maxRows(), new xt(), new tableColumnH(), new tableE(), new tableQRCodeLevel(), new tablept(), new tableSummaryTitle(), new tableSummaryText(), new tableSummaryColspan(), new tableSummary(), new tableSummaryAlign(), new tableSummaryNumFormat(), new tableSummaryFormatter(), new upperCase(), new barcodeType(), new qrcodeType()], t;
+    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new paperNumberContinue(), new watermarkOptions(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new borderRadius(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(),new textWrap(), new at(), new lt(), new panelLayoutOptions(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new rowsColumnsMergeClean(), new groupFieldsFormatter(), new groupFormatter(), new groupFooterFormatter(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new stylerHeader(), new renderFormatter(), new _t(), new wt(), new maxRows(), new xt(), new tableColumnH(), new tableE(), new tableQRCodeLevel(), new tablept(), new tableSummaryTitle(), new tableSummaryText(), new tableSummaryColspan(), new tableSummary(), new tableSummaryAlign(), new tableSummaryNumFormat(), new tableSummaryFormatter(), new upperCase(), new barcodeType(), new qrcodeType()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -8181,6 +8202,7 @@ var hiprint = function (t) {
         if (n.length) i.find("img").css('cssText', `width:100%;height:100%;content:url("${n}")!important`)
         else i.find("img").css('cssText', 'width:100%;height:100%;')
         if (this.options.fit) i.find("img").css("object-fit", this.options.fit);
+        if (this.options.borderRadius) i.find("img").css("border-radius", this.options.borderRadius);
       }, e.prototype.getHtml = function (t, e, n) {
         return this.getHtml2(t, e, n);
       }, e;
