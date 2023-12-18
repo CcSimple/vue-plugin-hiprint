@@ -482,6 +482,10 @@
               name: 'zIndex',
               hidden: false
             },
+            {
+              name: 'borderRadius',
+              hidden: false
+            },
           ]
         },
         {
@@ -516,6 +520,10 @@
         },
         {
           name: 'fit',
+          hidden: false
+        },
+        {
+          name: 'borderRadius',
           hidden: false
         },
         {
