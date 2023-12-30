@@ -54,7 +54,7 @@ import vImg from "./css/image/v_img.svg";
 import {jsPDF} from "jspdf";
 import html2canvas from "html2canvas";
 // 数字转中文,大写,金额
-import Nzh from "nzh/dist/nzh.min.js"
+import Nzh from "nzh/dist/nzh.min.js";
 // 解析svg 到 canvas, 二维码条形码需要
 import Canvg from 'canvg';
 // 默认自定义拖拽列表
@@ -881,6 +881,14 @@ var hiprint = function (t) {
               hinnn.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "参数修改");
             }
           }
+          this._printElementOptionTabs.forEach(tab=>{
+            tab.list.forEach(item=>{
+              if(item.name === o){
+                item.target.find('select')?.val(v.toString())
+                item.target.find('input')?.val(v.toString())
+              }
+            })
+          });
         } catch (e) {
           console.log('updateOption error', e)
         }
@@ -3460,7 +3468,7 @@ var hiprint = function (t) {
       }, t.prototype.updateEl = function (width, height, opt, cb) {
         if (opt) {
           var ratio, w, h;
-          if (opt || opt.auto) {
+          if (opt && opt.auto) {
             if (width >= height) {
               opt.width = true;
             } else {
@@ -3488,9 +3496,8 @@ var hiprint = function (t) {
             this.el.designTarget.css('height', h + "pt");
           }
           this.el.designTarget.children('.resize-panel').trigger($.Event('click'));
-        } else {
-          cb && cb(this.el, width, height);
         }
+        cb && cb(this.el, width, height);
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
