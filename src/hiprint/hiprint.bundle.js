@@ -881,6 +881,14 @@ var hiprint = function (t) {
               hinnn.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "参数修改");
             }
           }
+          this._printElementOptionTabs.forEach(tab=>{
+            tab.list.forEach(item=>{
+              if(item.name === o){
+                item.target.find('select')?.val(v.toString())
+                item.target.find('input')?.val(v.toString())
+              }
+            })
+          });
         } catch (e) {
           console.log('updateOption error', e)
         }
