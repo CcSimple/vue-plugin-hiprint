@@ -5523,7 +5523,7 @@ var hiprint = function (t) {
             h = this.getRowsInSpecificHeight(e, u > 0 ? u : 0 == s ? d - p : t.getContentHeight(s), r, o, s, c, tfh);
           l = h.isEnd;
           if (u < 0) {
-            n[0].target = $(`<div style="position:absolute;background: red;color: white;padding: 0px 4px;">${i18n._('没有足够空间进行表格分页，请调整页眉/页脚线')}</div>`)
+            n[0].target = $(`<div style="position:absolute;background: red;color: white;padding: 0px 4px;">${i18n.__('没有足够空间进行表格分页，请调整页眉/页脚线')}</div>`)
             n[0].printLine = p;
             n[0].referenceElement = new _PrintReferenceElement__WEBPACK_IMPORTED_MODULE_4__.a({
               top: this.options.getTop(),
