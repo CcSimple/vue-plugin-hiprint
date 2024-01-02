@@ -241,5 +241,10 @@
   "基础": "Basic",
   "边框": "Border",
   "列": "Column",
-  "高级": "Advanced"
+  "高级": "Advanced",
+  "面板排列": "Panel Arrangement",
+  "排列方式": "Arrangement Method",
+  "垂直间距%s": "Vertical Spacing %s",
+  "水平间距%s": "Horizontal Spacing %s",
+  "边框圆角": "Border Radius"
 }

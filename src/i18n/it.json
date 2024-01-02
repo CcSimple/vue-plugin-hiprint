@@ -240,5 +240,10 @@
     "基础": "Di base",
     "边框": "Bordo",
     "列": "Colonna",
-    "高级": "Avanzate"
+    "高级": "Avanzate",
+    "面板排列": "Disposizione del pannello",
+    "排列方式": "Metodo di disposizione",
+    "垂直间距%s": "Spaziatura Verticale %s",
+    "水平间距%s": "Spaziatura Orizzontale %s",
+    "边框圆角": "Raggio del Bordo"
 }
