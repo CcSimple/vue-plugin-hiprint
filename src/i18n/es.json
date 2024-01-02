@@ -240,5 +240,10 @@
     "基础": "Básico",
     "边框": "Borde",
     "列": "Columna",
-    "高级": "Avanzado"
+    "高级": "Avanzado",
+    "面板排列": "Disposición del panel",
+    "排列方式": "Método de disposición",
+    "垂直间距%s": "Espaciado Vertical %s",
+    "水平间距%s": "Espaciado Horizontal %s",
+    "边框圆角": "Radio de Borde"
 }

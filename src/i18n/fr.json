@@ -240,5 +240,10 @@
     "基础": "De base",
     "边框": "Bordure",
     "列": "Colonne",
-    "高级": "Avancé"
+    "高级": "Avancé",
+    "面板排列": "Agencement du panneau",
+    "排列方式": "Mode d'agencement",
+    "垂直间距%s": "Espacement Vertical %s",
+    "水平间距%s": "Espacement Horizontal %s",
+    "边框圆角": "Rayon de Bordure"
 }
