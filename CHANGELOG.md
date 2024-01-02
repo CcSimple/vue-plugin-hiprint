@@ -243,7 +243,8 @@ hiprint.init({
 </details>
 
 ## 0.0.54 (2023-07-05)
-> 使用此版本 请更新最新的 print-lock.css
+**⚠️⚠️⚠️ 破坏性更新 Breaking changes**
+> ⚠️ 使用此版本 请更新最新的 print-lock.css
 <details>
   <summary>01. 🌈 新增支持 文本换行参数(不换行、隐藏、省略)</summary>
 </details>
@@ -593,6 +594,7 @@ function(value,row,index,options) {
 </details>
 
 ## 0.0.36 (2022-10-10)
+**⚠️⚠️⚠️ 破坏性更新 Breaking changes**
 <details>
   <summary>1. ⚠️  移除 'tableCustom' 元素 'table' 默认可编辑,插入 </summary>
 </details>
