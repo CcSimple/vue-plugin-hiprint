@@ -4,18 +4,38 @@
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
 
+## 0.0.57-beta3
+<details>
+  <summary>01. 🌈 新增支持 近期社区 pr 部分中文 i18n 机翻 </summary>
+</details>
+<details>
+  <summary>02. ✨ 调整优化 条形码、二维码，增强条形码、二维码优化 </summary>
+
+  1. 基础条形码 标题 改为在元素容器内显示
+  2. 基础二维码 添加 标题
+  3. 增强条形码、二维码 标题 改为在元素容器内显示
+  4. 优化增强二维码始终显示为正方形，防止变形
+  5. 增强二维码添加 eclevel(容错率) 设置
+  6. 优化 resize 控制点
+</details>
+<details>
+  <summary>03. 🐛️ fix 修复表格空间不够分页显示错误信息无法正确i18n显示问题 </summary>
+</details>
+
 ## 0.0.56 (2023-11-19)
 > 使用此版本 请更新最新的 print-lock.css
 
 - 点击 ▶ 可查看详情
 
 <details>
-  <summary>01. 🌈 新增 条形码、二维码独立元素，使用 bwip-js 库生成 svg </summary>
-解决原 text 元素中的条形码、二维码 类型不全，生成条码、二维码不清晰的问题
+  <summary>01. 🌈 新增支持 条形码、二维码独立元素，使用 bwip-js 库生成 svg </summary>
+
+  - 解决原 text 元素中的条形码、二维码 类型不全，生成条码、二维码不清晰的问题
 </details>
 <details>
-  <summary>02. 🌈 新增 元素参数 国际化 i18n 支持 </summary>
-原生为简体中文，英语、德语、西班牙语、法语、意大利语、日语、俄语、繁体中文皆为 AI 机翻，欢迎帮助 [订正](https://github.com/CcSimple/vue-plugin-hiprint/tree/main/src/i18n)。
+  <summary>02. 🌈 新增支持 元素参数 国际化 i18n </summary>
+
+  - 原生为简体中文，英语、德语、西班牙语、法语、意大利语、日语、俄语、繁体中文皆为 AI 机翻，欢迎帮助 [订正](https://github.com/CcSimple/vue-plugin-hiprint/tree/main/src/i18n)。
 
 ```js
 hiprint.init({
@@ -24,7 +44,7 @@ hiprint.init({
 ```
 </details>
 <details>
-  <summary>03. 🌈 新增 中转服务 node-hiprint-transit 的支持</summary>
+  <summary>03. 🌈 新增支持 中转服务 node-hiprint-transit </summary>
 
 [中转服务 node-hiprint-transit](https://github.com/Xavier9896/node-hiprint-transit)
 
@@ -49,7 +69,7 @@ hiprint.init({
 详情转至 [文档说明](./README.md#使用-中转服务-node-hiprint-transit-实现代理)
 </details>
 <details>
-  <summary>04. 🌈 新增 客户端信息获取(需客户端^1.0.7)</summary>
+  <summary>04. 🌈 新增支持 客户端信息获取(需客户端^1.0.7)</summary>
 
 原本你可以通过 hiprint.getAddress 或 hiwebSocket.getAddress 获取客户端的 ip、ipv6、mac、dns、all、interface、vboxnext 信息，但是需要你主动调用方法去获取。
 
@@ -89,10 +109,10 @@ console.log(hiwebSocket.clientInfo)
 ```
 </details>
 <details>
-  <summary>05. 🌈 新增 底部聚合格式化函数 tableSummaryFormatter </summary>
+  <summary>05. 🌈 新增支持 底部聚合格式化函数 tableSummaryFormatter </summary>
 </details>
 <details>
-  <summary>06. 🌈 新增 表格支持设置测试数据 设计时可设置模拟数据 </summary>
+  <summary>06. 🌈 新增支持 表格支持设置测试数据 设计时可设置模拟数据 </summary>
 </details>
 <details>
   <summary>07. ✨ 调整优化 分组表格头/脚函数 返回更多参数,不再局限于td标签内</summary>
@@ -127,7 +147,7 @@ console.log(hiwebSocket.clientInfo)
 
 ## 0.0.55-beta14
 <details>
-  <summary>01. 🌈 添加对中转服务 node-hiprint-transit 的支持</summary>
+  <summary>01. 🌈 新增支持 中转服务 node-hiprint-transit</summary>
 
   [中转服务 node-hiprint-transit](https://github.com/Xavier9896/node-hiprint-transit)
 
@@ -152,7 +172,7 @@ console.log(hiwebSocket.clientInfo)
   详情转至 [文档说明](./README.md#使用-中转服务-node-hiprint-transit-实现代理)
 </details>
 <details>
-  <summary>02. 🌈 新的客户端信息获取</summary>
+  <summary>02. 🌈 新增支持 客户端信息获取</summary>
 
 原本你可以通过 hiprint.getAddress 或 hiwebSocket.getAddress 获取客户端的 ip、ipv6、mac、dns、all、interface、vboxnext 信息，但是需要你主动调用方法去获取。
 
@@ -194,7 +214,7 @@ console.log(hiwebSocket.clientInfo)
 
 ## 0.0.55-beta8(2023-09-12)
 <details>
-  <summary>01. 🌈 添加国际化 i18n 支持 </summary>
+  <summary>01. 🌈 新增支持 国际化 i18n </summary>
 
 原生为简体中文，英语、德语、西班牙语、法语、意大利语、日语、俄语、繁体中文皆为 AI 机翻，欢迎帮助 [订正](https://github.com/CcSimple/vue-plugin-hiprint/tree/main/src/i18n)。
 
@@ -238,7 +258,7 @@ hiprint.init({
 
 ## 0.0.55-beta3(2023-08-16)
 <details>
-  <summary>01. 🌈 新增 条形码、二维码独立元素，使用 bwip-js 库生成 svg </summary>
+  <summary>01. 🌈 新增支持 条形码、二维码独立元素，使用 bwip-js 库生成 svg </summary>
 解决原 text 元素中的条形码、二维码 类型不全，生成条码、二维码不清晰的问题
 </details>
 

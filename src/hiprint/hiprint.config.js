@@ -2004,6 +2004,9 @@
           name: 'qrcodeType',
           hidden: false
         }, {
+          name: 'qrCodeLevel',
+          hidden: false
+        }, {
           name: 'coordinate',
           hidden: false
         }, {
@@ -2085,6 +2088,9 @@
         hidden:false
       }, {
         name: 'qrcodeType',
+        hidden:false
+      }, {
+        name: 'qrCodeLevel',
         hidden:false
       }, {
         name: 'coordinate',

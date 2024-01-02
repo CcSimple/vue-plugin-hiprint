@@ -63,17 +63,18 @@ export default {
     }, {
       "options": {
         "left": 483,
-        "top": 124.5,
-        "height": 43,
-        "width": 51,
+        "top": 115,
+        "height": 60,
+        "width": 60,
         "title": "123456789",
+        "textAlign": "center",
         "textType": "qrcode"
       }, "printElementType": {"title": "自定义文本", "type": "text"}
     }, {
       "options": {
         "left": 285,
-        "top": 130.5,
-        "height": 34,
+        "top": 125,
+        "height": 40,
         "width": 175,
         "title": "123456789",
         "fontFamily": "微软雅黑",
