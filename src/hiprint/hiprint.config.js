@@ -1833,6 +1833,9 @@
         }, {
           name: 'barcodeType',
           hidden: false
+        },{
+          name: 'barColor',
+          hidden: false
         }, {
           name: 'coordinate',
           hidden: false

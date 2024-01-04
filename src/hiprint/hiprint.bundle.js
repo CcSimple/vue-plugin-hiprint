@@ -4270,7 +4270,34 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
-    it = function () {
+      barColor = function () {
+        function t() {
+          this.name = "barColor";
+        }
+
+        return t.prototype.css = function (t, e) {
+          if (t && t.length) {
+            // if (e) return t.css("background-color", e), "background-color:" + e;
+            // t[0].style.backgroundColor = "";
+          }
+
+          return null;
+        }, t.prototype.createTarget = function () {
+          return this.target = $(`<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        ${i18n.__('条码颜色')}\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="text" class="auto-submit"/>\n        </div>\n    </div>`), this.target;
+        }, t.prototype.getValue = function () {
+          var t = this.target.find("input").val();
+          if (t) return t.toString();
+        }, t.prototype.setValue = function (t) {
+          this.target.find("input").minicolors({
+            defaultValue: t || "",
+            theme: "bootstrap"
+          }), this.target.find("input").val(t);
+        }, t.prototype.destroy = function () {
+          this.target.remove();
+        }, t;
+      }(),
+
+      it = function () {
       function t() {
         this.name = "orient";
       }
@@ -5177,7 +5204,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new paperNumberContinue(), new watermarkOptions(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new borderRadius(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(),new textWrap(), new at(), new lt(), new panelLayoutOptions(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new rowsColumnsMergeClean(), new groupFieldsFormatter(), new groupFormatter(), new groupFooterFormatter(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new stylerHeader(), new renderFormatter(), new _t(), new wt(), new maxRows(), new xt(), new tableColumnH(), new tableE(), new tableQRCodeLevel(), new tablept(), new tableSummaryTitle(), new tableSummaryText(), new tableSummaryColspan(), new tableSummary(), new tableSummaryAlign(), new tableSummaryNumFormat(), new tableSummaryFormatter(), new upperCase(), new barcodeType(), new qrcodeType()], t;
+    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new paperNumberContinue(), new watermarkOptions(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new borderRadius(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(),new textWrap(), new at(), new lt(), new panelLayoutOptions(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new rowsColumnsMergeClean(), new groupFieldsFormatter(), new groupFormatter(), new groupFooterFormatter(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new stylerHeader(), new renderFormatter(), new _t(), new wt(), new maxRows(), new xt(), new tableColumnH(), new tableE(), new tableQRCodeLevel(), new tablept(), new tableSummaryTitle(), new tableSummaryText(), new tableSummaryColspan(), new tableSummary(), new tableSummaryAlign(), new tableSummaryNumFormat(), new tableSummaryFormatter(), new upperCase(), new barcodeType(), new qrcodeType(),new barColor()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -9058,7 +9085,8 @@ var hiprint = function (t) {
             scale: 1,
             width: parseInt(o.a.pt.toPx(this.options.getWidth()) / 2.835),
             height: parseInt(height / 2.835),
-            includetext: false
+            includetext: false,
+            barcolor: this.options.barColor || "#000",
           })
           content.html($(barcode))
           if (!this.options.hideTitle) {
