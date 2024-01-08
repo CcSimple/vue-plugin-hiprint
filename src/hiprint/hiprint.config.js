@@ -12,6 +12,7 @@
     adsorbLineMin: 6, //吸附线显示最小距离pt
     paperNumberContinue: true, //连续打印页码
     panel: {
+      
       supportOptions: [
         {
           name: 'panelPaperRule',
@@ -1757,13 +1758,8 @@
           hidden: false
         },
         {
-          // 表格条形码底部是否显示内容
+          // 表格条码底部是否显示内容
           name: 'showBarcodeTitle',
-          hidden: false,
-        },
-        {
-          // 表格二维码底部是否显示内容
-          name: 'showQrcodeTitle',
           hidden: false,
         },
         {
