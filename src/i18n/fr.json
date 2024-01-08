@@ -245,5 +245,6 @@
     "排列方式": "Mode d'agencement",
     "垂直间距%s": "Espacement Vertical %s",
     "水平间距%s": "Espacement Horizontal %s",
-    "边框圆角": "Rayon de Bordure"
+    "边框圆角": "Rayon de Bordure",
+    "显示码值": "Afficher la Valeur du Code"
 }
