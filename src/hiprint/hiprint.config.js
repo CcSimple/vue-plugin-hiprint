@@ -1757,6 +1757,16 @@
           hidden: false
         },
         {
+          // 表格条形码底部是否显示内容
+          name: 'showBarcodeTitle',
+          hidden: false,
+        },
+        {
+          // 表格二维码底部是否显示内容
+          name: 'showQrcodeTitle',
+          hidden: false,
+        },
+        {
           name: 'paddingLeft',
           hidden: false
         },
@@ -1788,6 +1798,7 @@
           name: 'tableSummaryNumFormat',
           hidden: false
         },
+       
         {
           name: 'tableSummaryFormatter',
           hidden: false
@@ -1796,6 +1807,7 @@
           name: 'upperCase',
           hidden: false
         },
+       
         {
           name: 'renderFormatter',
           hidden: false
@@ -1812,6 +1824,7 @@
           name: 'stylerHeader',
           hidden: false
         },
+   
       ],
       default: {
         height: 90,
