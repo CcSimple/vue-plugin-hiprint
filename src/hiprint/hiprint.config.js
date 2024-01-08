@@ -1759,7 +1759,7 @@
         },
         {
           // 表格条码底部是否显示内容
-          name: 'showBarcodeTitle',
+          name: 'showCodeTitle',
           hidden: false,
         },
         {
