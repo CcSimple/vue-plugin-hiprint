@@ -6340,7 +6340,6 @@ var hiprint = function (t) {
       });
     }, t.prototype.initRows = function (t) {
       var e = this;
-
       if (this.trRows = [], t) {
         this.rows = t, t.forEach(function (t, n) {
           t.init(e.optionsCoat, e.target.find("tr:eq(" + n + ")"), !0);
@@ -10640,7 +10639,19 @@ var hiprint = function (t) {
           })
         }
         return elements
-      }, t.prototype.updateOption = function (option, v) { // 批量更新参数
+      }, 
+      // 全选所有元素
+      t.prototype.selectAllElements = function(){
+        var t = this
+        t.editingPanel.printElements.forEach((e,index)=>{
+          const designTarget = e.designTarget
+          designTarget.children("div[panelindex]").addClass("selected")
+          designTarget.children("div[panelindex]").css({
+            display: "block"
+          })
+        })
+      },
+      t.prototype.updateOption = function (option, v) { // 批量更新参数
         var elements = this.getSelectEls();
         if (elements && elements.length) {
           elements.forEach(function (e) {
