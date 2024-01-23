@@ -1298,7 +1298,8 @@ var hiprint = function (t) {
           copyArea.text(json);
           // 元素需可见才能选中复制到剪切板
           copyArea.css('visibility', 'visible');
-          copyArea.focus();
+          // 尝试修复对复制元素的自动聚焦
+          // copyArea.focus();
           if (copyArea.setSelectionRange)
             copyArea.setSelectionRange(0, copyArea.value.length);
           else
@@ -2307,13 +2308,11 @@ var hiprint = function (t) {
       function t() {
         this.name = "letterSpacing";
       }
-
       return t.prototype.css = function (t, e) {
         if (t && t.length) {
           if (e) return t.css("letter-spacing", e + "pt"), "letter-spacing:" + e + "pt";
           t[0].style.letterSpacing = "";
         }
-
         return null;
       }, t.prototype.createTarget = function () {
         return this.target = $(`<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        ${i18n.__('字间距')}\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >${i18n.__('默认')}</option>\n        <option value="0.75" >0.75pt</option>\n        <option value="1.5" >1.5pt</option>\n        <option value="2.25" >2.25pt</option>\n        <option value="3" >3pt</option>\n        <option value="3.75" >3.75pt</option>\n        <option value="4.5" >4.5pt</option>\n        <option value="5.25" >5.25pt</option>\n        <option value="6" >6pt</option>\n        <option value="6.75" >6.75pt</option>\n        <option value="7.5" >7.5pt</option>\n        <option value="8.25" >8.25pt</option>\n        <option value="9" >9pt</option>\n        <option value="9.75" >9.75pt</option>\n        <option value="10.5" >10.5pt</option>\n        <option value="11.25" >11.25pt</option>\n        <option value="12" >12pt</option>\n        </select>\n        </div>\n    </div>`), this.target;
@@ -2331,7 +2330,6 @@ var hiprint = function (t) {
       function t() {
         this.name = "textAlign";
       }
-
       return t.prototype.css = function (t, e) {
         if (t && t.length) {
           if (e) return t.css("text-align", e), "justify" == e ? (t.css("text-align-last", "justify"), t.css("text-justify", "distribute-all-lines")) : (t[0].style.textAlignLast = "", t[0].style.textJustify = ""), "text-align:" + e;
@@ -4649,7 +4647,6 @@ var hiprint = function (t) {
       function t() {
         this.name = "tableSummaryFormatter";
       }
-
       return t.prototype.createTarget = function () {
         return this.target = $(`<div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        ${i18n.__('底部聚合格式化函数')}\n        </div>\n        <div class="hiprint-option-item-field">\n        <textarea style="height:80px;" placeholder="function(column,fieldPageData,tableData,options){ return \'<td></td>\'; }" class="auto-submit"></textarea>\n        </div>\n    </div>`), this.target;
       }, t.prototype.getValue = function () {
@@ -4701,7 +4698,6 @@ var hiprint = function (t) {
       function t() {
         this.name = "tableSummary"
       }
-
       return t.prototype.createTarget = function () {
         return this.target = $(`<div class="hiprint-option-item"><div class="hiprint-option-item-label">${i18n.__('底部聚合类型')}</div><div class="hiprint-option-item-field"><select class="auto-submit"><option value="">${i18n.__('不聚合')}</option><option value="count">${i18n.__('计数')}</option><option value="sum">${i18n.__('合计')}</option><option value="avg">${i18n.__('平均值')}</option><option value="min">${i18n.__('最小值')}</option><option value="max">${i18n.__('最大值')}</option><option value="text">${i18n.__('仅文本')}</option></select></div></div>`), this.target;
       }, t.prototype.getValue = function () {
