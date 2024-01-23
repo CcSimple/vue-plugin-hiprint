@@ -1393,7 +1393,6 @@ var hiprint = function (t) {
               hinnn.event.trigger("hiprintTemplateDataChanged_" + ele.templateId, "删除");
             })
             hinnn.event.trigger("clearSettingContainer")
-
             break
           case 37:
             i = n.options.getLeft();
