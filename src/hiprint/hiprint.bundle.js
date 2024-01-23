@@ -154,7 +154,6 @@ var hiprint = function (t) {
     id: 0,
     off: function off(t, e) {
       var n = i[t];
-
       if (n) {
         for (var o = -1, r = 0; r < n.length; r++) {
           if (n[r] === e) {
@@ -162,7 +161,6 @@ var hiprint = function (t) {
             break;
           }
         }
-
         o < 0 || i[t].splice(o, 1);
       }
     },
@@ -876,26 +874,24 @@ var hiprint = function (t) {
                 })
               }else{
                 tab.list.forEach(function (e) {
-                  var n = e.getValue(),
-                      r = 'textType' == e.name && t.options[e.name] !== n,
-                      a = 'axis' == e.name && t.options[e.name] !== n;
-                    n && "object" == _typeof(n) ? Object.keys(n).forEach(function (e) {
-                      t.options[e] = n[e];
-                    }) : t.options[e.name] = n;
-                    if (r) {
-                      t.setResizePanel()
-                    }
-                    if (a) {
-                      t.designTarget.hidraggable('update', { axis: n })
-                    }
+                  var n = e.getValue(), r = 'textType' == e.name && t.options[e.name] !== n,
+                    a = 'axis' == e.name && t.options[e.name] !== n;
+                  n && "object" == _typeof(n) ? Object.keys(n).forEach(function (e) {
+                    t.options[e] = n[e];
+                  }) : t.options[e.name] = n;
+                  if (r) {
+                    t.setResizePanel()
+                  }
+                  if (a) {
+                    t.designTarget.hidraggable('update', {axis: n})
+                  }
                 })
               }
             });
           } else {
             this.getPrintElementOptionItems().forEach(function (e) {
-              var n = e.getValue(),
-              r = 'textType' == e.name && t.options[e.name] !== n,
-              a = 'axis' == e.name && t.options[e.name] !== n;
+              var n = e.getValue(), r = 'textType' == e.name && t.options[e.name] !== n,
+                a = 'axis' == e.name && t.options[e.name] !== n;
               n && "object" == _typeof(n) ? Object.keys(n).forEach(function (e) {
                 t.options[e] = n[e];
               }) : t.options[e.name] = n;
@@ -903,7 +899,7 @@ var hiprint = function (t) {
                 t.setResizePanel()
               }
               if (a) {
-                t.designTarget.hidraggable('update', { axis: n })
+                t.designTarget.hidraggable('update', {axis: n})
               }
             });
           }
@@ -2289,7 +2285,6 @@ var hiprint = function (t) {
       function t() {
         this.name = "fontFamily";
       }
-
       return t.prototype.createTarget = function (t) {
         var e = void 0;
         if (t && (e = t.getFontList()), e) {
@@ -8819,6 +8814,10 @@ var hiprint = function (t) {
           ele.css(ele.designTarget, t)
           this.updateTargetText(ele.designTarget, ele.getTitle(), t)
         })
+        if (this.designTarget) {
+          var t = this.getData();
+          this.css(this.designTarget, t), this.updateTargetText(this.designTarget, this.getTitle(), t);
+        }
       }, e.prototype.getConfigOptions = function () {
         return p.a.instance.text;
       }, e.prototype.getTitle = function () {
