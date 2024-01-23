@@ -583,6 +583,7 @@ export default {
         ],
         dataMode: 1, // 1:getJson 其他：getJsonTid 默认1
         history: true, // 是否需要 撤销重做功能
+        willOutOfBounds: false, // 是否允许组件内的控件超出范围
         onDataChanged: (type, json) => {
           console.log(type); // 新增、移动、删除、修改(参数调整)、大小、旋转
           console.log(json); // 返回 template
