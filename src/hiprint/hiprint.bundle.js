@@ -3144,6 +3144,7 @@ var hiprint = function (t) {
       function t() {
         this.name = "qrcodeType"
       }
+
       return t.prototype.createTarget = function () {
         var options = [{
           label: `${i18n.__('默认')}(qrcode)`,
@@ -9246,8 +9247,7 @@ var hiprint = function (t) {
             width: Math.min(parseInt(width / 2.835), parseInt(height / 2.835)),
             height: Math.min(parseInt(width / 2.835), parseInt(height / 2.835)),
             includetext: false,
-            eclevel: ['M', 'L', 'H', 'Q'][this.options.qrCodeLevel ?? 0],
-            barcolor: this.options.barColor || '#000'
+            eclevel: ['M', 'L', 'H', 'Q'][this.options.qrCodeLevel ?? 0]
           })
           content.html($(qrcode))
           if (!this.options.hideTitle) {
@@ -9668,6 +9668,11 @@ var hiprint = function (t) {
             a.options.setTop(top);
             a.setTemplateId(n.templateId), a.setPanel(n);
             n.appendDesignPrintElement(n.designPaper, a, !1);
+            // 在复制的地方也重新给他算轮次
+            const template = s.a.instance.getPrintTemplateById(n.templateId)
+            if(a.options.field && template.qtDesigner){
+              a.options.field = template.qtDesignderFunction(a.options.field)
+            }
             n.printElements.push(a), a.design(void 0, n.designPaper);
             console.log('pasteJson success');
             o.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "复制");
@@ -9828,6 +9833,7 @@ var hiprint = function (t) {
         t.getTarget().hidroppable({
           accept: ".ep-draggable-item",
           onDrop: function onDrop(n, i) {
+            const template = s.a.instance.getPrintTemplateById(e.templateId)
             var r = s.a.instance.getDragingPrintElement(),
               a = r.printElement;
             var ptr = e.designPaper.scale || 1;
@@ -9835,6 +9841,10 @@ var hiprint = function (t) {
               top = (r.top - o.a.px.toPt(e.target.children(".hiprint-printPaper").offset().top)) / ptr;
             a.updateSizeAndPositionOptions(e.mathroundToporleft(left), e.mathroundToporleft(top));
             a.setTemplateId(e.templateId), a.setPanel(e), e.appendDesignPrintElement(e.designPaper, a, !0);
+            // 如果说编辑器开启qtDesigner,那么就将唯一ID构建唯一ID生成逻辑代码
+            if(a.options.field && template.qtDesigner){
+              a.options.field = template.qtDesignderFunction(a.options.field)
+            }
             e.printElements.push(a), a.design(void 0, t);
             o.a.event.trigger("hiprintTemplateDataChanged_" + e.templateId, "新增");
           }
@@ -10373,6 +10383,29 @@ var hiprint = function (t) {
         this.historyPos = 0;
         this.defaultPanelName = n.defaultPanelName;
         this.designOptions = {};
+        this.qtDesigner = n.qtDesigner != void 0 ? n.qtDesigner : !0;
+        this.qtDesignerMap = {}
+        this.qtDesignderFunction = function(field){
+          this.qtDesignerMap = {}
+          const fieldTitle = field.split("_")[0]
+          for(const item of this.editingPanel.printElements){
+            if(item.options.field === void 0){
+              continue
+            }
+            const renderKey = item.options.field.split("_")[0]
+            if(this.qtDesignerMap[renderKey] === void 0){
+              this.qtDesignerMap[renderKey] = 1
+            }else{
+              this.qtDesignerMap[renderKey] += 1
+            }
+          }
+          console.log(this.qtDesignerMap[fieldTitle])
+          if(this.qtDesignerMap[fieldTitle] === 0||this.qtDesignerMap[fieldTitle] === void 0){
+            return fieldTitle
+          }else{
+            return fieldTitle +"_"+ this.qtDesignerMap[fieldTitle]
+          }
+        }
         var i = new st(n.template || []);
         n.template && i.panels.forEach(function (t) {
           e.printPanels.push(new pt(t, e.id));
