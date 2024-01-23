@@ -26,6 +26,7 @@ export const aProvider = function (ops) {
               testData: '单据类型',
               height: 16,
               fontSize: 15,
+              field: "textType",
               fontWeight: "700",
               textAlign: "center",
               hideTitle: true

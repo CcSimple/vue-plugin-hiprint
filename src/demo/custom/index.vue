@@ -56,6 +56,7 @@
               直接打印
               <a-icon type="printer"/>
             </a-button>
+            <a-button type="primary" @click="selectAll">全选元素</a-button>
           </a-button-group>
           <!-- 保存/清空 -->
           <a-button-group>
@@ -193,6 +194,9 @@ export default {
       })
       this.changeMode()
     },
+    selectAll(){
+      this.template.selectAllElements()
+    },  
     changeMode() {
       let {mode} = this
       let provider = providers[mode]

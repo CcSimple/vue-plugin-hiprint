@@ -808,6 +808,9 @@ var hiprint = function (t) {
           onBeforeDrag: function onBeforeDrag(t) {
             _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !0, n.designTarget.focus(), n.createLineOfPosition(e);
           },
+          onBeforeSelectAllDrag: function onBeforeSelectAllDrag() {
+            _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.draging = !0, n.designTarget.focus()
+          },
           getScale: function getScale() {
             return n.designPaper.scale || 1;
           },
@@ -1289,12 +1292,25 @@ var hiprint = function (t) {
           var copyArea = $('#copyArea');
           if (!copyArea.length) copyArea = $('<textarea id="copyArea" style="position: absolute; left: 0px; top: 0px;opacity: 0"></textarea>');
           $("body").append(copyArea);
-          var json = JSON.stringify({
-            options: n.options,
-            printElementType: n.printElementType,
-            id: n.id,
-            templateId: n.templateId
-          });
+          let copyElements = this.panel.printElements.filter(ele => {
+            return 'block' == ele.designTarget.children().last().css('display') && !ele.printElementType.type.includes('table');
+          })
+          copyElements = copyElements.map(ele => {
+            return {
+              options: ele.options,
+              printElementType: ele.printElementType,
+              id: ele.id,
+              templateId: ele.templateId
+            }
+          })
+          console.log(copyElements)
+          var json = JSON.stringify(copyElements)
+          // var json = JSON.stringify({
+          //   options: n.options,
+          //   printElementType: n.printElementType,
+          //   id: n.id,
+          //   templateId: n.templateId
+          // });
           copyArea.text(json);
           // 元素需可见才能选中复制到剪切板
           copyArea.css('visibility', 'visible');
@@ -1370,6 +1386,12 @@ var hiprint = function (t) {
             var templete = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(n.templateId)
             templete.deletePrintElement(n)
             hinnn.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "删除");
+            hinnn.event.trigger("clearSettingContainer")
+             // 获取到了template 拿到template里面所有被选中的元素
+             els.forEach(ele=>{
+              templete.deletePrintElement(ele)
+              hinnn.event.trigger("hiprintTemplateDataChanged_" + ele.templateId, "删除");
+            })
             hinnn.event.trigger("clearSettingContainer")
             break
           case 37:
@@ -9565,27 +9587,55 @@ var hiprint = function (t) {
         if (!copyArea.length) return;
         try {
           var json = copyArea.text();
-          var obj = JSON.parse(json);
-          if (!obj.printElementType && !obj.templateId) return;
-          // 复制使用当前模板内的元素 进行克隆
-          // todo: 使用参数创建
-          var n = this, r = obj.options, ele = n.getElementById(obj.id);
-          if (!ele) return;
-          var a = ele.clone(obj);
-          if (!a) return;
-          // 判断是否是在元素上进行paste
-          var useMouse = e.currentTarget.className != e.target.className;
-          var left = (!useMouse && n.mouseOffsetX && o.a.px.toPt(n.mouseOffsetX)) || (r.left += 10);
-          var top = (!useMouse && n.mouseOffsetY && o.a.px.toPt(n.mouseOffsetY)) || (r.top += 10);
-          a.options.setLeft(left);
-          a.options.setTop(top);
-          a.setTemplateId(n.templateId), a.setPanel(n);
-          n.appendDesignPrintElement(n.designPaper, a, !1);
-          n.printElements.push(a), a.design(void 0, n.designPaper);
-          console.log('pasteJson success');
-          o.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "复制");
-          // 点击克隆出来的元素
-          a.designTarget.children('.resize-panel').trigger($.Event('click'));
+          var objList = JSON.parse(json);
+          let operationPasterPosition = null
+          let replacePosition = null
+          var left = null
+          var top = null
+          objList.forEach((obj,index) => {
+            if (!obj.printElementType && !obj.templateId) return;
+            // 复制使用当前模板内的元素 进行克隆
+            // todo: 使用参数创建
+            var n = this, r = obj.options, ele = n.getElementById(obj.id);
+            if (!ele) return;
+            var a = ele.clone(obj);
+            if (!a) return;
+            // 判断是否是在元素上进行paste            
+            if(index === 0){
+              operationPasterPosition = {
+                x: obj.options.left,
+                y: obj.options.top
+              }
+              var useMouse = e.currentTarget.className != e.target.className;
+              left = (!useMouse && n.mouseOffsetX && o.a.px.toPt(n.mouseOffsetX)) || (r.left += 10);
+              top = (!useMouse && n.mouseOffsetY && o.a.px.toPt(n.mouseOffsetY)) || (r.top += 10);
+              replacePosition = {
+                x: left,
+                y: top
+              }
+            }else{
+              const position = {
+                x: obj.options.left,
+                y: obj.options.top
+              }
+              const incrementPosition = {
+                x: position.x - operationPasterPosition.x,
+                y: position.y - operationPasterPosition.y
+              }
+              left = replacePosition.x + incrementPosition.x
+              top = replacePosition.y + incrementPosition.y
+
+            }
+            a.options.setLeft(left);
+            a.options.setTop(top);
+            a.setTemplateId(n.templateId), a.setPanel(n);
+            n.appendDesignPrintElement(n.designPaper, a, !1);
+            n.printElements.push(a), a.design(void 0, n.designPaper);
+            console.log('pasteJson success');
+            o.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "复制");
+            // 点击克隆出来的元素
+            a.designTarget.children('.resize-panel').trigger($.Event('click'));
+          })
         } catch (e) {
           console.error('pasteJson error', e);
         }
@@ -10640,7 +10690,23 @@ var hiprint = function (t) {
           })
         }
         return elements
-      }, t.prototype.updateOption = function (option, v) { // 批量更新参数
+      }, 
+      t.prototype.selectAllElements = function () {
+        var hiPrintEntity = this
+        var t = $
+        hiPrintEntity.editingPanel.printElements.forEach((e, index) => {
+          let designTarget = e.designTarget
+          designTarget.children("div[panelindex]").addClass("selected")
+          designTarget.children().last().css({
+            display: "block"
+          })
+          designTarget = designTarget[0]
+          t.data(designTarget, "hidraggable").options
+            .onBeforeSelectAllDrag
+            .call(designTarget, {})
+        })
+      },
+      t.prototype.updateOption = function (option, v) { // 批量更新参数
         var elements = this.getSelectEls();
         if (elements && elements.length) {
           elements.forEach(function (e) {
