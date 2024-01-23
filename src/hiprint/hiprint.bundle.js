@@ -3144,7 +3144,6 @@ var hiprint = function (t) {
       function t() {
         this.name = "qrcodeType"
       }
-
       return t.prototype.createTarget = function () {
         var options = [{
           label: `${i18n.__('默认')}(qrcode)`,
@@ -4345,7 +4344,6 @@ var hiprint = function (t) {
             // if (e) return t.css("background-color", e), "background-color:" + e;
             // t[0].style.backgroundColor = "";
           }
-
           return null;
         }, t.prototype.createTarget = function () {
           return this.target = $(`<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        ${i18n.__('条码颜色')}\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="text" class="auto-submit"/>\n        </div>\n    </div>`), this.target;
@@ -9248,7 +9246,8 @@ var hiprint = function (t) {
             width: Math.min(parseInt(width / 2.835), parseInt(height / 2.835)),
             height: Math.min(parseInt(width / 2.835), parseInt(height / 2.835)),
             includetext: false,
-            eclevel: ['M', 'L', 'H', 'Q'][this.options.qrCodeLevel ?? 0]
+            eclevel: ['M', 'L', 'H', 'Q'][this.options.qrCodeLevel ?? 0],
+            barcolor: this.options.barColor || '#000'
           })
           content.html($(qrcode))
           if (!this.options.hideTitle) {

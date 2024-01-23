@@ -2015,7 +2015,11 @@
         }, {
           name: 'qrcodeType',
           hidden: false
-        }, {
+        },{
+          name: 'barColor',
+          hidden: false
+        }, 
+        {
           name: 'qrCodeLevel',
           hidden: false
         }, {
@@ -2101,6 +2105,9 @@
       }, {
         name: 'qrcodeType',
         hidden:false
+      },{
+        name: 'barColor',
+        hidden: false
       }, {
         name: 'qrCodeLevel',
         hidden:false
