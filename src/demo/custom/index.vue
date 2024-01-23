@@ -195,7 +195,7 @@ export default {
       this.changeMode()
     },
     selectAll(){
-      console.log(this.template.selectAllElements())
+      this.template.selectAllElements()
     },  
     changeMode() {
       let {mode} = this
