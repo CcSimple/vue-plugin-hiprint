@@ -2371,7 +2371,6 @@ var hiprint = function (t) {
       function t() {
         this.name = "hideTitle";
       }
-
       return t.prototype.createTarget = function () {
         return this.target = $(`<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        ${i18n.__('标题显示隐藏')}\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >${i18n.__('默认')}</option>\n            <option value="false" >${i18n.__('显示')}</option>\n            <option value="true" >${i18n.__('隐藏')}</option>\n        </select>\n        </div>\n    </div>`), this.target;
       }, t.prototype.getValue = function () {
@@ -2386,7 +2385,6 @@ var hiprint = function (t) {
       function t() {
         this.name = "tableBorder";
       }
-
       return t.prototype.css = function (t, e) {
         if (t.find("table").length) {
           if ("border" == e || void 0 == e) return t.find("table").css("border", "1px solid"), "border:1px solid";
@@ -5227,7 +5225,6 @@ var hiprint = function (t) {
       function t() {
         this.name = "tableFooterRepeat";
       }
-
       return t.prototype.createTarget = function () {
         return this.target = $(`<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        ${i18n.__('表格脚显示')}\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >${i18n.__('默认')}</option>\n        <option value="no" >${i18n.__('不显示')}</option>\n        <option value="page" >${i18n.__('每页显示')}</option>\n        <option value="last" >${i18n.__('最后显示')}</option>\n        </select>\n        </div>\n    </div>`), this.target;
       }, t.prototype.getValue = function () {
