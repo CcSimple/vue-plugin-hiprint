@@ -9493,13 +9493,16 @@ var hiprint = function (t) {
       }
 
       return t.prototype.updateRect = function (t, e, i) {
-        var scale = i.scale||1.0
+        var scale = i.designPaper.scale||1.0
+        console.log(i)
         this.ex = t
         this.ey = e
         this.minX = this.startX/scale < t/scale ? this.startX/scale : t/scale, 
         this.minY = this.startY/scale < e/scale ? this.startY/scale : e/scale, 
         this.maxX = this.startX/scale < t/scale ? t/scale : this.startX/scale, 
         this.maxY = this.startY/scale < e/scale ? e/scale : this.startY/scale;
+        console.log(this)
+
       }, t.prototype.updatePositionByMultipleSelect = function (t, e) {
         null != t && (this.lastLeft = this.lastLeft + t), null != e && (this.lastTop = this.lastTop + e), this.target.css({
           left: this.lastLeft + "pt",
@@ -9679,7 +9682,7 @@ var hiprint = function (t) {
             // 在复制的地方也重新给他算轮次
             const template = s.a.instance.getPrintTemplateById(n.templateId)
             if(a.options.field && template.qtDesigner){
-              a.options.field = template.qtDesignderFunction(a.options.field)
+              a.qid = template.qtDesignderFunction(a.options.field)
             }
             n.printElements.push(a), a.design(void 0, n.designPaper);
             console.log('pasteJson success');
@@ -9851,7 +9854,7 @@ var hiprint = function (t) {
             a.setTemplateId(e.templateId), a.setPanel(e), e.appendDesignPrintElement(e.designPaper, a, !0);
             // 如果说编辑器开启qtDesigner,那么就将唯一ID构建唯一ID生成逻辑代码
             if(a.options.field && template.qtDesigner){
-              a.options.field = template.qtDesignderFunction(a.options.field)
+              a.qid = template.qtDesignderFunction(a.options.field)
             }
             e.printElements.push(a), a.design(void 0, t);
             o.a.event.trigger("hiprintTemplateDataChanged_" + e.templateId, "新增");
@@ -10429,7 +10432,6 @@ var hiprint = function (t) {
               this.qtDesignerMap[renderKey] += 1
             }
           }
-          console.log(this.qtDesignerMap[fieldTitle])
           if(this.qtDesignerMap[fieldTitle] === 0||this.qtDesignerMap[fieldTitle] === void 0){
             return fieldTitle
           }else{
