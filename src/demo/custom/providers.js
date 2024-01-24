@@ -15,6 +15,7 @@ export const aProvider = function (ops) {
               testData: '单据表头',
               height: 17,
               fontSize: 16.5,
+              field: "headera",
               fontWeight: "700",
               textAlign: "center",
               hideTitle: true
@@ -26,6 +27,7 @@ export const aProvider = function (ops) {
               testData: '单据类型',
               height: 16,
               fontSize: 15,
+              field: "textType",
               fontWeight: "700",
               textAlign: "center",
               hideTitle: true
