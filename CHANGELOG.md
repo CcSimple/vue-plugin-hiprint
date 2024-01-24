@@ -4,6 +4,73 @@
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
 
+## 0.0.57-beta9
+
+<details>
+  <summary>01. 🌈 新增支持 模版 控制元素是否可超出面板 </summary>
+
+  ```js
+  new hiprint.PrintTemplate({
+    template: panel,
+    willOutofBounds: true, // 是否允许组件内的控件超出范围
+  })
+  ```
+</details>
+<details>
+  <summary>02. 🌈 新增支持 拖拽元素 生成 类 QT Designer 唯一 field  </summary>
+
+  ```js
+  new hiprint.PrintTemplate({
+    template: panel,
+    qtDesigner: true, // 是否开启类似QT Designer的唯一field生成模式
+  })
+  ```
+  ```json
+  {
+    "options": {
+      // ... 省略其他属性 ...
+      "field": "textType",
+      "title": "单据类型",
+      "qid": "textType_1", // 唯一 id
+      // ... 省略其他属性 ...
+    },
+    "printElementType": {
+      "title": "单据类型",
+      "type": "text"
+    }
+  }
+  ```
+</details>
+<details>
+  <summary>03. ✨ 调整优化 bwip 条码、二维码 填充色统一 </summary>
+
+  > 设置移入 样式面板 => "条码颜色"
+
+  ```json
+  {
+    "options": {
+      "barColor": "#000", // 条码、二维码 填充颜色
+    }
+  }
+  ```
+</details>
+<details>
+  <summary>04. 🐛️ fix 面板缩放后 框选框不跟鼠标问题 </summary>
+</details>
+
+## 0.0.57-beta8
+<details>
+  <summary>01. 🌈 新增支持 添加全选 api </summary>
+
+  ```js
+  const template = new hiprint.PrintTemplate({
+    template: panel,
+  })
+  
+  template.selectAllElements()
+  ```
+</details>
+
 ## 0.0.57-beta3
 <details>
   <summary>01. 🌈 新增支持 近期社区 pr 部分中文 i18n 机翻 </summary>

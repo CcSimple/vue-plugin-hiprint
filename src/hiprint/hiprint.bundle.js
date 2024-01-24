@@ -7316,8 +7316,6 @@ var hiprint = function (t) {
       this.initResizeBox(t);
     },
     initResizeBox: function initResizeBox(t) {
-      console.log("初始化包围盒")
-
       var e = this;
       n(t).each(function () {
         var o;
@@ -9495,14 +9493,12 @@ var hiprint = function (t) {
 
       return t.prototype.updateRect = function (t, e, i) {
         var scale = i.designPaper.scale||1.0
-        console.log(i)
         this.ex = t
         this.ey = e
         this.minX = this.startX/scale < t/scale ? this.startX/scale : t/scale, 
         this.minY = this.startY/scale < e/scale ? this.startY/scale : e/scale, 
         this.maxX = this.startX/scale < t/scale ? t/scale : this.startX/scale, 
         this.maxY = this.startY/scale < e/scale ? e/scale : this.startY/scale;
-        console.log(this)
 
       }, t.prototype.updatePositionByMultipleSelect = function (t, e) {
         null != t && (this.lastLeft = this.lastLeft + t), null != e && (this.lastTop = this.lastTop + e), this.target.css({
@@ -10081,26 +10077,6 @@ var hiprint = function (t) {
             'transform-origin': '0 0'
           });
         }
-        // } else {
-        //   var r = '', f = 'rotate(180deg)';
-        //   if (t.startX == t.minX || t.startX == t.maxX) {
-        //     if (t.ey >= t.by) {
-        //       f = 'scaleX(-1)', r = 'left'
-        //     } else {
-        //       r = 'center top'
-        //     }
-        //   } else if (t.startY == t.minY || t.startY == t.maxY) {
-        //     r = t.ex >= t.bx ? 'right' : 'left'
-        //   }
-        //   this.mouseRect.target.css({
-        //     height: t.maxY - t.minY + "px",
-        //     width: t.maxX - t.minX + "px",
-        //     left: t.lastLeft / ptr + "pt",
-        //     top: t.lastTop / ptr + "pt",
-        //     transform: f,
-        //     'transform-origin': r
-        //   });
-        // }
         t.target.focus()
       }, t.prototype.bingKeyboardMoveEvent = function (t) {
         var e = this;
