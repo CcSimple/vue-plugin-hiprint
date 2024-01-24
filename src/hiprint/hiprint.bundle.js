@@ -9683,7 +9683,7 @@ var hiprint = function (t) {
             // 在复制的地方也重新给他算轮次
             const template = s.a.instance.getPrintTemplateById(n.templateId)
             if(a.options.field && template.qtDesigner){
-              a.qid = template.qtDesignderFunction(a.options.field)
+              a.options.qid = template.qtDesignderFunction(a.options.field)
             }
             n.printElements.push(a), a.design(void 0, n.designPaper);
             console.log('pasteJson success');
@@ -9855,7 +9855,7 @@ var hiprint = function (t) {
             a.setTemplateId(e.templateId), a.setPanel(e), e.appendDesignPrintElement(e.designPaper, a, !0);
             // 如果说编辑器开启qtDesigner,那么就将唯一ID构建唯一ID生成逻辑代码
             if(a.options.field && template.qtDesigner){
-              a.qid = template.qtDesignderFunction(a.options.field)
+              a.options.qid = template.qtDesignderFunction(a.options.field)
             }
             e.printElements.push(a), a.design(void 0, t);
             o.a.event.trigger("hiprintTemplateDataChanged_" + e.templateId, "新增");
