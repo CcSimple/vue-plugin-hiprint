@@ -154,7 +154,6 @@ var hiprint = function (t) {
     id: 0,
     off: function off(t, e) {
       var n = i[t];
-
       if (n) {
         for (var o = -1, r = 0; r < n.length; r++) {
           if (n[r] === e) {
@@ -162,7 +161,6 @@ var hiprint = function (t) {
             break;
           }
         }
-
         o < 0 || i[t].splice(o, 1);
       }
     },
@@ -692,6 +690,23 @@ var hiprint = function (t) {
       }, BasePrintElement.prototype.getTitle = function () {
         return this.printElementType.title;
       }, BasePrintElement.prototype.updateSizeAndPositionOptions = function (t, e, n, i) {
+        const template = _HiPrintlib__WEBPACK_IMPORTED_MODULE_6__.a.instance.getPrintTemplateById(this.templateId)
+        if (this.panel !== void 0 && !template.willOutOfBounds) {
+          const panelWidthPt = hinnn.mm.toPt(this.panel.width)
+          const panelHeightPt = hinnn.mm.toPt(this.panel.height)
+          if (t < 0) {
+            return
+          }
+          if (e < 0) {
+            return
+          }
+          if (t + this.options.width > panelWidthPt) {
+            return
+          }
+          if (e + this.options.height > panelHeightPt) {
+            return
+          }
+        }
         this.options.setLeft(t), this.options.setTop(e), this.options.copyDesignTopFromTop(), this.options.setWidth(n), this.options.setHeight(i);
       }, BasePrintElement.prototype.initSizeByHtml = function (t) {
         if (t && t.length) {
@@ -830,11 +845,51 @@ var hiprint = function (t) {
       }, BasePrintElement.prototype.getPrintElementEntity = function (t) {
         return t ? new _entity_PrintElementEntity__WEBPACK_IMPORTED_MODULE_0__.a(void 0, this.options.getPrintElementOptionEntity(), this.printElementType.getPrintElementTypeEntity()) : new _entity_PrintElementEntity__WEBPACK_IMPORTED_MODULE_0__.a(this.printElementType.tid, this.options.getPrintElementOptionEntity());
       }, BasePrintElement.prototype.submitOption = function () {
-        // 右侧选项修改模版数据触发history
-        var t = this, o = this.getConfigOptions();
-        if (o && o.tabs && o.tabs.length) {
-          this.getPrintElementOptionTabs().forEach(function (tab) {
-            tab.list.forEach(function (e) {
+        var els = this.panel.printElements.filter(function (t) {
+            return ('block' == t.designTarget.children().last().css('display')
+              && t.designTarget.children().last().hasClass('selected'))
+              && !t.printElementType.type.includes('table');
+          });
+          els = els.filter(ele => ele.printElementType.type == this.printElementType.type)
+          var t = this, o = this.getConfigOptions();
+          if (o && o.tabs && o.tabs.length) {
+            this.getPrintElementOptionTabs().forEach(function (tab) {
+              // 样式更新要应用到其他选中的同种元素
+              if(tab.name === "样式"){
+                tab.list.forEach(function (e) {
+                  els.forEach(ele => {
+                    var n = e.getValue(),
+                      r = 'textType' == e.name && ele.options[e.name] !== n,
+                      a = 'axis' == e.name && ele.options[e.name] !== n;
+                    n && "object" == _typeof(n) ? Object.keys(n).forEach(function (e) {
+                      ele.options[e] = n[e];
+                    }) : ele.options[e.name] = n;
+                    if (r) {
+                      ele.setResizePanel()
+                    }
+                    if (a) {
+                      ele.designTarget.hidraggable('update', { axis: n })
+                    }
+                  })
+                })
+              }else{
+                tab.list.forEach(function (e) {
+                  var n = e.getValue(), r = 'textType' == e.name && t.options[e.name] !== n,
+                    a = 'axis' == e.name && t.options[e.name] !== n;
+                  n && "object" == _typeof(n) ? Object.keys(n).forEach(function (e) {
+                    t.options[e] = n[e];
+                  }) : t.options[e.name] = n;
+                  if (r) {
+                    t.setResizePanel()
+                  }
+                  if (a) {
+                    t.designTarget.hidraggable('update', {axis: n})
+                  }
+                })
+              }
+            });
+          } else {
+            this.getPrintElementOptionItems().forEach(function (e) {
               var n = e.getValue(), r = 'textType' == e.name && t.options[e.name] !== n,
                 a = 'axis' == e.name && t.options[e.name] !== n;
               n && "object" == _typeof(n) ? Object.keys(n).forEach(function (e) {
@@ -846,24 +901,9 @@ var hiprint = function (t) {
               if (a) {
                 t.designTarget.hidraggable('update', {axis: n})
               }
-            })
-          });
-        } else {
-          this.getPrintElementOptionItems().forEach(function (e) {
-            var n = e.getValue(), r = 'textType' == e.name && t.options[e.name] !== n,
-              a = 'axis' == e.name && t.options[e.name] !== n;
-            n && "object" == _typeof(n) ? Object.keys(n).forEach(function (e) {
-              t.options[e] = n[e];
-            }) : t.options[e.name] = n;
-            if (r) {
-              t.setResizePanel()
-            }
-            if (a) {
-              t.designTarget.hidraggable('update', {axis: n})
-            }
-          });
-        }
-        this.updateDesignViewFromOptions(), hinnn.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "元素修改");
+            });
+          }
+          this.updateDesignViewFromOptions(), hinnn.event.trigger("hiprintTemplateDataChanged_" + this.templateId, "元素修改");
       }, BasePrintElement.prototype.updateOption = function (o, v, b) {
         try {
           var e = this.getConfigOptions();
@@ -1303,7 +1343,6 @@ var hiprint = function (t) {
               templateId: ele.templateId
             }
           })
-          console.log(copyElements)
           var json = JSON.stringify(copyElements)
           // var json = JSON.stringify({
           //   options: n.options,
@@ -2195,10 +2234,6 @@ var hiprint = function (t) {
             })
           }
         }
-        console.log('原始数据');
-        console.log(t);
-        console.log('数据源');
-        console.log(newColumns);
         this.rowColumns = newColumns[t.totalLayer - 1];
         return newColumns[t.totalLayer - 1];
       }, TableExcelHelper;
@@ -2250,7 +2285,6 @@ var hiprint = function (t) {
       function t() {
         this.name = "fontFamily";
       }
-
       return t.prototype.createTarget = function (t) {
         var e = void 0;
         if (t && (e = t.getFontList()), e) {
@@ -4311,7 +4345,6 @@ var hiprint = function (t) {
             // if (e) return t.css("background-color", e), "background-color:" + e;
             // t[0].style.backgroundColor = "";
           }
-
           return null;
         }, t.prototype.createTarget = function () {
           return this.target = $(`<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        ${i18n.__('条码颜色')}\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="text" class="auto-submit"/>\n        </div>\n    </div>`), this.target;
@@ -7539,7 +7572,6 @@ var hiprint = function (t) {
             // 宽高比
             var ratio = p / a;
             var width = a + n, height = p + E;
-            console.log('ratio', ratio)
             height = width * ratio;
             u.css({width: i.numHandlerText(width), height: i.numHandlerText(height)});
             i.options.onResize(e, i.numHandler(height), i.numHandler(width), void 0, void 0);
@@ -8772,6 +8804,15 @@ var hiprint = function (t) {
           n = this.createTarget(this.printElementType.getText(!0), e);
         return this.updateTargetSize(n), this.css(n, e), n;
       }, e.prototype.updateDesignViewFromOptions = function () {
+        var els = this.panel.printElements.filter(function (t) {
+          return ('block' == t.designTarget.children().last().css('display')
+            && t.designTarget.children().last().hasClass('selected')) && !t.printElementType.type.includes('table');
+        });
+        els.forEach(ele => {
+          var t = ele.getData()
+          ele.css(ele.designTarget, t)
+          this.updateTargetText(ele.designTarget, ele.getTitle(), t)
+        })
         if (this.designTarget) {
           var t = this.getData();
           this.css(this.designTarget, t), this.updateTargetText(this.designTarget, this.getTitle(), t);
@@ -9206,9 +9247,9 @@ var hiprint = function (t) {
             width: Math.min(parseInt(width / 2.835), parseInt(height / 2.835)),
             height: Math.min(parseInt(width / 2.835), parseInt(height / 2.835)),
             includetext: false,
-            eclevel: ['M', 'L', 'H', 'Q'][this.options.qrCodeLevel ?? 0]
+            eclevel: ['M', 'L', 'H', 'Q'][this.options.qrCodeLevel ?? 0],
+            barcolor: this.options.barColor || "#000",
           })
-          console.log(this.options.qrCodeLevel, ['M', 'L', 'H', 'Q'][this.options.qrCodeLevel ?? 0])
           content.html($(qrcode))
           if (!this.options.hideTitle) {
             content.append($(`<div class="hiprint-printElement-qrcode-content-title" style="text-align: center">${ title ? title + ( text ? ":" : '' ) : "" }${ text }</div>`))
@@ -9450,8 +9491,15 @@ var hiprint = function (t) {
         this.bx = t, this.by = e, this.ex = t, this.ey = e, this.startX = this.minX = t, this.startY = this.minY = e, this.maxX = t, this.maxY = e, this.lastLeft = n, this.lastTop = i;
       }
 
-      return t.prototype.updateRect = function (t, e) {
-        this.ex = t, this.ey = e, this.minX = this.startX < t ? this.startX : t, this.minY = this.startY < e ? this.startY : e, this.maxX = this.startX < t ? t : this.startX, this.maxY = this.startY < e ? e : this.startY;
+      return t.prototype.updateRect = function (t, e, i) {
+        var scale = i.designPaper.scale||1.0
+        this.ex = t
+        this.ey = e
+        this.minX = this.startX/scale < t/scale ? this.startX/scale : t/scale, 
+        this.minY = this.startY/scale < e/scale ? this.startY/scale : e/scale, 
+        this.maxX = this.startX/scale < t/scale ? t/scale : this.startX/scale, 
+        this.maxY = this.startY/scale < e/scale ? e/scale : this.startY/scale;
+
       }, t.prototype.updatePositionByMultipleSelect = function (t, e) {
         null != t && (this.lastLeft = this.lastLeft + t), null != e && (this.lastTop = this.lastTop + e), this.target.css({
           left: this.lastLeft + "pt",
@@ -9503,8 +9551,6 @@ var hiprint = function (t) {
         this.bindBatchMoveElement();
       }, t.prototype.update = function (t) {
         try {
-          console.log('update ------>')
-          console.log(t)
           var start = Date.now();
           console.log('start', start)
           var e = this;
@@ -9630,6 +9676,11 @@ var hiprint = function (t) {
             a.options.setTop(top);
             a.setTemplateId(n.templateId), a.setPanel(n);
             n.appendDesignPrintElement(n.designPaper, a, !1);
+            // 在复制的地方也重新给他算轮次
+            const template = s.a.instance.getPrintTemplateById(n.templateId)
+            if(a.options.field && template.qtDesigner){
+              a.options.qid = template.qtDesignderFunction(a.options.field)
+            }
             n.printElements.push(a), a.design(void 0, n.designPaper);
             console.log('pasteJson success');
             o.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "复制");
@@ -9790,6 +9841,7 @@ var hiprint = function (t) {
         t.getTarget().hidroppable({
           accept: ".ep-draggable-item",
           onDrop: function onDrop(n, i) {
+            const template = s.a.instance.getPrintTemplateById(e.templateId)
             var r = s.a.instance.getDragingPrintElement(),
               a = r.printElement;
             var ptr = e.designPaper.scale || 1;
@@ -9797,6 +9849,10 @@ var hiprint = function (t) {
               top = (r.top - o.a.px.toPt(e.target.children(".hiprint-printPaper").offset().top)) / ptr;
             a.updateSizeAndPositionOptions(e.mathroundToporleft(left), e.mathroundToporleft(top));
             a.setTemplateId(e.templateId), a.setPanel(e), e.appendDesignPrintElement(e.designPaper, a, !0);
+            // 如果说编辑器开启qtDesigner,那么就将唯一ID构建唯一ID生成逻辑代码
+            if(a.options.field && template.qtDesigner){
+              a.options.qid = template.qtDesignderFunction(a.options.field)
+            }
             e.printElements.push(a), a.design(void 0, t);
             o.a.event.trigger("hiprintTemplateDataChanged_" + e.templateId, "新增");
           }
@@ -9936,7 +9992,7 @@ var hiprint = function (t) {
           } else {
             t.mouseOffsetX = t.mouseOffsetY = void 0;
           }
-          s.a.instance.draging || 1 === e.buttons && s.a.instance.rectDraging && (t.mouseRect && (t.mouseRect.updateRect(e.pageX, e.pageY), t.updateRectPanel(t.mouseRect)));
+          s.a.instance.draging || 1 === e.buttons && s.a.instance.rectDraging && (t.mouseRect && (t.mouseRect.updateRect(e.pageX, e.pageY, t), t.updateRectPanel(t.mouseRect)));
         }).on("mousedown", function (e) {
           s.a.instance.rectDraging = true;
           if ((e.target.className && _typeof(e.target.className) == "string" && (e.target.className.includes("editing")))) {
@@ -9962,7 +10018,9 @@ var hiprint = function (t) {
               e.mouseRect.lastLeft = e.mouseRect.lastLeft ? o.a.px.toPt(e.mouseRect.target[0].offsetLeft) : n / ptr, e.mouseRect.lastTop = e.mouseRect.lastTop ? o.a.px.toPt(e.mouseRect.target[0].offsetTop) : i / ptr
               , (e.mouseRect.mouseRectSelectedElement || []).forEach(function (t) {
               t.updatePositionByMultipleSelect(n - e.mouseRect.lastLeft, i - e.mouseRect.lastTop);
-            }), e.mouseRect.lastLeft = n / ptr, e.mouseRect.lastTop = i / ptr;
+            }), 
+            e.mouseRect.lastLeft = n / ptr,
+            e.mouseRect.lastTop = i / ptr,
             s.a.instance.changed = !0;
           },
           moveUnit: "pt",
@@ -9999,24 +10057,24 @@ var hiprint = function (t) {
             transform: 'rotate(180deg)',
             'transform-origin': '0 0'
           });
-        } else {
-          var r = '', f = 'rotate(180deg)';
-          if (t.startX == t.minX || t.startX == t.maxX) {
-            if (t.ey >= t.by) {
-              f = 'scaleX(-1)', r = 'left'
-            } else {
-              r = 'center top'
-            }
-          } else if (t.startY == t.minY || t.startY == t.maxY) {
-            r = t.ex >= t.bx ? 'right' : 'left'
-          }
+        // 左下角
+        } else if (t.ex < t.bx && t.ey >t.by){
           this.mouseRect.target.css({
             height: t.maxY - t.minY + "px",
             width: t.maxX - t.minX + "px",
             left: t.lastLeft / ptr + "pt",
             top: t.lastTop / ptr + "pt",
-            transform: f,
-            'transform-origin': r
+            transform: 'rotateY(180deg)',
+            'transform-origin': '0 0'
+          });
+        } else if (t.ex > t.bx && t.ey < t.by){
+          this.mouseRect.target.css({
+            height: t.maxY - t.minY + "px",
+            width: t.maxX - t.minX + "px",
+            left: t.lastLeft / ptr + "pt",
+            top: t.lastTop / ptr + "pt",
+            transform: 'rotateX(180deg)',
+            'transform-origin': '0 0'
           });
         }
         t.target.focus()
@@ -10327,6 +10385,7 @@ var hiprint = function (t) {
         this.printPanels = [];
         this.dataMode = n.dataMode || 1;
         this.history = n.history != void 0 ? n.history : !0;
+        this.willOutOfBounds = n.willOutOfBounds != void 0 ? n.willOutOfBounds : !0;
         this.onDataChanged = n.onDataChanged;
         this.onUpdateError = n.onUpdateError;
         this.lastJson = n.template || {};
@@ -10334,6 +10393,28 @@ var hiprint = function (t) {
         this.historyPos = 0;
         this.defaultPanelName = n.defaultPanelName;
         this.designOptions = {};
+        this.qtDesigner = n.qtDesigner != void 0 ? n.qtDesigner : !0;
+        this.qtDesignerMap = {}
+        this.qtDesignderFunction = function(field){
+          this.qtDesignerMap = {}
+          const fieldTitle = field.split("_")[0]
+          for(const item of this.editingPanel.printElements){
+            if(item.options.field === void 0){
+              continue
+            }
+            const renderKey = item.options.field.split("_")[0]
+            if(this.qtDesignerMap[renderKey] === void 0){
+              this.qtDesignerMap[renderKey] = 1
+            }else{
+              this.qtDesignerMap[renderKey] += 1
+            }
+          }
+          if(this.qtDesignerMap[fieldTitle] === 0||this.qtDesignerMap[fieldTitle] === void 0){
+            return fieldTitle
+          }else{
+            return fieldTitle +"_"+ this.qtDesignerMap[fieldTitle]
+          }
+        }
         var i = new st(n.template || []);
         n.template && i.panels.forEach(function (t) {
           e.printPanels.push(new pt(t, e.id));
