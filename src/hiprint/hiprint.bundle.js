@@ -9249,7 +9249,8 @@ var hiprint = function (t) {
             width: Math.min(parseInt(width / 2.835), parseInt(height / 2.835)),
             height: Math.min(parseInt(width / 2.835), parseInt(height / 2.835)),
             includetext: false,
-            eclevel: ['M', 'L', 'H', 'Q'][this.options.qrCodeLevel ?? 0]
+            eclevel: ['M', 'L', 'H', 'Q'][this.options.qrCodeLevel ?? 0],
+            barcolor: this.options.barColor || "#000",
           })
           content.html($(qrcode))
           if (!this.options.hideTitle) {
@@ -9995,7 +9996,7 @@ var hiprint = function (t) {
           } else {
             t.mouseOffsetX = t.mouseOffsetY = void 0;
           }
-          s.a.instance.draging || 1 === e.buttons && s.a.instance.rectDraging && (t.mouseRect && (t.mouseRect.updateRect(e.pageX, e.pageY,t), t.updateRectPanel(t.mouseRect)));
+          s.a.instance.draging || 1 === e.buttons && s.a.instance.rectDraging && (t.mouseRect && (t.mouseRect.updateRect(e.pageX, e.pageY, t), t.updateRectPanel(t.mouseRect)));
         }).on("mousedown", function (e) {
           s.a.instance.rectDraging = true;
           if ((e.target.className && _typeof(e.target.className) == "string" && (e.target.className.includes("editing")))) {
