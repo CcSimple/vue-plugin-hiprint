@@ -7316,6 +7316,8 @@ var hiprint = function (t) {
       this.initResizeBox(t);
     },
     initResizeBox: function initResizeBox(t) {
+      console.log("初始化包围盒")
+
       var e = this;
       n(t).each(function () {
         var o;
@@ -9490,8 +9492,14 @@ var hiprint = function (t) {
         this.bx = t, this.by = e, this.ex = t, this.ey = e, this.startX = this.minX = t, this.startY = this.minY = e, this.maxX = t, this.maxY = e, this.lastLeft = n, this.lastTop = i;
       }
 
-      return t.prototype.updateRect = function (t, e) {
-        this.ex = t, this.ey = e, this.minX = this.startX < t ? this.startX : t, this.minY = this.startY < e ? this.startY : e, this.maxX = this.startX < t ? t : this.startX, this.maxY = this.startY < e ? e : this.startY;
+      return t.prototype.updateRect = function (t, e, i) {
+        var scale = i.scale||1.0
+        this.ex = t
+        this.ey = e
+        this.minX = this.startX/scale < t/scale ? this.startX/scale : t/scale, 
+        this.minY = this.startY/scale < e/scale ? this.startY/scale : e/scale, 
+        this.maxX = this.startX/scale < t/scale ? t/scale : this.startX/scale, 
+        this.maxY = this.startY/scale < e/scale ? e/scale : this.startY/scale;
       }, t.prototype.updatePositionByMultipleSelect = function (t, e) {
         null != t && (this.lastLeft = this.lastLeft + t), null != e && (this.lastTop = this.lastTop + e), this.target.css({
           left: this.lastLeft + "pt",
@@ -9984,7 +9992,7 @@ var hiprint = function (t) {
           } else {
             t.mouseOffsetX = t.mouseOffsetY = void 0;
           }
-          s.a.instance.draging || 1 === e.buttons && s.a.instance.rectDraging && (t.mouseRect && (t.mouseRect.updateRect(e.pageX, e.pageY), t.updateRectPanel(t.mouseRect)));
+          s.a.instance.draging || 1 === e.buttons && s.a.instance.rectDraging && (t.mouseRect && (t.mouseRect.updateRect(e.pageX, e.pageY,t), t.updateRectPanel(t.mouseRect)));
         }).on("mousedown", function (e) {
           s.a.instance.rectDraging = true;
           if ((e.target.className && _typeof(e.target.className) == "string" && (e.target.className.includes("editing")))) {
@@ -10010,7 +10018,9 @@ var hiprint = function (t) {
               e.mouseRect.lastLeft = e.mouseRect.lastLeft ? o.a.px.toPt(e.mouseRect.target[0].offsetLeft) : n / ptr, e.mouseRect.lastTop = e.mouseRect.lastTop ? o.a.px.toPt(e.mouseRect.target[0].offsetTop) : i / ptr
               , (e.mouseRect.mouseRectSelectedElement || []).forEach(function (t) {
               t.updatePositionByMultipleSelect(n - e.mouseRect.lastLeft, i - e.mouseRect.lastTop);
-            }), e.mouseRect.lastLeft = n / ptr, e.mouseRect.lastTop = i / ptr;
+            }), 
+            e.mouseRect.lastLeft = n / ptr,
+            e.mouseRect.lastTop = i / ptr,
             s.a.instance.changed = !0;
           },
           moveUnit: "pt",
@@ -10047,26 +10057,46 @@ var hiprint = function (t) {
             transform: 'rotate(180deg)',
             'transform-origin': '0 0'
           });
-        } else {
-          var r = '', f = 'rotate(180deg)';
-          if (t.startX == t.minX || t.startX == t.maxX) {
-            if (t.ey >= t.by) {
-              f = 'scaleX(-1)', r = 'left'
-            } else {
-              r = 'center top'
-            }
-          } else if (t.startY == t.minY || t.startY == t.maxY) {
-            r = t.ex >= t.bx ? 'right' : 'left'
-          }
+        // 左下角
+        } else if (t.ex < t.bx && t.ey >t.by){
           this.mouseRect.target.css({
             height: t.maxY - t.minY + "px",
             width: t.maxX - t.minX + "px",
             left: t.lastLeft / ptr + "pt",
             top: t.lastTop / ptr + "pt",
-            transform: f,
-            'transform-origin': r
+            transform: 'rotateY(180deg)',
+            'transform-origin': '0 0'
+          });
+        } else if (t.ex > t.bx && t.ey < t.by){
+          this.mouseRect.target.css({
+            height: t.maxY - t.minY + "px",
+            width: t.maxX - t.minX + "px",
+            left: t.lastLeft / ptr + "pt",
+            top: t.lastTop / ptr + "pt",
+            transform: 'rotateX(180deg)',
+            'transform-origin': '0 0'
           });
         }
+        // } else {
+        //   var r = '', f = 'rotate(180deg)';
+        //   if (t.startX == t.minX || t.startX == t.maxX) {
+        //     if (t.ey >= t.by) {
+        //       f = 'scaleX(-1)', r = 'left'
+        //     } else {
+        //       r = 'center top'
+        //     }
+        //   } else if (t.startY == t.minY || t.startY == t.maxY) {
+        //     r = t.ex >= t.bx ? 'right' : 'left'
+        //   }
+        //   this.mouseRect.target.css({
+        //     height: t.maxY - t.minY + "px",
+        //     width: t.maxX - t.minX + "px",
+        //     left: t.lastLeft / ptr + "pt",
+        //     top: t.lastTop / ptr + "pt",
+        //     transform: f,
+        //     'transform-origin': r
+        //   });
+        // }
         t.target.focus()
       }, t.prototype.bingKeyboardMoveEvent = function (t) {
         var e = this;
