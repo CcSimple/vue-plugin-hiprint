@@ -1842,9 +1842,6 @@
         }, {
           name: 'barcodeType',
           hidden: false
-        },{
-          name: 'barColor',
-          hidden: false
         }, {
           name: 'coordinate',
           hidden: false
@@ -1877,6 +1874,9 @@
           hidden: false
         }, {
           name: 'backgroundColor',
+          hidden: false
+        }, {
+          name: 'barColor',
           hidden: false
         }, {
           name: 'textAlign',
@@ -1959,6 +1959,9 @@
         name: 'backgroundColor',
         hidden:false
       }, {
+        name: 'barColor',
+        hidden:false
+      }, {
         name: 'textAlign',
         hidden:false
       }, {
@@ -2015,11 +2018,7 @@
         }, {
           name: 'qrcodeType',
           hidden: false
-        },{
-          name: 'barColor',
-          hidden: false
-        }, 
-        {
+        }, {
           name: 'qrCodeLevel',
           hidden: false
         }, {
@@ -2054,6 +2053,9 @@
           hidden: false
         }, {
           name: 'backgroundColor',
+          hidden: false
+        }, {
+          name: 'barColor',
           hidden: false
         }, {
           name: 'textAlign',
@@ -2105,9 +2107,6 @@
       }, {
         name: 'qrcodeType',
         hidden:false
-      },{
-        name: 'barColor',
-        hidden: false
       }, {
         name: 'qrCodeLevel',
         hidden:false
@@ -2141,6 +2140,9 @@
       }, {
         name: 'backgroundColor',
         hidden:false
+      }, {
+        name: 'barColor',
+        hidden: false
       }, {
         name: 'textAlign',
         hidden:false
