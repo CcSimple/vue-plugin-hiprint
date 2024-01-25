@@ -8303,7 +8303,7 @@ var hiprint = function (t) {
       }
 
       return m(e, t), e.prototype.getReizeableShowPoints = function () {
-        return ["se", "r"];
+        return ["s","e","se","r"];
       }, e.prototype.getData = function (t) {
         var e = "", f = this.getField();
         t ? e = f ? f.split('.').reduce((a, c) => a ? a[c] : t[c], !1) || "" : this.options.src || this.printElementType.getData() : e = this.options.src || this.printElementType.getData();
