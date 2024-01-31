@@ -1,0 +1,69 @@
+{
+  "name": "vue-plugin-hiprint",
+  "description": "hiprint for Vue2.x / Vue3.x 支持拖拽(分页(不分页)、表头表脚、样式设置、复制粘贴、缩放、撤销重做)生成打印模板、导出json模板数据、静默打印/获取MAC地址(借助客户端)",
+<<<<<<< HEAD
+  "version": "0.0.57-beta11",
+=======
+  "version": "0.0.57-beta12",
+>>>>>>> 1464d76ddb2c43065d7c7a12a34efdc6442bc575
+  "author": "CcSimple",
+  "license": "MIT",
+  "main": "dist/vue-plugin-hiprint.js",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CcSimple/vue-plugin-hiprint.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CcSimple/vue-plugin-hiprint/issues"
+  },
+  "keywords": [
+    "vue",
+    "hiprint",
+    "print"
+  ],
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build-demo": "vue-cli-service build",
+    "build": "cross-env NODE_ENV=production webpack --progress",
+    "pub": "npm run build && npm --registry https://registry.npmjs.org/ publish",
+    "up-version": "node ./scripts/change-version.js",
+    "pub-beta": "npm run build && npm --registry https://registry.npmjs.org/ publish --tag beta"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-service": "^4.5.15",
+    "ant-design-vue": "^1.7.8",
+    "babel-loader": "^8.1.0",
+    "bootstrap": "^3.3.7",
+    "concurrent-tasks": "^1.0.7",
+    "copy-webpack-plugin": "^5.1.2",
+    "core-js": "^3.6.5",
+    "cross-env": "^5.0.5",
+    "less-loader": "^6.1.1",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "vue": "^2.5.11",
+    "vue-ls": "^4.0.0",
+    "vue-template-compiler": "^2.6.11",
+    "webpack-cli": "^4.9.1"
+  },
+  "dependencies": {
+    "@claviska/jquery-minicolors": "^2.3.6",
+    "bwip-js": "^4.0.0",
+    "canvg": "^3.0.10",
+    "html2canvas": "^1.4.1",
+    "jquery": "^3.6.0",
+    "jsbarcode": "^3.11.5",
+    "jspdf": "^2.5.1",
+    "nzh": "^1.0.8",
+    "socket.io-client": "^4.5.1"
+  }
+}
