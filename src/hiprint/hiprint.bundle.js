@@ -10640,6 +10640,7 @@ var hiprint = function (t) {
               format: this.printPanels[0].paperType ? this.printPanels[0].paperType.toLocaleLowerCase() : [r, a]
             }),
             l = this.getHtml(t, options);
+          console.log(l)
           if (options && undefined != options.isDownload) {
             isDownload = options.isDownload
           }
@@ -10652,6 +10653,8 @@ var hiprint = function (t) {
             n.mozImageSmoothingEnabled = !1, n.webkitImageSmoothingEnabled = !1, n.msImageSmoothingEnabled = !1, n.imageSmoothingEnabled = !1;
 
             for (var o = t.toDataURL("image/jpeg"), p = 0; p < d; p++) {
+              // 在这个地方判断图片是不是等比缩放的
+              
               s.addImage(o, "JPEG", 0, 0 - p * a, r, d * a), p < d - 1 && s.addPage();
             }
             if (isDownload) {
