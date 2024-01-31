@@ -52,7 +52,7 @@ import lImg from "./css/image/l_img.svg";
 import vImg from "./css/image/v_img.svg";
 // pdf
 import {jsPDF} from "jspdf";
-import html2canvas from "html2canvas";
+import html2canvas from "@wtto00/html2canvas";
 // 数字转中文,大写,金额
 import Nzh from "nzh/dist/nzh.min.js";
 // 解析svg 到 canvas, 二维码条形码需要

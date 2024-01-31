@@ -55,7 +55,7 @@
     "@claviska/jquery-minicolors": "^2.3.6",
     "bwip-js": "^4.0.0",
     "canvg": "^3.0.10",
-    "html2canvas": "^1.4.1",
+    "@wtto00/html2canvas": "^1.4.3",
     "jquery": "^3.6.0",
     "jsbarcode": "^3.11.5",
     "jspdf": "^2.5.1",
