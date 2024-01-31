@@ -765,7 +765,7 @@ var hiprint = function (t) {
         if (e._editing) {
           c && c.css("cursor", "") && c.removeClass("editing") && c.removeAttr("contenteditable");
           e.designTarget.removeClass("editing");
-          var t = c.text(), title = e.options.title + "：";
+          var t = c.text(), title = e.options.title;
           if (t.startsWith(title) && e.options.field) {
             if (t.length > title.length) {
               e.options.testData = t.split("：")[1];
@@ -776,6 +776,7 @@ var hiprint = function (t) {
           } else {
             e.options.title = t;
           }
+          e.options.title = e.options.title.split("：")[0]
           if (!clear) {
             hinnn.event.trigger(e.getPrintElementSelectEventKey(), {
               printElement: e
