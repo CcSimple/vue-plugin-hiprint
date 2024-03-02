@@ -52,7 +52,7 @@ import lImg from "./css/image/l_img.svg";
 import vImg from "./css/image/v_img.svg";
 // pdf
 import {jsPDF} from "jspdf";
-import html2canvas from "html2canvas";
+import html2canvas from "@wtto00/html2canvas";
 // 数字转中文,大写,金额
 import Nzh from "nzh/dist/nzh.min.js";
 // 解析svg 到 canvas, 二维码条形码需要
@@ -5814,35 +5814,36 @@ var hiprint = function (t) {
         };
         return zz;
       }, TablePrintElement.prototype.fixMergeSpan = function (tr, tbody) {
-        var e = this;
-        let nextRow = 1, rowEnd = false;
-        // 未验证列合并是否存在问题
-        let nextCol = 1, colEnd = false;
-        tr.nextAll().each(function(index) {
-          if ($(this).children().filter("td[rowspan=0]").length > 0 && !rowEnd) {
-            nextRow += 1;
-          } else {
-            rowEnd = true;
-          }
-          if ($(this).children().filter("td[colspan=0]").length > 0 && !colEnd) {
-            nextCol += 1;
-          } else {
-            colEnd = true;
-          }
-        })
-        tr.children().each(function (i, td) {
+        let [nextRowMap, nextColMap] = [new Map(), new Map()];
+        tr.children().each((_, td) => {
+          var field = $(td).attr('field');
+          nextRowMap.set(field, {
+            rowSpan: 1,
+            rowEnd: false
+          })
+          nextColMap.set(field, {
+            colSpan: $(td).nextUntil('td[colspan!=0]').length,
+          })
+          tr.nextAll().each((_, nextTr) => {
+            if ($(nextTr).has(`td[field=${field}][rowspan=0]`).length && !nextRowMap.get(field).rowEnd) {
+              nextRowMap.set(field, { rowSpan: ++nextRowMap.get(field).rowSpan, rowEnd: false })
+            } else {
+              nextRowMap.set(field, { ...nextRowMap.get(field), rowEnd: true })
+            }
+          })
+
           if ($(td).attr("rowspan") < 1) {
-            $(td).attr("rowspan", nextRow);
+            $(td).attr("rowspan", nextRowMap.get(field).rowSpan);
             $(td).css("display", "");
-            if (e.options.rowsColumnsMergeClean) {
-              $(td).text("");
+            if (this.options.rowsColumnsMergeClean) {
+              $(td).text("")
             }
           }
           if ($(td).attr("colspan") < 1) {
-            $(td).attr("colspan",  nextCol);
-            $(td).css("display", "");
-            if (e.options.rowsColumnsMergeClean) {
-              $(td).text("");
+            $(td).attr("colspan", nextColMap.get(field).colSpan);
+            $(td).css("display", "")
+            if (this.options.rowsColumnsMergeClean) {
+              $(td).text("")
             }
           }
         })
