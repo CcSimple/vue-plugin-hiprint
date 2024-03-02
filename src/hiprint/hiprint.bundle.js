@@ -5814,15 +5814,12 @@ var hiprint = function (t) {
         };
         return zz;
       }, TablePrintElement.prototype.fixMergeSpan = function (tr, tbody) {
-        let [nextRowMap, nextColMap] = [new Map(), new Map()];
+        const nextRowMap = new Map();
         tr.children().each((_, td) => {
           var field = $(td).attr('field');
           nextRowMap.set(field, {
             rowSpan: 1,
             rowEnd: false
-          })
-          nextColMap.set(field, {
-            colSpan: $(td).nextUntil('td[colspan!=0]').length,
           })
           tr.nextAll().each((_, nextTr) => {
             if ($(nextTr).has(`td[field=${field}][rowspan=0]`).length && !nextRowMap.get(field).rowEnd) {
@@ -5835,13 +5832,6 @@ var hiprint = function (t) {
           if ($(td).attr("rowspan") < 1) {
             $(td).attr("rowspan", nextRowMap.get(field).rowSpan);
             $(td).css("display", "");
-            if (this.options.rowsColumnsMergeClean) {
-              $(td).text("")
-            }
-          }
-          if ($(td).attr("colspan") < 1) {
-            $(td).attr("colspan", nextColMap.get(field).colSpan);
-            $(td).css("display", "")
             if (this.options.rowsColumnsMergeClean) {
               $(td).text("")
             }
