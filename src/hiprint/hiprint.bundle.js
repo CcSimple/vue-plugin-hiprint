@@ -1888,8 +1888,14 @@ var hiprint = function (t) {
         }).forEach(function (t) {
           var groupFormatter = h.getGroupFormatter(n, i);
           if (groupFormatter) {
-            var ee = $("<tr></tr>");
-            ee.append(groupFormatter(o.colspan, e, printData, t, n)), r.append(ee);
+            let result = groupFormatter(o.colspan, e, printData, t, n)
+            if ($(result).is("tr")) {
+              r.append(result)
+            } else if ($(result).is("td")) {
+              r.append(`<tr>${result}</tr>`)
+            } else {
+              r.append(`<tr><td>${result}</td></tr>`)
+            }
           }
           var groupFooterFormatter = h.getGroupFooterFormatter(n, i);
           var groupData = t;
@@ -1897,8 +1903,14 @@ var hiprint = function (t) {
             var e = TableExcelHelper.createRowTarget(o, t, n, i, rowIndex, groupData.rows, printData);
             r.append(e);
           }), groupFooterFormatter) {
-            var a = $("<tr></tr>");
-            a.append(groupFooterFormatter(o.colspan, e, printData, t, n)), r.append(a);
+            let result = groupFooterFormatter(o.colspan, e, printData, t, n)
+            if ($(result).is("tr")) {
+              r.append(result)
+            } else if ($(result).is("td")) {
+              r.append(`<tr>${result}</tr>`)
+            } else {
+              r.append(`<tr><td>${result}</td></tr>`)
+            }
           }
         }) : e.forEach(function (t, rowIndex) {
           var row = TableExcelHelper.createRowTarget(o, t, n, i, rowIndex, e, printData);
