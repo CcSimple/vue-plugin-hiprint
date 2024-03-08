@@ -1768,8 +1768,10 @@ var hiprint = function (t) {
       }
 
       return TableExcelHelper.createTableHead = function (t, e) {
-        for (var n = TableExcelHelper.reconsitutionTableColumnTree(t), i = $("<thead></thead>"), o = TableExcelHelper.getColumnsWidth(n, e), r = function r(t) {
+        for (var n = TableExcelHelper.reconsitutionTableColumnTree(t), i = $("<thead></thead>"), colgroup = $("<colgroup></colgroup>"), o = TableExcelHelper.getColumnsWidth(n, e), r = function r(t) {
           var e = $("<tr></tr>");
+          // 重置 colgroup，解决多行表头 col 添加错误问题，仅以最后一行添加
+          colgroup = $("<colgroup></colgroup>");
           n[t].filter(function (t) {
             return t.checked;
           }).forEach(function (t) {
@@ -1783,12 +1785,12 @@ var hiprint = function (t) {
               });
             }
             e.append(n);
+            colgroup.append(`<col column-id="${t.columnId}" width="${t.width}pt"></col>`)
           }), i.append(e);
         }, a = 0; a < n.totalLayer; a++) {
           r(a);
         }
-
-        return TableExcelHelper.syncTargetWidthToOption(t), i;
+        return TableExcelHelper.syncTargetWidthToOption(t), [i, colgroup];
       }, TableExcelHelper.createTableFooter = function (t, e, n, i, o, r) {
         // n=>options e=>表格所有数据 o=>所有打印数据 r=>表格每页数据
         var a = $("<tfoot></tfoot>"), p = this.getFooterFormatter(n, i);
