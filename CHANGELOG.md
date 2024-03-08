@@ -4,6 +4,16 @@
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
 
+## 0.0.57-beta17(2024-03-08)
+
+<details>
+  <summary>01. ✨ 调整优化 表格添加 colgroup 解决列宽跨页不齐问题 </summary>
+</details>
+<details>
+  <summary>02. ✨ 调整优化 表格分组头、脚格式化函数自动判断 tr、td 包裹 </summary>
+  现在你可以直接 return content 内容、td(s) 字符串、tr(s) 字符串，插件将自动检测是否包裹 td、tr 标签，自动补全代码
+</details>
+
 ## 0.0.57-beta9
 
 <details>
