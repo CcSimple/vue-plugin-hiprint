@@ -7692,11 +7692,26 @@ var hiprint = function (t) {
         console.log("refreshPrinterList error:" + JSON.stringify(e));
       }
     },
+    getPaperSizeInfo: function getPaperSizeInfo(printer) {
+      try {
+        console.warn("getPaperSizeInfo 是一个测试功能，仅win客户端支持该api！")
+        this.socket.emit("getPaperSizeInfo", printer);
+      } catch (e) {
+        console.log("getPaperSizeInfo error:" + JSON.stringify(e))
+      }
+    },
     getClients: function getClients() {
       try {
         this.socket.emit("getClients");
       } catch (e) {
         console.log("getClients error:" + JSON.stringify(e));
+      }
+    },
+    getClientInfo: function getClientInfo() {
+      try {
+        this.socket.emit("getClientInfo");
+      } catch (e) {
+        console.log("getClientInfo error:" + JSON.stringify(e))
       }
     },
     getAddress: function getAddress(type, ...args) {
@@ -7754,6 +7769,9 @@ var hiprint = function (t) {
         }), _this.socket.on("printerList", function (e) {
           t.printerList = e;
           hinnn.event.trigger("printerList", e);
+        }), _this.socket.on("paperSizeInfo", function(e) {
+          t.paperSize = Array.isArray(e)?e:[e]
+          hinnn.event.trigger("paperSizeInfo", t.paperSize);
         }), _this.socket.on("address", function (type, addr, e) {
           hinnn.event.trigger("address_" + type, {'addr': addr, 'e': e});
         }), _this.socket.on("ippPrinterConnected", function (printer) {

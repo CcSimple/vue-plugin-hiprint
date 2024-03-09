@@ -4,6 +4,45 @@
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
 
+## 0.0.57-beta18(2024-03-09)
+
+<details>
+  <summary>01. 🌈 新增支持 获取打印机纸张信息 Beta ❗️ </summary>
+  
+  当客户端运行在 window 系统环境时可以获取打印机纸张信息，你需要自行拉取最新客户端代码[electron-hiprint](https://github.com/CcSimple/electron-hiprint)，自行构建最新版本(v1.0.10)
+
+  > ❗️ node-hiprint-transit 中转暂未添加支持
+
+  ```js
+  // 获取指定打印机纸张信息
+  hiprint.getPaperInfo(printerName);
+  // 获取所有打印机纸张信息
+  hiprint.getPaperInfo();
+
+  // 获取纸张信息方法是异步请求的，没有返回值，你可以使用 hinnn.event.on("paperSizeInfo", () => {}) 监听数据返回
+  hinnn.event.on("paperSizeInfo", (paperSize) => {
+    console.log(paperSize);
+  });
+  // [
+  //   {
+  //       "PrinterName": "Microsoft Print to PDF",
+  //       "TaskNumber": 0, // 打印队列数
+  //       "Status": 0, // 设备状态码
+  //       "StatusMsg": "准备就绪（Ready）", // 设备状态信息
+  //       "PaperSizes": [
+  //           {
+  //               "Height": 1100, // 单位 mm
+  //               "Kind": 1,
+  //               "PaperName": "信纸",
+  //               "RawKind": 1,
+  //               "Width": 850 // 单位 mm
+  //           }
+  //       ]
+  //   }
+  // ]
+  ```
+</details>
+
 ## 0.0.57-beta17(2024-03-08)
 
 <details>
@@ -142,6 +181,10 @@ hiprint.init({
   // 中转服务专有的 api，可获取所有连接中转服务的客户端 v1.0.7
   hiprint.getClients()
   hiwebSocket.getClients()
+  // 监听数据返回
+  hinnn.event.on("clientInfo", (clients) => {
+    console.log(clients);
+  });
   ```
 详情转至 [文档说明](./README.md#使用-中转服务-node-hiprint-transit-实现代理)
 </details>
@@ -157,10 +200,13 @@ hiprint.init({
 hiprint.getClientInfo()
 // or
 hiwebSocket.getClientInfo()
-```
-```js
-console.log(hiwebSocket.clientInfo)
 
+// 监听数据返回
+hinnn.event.on("clientInfo", (clientInfo) => {
+  console.log(clientInfo);
+});
+
+console.log(hiwebSocket.clientInfo)
 {
   arch: "x64",
   clientUrl: "http://192.168.0.2:17521",
