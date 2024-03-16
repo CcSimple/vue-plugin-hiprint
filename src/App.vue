@@ -129,12 +129,13 @@ export default {
   computed: {
     i18nSupport() {
       return (
-        this.version == "development" || (this.version && decodeVer(this.version).verVal >= 55.8)
+        this.version == "development" ||
+        (this.version && decodeVer(this.version).verVal >= 55.8)
       );
     },
   },
   created() {
-    this.version = sessionStorage.getItem("version") || 'development';
+    this.version = sessionStorage.getItem("version") || "development";
     this.lang = sessionStorage.getItem("lang") || "cn";
     this.getVersion();
   },
@@ -145,17 +146,22 @@ export default {
      */
     getVersion() {
       const xhr = new XMLHttpRequest();
-      xhr.open(
-        "GET",
-        "https://data.jsdelivr.com/v1/packages/npm/vue-plugin-hiprint"
-      );
+      // jsdelivr 源
+      // xhr.open(
+      //   "GET",
+      //   "https://data.jsdelivr.com/v1/packages/npm/vue-plugin-hiprint"
+      // );
+      // cnpm 源
+      xhr.open("GET", "https://registry.npmmirror.com/vue-plugin-hiprint");
       xhr.onload = () => {
         if (xhr.status === 200) {
           this.npmInfo = JSON.parse(xhr.responseText);
-          this.versions = this.npmInfo.versions.map(({ version }) => ({
-            label: version,
-            value: version,
-          }));
+          this.versions = Object.keys(this.npmInfo.versions)
+            .map((version) => ({
+              label: version,
+              value: version,
+            }))
+            .reverse();
           if (process.env.NODE_ENV === "development") {
             this.versions.unshift({
               label: "development",
