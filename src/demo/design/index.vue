@@ -442,14 +442,22 @@ export default {
       script.setAttribute("type", "text/javascript");
       script.setAttribute(
         "src",
-        `https://cdn.jsdelivr.net/npm/vue-plugin-hiprint@${version}/dist/vue-plugin-hiprint.js`
+        // jsdelivr cdn
+        // `https://cdn.jsdelivr.net/npm/vue-plugin-hiprint@${version}/dist/vue-plugin-hiprint.js`
+        // cnpm cdn
+        `https://registry.npmmirror.com/vue-plugin-hiprint/${version}/files/dist/vue-plugin-hiprint.js`
       );
       script.addEventListener("load", () => {
         hiprint = window['vue-plugin-hiprint'].hiprint
         defaultElementTypeProvider = window['vue-plugin-hiprint'].defaultElementTypeProvider
         this.init()
       })
-      document.body.append(script)
+      const head = document.querySelector("head");
+      head.querySelector('link[media=print][href*="print-lock.css"]').remove();
+      head.append(
+        $(`<link rel="stylesheet" type="text/css" media="print" href="https://registry.npmmirror.com/vue-plugin-hiprint/${version}/files/dist/print-lock.css">`)[0]
+      )
+      head.append(script)
     },
     init() {
       hiprint.init({
