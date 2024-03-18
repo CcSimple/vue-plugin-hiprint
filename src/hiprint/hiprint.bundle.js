@@ -2745,6 +2745,38 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
+    barWidth = function () {
+      function t() {
+        this.name = "barWidth";
+      }
+      return t.prototype.createTarget = function() {
+        this.target = $(`<div class="hiprint-option-item"><div class="hiprint-option-item-label">${i18n.__('条码宽度')}</div><div class="hiprint-option-item-field"><select class="auto-submit"><option value="">${i18n.__('默认')}</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></div></div>`)
+        return this.target;
+      }, t.prototype.getValue = function() {
+        var t = this.target.find("select").val();
+        return t || void 0;
+      }, t.prototype.setValue = function(t) {
+        this.target.find("select").val(t)
+      }, t.prototype.destroy = function() {
+        this.target.remove()
+      }, t;
+    }(),
+    barAutoWidth = function() {
+      function t() {
+        this.name = "barAutoWidth";
+      }
+      return t.prototype.createTarget = function() {
+        this.target = $(`<div class="hiprint-option-item"><div class="hiprint-option-item-label">${i18n.__('条码自动增宽')}</div><div class="hiprint-option-item-field"><select class="auto-submit"><option value="">${i18n.__('默认')}</option><option value="true">${i18n.__('自动')}</option><option value="false">${i18n.__('不自动')}</option></select></div></div>`)
+        return this.target;
+      }, t.prototype.getValue = function() {
+        var t = this.target.find("select").val();
+        return t || void 0;
+      }, t.prototype.setValue = function(t) {
+        this.target.find("select").val(t)
+      }, t.prototype.destroy = function() {
+        this.target.remove()
+      }, t;
+    }(),
     barcodeType = function() {
       function t() {
         this.name = "barcodeType"
@@ -5308,7 +5340,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new paperNumberContinue(), new watermarkOptions(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new borderRadius(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(),new textWrap(), new at(), new lt(), new panelLayoutOptions(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new rowsColumnsMergeClean(), new groupFieldsFormatter(), new groupFormatter(), new groupFooterFormatter(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new stylerHeader(), new renderFormatter(), new _t(), new wt(), new maxRows(), new xt(), new tableColumnH(), new tableE(), new tableQRCodeLevel(), new tablept(), new tableSummaryTitle(), new tableSummaryText(), new tableSummaryColspan(), new tableSummary(), new tableSummaryAlign(), new tableSummaryNumFormat(), new tableSummaryFormatter(),new showCodeTitle(), new upperCase(), new barcodeType(), new qrcodeType(),new barColor(),], t;
+    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new paperNumberContinue(), new watermarkOptions(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new borderRadius(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(),new textWrap(), new at(), new lt(), new panelLayoutOptions(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new rowsColumnsMergeClean(), new groupFieldsFormatter(), new groupFormatter(), new groupFooterFormatter(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new stylerHeader(), new renderFormatter(), new _t(), new wt(), new maxRows(), new xt(), new tableColumnH(), new tableE(), new tableQRCodeLevel(), new tablept(), new tableSummaryTitle(), new tableSummaryText(), new tableSummaryColspan(), new tableSummary(), new tableSummaryAlign(), new tableSummaryNumFormat(), new tableSummaryFormatter(),new showCodeTitle(), new upperCase(), new barcodeType(), new qrcodeType(), new barColor(), new barWidth(), new barAutoWidth()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -8789,6 +8821,10 @@ var hiprint = function (t) {
         return (null == this.fontSize ? this.defaultOptions.fontSize : this.fontSize) || 9;
       }, e.prototype.getbarcodeMode = function () {
         return (null == this.barcodeMode ? this.defaultOptions.barcodeMode : this.barcodeMode) || "CODE128";
+      }, e.prototype.getBarWidth = function () {
+        return (null == this.barWidth ? this.defaultOptions.barWidth : this.barWidth) || 1;
+      }, e.prototype.getBarAutoWidth = function () {
+        return (null == this.barAutoWidth ? this.defaultOptions.barAutoWidth : this.barAutoWidth) ?? true;
       }, e.prototype.getQRcodeLevel = function () {
         return (null == this.qrCodeLevel ? this.defaultOptions.qrCodeLevel : this.qrCodeLevel) || 0;
       }, e;
@@ -8871,17 +8907,20 @@ var hiprint = function (t) {
               "flex-direction": "column"
             })
             a.html('<svg width="100%" display="block" height="100%" class="hibarcode_imgcode" preserveAspectRatio="none slice"></svg ><div class="hibarcode_displayValue" style="white-space:nowrap"></div>');
-
             try {
               n ? (JsBarcode(a.find(".hibarcode_imgcode")[0], n, {
                 format: this.options.getbarcodeMode(),
-                width: 1,
+                width: this.options.getBarWidth(),
                 textMargin: -1,
                 lineColor: this.options.color || "#000000",
                 margin: 0,
                 height: parseInt(o.a.pt.toPx(this.options.getHeight() || 10).toString()),
                 displayValue: !1
               }), a.find(".hibarcode_imgcode").attr("height", "100%"), a.find(".hibarcode_imgcode").attr("width", "100%"), this.options.hideTitle || a.find(".hibarcode_displayValue").html(n)) : a.html("");
+              let svgWidth = a.find(".hibarcode_imgcode rect")[0].attributes.width.value * 1.2
+              if (this.options.getBarAutoWidth() && svgWidth > hinnn.pt.toPx(this.options.width)) {
+                this.options.width = Math.ceil(hinnn.px.toPt(svgWidth));
+              }
             } catch (t) {
               console.log(t), a.html(`${i18n.__('此格式不支持该文本')}`);
             }
@@ -9199,13 +9238,13 @@ var hiprint = function (t) {
         var content = designTarget.find('.hiprint-printElement-barcode-content')
         try {
           // 计算 barcode 的高度，判断是否需要减去 title，使 title 包含在元素内部
-          const height = o.a.pt.toPx(this.options.height - (!this.options.hideTitle ? this.options.lineHeight ?? (this.options.fontSize ?? 10.5) * 1.5 :0));
+          const height = o.a.pt.toMm(this.options.height - (!this.options.hideTitle ? this.options.lineHeight ?? (this.options.fontSize ?? 10.5) * 1.5 :0));
           var barcode = bwipjs.toSVG({
             bcid: this.options.barcodeType || 'code128',
             text: text || this.options.testData || this.options.title,
-            scale: 1,
-            width: parseInt(o.a.pt.toPx(this.options.getWidth()) / 2.835),
-            height: parseInt(height / 2.835),
+            scale: this.options.barWidth || 1,
+            width: parseInt(o.a.pt.toMm(this.options.getWidth())),
+            height: parseInt(height),
             includetext: false,
             barcolor: this.options.barColor || "#000",
           })
