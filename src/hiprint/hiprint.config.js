@@ -12,7 +12,6 @@
     adsorbLineMin: 6, //吸附线显示最小距离pt
     paperNumberContinue: true, //连续打印页码
     panel: {
-      
       supportOptions: [
         {
           name: 'panelPaperRule',
@@ -230,6 +229,14 @@
               hidden: false
             },
             {
+              name: 'barWidth',
+              hidden: false
+            },
+            {
+              name: 'barAutoWidth',
+              hidden: false
+            },
+            {
               name: 'qrCodeLevel',
               hidden: false
             },
@@ -335,6 +342,14 @@
         },
         {
           name: 'barcodeMode',
+          hidden: false
+        },
+        {
+          name: 'barWidth',
+          hidden: false
+        },
+        {
+          name: 'barAutoWidth',
           hidden: false
         },
         {
@@ -1843,6 +1858,9 @@
           name: 'barcodeType',
           hidden: false
         }, {
+          name: 'barWidth',
+          hidden: false
+        }, {
           name: 'coordinate',
           hidden: false
         }, {
@@ -1928,6 +1946,9 @@
       }, {
         name: 'barcodeType',
         hidden:false
+      }, {
+        name: 'barWidth',
+        hidden: false
       }, {
         name: 'coordinate',
         hidden:false
