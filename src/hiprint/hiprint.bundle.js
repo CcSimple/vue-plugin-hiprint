@@ -9250,11 +9250,11 @@ var hiprint = function (t) {
           })
           content.html($(barcode))
           if (!this.options.hideTitle) {
-            const titleText = title ? title + ( text ? ':' : '' ) : '';
+            const defalutValue = text || title
             const textAlign = this.options.textAlign || 'center';
             // 支持type为barcode的textAlign属性
             const textStyle = textAlign === 'justify' ? 'text-align-last: justify;text-justify: distribute-all-lines;' : `text-align: ${ textAlign };`
-            content.append($(`<div class="hiprint-printElement-barcode-content-title" style="${ textStyle }">${ titleText }${ text }</div>`))
+            content.append($(`<div class="hiprint-printElement-barcode-content-title" style="${ textStyle }">${ defalutValue }</div>`))
           }
         } catch (error) {
           console.error(error)
@@ -9319,11 +9319,11 @@ var hiprint = function (t) {
           })
           content.html($(qrcode))
           if (!this.options.hideTitle) {
-            const titleText = title ? title + ( text ? ':' : '' ) : '';
+            const defalutValue = text || title
             const textAlign = this.options.textAlign || 'center';
             // 支持type为qrcode的textAlign属性
             const textStyle = textAlign === 'justify' ? 'text-align-last: justify;text-justify: distribute-all-lines;' : `text-align: ${ textAlign };`
-            content.append($(`<div class="hiprint-printElement-qrcode-content-title" style="${ textStyle }">${ titleText }${ text }</div>`))
+            content.append($(`<div class="hiprint-printElement-qrcode-content-title" style="${ textStyle }">${ defalutValue }</div>`))
           }
         } catch (error) {
           console.error(error)
