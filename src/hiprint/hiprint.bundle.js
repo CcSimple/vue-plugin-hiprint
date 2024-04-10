@@ -856,7 +856,7 @@ var hiprint = function (t) {
           if (o && o.tabs && o.tabs.length) {
             this.getPrintElementOptionTabs().forEach(function (tab) {
               // 样式更新要应用到其他选中的同种元素
-              if(tab.name === "样式"){
+              if(tab.name === "样式" && els.length){
                 tab.list.forEach(function (e) {
                   els.forEach(ele => {
                     var n = e.getValue(),
@@ -1735,7 +1735,7 @@ var hiprint = function (t) {
     f = function (t) {
       function e(e) {
         var n = this;
-        return e = e || {}, (n = t.call(this) || this).width = e.width ? parseFloat(e.width.toString()) : 100, n.title = e.title, n.descTitle = e.descTitle, n.field = e.field, n.fixed = e.fixed, n.rowspan = e.rowspan ? parseInt(e.rowspan) : 1, n.colspan = e.colspan ? parseInt(e.colspan) : 1, n.align = e.align, n.halign = e.halign, n.vAlign = e.vAlign, n.formatter = e.formatter, n.styler = e.styler, n.renderFormatter = e.renderFormatter, n.formatter2 = e.formatter2, n.styler2 = e.styler2, n.stylerHeader = e.stylerHeader, n.checkbox = e.checkbox, n.checked = 0 != e.checked, n.columnId = e.columnId || e.field, n.tableColumnHeight = e.tableColumnHeight, n.tableTextType = e.tableTextType, n.tableBarcodeMode = e.tableBarcodeMode, n.tableQRCodeLevel = e.tableQRCodeLevel, n.tableSummaryTitle = e.tableSummaryTitle, n.tableSummaryText = e.tableSummaryText, n.tableSummaryColspan = e.tableSummaryColspan, n.tableSummary = e.tableSummary, n.tableSummaryAlign = e.tableSummaryAlign, n.tableSummaryNumFormat = e.tableSummaryNumFormat, n.tableSummaryFormatter = e.tableSummaryFormatter, 
+        return e = e || {}, (n = t.call(this) || this).width = e.width ? parseFloat(e.width.toString()) : 100, n.title = e.title, n.descTitle = e.descTitle, n.field = e.field, n.fixed = e.fixed, n.rowspan = e.rowspan ? parseInt(e.rowspan) : 1, n.colspan = e.colspan ? parseInt(e.colspan) : 1, n.align = e.align, n.halign = e.halign, n.vAlign = e.vAlign, n.formatter = e.formatter, n.styler = e.styler, n.renderFormatter = e.renderFormatter, n.formatter2 = e.formatter2, n.styler2 = e.styler2, n.stylerHeader = e.stylerHeader, n.checkbox = e.checkbox, n.checked = 0 != e.checked, n.columnId = e.columnId || e.field, n.tableColumnHeight = e.tableColumnHeight, n.tableTextType = e.tableTextType, n.tableBarcodeMode = e.tableBarcodeMode, n.tableQRCodeLevel = e.tableQRCodeLevel, n.tableSummaryTitle = e.tableSummaryTitle, n.tableSummaryText = e.tableSummaryText, n.tableSummaryColspan = e.tableSummaryColspan, n.tableSummary = e.tableSummary, n.tableSummaryAlign = e.tableSummaryAlign, n.tableSummaryNumFormat = e.tableSummaryNumFormat, n.tableSummaryFormatter = e.tableSummaryFormatter,
         n.showCodeTitle = e.showCodeTitle, n.upperCase = e.upperCase, n;
       }
 
@@ -4794,7 +4794,7 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
-  
+
     // 表格底部合计栏
     tableSummary = function () {
       function t() {
@@ -9566,9 +9566,9 @@ var hiprint = function (t) {
         var scale = i.designPaper.scale||1.0
         this.ex = t
         this.ey = e
-        this.minX = this.startX/scale < t/scale ? this.startX/scale : t/scale, 
-        this.minY = this.startY/scale < e/scale ? this.startY/scale : e/scale, 
-        this.maxX = this.startX/scale < t/scale ? t/scale : this.startX/scale, 
+        this.minX = this.startX/scale < t/scale ? this.startX/scale : t/scale,
+        this.minY = this.startY/scale < e/scale ? this.startY/scale : e/scale,
+        this.maxX = this.startX/scale < t/scale ? t/scale : this.startX/scale,
         this.maxY = this.startY/scale < e/scale ? e/scale : this.startY/scale;
 
       }, t.prototype.updatePositionByMultipleSelect = function (t, e) {
@@ -9599,7 +9599,7 @@ var hiprint = function (t) {
             lastPaperFooter: e.lastPaperFooter,
             leftOffset: e.leftOffset,
             topOffset: e.topOffset,
-            panelLayoutOptions:e.panelLayoutOptions || {}, 
+            panelLayoutOptions:e.panelLayoutOptions || {},
             fontFamily: e.fontFamily,
             orient: e.orient,
             paperNumberDisabled: e.paperNumberDisabled,
@@ -9717,7 +9717,7 @@ var hiprint = function (t) {
             if (!ele) return;
             var a = ele.clone(obj);
             if (!a) return;
-            // 判断是否是在元素上进行paste            
+            // 判断是否是在元素上进行paste
             if(index === 0){
               operationPasterPosition = {
                 x: obj.options.left,
@@ -10089,7 +10089,7 @@ var hiprint = function (t) {
               e.mouseRect.lastLeft = e.mouseRect.lastLeft ? o.a.px.toPt(e.mouseRect.target[0].offsetLeft) : n / ptr, e.mouseRect.lastTop = e.mouseRect.lastTop ? o.a.px.toPt(e.mouseRect.target[0].offsetTop) : i / ptr
               , (e.mouseRect.mouseRectSelectedElement || []).forEach(function (t) {
               t.updatePositionByMultipleSelect(n - e.mouseRect.lastLeft, i - e.mouseRect.lastTop);
-            }), 
+            }),
             e.mouseRect.lastLeft = n / ptr,
             e.mouseRect.lastTop = i / ptr,
             s.a.instance.changed = !0;
@@ -10842,7 +10842,7 @@ var hiprint = function (t) {
           })
         }
         return elements
-      }, 
+      },
       t.prototype.selectAllElements = function () {
         var hiPrintEntity = this
         var t = $
