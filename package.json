@@ -29,6 +29,9 @@
     "up-version": "node ./scripts/change-version.js",
     "pub-beta": "npm run build && npm --registry https://registry.npmjs.org/ publish --tag beta"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "browserslist": [
     "> 1%",
     "last 2 versions",

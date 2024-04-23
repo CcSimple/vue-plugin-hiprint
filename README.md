@@ -36,6 +36,7 @@ vue-plugin-hiprint(基于[hiprint 2.5.4](http://hiprint.io/)) 当时只是为了
 
 ## 注意事项!!
 
+- NodeJs 需要 16.x 版本 (开发使用的 16.18.1)
 - <div style="color: red">【vue-plugin-hiprint】与【hiprint.io官网】差异甚多,请忽混用!请忽混用!请忽混用!</div>
 - <div style="color: orange">请使用我提供的打印客户端,或者自行修改打印客户端的源码,以适配本项目的模板!</div>
 - 主分支是融合版本的最新代码,如果你不需要修改 hiprint 相关代码. 请使用 npm 包的方式安装.
