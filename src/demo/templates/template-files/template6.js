@@ -2,7 +2,7 @@
  * @Author: 54xavier
  * @LastEditors: admin@54xavier.cn
  * @Date: 2023-02-28 14:00:03
- * @LastEditTime: 2023-08-08 19:32:55
+ * @LastEditTime: 2024-05-11 17:39:43
  */
 export const name = "Echarts实现";
 export const desc = "通过HTML元素实现Echarts-svg";
@@ -197,12 +197,24 @@ export const json = {
           options: {
             left: 12,
             top: 460,
-            height: 12,
+            height: 45,
             width: 418,
             title:
               "说明：此处模版以一个不可见 html 元素加载 echarts ，故第一次打开无法显示预览，但后续的 print api 能够正常显示，你可以在你的项目中全局加载 echarts 依赖，保证设计、预览时能加载到 echarts 依赖，即可删除用于引入依赖的html元素。使用 print2 需要在 electron-hiprint 项目渲染层中添加该依赖，否则客户端首次打印都无法正常渲染 echarts",
           },
-          printElementType: { title: "说明", type: "text" },
+          printElementType: { title: "说明", type: "longText" },
+        },
+        {
+          options: {
+            left: 12,
+            top: 505,
+            height: 24,
+            width: 418,
+            color: "#FF0000",
+            title:
+              "注意：Echarts 默认开启 动画，请在 option 中配置 animation 为 false，否则打印时因为动画会导致只显示动画第一帧",
+          },
+          printElementType: { title: "注意", type: "longText" },
         },
       ],
       paperNumberLeft: 565.5,
