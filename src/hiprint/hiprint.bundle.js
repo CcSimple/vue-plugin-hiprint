@@ -8824,7 +8824,8 @@ var hiprint = function (t) {
       }, e.prototype.getBarWidth = function () {
         return (null == this.barWidth ? this.defaultOptions.barWidth : this.barWidth) || 1;
       }, e.prototype.getBarAutoWidth = function () {
-        return (null == this.barAutoWidth ? this.defaultOptions.barAutoWidth : this.barAutoWidth) ?? true;
+        // 该属性 "true" 为 true，其余一概为 false
+        return (null == this.barAutoWidth ? this.defaultOptions.barAutoWidth === "true" : this.barAutoWidth === "true") ?? true;
       }, e.prototype.getQRcodeLevel = function () {
         return (null == this.qrCodeLevel ? this.defaultOptions.qrCodeLevel : this.qrCodeLevel) || 0;
       }, e;
@@ -8864,15 +8865,16 @@ var hiprint = function (t) {
           n = this.createTarget(this.printElementType.getText(!0), e);
         return this.updateTargetSize(n), this.css(n, e), n;
       }, e.prototype.updateDesignViewFromOptions = function () {
-        var els = this.panel.printElements.filter(function (t) {
-          return ('block' == t.designTarget.children().last().css('display')
-            && t.designTarget.children().last().hasClass('selected')) && !t.printElementType.type.includes('table');
-        });
-        els.forEach(ele => {
-          var t = ele.getData()
-          ele.css(ele.designTarget, t)
-          this.updateTargetText(ele.designTarget, ele.getTitle(), t)
-        })
+        // ! pub-beta 0.0.57-beta22 这里的处理似乎重复了，影响了 updateTargetText 方法执行，故在此处注释掉
+        // var els = this.panel.printElements.filter(function (t) {
+        //   return ('block' == t.designTarget.children().last().css('display')
+        //     && t.designTarget.children().last().hasClass('selected')) && !t.printElementType.type.includes('table');
+        // });
+        // els.forEach(ele => {
+        //   var t = ele.getData()
+        //   ele.css(ele.designTarget, t)
+        //   this.updateTargetText(ele.designTarget, ele.getTitle(), t)
+        // })
         if (this.designTarget) {
           var t = this.getData();
           this.css(this.designTarget, t), this.updateTargetText(this.designTarget, this.getTitle(), t);
@@ -8906,7 +8908,8 @@ var hiprint = function (t) {
               "display": "flex",
               "flex-direction": "column"
             })
-            a.html('<svg width="100%" display="block" height="100%" class="hibarcode_imgcode" preserveAspectRatio="none slice"></svg ><div class="hibarcode_displayValue" style="white-space:nowrap"></div>');
+            // pub-beta 0.0.57-beta22 移除插件通过 div 添加的文本元素，默认使用 JsBarcode 生成条形码文本
+            a.html('<svg width="100%" display="block" height="100%" class="hibarcode_imgcode" preserveAspectRatio="none slice"></svg>');
             try {
               n ? (JsBarcode(a.find(".hibarcode_imgcode")[0], n, {
                 format: this.options.getbarcodeMode(),
@@ -8915,11 +8918,14 @@ var hiprint = function (t) {
                 lineColor: this.options.color || "#000000",
                 margin: 0,
                 height: parseInt(o.a.pt.toPx(this.options.getHeight() || 10).toString()),
-                displayValue: !1
-              }), a.find(".hibarcode_imgcode").attr("height", "100%"), a.find(".hibarcode_imgcode").attr("width", "100%"), this.options.hideTitle || a.find(".hibarcode_displayValue").html(n)) : a.html("");
-              let svgWidth = a.find(".hibarcode_imgcode rect")[0].attributes.width.value * 1.2
-              if (this.options.getBarAutoWidth() && svgWidth > hinnn.pt.toPx(this.options.width)) {
-                this.options.width = Math.ceil(hinnn.px.toPt(svgWidth));
+                displayValue: !this.options.hideTitle,
+              }), a.find(".hibarcode_imgcode").attr("height", "100%"), a.find(".hibarcode_imgcode").attr("width", "100%")) : a.html("");
+              // pub-beta 0.0.57-beta22 解决条形码自动宽度问题
+              let svgWidth = a.find(".hibarcode_imgcode rect")[0].attributes.width.value
+              svgWidth = Math.ceil(hinnn.px.toPt(svgWidth * 1.05));
+              if (this.options.getBarAutoWidth() && svgWidth > this.options.width) {
+                a.parent().css("width", svgWidth + 'pt')
+                this.options.width = svgWidth;
               }
             } catch (t) {
               console.log(t), a.html(`${i18n.__('此格式不支持该文本')}`);
@@ -9223,6 +9229,8 @@ var hiprint = function (t) {
         }
       }, e.prototype.getConfigOptions = function () {
         return p.a.instance.barcode;
+      }, e.prototype.getBarAutoWidth = function () {
+        return (null == this.options.barAutoWidth ? this.options.defaultOptions.barAutoWidth === "true" : this.options.barAutoWidth === "true") ?? true;
       }, e.prototype.onResize = function (e, n, i, o, r) {
         t.prototype.onResize.call(this, e, n, i, o, r);
         this.initBarcode(this.designTarget, this.getTitle(), this.getData())
@@ -9243,19 +9251,30 @@ var hiprint = function (t) {
             bcid: this.options.barcodeType || 'code128',
             text: text || this.options.testData || this.options.title,
             scale: this.options.barWidth || 1,
-            width: parseInt(o.a.pt.toMm(this.options.getWidth())),
+            width: !this.getBarAutoWidth() ? parseInt(o.a.pt.toMm(this.options.getWidth())) : '',
             height: parseInt(height),
-            includetext: false,
+            includetext: !this.options.hideTitle,
             barcolor: this.options.barColor || "#000",
           })
-          content.html($(barcode))
-          if (!this.options.hideTitle) {
-            const titleText = title ? title + ( text ? ':' : '' ) : '';
-            const textAlign = this.options.textAlign || 'center';
-            // 支持type为barcode的textAlign属性
-            const textStyle = textAlign === 'justify' ? 'text-align-last: justify;text-justify: distribute-all-lines;' : `text-align: ${ textAlign };`
-            content.append($(`<div class="hiprint-printElement-barcode-content-title" style="${ textStyle }">${ titleText }${ text }</div>`))
+          // pub-beta 0.0.57-beta22 优化了条码自动调整宽度的逻辑，title 文本改为使用 bwipjs 文本内部实现
+          barcode = $(barcode)
+          // pub-beta 0.0.57-beta22 svg 元素需要添加 preserveAspectRatio 属性，使其横向可以自适应缩放
+          barcode.attr("preserveAspectRatio", "none slice")
+          let svgWidth = barcode[0].attributes.viewBox.value.split(" ")[2]; // 通过 viewBox 属性获取 bwipjs 内部生成的 svg 宽度
+          svgWidth = Math.ceil(hinnn.px.toPt(svgWidth * 1.05));
+          if (this.getBarAutoWidth() && svgWidth > this.options.width) {
+            content.parent().css("width", svgWidth + 'pt')
+            barcode.css("height", "100%");
+            this.options.width = svgWidth;
           }
+          content.html(barcode)
+          // if (!this.options.hideTitle) {
+          //   const titleText = title ? title + ( text ? ':' : '' ) : '';
+          //   const textAlign = this.options.textAlign || 'center';
+          //   // 支持type为barcode的textAlign属性
+          //   const textStyle = textAlign === 'justify' ? 'text-align-last: justify;text-justify: distribute-all-lines;' : `text-align: ${ textAlign };`
+          //   content.append($(`<div class="hiprint-printElement-barcode-content-title" style="${ textStyle }">${ titleText }${ text }</div>`))
+          // }
         } catch (error) {
           console.error(error)
           content.html($(`<div>${i18n.__('条形码生成失败')}</div>`))
