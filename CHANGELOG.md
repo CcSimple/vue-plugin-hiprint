@@ -4,6 +4,21 @@
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
 
+## 0.0.57-beta22(2024-05-13)
+
+<details>
+  <summary>01. ✨ 调整优化 text、barcode 类型条码自动增加宽度优化 </summary>
+
+  经过一段时间的测试及实验，找到了 [JsBarcode](https://github.com/lindell/JsBarcode) 与 [bwip-js](https://github.com/metafloor/bwip-js) 两个库实现条码宽度自动增加的较优方案。（感谢Q群用户 【︶ㄣ夏＾熟 。】的测试）
+  
+  现在你可以在 text[textType='barcode']、barCode 元素中设置 barAutoWidth 属性，使条码以渲染时 svg 提供的最小尺寸自动增加宽度。
+
+  > 0.0.57-beta20 版本中 条码宽度 = svg宽度 * 1.2，该倍率不是很合理，在此版本中修改为 1.05
+</details>
+<details>
+  <summary>02. ✨ 调整优化 模版中心预览图片资源调整</summary>
+</details>
+
 ## 0.0.57-beta20(2024-03-19)
 
 <details>
