@@ -3,7 +3,7 @@ export const desc = '首列合并示例';
 export const author = 'CcSimple'
 export const link = 'https://github.com/CcSimple'
 // url 或者 base64 或者 require('../../../assets/logo.png')
-export const preview = 'https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/template3.png';
+export const preview = '/static/template3.png';
 export const printData = {
   table: [
     {

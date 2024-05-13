@@ -3,7 +3,7 @@ export const desc = "动态数据多列行合并示例";
 export const author = "54xavier";
 export const link = "https://ccsimple.gitee.io/vue-plugin-hiprint/";
 export const preview =
-  "https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/template7.png";
+  "/static/template7.png";
 
 import _ from "lodash";
 
