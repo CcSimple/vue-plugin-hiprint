@@ -2,7 +2,7 @@
  * @Author: 54xavier
  * @LastEditors: admin@54xavier.cn
  * @Date: 2023-02-28 14:00:03
- * @LastEditTime: 2024-05-11 17:39:43
+ * @LastEditTime: 2024-05-13 23:39:39
  */
 export const name = "Echarts实现";
 export const desc = "通过HTML元素实现Echarts-svg";
@@ -10,7 +10,7 @@ export const author = "54xavier";
 export const link = "https://ccsimple.gitee.io/vue-plugin-hiprint/";
 // url 或者 base64 或者 require('../../../assets/logo.png')
 export const preview =
-  "https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/template6.png";
+  "/static/template6.png";
 function getRandomInt({ min = 10, max = 200 }) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }

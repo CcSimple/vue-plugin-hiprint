@@ -9,7 +9,7 @@ export const desc = '条码、标签A4纸铺满打印demo'
 export const author = '54xavier'
 export const link = "https://ccsimple.gitee.io/vue-plugin-hiprint/";
 // url 或者 base64 或者 require('../../../assets/logo.png')
-export const preview = 'https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/template2.png';
+export const preview = '/static/template2.png';
 export const printData = {
 	table: [
 		{

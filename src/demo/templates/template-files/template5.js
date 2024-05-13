@@ -10,7 +10,7 @@ export const author = "54xavier";
 export const link = "https://ccsimple.gitee.io/vue-plugin-hiprint/";
 // url 或者 base64 或者 require('../../../assets/logo.png')
 export const preview =
-  "https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/template5.png";
+  "/static/template5.png";
 export const printData = {
   DMCode1: "123456",
   DMCode2: "234567",
