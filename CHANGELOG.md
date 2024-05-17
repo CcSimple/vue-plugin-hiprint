@@ -10,7 +10,7 @@
 ```js
         hiprintTemplate.selectElementsByField(['name'])
 ```
-![选中field为name的字段](img.png)
+![选中field为name的字段](src/assets/selectElementsByField.png)
 ## 0.0.57-beta22(2024-05-13)
 
 <details>
