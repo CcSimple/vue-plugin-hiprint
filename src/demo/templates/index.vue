@@ -25,7 +25,6 @@
 <script>
 import templates from './files'
 import templatePreview from './preview'
-import printData from "../design/print-data";
 
 export default {
   name: "templates",
@@ -33,6 +32,16 @@ export default {
   data() {
     return {
       templates
+    }
+  },
+  computed: {
+    templates() {
+      return this.templates.map(template => {
+        return {
+          ...template,
+          preview: process.env.NODE_ENV === 'development' ? template.preview : `/vue-plugin-hiprint${template.preview}`
+        }
+      })
     }
   },
   mounted() {
