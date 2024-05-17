@@ -10862,6 +10862,21 @@ var hiprint = function (t) {
         }
         return elements
       },
+     t.prototype.selectElementsByField = function (fieldsArray){
+            var hiPrintEntity = this
+            var t = $
+            hiPrintEntity.editingPanel.printElements.forEach((e, index) => {
+              if(fieldsArray && fieldsArray.includes(e.options.field)){
+                let designTarget = e.designTarget
+                designTarget.children("div[panelindex]").addClass("selected")
+                designTarget.children().last().css({
+                  display: "block"
+                })
+                designTarget = designTarget[0]
+                t.data(designTarget, "hidraggable").options.onBeforeSelectAllDrag.call(designTarget,{})
+              }
+            })
+          },
       t.prototype.selectAllElements = function () {
         var hiPrintEntity = this
         var t = $

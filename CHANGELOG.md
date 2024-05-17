@@ -4,6 +4,13 @@
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
 
+## 0.0.57-beta23(2024-05-17)
+ <summary>01. 🌈 新增支持 添加 selectElementsByField 属性，通过传入field的字符串数组选中文本类型的元素</summary>
+ 
+```js
+        hiprintTemplate.selectElementsByField(['name'])
+```
+![选中field为name的字段](img.png)
 ## 0.0.57-beta22(2024-05-13)
 
 <details>
