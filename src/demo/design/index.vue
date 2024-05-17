@@ -113,6 +113,10 @@
         <a-button type="primary" @click="getSelectEls">
           获取选中元素
         </a-button>
+        <a-button type="primary" @click="setEleSelectByField">
+          设置根据field选中文本元素
+        </a-button>
+
         <a-button type="primary" @click="updateFontSize">
           选中元素字体12pt
         </a-button>
@@ -942,6 +946,9 @@ export default {
     },
     setElsSpace(h) {
       hiprintTemplate.setElsSpace(10, h)
+    },
+    setEleSelectByField(){
+      hiprintTemplate.selectElementsByField(['name'])
     },
     getSelectEls() {
       let els = hiprintTemplate.getSelectEls();
