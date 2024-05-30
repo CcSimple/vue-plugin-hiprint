@@ -1,69 +1,47 @@
 {
-  "name": "vue-plugin-hiprint",
-  "description": "hiprint for Vue2.x / Vue3.x 支持拖拽(分页(不分页)、表头表脚、样式设置、复制粘贴、缩放、撤销重做)生成打印模板、导出json模板数据、静默打印/获取MAC地址(借助客户端)",
-  "version": "0.0.57-beta23",
-  "author": "CcSimple",
-  "license": "MIT",
-  "main": "dist/vue-plugin-hiprint.js",
-  "private": false,
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/CcSimple/vue-plugin-hiprint.git"
-  },
-  "bugs": {
-    "url": "https://github.com/CcSimple/vue-plugin-hiprint/issues"
-  },
-  "keywords": [
-    "vue",
-    "hiprint",
-    "print"
-  ],
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build-demo": "vue-cli-service build",
-    "build": "cross-env NODE_ENV=production webpack --progress",
-    "pub": "npm run build && npm --registry https://registry.npmjs.org/ publish",
-    "up-version": "node ./scripts/change-version.js",
-    "pub-beta": "npm run build && npm --registry https://registry.npmjs.org/ publish --tag beta"
-  },
-  "engines": {
-    "node": "16.x"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-service": "^4.5.15",
-    "ant-design-vue": "^1.7.8",
-    "babel-loader": "^8.1.0",
-    "bootstrap": "^3.3.7",
-    "concurrent-tasks": "^1.0.7",
-    "copy-webpack-plugin": "^5.1.2",
-    "core-js": "^3.6.5",
-    "cross-env": "^5.0.5",
-    "less-loader": "^6.1.1",
-    "uglifyjs-webpack-plugin": "^2.2.0",
-    "vue": "^2.5.11",
-    "vue-ls": "^4.0.0",
-    "vue-template-compiler": "^2.6.11",
-    "webpack-cli": "^4.9.1"
-  },
-  "dependencies": {
-    "@claviska/jquery-minicolors": "^2.3.6",
-    "@wtto00/html2canvas": "^1.4.3",
-    "bwip-js": "^4.0.0",
-    "canvg": "^3.0.10",
-    "jquery": "^3.6.0",
-    "jsbarcode": "^3.11.5",
-    "jspdf": "^2.5.1",
-    "lodash": "^4.17.21",
-    "nzh": "^1.0.8",
-    "socket.io-client": "^4.5.1"
-  }
+	"name": "vite-project",
+	"private": false,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "vite --host",
+		"build": "tsc && vite build",
+		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"@ant-design/icons": "^5.3.6",
+		"@claviska/jquery-minicolors": "^2.3.6",
+		"@wtto00/html2canvas": "^1.4.3",
+		"ahooks": "^3.7.11",
+		"antd": "^5.16.4",
+		"bwip-js": "^4.3.2",
+		"canvg": "^4.0.2",
+		"immer": "^10.1.1",
+		"jquery": "^3.7.1",
+		"jsbarcode": "^3.11.6",
+		"jspdf": "^2.5.1",
+		"lodash": "^4.17.21",
+		"nzh": "^1.0.12",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-router-dom": "^6.23.1",
+		"socket.io-client": "^4.7.5"
+	},
+	"devDependencies": {
+		"@types/jquery": "^3.5.29",
+		"@types/react": "^18.2.66",
+		"@types/react-dom": "^18.2.22",
+		"@typescript-eslint/eslint-plugin": "^7.2.0",
+		"@typescript-eslint/parser": "^7.2.0",
+		"@vitejs/plugin-react": "^4.2.1",
+		"autoprefixer": "^10.4.19",
+		"eslint": "^8.57.0",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-react-refresh": "^0.4.6",
+		"postcss": "^8.4.38",
+		"tailwindcss": "^3.4.3",
+		"typescript": "^5.2.2",
+		"vite": "^5.2.0"
+	}
 }
