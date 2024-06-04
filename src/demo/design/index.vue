@@ -382,7 +382,7 @@ export default {
     /**
      * @description: 当前版本信息，用于 demo 页面根据版本控制功能
      * @return {Object}
-     */    
+     */
     currVerInfo() {
       if (this.$parent.version && this.$parent.version != "development") {
         return decodeVer(this.$parent.version)
@@ -440,7 +440,7 @@ export default {
     /**
      * @description: 加载版本
      * @param {string} version 版本号
-     */    
+     */
     getVersion(version) {
       const script = document.createElement("script");
       script.setAttribute("type", "text/javascript");
@@ -449,7 +449,9 @@ export default {
         // jsdelivr cdn
         // `https://cdn.jsdelivr.net/npm/vue-plugin-hiprint@${version}/dist/vue-plugin-hiprint.js`
         // cnpm cdn
-        `https://registry.npmmirror.com/vue-plugin-hiprint/${version}/files/dist/vue-plugin-hiprint.js`
+        // `https://registry.npmmirror.com/vue-plugin-hiprint/${version}/files/dist/vue-plugin-hiprint.js`
+        // unpkg cdn
+        `https://unpkg.com/vue-plugin-hiprint@${version}/dist/vue-plugin-hiprint.js`
       );
       script.addEventListener("load", () => {
         hiprint = window['vue-plugin-hiprint'].hiprint
@@ -459,7 +461,8 @@ export default {
       const head = document.querySelector("head");
       head.querySelector('link[media=print][href*="print-lock.css"]').remove();
       head.append(
-        $(`<link rel="stylesheet" type="text/css" media="print" href="https://registry.npmmirror.com/vue-plugin-hiprint/${version}/files/dist/print-lock.css">`)[0]
+        // $(`<link rel="stylesheet" type="text/css" media="print" href="https://registry.npmmirror.com/vue-plugin-hiprint/${version}/files/dist/print-lock.css">`)[0]
+        $(`<link rel="stylesheet" type="text/css" media="print" href="https://unpkg.com/vue-plugin-hiprint@${version}/dist/print-lock.css">`)[0]
       )
       head.append(script)
     },
