@@ -43,11 +43,13 @@ vue-plugin-hiprint(基于[hiprint 2.5.4](http://hiprint.io/)) 当时只是为了
 - 使用直接客户端时,本地开发连接没问题,部署到线上出现跨域无法连接打印客户端问题:
 - [线上跨域问题,请升级 https! 说明:https://www.cnblogs.com/daysme/p/15493523.html](https://www.cnblogs.com/daysme/p/15493523.html)
 - 如需提交 PR 请前往 github 合并后可自动发布npm包并同步代码到 gitee
-- vue-plugin-hiprint 包不包含UI界面,需要自行处理。如果想更快速引入请查看 [sv-print组件库](https://ccsimple.gitee.io/sv-print-docs/)
+- vue-plugin-hiprint 包不包含UI界面,需要自行处理。如果想更快速引入请查看 [sv-print组件库](https://ccsimple.github.io/sv-print-docs/)
 
 ## 快速链接
 
-Demo预览：[https://ccsimple.gitee.io/vue-plugin-hiprint/](https://ccsimple.gitee.io/vue-plugin-hiprint/)
+Demo预览：[https://ccsimple.gitee.io/vue-plugin-hiprint/](https://ccsimple.gitee.io/vue-plugin-hiprint/)(已挂，恢复看gitee官方情况)
+
+Github Demo预览：[https://ccsimple.github.io/vue-plugin-hiprint/](https://ccsimple.github.io/vue-plugin-hiprint/)(慢，请墙)
 
 更新记录：[npm包版本及更新记录](CHANGELOG.md)
 
