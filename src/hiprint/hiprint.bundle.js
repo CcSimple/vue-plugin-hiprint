@@ -10262,7 +10262,7 @@ var hiprint = function (t) {
         var r;
         if (tabs.length) {
           r = $('<div class="prop-tabs"><ul class="prop-tab-items"></ul></div>');
-          tabs.forEach(function (tab) {
+          tabs.filter((e) => e.list.length > 0).forEach(function (tab) {
             var item = $('<li class="prop-tab-item"><span class="tab-title">' + i18n.__(tab.name) + '</span></li>')
             r.find('.prop-tab-items').append(item)
             var options = $('<div class="hiprint-option-items" data-title="' + i18n.__(tab.name) + '"></div>')
@@ -11093,8 +11093,8 @@ var hiprint = function (t) {
             if (tab.replace) {
               $.extend(p.a.instance[i].tabs[idx], tab);
             } else {
-              var options = tab.options, list = p.a.instance[i].tabs[idx].options;
-              options.forEach(function (o) {
+              var options = tab.options || [], list = p.a.instance[i].tabs[idx].options;
+              options && options.forEach(function (o) {
                 var idx = list.findIndex(function (e) {
                   return e.name == o.name
                 });
@@ -11116,7 +11116,7 @@ var hiprint = function (t) {
           })
           delete t[i].tabs;
         }
-        else if (t[i].supportOptions) {
+        else if (t[i].supportOptions && t[i].supportOptions.length) {
           var options = t[i].supportOptions, list = p.a.instance[i].supportOptions;
           options.forEach(function (o) {
             var idx = list.findIndex(function (e) {
@@ -11137,6 +11137,9 @@ var hiprint = function (t) {
         } else {
           var keyMap = {};
           keyMap[i] = t[i];
+          if (t[i].tabs && t[i].tabs.length == 0) {
+            keyMap[i].supportOptions = p.a.instance[i].supportOptions;
+          }
           $.extend(p.a.instance, keyMap);
         }
       });

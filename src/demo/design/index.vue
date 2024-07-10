@@ -96,6 +96,19 @@
         <a-button type="primary" @click="ippRequestPrint">
           ipp请求 打印测试
         </a-button>
+        <div>元素参数操作:</div>
+        <a-button type="primary" @click="setOptionConfig(-1)"> 测试隐藏参数[看代码]
+        </a-button>
+        <a-button type="primary" @click="setOptionConfig(1)"> 隐藏[文本] "边框"、"高级"
+        </a-button>
+        <a-button type="primary" @click="setOptionConfig(2)"> [图片]不分组
+        </a-button>
+        <a-button type="primary" @click="setOptionConfig(3)"> 重写[文本] "字体大小"、"元素层级"
+        </a-button>
+        <a-button type="primary" @click="setOptionConfig(4)"> [文本]新增 "缩放"
+        </a-button>
+        <a-button type="primary" @click="setOptionConfig(0)"> 还原配置
+        </a-button>
       </a-space>
       <a-space style="margin-bottom: 10px">
         <a-textarea style="width:30vw" v-model="jsonIn" @pressEnter="updateJson"
@@ -123,6 +136,7 @@
         <a-button type="primary" @click="updateFontWeight">
           选中元素字体Bolder
         </a-button>
+        <div>选中元素后点击:</div>
         <a-button type="primary" @click="setElsSpace(true)"> 水平间距10
         </a-button>
         <a-button type="primary" @click="setElsSpace(false)"> 垂直间距10
@@ -473,90 +487,6 @@ export default {
       });
       // 还原配置
       hiprint.setConfig()
-      // 替换配置
-      hiprint.setConfig({
-        optionItems: [
-          fontSize,
-          scale,
-          function () {
-            function t() {
-              this.name = "zIndex";
-            }
-
-            return t.prototype.css = function (t, e) {
-              if (t && t.length) {
-                if (e) return t.css('z-index', e);
-              }
-              return null;
-            }, t.prototype.createTarget = function () {
-              return this.target = $('<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        元素层级2\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="number" class="auto-submit"/>\n        </div>\n    </div>'), this.target;
-            }, t.prototype.getValue = function () {
-              var t = this.target.find("input").val();
-              if (t) return parseInt(t.toString());
-            }, t.prototype.setValue = function (t) {
-              this.target.find("input").val(t);
-            }, t.prototype.destroy = function () {
-              this.target.remove();
-            }, t;
-          }(),
-        ],
-        movingDistance: 2.5,
-        text: {
-          tabs: [
-            // 隐藏部分
-            {
-              // name: '测试', // tab名称 可忽略
-              options: [] // 必须包含 options
-            },// 当修改第二个 tabs 时,必须把他之前的 tabs 都列举出来.
-            {
-              name: '样式', options: [
-                {
-                  name: 'scale',
-                  after: 'transform', // 自定义参数，插入在 transform 之后
-                  hidden: false
-                },
-              ]
-            }
-          ],
-          supportOptions: [
-            {
-              name: 'styler',
-              hidden: true
-            },
-            {
-              name: 'scale', // 自定义参数，supportOptions 必须得添加
-              after: 'transform', // 自定义参数，插入在 transform 之后
-              hidden: false
-            },
-            {
-              name: 'formatter',
-              hidden: true
-            },
-          ]
-        },
-        image: {
-          tabs: [
-            {
-              // 整体替换
-              replace: true,
-              name: '基本', options: [
-                {
-                  name: 'field',
-                  hidden: false
-                },
-                {
-                  name: 'src',
-                  hidden: false
-                },
-                {
-                  name: 'fit',
-                  hidden: false
-                }
-              ]
-            },
-          ],
-        }
-      })
       // eslint-disable-next-line no-undef
       hiprint.PrintElementTypeManager.buildByHtml($('.ep-draggable-item'));
       $('#hiprint-printTemplate').empty()
@@ -614,6 +544,208 @@ export default {
       console.log(hiprintTemplate);
       // 获取当前放大比例, 当zoom时传true 才会有
       this.scaleValue = hiprintTemplate.editingPanel.scale || 1;
+    },
+    setOptionConfig(type) {
+      switch (type) {
+        case -1: // 测试
+          hiprint.setConfig({
+            movingDistance: 2.5,
+            text: {
+              tabs: [
+                // 隐藏部分
+                {
+                  // name: '测试', // tab名称 可忽略
+                  options: [
+                    {
+                      name: 'fixed',
+                      hidden: true
+                    },
+                  ]
+                },
+                // 当修改第二个 tabs 时,必须把他之前的 tabs 都列举出来.
+              ],
+              supportOptions: [
+                {
+                  name: 'styler',
+                  hidden: true
+                },
+                {
+                  name: 'formatter',
+                  hidden: true
+                },
+              ]
+            },
+            image: {
+              tabs: [
+                {
+                  // 整体替换
+                  replace: true,
+                  name: '基本', options: [
+                    {
+                      name: 'field',
+                      hidden: false
+                    },
+                    {
+                      name: 'src',
+                      hidden: false
+                    },
+                    {
+                      name: 'fit',
+                      hidden: false
+                    }
+                  ]
+                },
+              ],
+            }
+          })
+          hiprint.setConfig({
+            movingDistance: 2.5,
+            text: {
+              tabs: [
+                // 隐藏部分
+                {
+                  // name: '测试', // tab名称 可忽略
+                  options: [
+                    {
+                      name: 'fixed',
+                      hidden: true
+                    },
+                  ]
+                },
+                // 当修改第二个 tabs 时,必须把他之前的 tabs 都列举出来.
+              ],
+              supportOptions: [
+                {
+                  name: 'styler',
+                  hidden: true
+                },
+                {
+                  name: 'formatter',
+                  hidden: true
+                },
+              ]
+            },
+            image: {
+              tabs: [
+                {
+                  // 整体替换
+                  replace: true,
+                  name: '基本', options: [
+                    {
+                      name: 'field',
+                      hidden: false
+                    },
+                    {
+                      name: 'src',
+                      hidden: false
+                    },
+                    {
+                      name: 'fit',
+                      hidden: false
+                    }
+                  ]
+                },
+              ],
+            }
+          })
+          break;
+        case 0: // 还原配置
+          hiprint.setConfig();
+          break;
+        case 1: // 隐藏文本 边框、高级
+          hiprint.setConfig({
+            text: {
+              tabs: [
+                {},
+                {},
+                // 隐藏边框
+                {
+                  name: '边框',
+                  replace: true, // 整体替换
+                  options: []
+                },
+                // 隐藏高级
+                {
+                  name: '高级',
+                  replace: true, // 整体替换
+                  options: []
+                },
+              ],
+            }
+          });
+          break
+        case 2: // 图片元素 参数不分组
+          hiprint.setConfig({
+            image: {
+              tabs: [],
+              supportOptions: [],
+            }
+          });
+          break;
+        case 3: // 重写字体大小、元素层级参数
+          hiprint.setConfig({
+            optionItems: [
+              fontSize,
+              function () {
+                function t() {
+                  this.name = "zIndex";
+                }
+
+                return t.prototype.css = function (t, e) {
+                  if (t && t.length) {
+                    if (e) return t.css('z-index', e);
+                  }
+                  return null;
+                }, t.prototype.createTarget = function () {
+                  return this.target = $('<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        元素层级2\n        </div>\n        <div class="hiprint-option-item-field">\n        <input type="number" class="auto-submit"/>\n        </div>\n    </div>'), this.target;
+                }, t.prototype.getValue = function () {
+                  var t = this.target.find("input").val();
+                  if (t) return parseInt(t.toString());
+                }, t.prototype.setValue = function (t) {
+                  this.target.find("input").val(t);
+                }, t.prototype.destroy = function () {
+                  this.target.remove();
+                }, t;
+              }(),
+            ]
+          });
+          break;
+        case 4: // 新增缩放参数
+          hiprint.setConfig({
+            optionItems: [
+              scale,
+            ],
+            movingDistance: 2.5,
+            text: {
+              tabs: [
+                {},
+                // 当修改第二个 tabs 时,必须把他之前的 tabs 都列举出来.
+                {
+                  name: '样式', options: [
+                    {
+                      name: 'scale',
+                      after: 'transform', // 自定义参数，插入在 transform 之后
+                      hidden: false
+                    },
+                  ]
+                }
+              ],
+            }
+          });
+          break;
+      }
+      // 参数 tabs 会缓存. 这里演示: 手动清空一下, 再点击选中元素
+      console.log(hiprintTemplate);
+      hiprintTemplate.editingPanel.printElements.forEach((e) => {
+        if (e._printElementOptionTabs) {
+          delete e._printElementOptionTabs;
+        }
+        if (e._printElementOptionItems) {
+          delete e._printElementOptionItems;
+        }
+      });
+      let els = hiprintTemplate.getSelectEls();
+      els && els.length && els[0].designTarget.trigger($.Event('click'));
     },
     /**
      * 设置纸张大小
@@ -739,7 +871,7 @@ export default {
         content: (h) => (
           <div>
             连接【{hiwebSocket.host}】失败！
-            <br />
+            <br/>
             请确保目标服务器已
             <a
               href="https://gitee.com/CcSimple/electron-hiprint/releases"
@@ -768,7 +900,7 @@ export default {
         content: (h) => (
           <div>
             连接【{hiwebSocket.host}】失败！
-            <br />
+            <br/>
             请确保目标服务器已
             <a
               href="https://gitee.com/CcSimple/electron-hiprint/releases"
@@ -950,7 +1082,7 @@ export default {
     setElsSpace(h) {
       hiprintTemplate.setElsSpace(10, h)
     },
-    setEleSelectByField(){
+    setEleSelectByField() {
       hiprintTemplate.selectElementsByField(['name'])
     },
     getSelectEls() {
