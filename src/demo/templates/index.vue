@@ -1,7 +1,7 @@
 <template>
   <a-card>
     <div class="templates">
-      <template v-for="(template,key) in templates">
+      <template v-for="(template, key) in templates">
         <div class="item-box" :key="key" @click="show(template)">
           <a-popover v-if="template.preview">
             <template #content>
@@ -31,17 +31,18 @@ export default {
   components: {templatePreview},
   data() {
     return {
-      templates
+      // templates
     }
   },
   computed: {
     templates() {
-      return this.templates.map(template => {
-        return {
-          ...template,
-          preview: process.env.NODE_ENV === 'development' ? template.preview : `/vue-plugin-hiprint${template.preview}`
+      const data = JSON.parse(JSON.stringify(templates));
+      for (const key in data) {
+        if (Object.hasOwnProperty.call(data, key)) {
+          data[key].preview = process.env.NODE_ENV === 'development' ? templates[key].preview : `/vue-plugin-hiprint${templates[key].preview}`
         }
-      })
+      }
+      return data;
     }
   },
   mounted() {
