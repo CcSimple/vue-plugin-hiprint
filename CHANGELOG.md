@@ -4,6 +4,20 @@
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
 
+## 0.0.57-beta26(2024-07-11)
+<details>
+  <summary>01. ✨ 调整优化 水印 打印无需在浏览器预览勾选背景图案</summary>
+
+  需要支持 [-webkit-print-color-adjust](https://caniuse.com/?search=-webkit-print-color-adjust) 样式
+</details>
+
+## 0.0.57-beta25(2024-07-10)
+<details>
+  <summary>01. ✨ 调整优化 setConfig API & 支持隐藏全部/部分参数分组</summary>
+
+  详细使用查看 demo
+</details>
+
 ## 0.0.57-beta23(2024-05-17)
 <details>
  <summary>01. 🌈 新增支持 添加 selectElementsByField 属性，通过传入field的字符串数组选中文本类型的元素</summary>
