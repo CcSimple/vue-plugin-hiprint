@@ -112,7 +112,7 @@ function _createWatermark(param) {
   let __vm = containerDom.querySelector('.__vm__' + id);
   const watermarkDiv = __vm || document.createElement('div');
   const withHeightStr = containerDom.getAttribute('style');
-  const styleStr = `position:absolute;user-select:none;top:0;left:0;${withHeightStr};z-index:${zIndex};pointer-events:none !important;background-repeat:repeat;background-image:url('${canvas.toDataURL()}')`;
+  const styleStr = `position:absolute;user-select:none;top:0;left:0;${withHeightStr};z-index:${zIndex};pointer-events:none !important;background-repeat:repeat;background-image:url('${canvas.toDataURL()}');-webkit-print-color-adjust: exact;`;
 
   watermarkDiv.setAttribute('style', styleStr);
   watermarkDiv.classList.add('__vm__' + id);
