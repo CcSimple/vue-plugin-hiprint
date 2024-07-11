@@ -10629,7 +10629,7 @@ var hiprint = function (t) {
           var n = this,
             i = 0,
             o = {},
-            r = $('link[media=print][href*="print-lock.css"]'),
+            r = $('link[media=print][href*="print-lock"]'),
             css = '';
           if (e.styleHandler) {
             css += e.styleHandler()
@@ -10682,7 +10682,7 @@ var hiprint = function (t) {
           var n = this,
             i = 0,
             o = {},
-            r = $('link[media=print][href*="print-lock.css"]');
+            r = $('link[media=print][href*="print-lock"]');
           if (r.length <= 0) {
             throw new Error("请在 入口文件(index.html) 中引入 print-lock.css. 注意: link[media=\"print\"]");
             return;

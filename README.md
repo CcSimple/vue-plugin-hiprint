@@ -55,6 +55,8 @@ Github Demo预览：[https://ccsimple.github.io/vue-plugin-hiprint/](https://ccs
 
 打印客户端：[https://gitee.com/CcSimple/electron-hiprint](https://gitee.com/CcSimple/electron-hiprint)
 
+中转服务：[https://github.com/Xavier9896/node-hiprint-transit](https://github.com/Xavier9896/node-hiprint-transit)
+
 ## 文章链接
 
 入门篇: [【vue-plugin-hiprint】使用-入门篇](https://mp.weixin.qq.com/s/4N4f7CkxodA-fuTJ_FbkOQ)
