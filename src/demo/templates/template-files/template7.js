@@ -92,7 +92,7 @@ export const json = {
             coordinateSync: false,
             widthHeightSync: false,
             field: "tableData",
-            rowsColumnsMerge: (
+            rowsColumnsMerge: `(
               row,
               col,
               colIndex,
@@ -133,7 +133,7 @@ export const json = {
               else {
                 return [1, 1];
               }
-            },
+            }`,
             right: 564.49609375,
             bottom: 93.75,
             vCenter: 289.49609375,
