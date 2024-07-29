@@ -1990,6 +1990,7 @@ var hiprint = function (t) {
 
                 var imagebox = $('<div><img style = "max-width:100%;max-height:100%"/></div>')
                 imagebox.find('img').attr('src', p)
+                imagebox.find('img').attr("height", t.tableColumnHeight || 50 + 'pt')
                 console.log(imagebox.find('img').css('width'))
                 r.html(imagebox)
               }
