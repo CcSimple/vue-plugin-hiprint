@@ -436,6 +436,18 @@ hiprintTemplate.on('printError', function (data) {
   console.log('打印失败')
 })
 ```
+> 大量单据连续打印
+```javascript
+hiprintTemplate.print2(printDataList, {
+  printer: '打印机名称',
+   title: '打印标题',
+   printByFragments: true,   // 是否需要分批打印，分批打印能够支持连续打印大量数据，但会增加打印所需时间
+   generateHTMLInterval: 30, // 多条数据生成HTML的间隔，单位ms，默认是10
+   fragmentSize: 10000,  // 分片字符长度，默认50000
+   sendInterval: 20, // 分片传输间隔，单位ms，默认10
+})
+
+```
 > 打印重叠 / 样式问题
 ```javascript
 /**
