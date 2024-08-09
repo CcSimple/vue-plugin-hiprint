@@ -23,11 +23,13 @@
 
 ## 关于此插件
 
-vue-plugin-hiprint(基于[hiprint 2.5.4](http://hiprint.io/)) 当时只是为了方便<span style="color: red">我（并非hiprint原作者）</span> 在vue项目中引入使用，所以以此命名。
+vue-plugin-hiprint (基于 [hiprint 2.5.4](http://hiprint.io/)) 当时只是为了方便 <span style="color: red">我（并非hiprint原作者）</span> 在vue项目中引入使用，所以以此命名。
 
-此<span style="color: red">插件</span>仅仅是一个<span style="color: red">JavaScript【工具库】</span>而非 <span style="color: yellow">Vue【组件库】</span>，所以它默认是不包含demo中所见的那些组件页面的（demo代码随便复制修改拿去用）。
+此 <span style="color: red">插件</span> 仅仅是一个 <span style="color: red">JavaScript【工具库】</span> 而非 <span style="color: yellow">Vue【组件库】</span>，所以它默认不包含demo中的那些组件页面（demo代码可复制使用）。
 
-由于hiprint官网最后一次更新时间为2019年【hiprint 2.5.4 是 [LGPL](#关于lgpl协议) 协议】，后在诸多使用者及反馈下进行了许多优化调整。[更新日志](CHANGELOG.md)（同时感谢各位群友支持和参与）
+由于hiprint官网最后一次更新时间为2019年【hiprint 2.5.4 是 [LGPL](#关于lgpl协议) 协议】，后在诸多使用者及反馈下进行了许多优化调整。
+
+[更新日志](CHANGELOG.md)（感谢各位群友支持和参与）
 
 ## vue-plugin-hiprint [更新日志](CHANGELOG.md)
 > hiprint for Vue2.x / Vue3.x (基于jQuery, 理论上应该也是支持其他框架的)
@@ -49,7 +51,7 @@ vue-plugin-hiprint(基于[hiprint 2.5.4](http://hiprint.io/)) 当时只是为了
 
 Demo预览：[https://ccsimple.gitee.io/vue-plugin-hiprint/](https://ccsimple.gitee.io/vue-plugin-hiprint/)(已挂，恢复看gitee官方情况)
 
-Github Demo预览：[https://ccsimple.github.io/vue-plugin-hiprint/](https://ccsimple.github.io/vue-plugin-hiprint/)(慢，请墙)
+Github Demo预览：[https://ccsimple.github.io/vue-plugin-hiprint/](https://ccsimple.github.io/vue-plugin-hiprint/)(慢，需翻墙)
 
 更新记录：[npm包版本及更新记录](CHANGELOG.md)
 
@@ -91,7 +93,9 @@ npm install vue-plugin-hiprint
 ```
 
 ```html
-<!--【必须】在index.html 文件中添加打印所需样式(此cdn可能不稳定):-->
+<!--【必须】在index.html 文件中添加打印所需样式(cdn可能不稳定):-->
+<link rel="stylesheet" type="text/css" media="print" href="https://npmmirror.com/package/vue-plugin-hiprint/files/dist/print-lock.css">
+<!-- OR -->
 <link rel="stylesheet" type="text/css" media="print" href="https://cdn.jsdelivr.net/npm/vue-plugin-hiprint@latest/dist/print-lock.css">
 <!-- 可以调整成 相对链接/自有链接, 【重要】名称需要一致 【print-lock.css】-->
 <link rel="stylesheet" type="text/css" media="print" href="/print-lock.css">
@@ -199,7 +203,7 @@ panel.addPrintLongText({ options: { width: 180, height: 35, top: 90, left: 20, t
 hiprintTemplate.print({});
 ```
 
-## i18n 设置
+## i18n 设置 ⬆️ 0.0.55-beta8
 
 原生为简体中文，英语、德语、西班牙语、法语、意大利语、日语、俄语、繁体中文皆为 AI 机翻，欢迎帮助 [订正](https://github.com/CcSimple/vue-plugin-hiprint/tree/main/src/i18n)。
 
@@ -360,8 +364,8 @@ this.$error({
 import { hiprint } from 'vue-plugin-hiprint'
 
 hiprint.init({
-    host: 'https://printjs.cn:17521', // 此处输入服务启动后的地址
-    token: 'vue-plugin-hiprint',     // 用于鉴权的token
+    host: 'https://v4.printjs.cn:17521', // 此处输入服务启动后的地址
+    token: 'hiprint-17521',     // 用于鉴权的token，hiprint* （*可替换为[0-9a-zA-Z\-_]字符）
 });
 
 // or
@@ -436,22 +440,23 @@ hiprintTemplate.on('printError', function (data) {
   console.log('打印失败')
 })
 ```
-> 大量单据连续打印
+> 大量单据连续打印 ⬆️ v0.0.57-beta28
 ```javascript
 hiprintTemplate.print2(printDataList, {
   printer: '打印机名称',
-   title: '打印标题',
-   printByFragments: true,   // 是否需要分批打印，分批打印能够支持连续打印大量数据，但会增加打印所需时间
-   generateHTMLInterval: 30, // 多条数据生成HTML的间隔，单位ms，默认是10
-   fragmentSize: 10000,  // 分片字符长度，默认50000
-   sendInterval: 20, // 分片传输间隔，单位ms，默认10
+  title: '打印标题',
+  printByFragments: true,   // 是否需要分批打印，分批打印能够支持连续打印大量数据，但会增加打印所需时间
+  generateHTMLInterval: 30, // 多条数据生成HTML的间隔，单位ms，默认是10
+  fragmentSize: 10000,  // 分片字符长度，默认50000
+  sendInterval: 20, // 分片传输间隔，单位ms，默认10
 })
-
 ```
-> 打印重叠 / 样式问题
+> 打印重叠 / 样式问题 ⬆️ v0.0.19
 ```javascript
 /**
- * 从 0.0.19 起, 在index.html添加:
+ * 从 在index.html添加:
+ * <link rel="stylesheet" type="text/css" media="print" href="https://npmmirror.com/package/vue-plugin-hiprint/files/dist/print-lock.css">
+ * 或者
  * <link rel="stylesheet" type="text/css" media="print" href="https://cdn.jsdelivr.net/npm/vue-plugin-hiprint@latest/dist/print-lock.css">
  * 以处理打印所需css, 当然你也可以自行处理
  * 比如： index.html目录下放一个print-lock.css, 然后在index.html添加:
@@ -481,9 +486,9 @@ hiprintTemplate.print2(this.printData, {
   }
 })
 ```
-> 修改默认配置 / 显示/隐藏元素设置参数
+> 修改默认配置 / 显示/隐藏元素设置参数 ⬆️ v0.0.13
 ```javascript
-// 0.0.13， 新增setConfig方法
+// 新增setConfig方法
 // 还原配置
 hiprint.setConfig()
 // 替换配置

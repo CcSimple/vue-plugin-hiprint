@@ -4,11 +4,42 @@
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
 
+## 0.0.57-beta28(2024-08-10)
+**⚠️⚠️⚠️ 有限的破坏性更新 Breaking changes**
+<details>
+  <summary>01. 🌈 新增支持 print2支持分批打印（需客户端 v1.0.11）</summary>
+
+  支持单模版大单据量连续打印 @george-hong ([#138](https://github.com/CcSimple/vue-plugin-hiprint/pull/138))
+  ```js
+  hiprintTemplate.print2(printDataList, {
+    printer: '打印机名称',
+    title: '打印标题',
+    printByFragments: true,   // 是否需要分批打印，分批打印能够支持连续打印大量数据，但会增加打印所需时间
+    generateHTMLInterval: 30, // 多条数据生成HTML的间隔，单位ms，默认10
+    fragmentSize: 10000,  // 分片字符长度，默认50000
+    sendInterval: 20, // 分片传输间隔，单位ms，默认10
+  })
+  ```
+</details>
+
+<details>
+  <summary>02. ⚠️  修改 print2 打印成功回调事件为 <b>success</b></summary>
+
+  项目初始时 print2 打印成功回调事件即为 `successs` 事件 (手抖多打了个 s)，electron-hiprint v1.0.8 重构关键代码时发现了该问题，为了标准及向下兼容，同时保留了 `succsss` 和 `success` 事件，经过 8 个多月的过渡期，现统一改为 `success` ，该改动仅对 electron-hiprint 1.0.7 及以前的客户端版本造成破坏性更新，后续版本无影响，我们也推荐大家及时更新至 1.0.11 以后的版本，体验更多优秀的功能。
+</details>
+
+## 0.0.57-beta27(2024-07-30)
+<details>
+  <summary>01. 🐛️ fix 表格字段为图片，单元格高度无效修复</summary>
+
+  表格里面当字段类型为图片时，单元格高度设置无效 BUG 修复，并设置最小高度避免表单高度计算失败 @zhmlsj ([#131](https://github.com/CcSimple/vue-plugin-hiprint/pull/131))
+</details>
+
 ## 0.0.57-beta26(2024-07-11)
 <details>
   <summary>01. ✨ 调整优化 水印 打印无需在浏览器预览勾选背景图案</summary>
 
-  需要支持 [-webkit-print-color-adjust](https://caniuse.com/?search=-webkit-print-color-adjust) 样式
+  需要支持 [-webkit-print-color-adjust](https://caniuse.com/?search=-webkit-print-color-adjust) 样式 @Xavier ([#129](https://github.com/CcSimple/vue-plugin-hiprint/pull/129))
 </details>
 
 ## 0.0.57-beta25(2024-07-10)
@@ -22,6 +53,7 @@
 <details>
  <summary>01. 🌈 新增支持 添加 selectElementsByField 属性，通过传入field的字符串数组选中文本类型的元素</summary>
  
+@xiaolonggee ([#123](https://github.com/CcSimple/vue-plugin-hiprint/pull/123))
 ```js
   hiprintTemplate.selectElementsByField(['name'])
 ```
