@@ -7824,7 +7824,8 @@ var hiprint = function (t) {
           token: this.token
         }
       }), this.socket.on("connect", function (e) {
-        t.opened = !0, console.log("Websocket opened."), _this.socket.on("successs", function (t) {
+        t.opened = !0, console.log("Websocket opened."),
+        _this.socket.on("success", function (t) {
           hinnn.event.trigger("printSuccess_" + t.templateId, t);
         }), _this.socket.on("error", function (t) {
           hinnn.event.trigger("printError_" + t.templateId, t);
