@@ -7717,6 +7717,39 @@ var hiprint = function (t) {
         console.log("send data error:" + (t || "") + JSON.stringify(e));
       }
     },
+    sendByFragments: function(content) {
+      try {
+        const {
+          fragmentSize =  50000, // 单片字符长度
+          sendInterval = 10,  // 分批传输间隔
+          html,
+          generateHTMLInterval, // 不需要传给client,取出字段
+          printByFragments, // 不需要传给client,取出字段
+          ...otherFields
+        } = content
+        const contentToSplit = content.html
+        // 字符总数
+        const charsCount = contentToSplit.length
+        // 片段总数
+        const fragmentsCount = Math.ceil(charsCount / fragmentSize)
+        Array.apply(undefined, { length: fragmentsCount }).forEach((item, index) => {
+          const startIndex = index * fragmentSize
+          // 字符结束索引
+          const endIndex = index + 1 === fragmentSize ? charsCount : (index + 1) * fragmentSize
+          // socket分段发送内容
+          setTimeout(() => {
+            this.socket.emit('printByFragments', {
+              ...otherFields,
+              index,
+              total: fragmentsCount,
+              htmlFragment: html.slice(startIndex, endIndex)
+            });
+          }, sendInterval * index);
+        })
+      } catch (e) {
+        console.log("send data fragment error:" + (content || "") + JSON.stringify(e));
+      }
+    },
     getPrinterList: function getPrinterList() {
       return this.printerList;
     },
@@ -7791,7 +7824,8 @@ var hiprint = function (t) {
           token: this.token
         }
       }), this.socket.on("connect", function (e) {
-        t.opened = !0, console.log("Websocket opened."), _this.socket.on("successs", function (t) {
+        t.opened = !0, console.log("Websocket opened."),
+        _this.socket.on("success", function (t) {
           hinnn.event.trigger("printSuccess_" + t.templateId, t);
         }), _this.socket.on("error", function (t) {
           hinnn.event.trigger("printError_" + t.templateId, t);
@@ -10549,8 +10583,43 @@ var hiprint = function (t) {
           }
         });
         return e && e.imgToBase64 && this.transformImg(i.find("img")), i;
+      }, t.prototype.getSimpleHtmlAsync = function (dataItemOrList, e) {
+        return new Promise(resolve => {
+          var that = this;
+          e || (e = {});
+          let rootElement = $('<div class="hiprint-printTemplate"></div>');
+          // 将数据转换成列表处理，简化代码
+          const dataList = Array.isArray(dataItemOrList) ? dataItemOrList : [dataItemOrList]
+          // 生成参数列表，用于后续递归
+          const paramsListToCreateHTML = []
+          dataList.forEach(function (data, dataIndex) {
+            data && that.printPanels.forEach(function (panel, o) {
+              paramsListToCreateHTML.push([panel, data, e])
+            });
+          });
+
+          function appendElementByParamsList(paramsListToCreateHTML, onFinish) {
+            if (!paramsListToCreateHTML.length) return onFinish();
+            const [panel, data, e] = paramsListToCreateHTML.shift();
+            rootElement.append(panel.getHtml(data, e));
+            // 每次生成Html之间留一些间隔，默认10，通过generateHTMLInterval字段控制
+            console.log('e.generateHTMLInterval', e.generateHTMLInterval)
+            setTimeout(() => appendElementByParamsList(paramsListToCreateHTML, onFinish), e.generateHTMLInterval ?? 10)
+          }
+
+          function onFinish() {
+            delete hinnn._paperList;
+            e && e.imgToBase64 && that.transformImg(rootElement.find("img"));
+            resolve(rootElement)
+          }
+
+          appendElementByParamsList(paramsListToCreateHTML, onFinish);
+        });
       }, t.prototype.getHtml = function (t, e) {
         return t || (t = {}), this.getSimpleHtml(t, e);
+      }, t.prototype.getHtmlAsync = function (t, e) {
+        // 分解生成HTML任务，留下空隙发送socket信息，避免断开连接
+        return t || (t = {}), this.getSimpleHtmlAsync(t, e);
       }, t.prototype.getJointHtml = function (t, e, n) {
         var i = $('<div class="hiprint-printTemplate"></div>'),
           o = [];
@@ -10674,8 +10743,18 @@ var hiprint = function (t) {
         e || (e = {});
         var i = $.extend({}, n || {});
         i.imgToBase64 = !0;
-        var o = t + this.getHtml(e, i)[0].outerHTML;
-        i.id = s.a.instance.guid(), i.html = o, i.templateId = this.id, hiwebSocket.send(i);
+        if (i.printByFragments) {
+          // 分批打印
+          this.getHtmlAsync(e, i)
+            .then(rootElement => {
+              var o = t + rootElement[0].outerHTML;
+              i.id = s.a.instance.guid(), i.html = o, i.templateId = this.id, hiwebSocket.sendByFragments(i, n);
+            })
+        } else {
+          // 同步打印
+          var o = t + this.getHtml(e, i)[0].outerHTML;
+          i.id = s.a.instance.guid(), i.html = o, i.templateId = this.id, hiwebSocket.send(i);
+        }
       }, t.prototype.printByHtml = function (t) {
         $(t).hiwprint();
       }, t.prototype.printByHtml2 = function (t, e) {

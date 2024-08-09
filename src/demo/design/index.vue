@@ -43,6 +43,9 @@
         <a-button type="primary" icon="printer" @click="print">
           直接打印
         </a-button>
+        <a-button type="primary" icon="printer" @click="printByFragments">
+          分批直接打印
+        </a-button>
         <a-button type="primary" @click="onlyPrint">
           Api单独打印
         </a-button>
@@ -889,31 +892,52 @@ export default {
       });
     },
     print() {
-      if (window.hiwebSocket.opened) {
+      this.doOperationWhenClientConnected(() => {
         const printerList = hiprintTemplate.getPrinterList();
         console.log(printerList)
         hiprintTemplate.print2(printData, {printer: '', title: 'hiprint测试打印'});
+      })
+    },
+    printByFragments() {
+      this.doOperationWhenClientConnected(() => {
+        const dataList = new Array(50).fill(printData)
+        // 原有方法打印不成功，原因是获取HTML的方法处理时间过长，导致超过socket心跳间隔
+        // hiprintTemplate.print2(dataList, {printer: '', title: 'hiprint测试打印'});
+        hiprintTemplate.print2(dataList, {
+          printer: '',
+          title: 'hiprint测试打印',
+          printByFragments: true,   // 是否需要分批打印，分批打印能够支持连续打印大量数据，但会增加打印所需时间
+          // generateHTMLInterval: 30, // 多条数据生成HTML的间隔，单位ms，默认是10
+          // fragmentSize: 10000,  // 分片字符长度，默认50000
+          // sendInterval: 20, // 分片传输间隔，单位ms，默认10
+          // type: 'pdf',
+        });
+      })
+    },
+    doOperationWhenClientConnected(operation) {
+      if (window.hiwebSocket.opened) {
+        operation?.()
         return
       }
       this.$error({
         title: "客户端未连接",
         content: (h) => (
-          <div>
-            连接【{hiwebSocket.host}】失败！
-            <br/>
-            请确保目标服务器已
-            <a
-              href="https://gitee.com/CcSimple/electron-hiprint/releases"
-              target="_blank"
-            >
-              下载
-            </a>
-            并
-            <a href="hiprint://" target="_blank">
-              运行
-            </a>
-            打印服务！
-          </div>
+            <div>
+              连接【{hiwebSocket.host}】失败！
+              <br/>
+              请确保目标服务器已
+              <a
+                  href="https://gitee.com/CcSimple/electron-hiprint/releases"
+                  target="_blank"
+              >
+                下载
+              </a>
+              并
+              <a href="hiprint://" target="_blank">
+                运行
+              </a>
+              打印服务！
+            </div>
         ),
       });
     },
