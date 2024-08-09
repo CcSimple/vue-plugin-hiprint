@@ -83,7 +83,7 @@ provider: [【vue-plugin-hiprint】如何自定义可拖拽元素 provider](http
 
 hiprint官方文档：[http://hiprint.io/docs/start](http://hiprint.io/docs/start)
 
-本人写的部分文档: [https://ccsimple.gitee.io/sv-print-docs/config/hiprint.html](https://ccsimple.gitee.io/sv-print-docs/config/hiprint.html)
+本人写的部分文档: [https://ccsimple.github.io/sv-print-docs/config/hiprint.html](https://ccsimple.github.io/sv-print-docs/config/hiprint.html)
 
 ## 安装使用
 ```
