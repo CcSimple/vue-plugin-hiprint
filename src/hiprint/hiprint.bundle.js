@@ -10297,7 +10297,7 @@ var hiprint = function (t) {
         var r;
         if (tabs.length) {
           r = $('<div class="prop-tabs"><ul class="prop-tab-items"></ul></div>');
-          tabs.filter((e) => e.list.length > 0).forEach(function (tab) {
+          tabs.filter((e,idx) => e.list.length > 0 || (idx == 2 && o && o.length)).forEach(function (tab) {
             var item = $('<li class="prop-tab-item"><span class="tab-title">' + i18n.__(tab.name) + '</span></li>')
             r.find('.prop-tab-items').append(item)
             var options = $('<div class="hiprint-option-items" data-title="' + i18n.__(tab.name) + '"></div>')
@@ -11163,6 +11163,10 @@ var hiprint = function (t) {
   }
 
   function cig(t) {
+    if (hiprint._config == void 0) {
+      hiprint._config = JSON.stringify(window.HIPRINT_CONFIG);
+    }
+    const oldConfig = JSON.parse(hiprint._config);
     if (t) {
       t && Object.keys(t).forEach(function (i) {
         if (i == "optionItems" && t.optionItems && t.optionItems.length) {
@@ -11173,7 +11177,7 @@ var hiprint = function (t) {
             if (tab.replace) {
               $.extend(p.a.instance[i].tabs[idx], tab);
             } else {
-              var options = tab.options || [], list = p.a.instance[i].tabs[idx].options;
+              var options = tab.options || [], list = oldConfig[i].tabs[idx].options;
               options && options.forEach(function (o) {
                 var idx = list.findIndex(function (e) {
                   return e.name == o.name
@@ -11197,7 +11201,7 @@ var hiprint = function (t) {
           delete t[i].tabs;
         }
         else if (t[i].supportOptions && t[i].supportOptions.length) {
-          var options = t[i].supportOptions, list = p.a.instance[i].supportOptions;
+          var options = t[i].supportOptions, list = oldConfig[i].supportOptions;
           options.forEach(function (o) {
             var idx = list.findIndex(function (e) {
               return e.name == o.name
@@ -11218,13 +11222,13 @@ var hiprint = function (t) {
           var keyMap = {};
           keyMap[i] = t[i];
           if (t[i].tabs && t[i].tabs.length == 0) {
-            keyMap[i].supportOptions = p.a.instance[i].supportOptions;
+            keyMap[i].supportOptions = oldConfig[i].supportOptions;
           }
           $.extend(p.a.instance, keyMap);
         }
       });
     } else {
-      $.extend(p.a.instance, HIPRINT_CONFIG);
+      $.extend(p.a.instance, JSON.parse(hiprint._config));
     }
   }
 
