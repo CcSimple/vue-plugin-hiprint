@@ -6224,8 +6224,9 @@ var hiprint = function (t) {
         }), this.target.before(i), this.rgripContariner = new d(i, n), this.syncRowGrips();
       }, t.prototype.syncGrips = function (t, e) {
         var n = t.getTarget();
+        var scale = ($('.hiprint-printPaper')[0].style.transform && parseFloat($('.hiprint-printPaper')[0].style.transform.slice(6, -1))) || 1;
         e.cell = t, e.target.css({
-          left: n.offset().left - this.target.offset().left + n.outerWidth(!1),
+          left: (n.offset().left / scale) - (this.target.offset().left / scale) + n.outerWidth(!1),
           height: 30
         });
       }, t.prototype.syncRowGrips = function () {
