@@ -9706,6 +9706,14 @@ var hiprint = function (t) {
             this.oddPaperFooter = t.oddPaperFooter, this.lastPaperFooter = t.lastPaperFooter, this.topOffset = t.topOffset, this.leftOffset = t.leftOffset;
           this.designPaper.setFooter(this.firstPaperFooter, this.evenPaperFooter, this.oddPaperFooter, this.lastPaperFooter),
             this.designPaper.setOffset(this.leftOffset, this.topOffset);
+          // 宽高
+          this.target.css("width", t.width + "mm"),
+          this.target.css("height", t.height - p.a.instance.paperHeightTrim + "mm"),
+          this.target.attr("original-height", t.height),
+          this.target.parent().css("width", t.width + "mm"),
+          this.target.parent().css("height", t.height - p.a.instance.paperHeightTrim + "mm"),
+          this.designPaper.target.css("width", t.width + "mm"),
+          this.designPaper.target.css("height", t.height - p.a.instance.paperHeightTrim + "mm");
           var end = Date.now();
           console.log('更新参数 end', end)
           console.log('更新参数 time:', end - start)
