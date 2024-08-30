@@ -7701,7 +7701,7 @@ var hiprint = function (t) {
     opened: !1,
     name: "webSockets",
     host: "http://localhost:17521",
-    token: null,
+    token: 'vue-plugin-hiprint',
     reconnectTimeout: 6e4,
     reconnectWindowSetTimeout: null,
     reconnectDelay: 2e3,
