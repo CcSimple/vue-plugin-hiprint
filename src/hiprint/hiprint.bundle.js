@@ -10751,7 +10751,7 @@ var hiprint = function (t) {
       }, t.prototype.sentToClient = function (t, e, n) {
         e || (e = {});
         var i = $.extend({}, n || {});
-        i.imgToBase64 = !0;
+        i.imgToBase64 = i.imgToBase64 ?? false;
         if (i.printByFragments) {
           // 分批打印
           this.getHtmlAsync(e, i)
@@ -11141,7 +11141,8 @@ var hiprint = function (t) {
   }
 
   function ft(t, e, n) {
-    $.extend({}, t || {}).imgToBase64 = !0;
+    $.extend({}, t || {});
+    t.imgToBase64 = t.imgToBase64 ?? false;
     var i = new ct({});
     i.on("printSuccess", e), i.on("printError", n), i.printByHtml2(this.getHtml(t), t.options);
   }
@@ -11150,7 +11151,7 @@ var hiprint = function (t) {
     var e = void 0;
     return t && t.templates.forEach(function (n, i) {
       var o = $.extend({}, n.options || {});
-      t.imgToBase64 && (o.imgToBase64 = !0), e ? e.append(n.template.getHtml(n.data, o).html()) : e = n.template.getHtml(n.data, o);
+      t.imgToBase64 && (o.imgToBase64 = o.imgToBase64 ?? false), e ? e.append(n.template.getHtml(n.data, o).html()) : e = n.template.getHtml(n.data, o);
     }), e;
   }
 
