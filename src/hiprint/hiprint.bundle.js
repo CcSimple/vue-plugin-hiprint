@@ -2746,6 +2746,22 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
+    barTextMode = function () {
+      function t() {
+        this.name = "barTextMode";
+      }
+      return t.prototype.createTarget = function() {
+        this.target = $(`<div class="hiprint-option-item"><div class="hiprint-option-item-label">${i18n.__('条码文本模式')}</div><div class="hiprint-option-item-field"><select class="auto-submit"><option value="">${i18n.__('默认')}</option><option value="text">单独文本</option><option value="svg">svg文本</option></select></div></div>`)
+        return this.target;
+      }, t.prototype.getValue = function() {
+        var t = this.target.find("select").val();
+        return t || void 0;
+      }, t.prototype.setValue = function(t) {
+        this.target.find("select").val(t)
+      }, t.prototype.destroy = function() {
+        this.target.remove()
+      }, t;
+    }(),
     barWidth = function () {
       function t() {
         this.name = "barWidth";
@@ -5341,7 +5357,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new paperNumberContinue(), new watermarkOptions(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new borderRadius(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(),new textWrap(), new at(), new lt(), new panelLayoutOptions(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new rowsColumnsMergeClean(), new groupFieldsFormatter(), new groupFormatter(), new groupFooterFormatter(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new stylerHeader(), new renderFormatter(), new _t(), new wt(), new maxRows(), new xt(), new tableColumnH(), new tableE(), new tableQRCodeLevel(), new tablept(), new tableSummaryTitle(), new tableSummaryText(), new tableSummaryColspan(), new tableSummary(), new tableSummaryAlign(), new tableSummaryNumFormat(), new tableSummaryFormatter(),new showCodeTitle(), new upperCase(), new barcodeType(), new qrcodeType(), new barColor(), new barWidth(), new barAutoWidth()], t;
+    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new paperNumberContinue(), new watermarkOptions(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new borderRadius(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(),new textWrap(), new at(), new lt(), new panelLayoutOptions(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new rowsColumnsMergeClean(), new groupFieldsFormatter(), new groupFormatter(), new groupFooterFormatter(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new stylerHeader(), new renderFormatter(), new _t(), new wt(), new maxRows(), new xt(), new tableColumnH(), new tableE(), new tableQRCodeLevel(), new tablept(), new tableSummaryTitle(), new tableSummaryText(), new tableSummaryColspan(), new tableSummary(), new tableSummaryAlign(), new tableSummaryNumFormat(), new tableSummaryFormatter(),new showCodeTitle(), new upperCase(), new barcodeType(), new qrcodeType(), new barColor(), new barTextMode(), new barWidth(), new barAutoWidth()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -8859,6 +8875,8 @@ var hiprint = function (t) {
         return (null == this.fontSize ? this.defaultOptions.fontSize : this.fontSize) || 9;
       }, e.prototype.getbarcodeMode = function () {
         return (null == this.barcodeMode ? this.defaultOptions.barcodeMode : this.barcodeMode) || "CODE128";
+      }, e.prototype.getBarTextMode = function () {
+        return (null == this.barTextMode ? this.defaultOptions.barTextMode : this.barTextMode) || 'text';
       }, e.prototype.getBarWidth = function () {
         return (null == this.barWidth ? this.defaultOptions.barWidth : this.barWidth) || 1;
       }, e.prototype.getBarAutoWidth = function () {
@@ -8946,8 +8964,13 @@ var hiprint = function (t) {
               "display": "flex",
               "flex-direction": "column"
             })
+            // 分离显示条形码文本
+            var divMode = this.options.getBarTextMode() == 'text';
             // pub-beta 0.0.57-beta22 移除插件通过 div 添加的文本元素，默认使用 JsBarcode 生成条形码文本
             a.html('<svg width="100%" display="block" height="100%" class="hibarcode_imgcode" preserveAspectRatio="none slice"></svg>');
+            if (divMode) {
+              a.append(`<div class="hibarcode_displayValue" style="white-space:nowrap">`);
+            }
             try {
               n ? (JsBarcode(a.find(".hibarcode_imgcode")[0], n, {
                 format: this.options.getbarcodeMode(),
@@ -8956,8 +8979,9 @@ var hiprint = function (t) {
                 lineColor: this.options.color || "#000000",
                 margin: 0,
                 height: parseInt(o.a.pt.toPx(this.options.getHeight() || 10).toString()),
-                displayValue: !this.options.hideTitle,
-              }), a.find(".hibarcode_imgcode").attr("height", "100%"), a.find(".hibarcode_imgcode").attr("width", "100%")) : a.html("");
+                displayValue: divMode ? false : !this.options.hideTitle,
+              }), a.find(".hibarcode_imgcode").attr("height", "100%"), a.find(".hibarcode_imgcode").attr("width", "100%"),
+              divMode && (this.options.hideTitle || a.find(".hibarcode_displayValue").html(n))): a.html("");
               // pub-beta 0.0.57-beta22 解决条形码自动宽度问题
               let svgWidth = a.find(".hibarcode_imgcode rect")[0].attributes.width.value
               svgWidth = Math.ceil(hinnn.px.toPt(svgWidth * 1.05));

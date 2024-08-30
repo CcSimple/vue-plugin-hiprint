@@ -229,6 +229,10 @@
               hidden: false
             },
             {
+              name: 'barTextMode',
+              hidden: false
+            },
+            {
               name: 'barWidth',
               hidden: false
             },
@@ -342,6 +346,10 @@
         },
         {
           name: 'barcodeMode',
+          hidden: false
+        },
+        {
+          name: 'barTextMode',
           hidden: false
         },
         {
@@ -1810,7 +1818,7 @@
           name: 'tableSummaryNumFormat',
           hidden: false
         },
-       
+
         {
           name: 'tableSummaryFormatter',
           hidden: false
@@ -1819,7 +1827,7 @@
           name: 'upperCase',
           hidden: false
         },
-       
+
         {
           name: 'renderFormatter',
           hidden: false
@@ -1836,7 +1844,7 @@
           name: 'stylerHeader',
           hidden: false
         },
-   
+
       ],
       default: {
         height: 90,
