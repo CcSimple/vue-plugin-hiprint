@@ -584,9 +584,11 @@ $('#hiwprint_iframe').css('visibility','hidden');
     </tr>
 </table>
 
-## 状态/调整/优化 请查看[更新记录](CHANGELOG.md)
-
 本项目使用 <a href="https://jb.gg/OpenSourceSupport"><img height="40" width="100" src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/WebStorm.svg"/></a><a href="https://jb.gg/OpenSourceSupport"><img width="50" height="50" src="https://gitee.com/CcSimple/vue-plugin-hiprint/raw/main/res/WebStorm_icon.svg"/></a> 开发
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=CcSimple/vue-plugin-hiprint&type=Date)](https://star-history.com/#CcSimple/vue-plugin-hiprint&Date)
 
 ## 分支说明
 > main： vue2.x + ant1.7.x融合版 及 npm包源代码
