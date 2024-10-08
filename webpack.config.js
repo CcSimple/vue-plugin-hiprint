@@ -45,9 +45,11 @@ module.exports = {
       amd: "socket.io-client",
       root: "io",
     },
-    html2canvas: "html2canvas",
+    "@wtto00/html2canvas": "html2canvas",
     canvg: 'canvg',
     jspdf: "jspdf",
+    "bwip-js": "bwipjs",
+    "nzh": "Nzh",
   },
   optimization:{
     minimizer:[
