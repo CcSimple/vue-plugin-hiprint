@@ -1791,7 +1791,7 @@ var hiprint = function (t) {
           r(a);
         }
         return TableExcelHelper.syncTargetWidthToOption(t), [i, colgroup];
-      }, TableExcelHelper.createTableFooter = function (t, e, n, i, o, r) {
+      }, TableExcelHelper.createTableFooter = function (t, e, n, i, o, r, pageIndex) {
         // n=>options e=>表格所有数据 o=>所有打印数据 r=>表格每页数据
         var a = $("<tfoot></tfoot>"), p = this.getFooterFormatter(n, i);
         var tst = this.tableSummaryTitle;
@@ -1870,7 +1870,8 @@ var hiprint = function (t) {
           a.append(tableFooter);
         }
         if (p) {
-          a.append(p(n, e, o, r));
+          // pageIndex: 当前页码(0开始) 如果表格脚最后页显示,则中间回调 undefined
+          a.append(p(n, e, o, r, pageIndex));
         }
         return a;
       }, TableExcelHelper.tableSummaryTitle = function (column, title, data) {
@@ -5093,7 +5094,7 @@ var hiprint = function (t) {
       }
 
       return t.prototype.createTarget = function () {
-        return this.target = $(`<div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        ${i18n.__('表格脚函数')}\n        </div>\n        <div class="hiprint-option-item-field">\n        <textarea style="height:80px;" placeholder="function(options,rows,data,pageData){ return \'<tr></tr>\' }" class="auto-submit"></textarea>\n        </div>\n    </div>`), this.target;
+        return this.target = $(`<div class="hiprint-option-item hiprint-option-item-row">\n        <div class="hiprint-option-item-label">\n        ${i18n.__('表格脚函数')}\n        </div>\n        <div class="hiprint-option-item-field">\n        <textarea style="height:80px;" placeholder="function(options,rows,data,pageData,pageIndex){ return \'<tr></tr>\' }" class="auto-submit"></textarea>\n        </div>\n    </div>`), this.target;
       }, t.prototype.getValue = function () {
         var t = this.target.find("textarea").val();
         if (t) return t;
@@ -5850,9 +5851,9 @@ var hiprint = function (t) {
               if ("last" == this.options.tableFooterRepeat && !c.isEnd) break;
               if ("no" !== this.options.tableFooterRepeat) {
                 if (noPaging) {
-                  d.find("tbody").append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, this.getData(t), this.options, this.printElementType, t, h).children())
+                  d.find("tbody").append(_table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, this.getData(t), this.options, this.printElementType, t, h, o).children())
                 } else {
-                  _table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, this.getData(t), this.options, this.printElementType, t, h).insertBefore(d.find("tbody"));
+                  _table_TableExcelHelper__WEBPACK_IMPORTED_MODULE_6__.a.createTableFooter(this.printElementType.columns, this.getData(t), this.options, this.printElementType, t, h, o).insertBefore(d.find("tbody"));
                 }
                 that.css(d, t);
               }
