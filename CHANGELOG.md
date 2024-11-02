@@ -4,6 +4,177 @@
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
 
+## 0.0.58 (2024-10-10)
+> 使用此版本 请更新最新的 print-lock.css
+
+> 感谢各位提交 PR 的码友们! 感谢~
+
+> 同时希望各位多看看文档、文章、更新日志;  📢 本页面支持 Ctrl/Command + F 搜索
+
+- 点击 ▶ 可查看详情
+
+<details>
+  <summary>01. 🌈 新增面板排列功能 (横向、纵向 支持间距)</summary>
+
+- 小模板 传数组 铺满 对应纸张
+</details>
+<details>
+  <summary>02. 🌈 新增支持 barcode、qrcode 条码颜色设置</summary>
+
+</details>
+<details>
+  <summary>03. 🌈 新增支持 表格列 条形码/二维码值显示设置</summary>
+
+</details>
+<details>
+  <summary>04. 🌈 新增支持 全选元素API 可批量删除</summary>
+
+hiprintTemplate.selectAllElements();
+</details>
+<details>
+  <summary>05. 🌈 新增支持 根据字段名 选中元素</summary>
+
+hiprintTemplate.selectElementsByField(['name']);
+</details>
+<details>
+  <summary>06. 🌈 新增支持 获取打印机纸张信息 API (客户端^1.0.10)</summary>
+
+> ❗️ node-hiprint-transit 中转暂未添加支持
+
+  ```js
+  // 获取指定打印机纸张信息
+  hiprint.getPaperInfo(printerName);
+  // 获取所有打印机纸张信息
+  hiprint.getPaperInfo();
+
+  // 获取纸张信息方法是异步请求的，没有返回值，你可以使用 hinnn.event.on("paperSizeInfo", () => {}) 监听数据返回
+  hinnn.event.on("paperSizeInfo", (paperSize) => {
+    console.log(paperSize);
+  });
+  // [
+  //   {
+  //       "PrinterName": "Microsoft Print to PDF",
+  //       "TaskNumber": 0, // 打印队列数
+  //       "Status": 0, // 设备状态码
+  //       "StatusMsg": "准备就绪（Ready）", // 设备状态信息
+  //       "PaperSizes": [
+  //           {
+  //               "Height": 1100, // 单位 mm
+  //               "Kind": 1,
+  //               "PaperName": "信纸",
+  //               "RawKind": 1,
+  //               "Width": 850 // 单位 mm
+  //           }
+  //       ]
+  //   }
+  // ]
+  ```> ❗️ node-hiprint-transit 中转暂未添加支持
+
+  ```js
+  // 获取指定打印机纸张信息
+  hiprint.getPaperInfo(printerName);
+  // 获取所有打印机纸张信息
+  hiprint.getPaperInfo();
+
+  // 获取纸张信息方法是异步请求的，没有返回值，你可以使用 hinnn.event.on("paperSizeInfo", () => {}) 监听数据返回
+  hinnn.event.on("paperSizeInfo", (paperSize) => {
+    console.log(paperSize);
+  });
+  // [
+  //   {
+  //       "PrinterName": "Microsoft Print to PDF",
+  //       "TaskNumber": 0, // 打印队列数
+  //       "Status": 0, // 设备状态码
+  //       "StatusMsg": "准备就绪（Ready）", // 设备状态信息
+  //       "PaperSizes": [
+  //           {
+  //               "Height": 1100, // 单位 mm
+  //               "Kind": 1,
+  //               "PaperName": "信纸",
+  //               "RawKind": 1,
+  //               "Width": 850 // 单位 mm
+  //           }
+  //       ]
+  //   }
+  // ]
+  ```
+</details>
+<details>
+  <summary>07. 🌈 新增支持 print2支持分批打印（需客户端 v1.0.11）</summary>
+
+支持单模版大单据量连续打印 @george-hong ([#138](https://github.com/CcSimple/vue-plugin-hiprint/pull/138))
+  ```js
+  hiprintTemplate.print2(printDataList, {
+    printer: '打印机名称',
+    title: '打印标题',
+    printByFragments: true,   // 是否需要分批打印，分批打印能够支持连续打印大量数据，但会增加打印所需时间
+    generateHTMLInterval: 30, // 多条数据生成HTML的间隔，单位ms，默认10
+    fragmentSize: 10000,  // 分片字符长度，默认50000
+    sendInterval: 20, // 分片传输间隔，单位ms，默认10
+  })
+  ```
+</details>
+<details>
+  <summary>08. ✨ 调整优化 text、barcode 类型条码自动增加宽度优化</summary>
+
+</details>
+<details>
+  <summary>09. ✨ 调整优化 text条形码: 支持设置条码文本模式: 单独文本、svg文本</summary>
+
+</details>
+<details>
+  <summary>10. ✨ 调整优化 API 更新元素时 属性同步</summary>
+
+</details>
+<details>
+  <summary>11. ✨ 调整优化 缩放时 框选框 移动偏差问题</summary>
+
+</details>
+<details>
+  <summary>12. ✨ 调整优化 分组头/脚函数 自动判断return是否包含 tr、td</summary>
+
+</details>
+<details>
+  <summary>13. ✨ 调整优化 hiprint.setConfig API</summary>
+
+- 支持隐藏参数分组
+- 隐藏部分参数分组
+</details>
+<details>
+  <summary>14. ✨ 调整优化 update 更新模板时 尺寸跟着改变</summary>
+
+</details>
+<details>
+  <summary>15. ✨ 调整优化 静默打印 图片默认不转 base64</summary>
+
+</details>
+<details>
+  <summary>16. ✨ 调整优化 表格 分组序号 支持续编</summary>
+
+</details>
+<details>
+  <summary>17. ⚠️  修改 print2 打印成功回调事件为 <b>success</b></summary>
+
+项目初始时 print2 打印成功回调事件即为 `successs` 事件 (手抖多打了个 s)，electron-hiprint v1.0.8 重构关键代码时发现了该问题，为了标准及向下兼容，同时保留了 `succsss` 和 `success` 事件，经过 8 个多月的过渡期，现统一改为 `success` ，该改动仅对 electron-hiprint 1.0.7 及以前的客户端版本造成破坏性更新，后续版本无影响，我们也推荐大家及时更新至 1.0.11 以后的版本，体验更多优秀的功能。
+</details>
+<details>
+  <summary>18. 🐛✨🐛✨🐛✨🐛 其他修复或优化见详情(或见 git history)</summary>
+
+- 修复选择图片后refresh方法参数real属性无效，以及回调函数可能不会执行的问题
+- i18n相关修复优化
+- fix: 修复复制元素自动聚焦的bug
+- 将图片的缩放控制点从[se,r]改为[s,e,se,r] (#98)
+- 修复双击文本出现冒号的bug (#102)
+- fix #104 修复表格中存在多列rowSpan时多页rowSpan错误
+- 修复表格分页colspan问题
+- fix: 修复新添加的条形码/二维码元素-左右对齐参数不生效的问题
+- add 表格添加 colgroup 解决分页不显示表头时列宽各种问题
+- fix 表格 样式参数设置不生效的 bug
+- fix 表格里面当字段类型为图片时，单元格高度设置无效BUG修复，并设置最小高度避免表单高度计算失败
+</details>
+
+
+
 ## 0.0.57-beta28(2024-08-10)
 **⚠️⚠️⚠️ 有限的破坏性更新 Breaking changes**
 <details>
@@ -52,7 +223,7 @@
 ## 0.0.57-beta23(2024-05-17)
 <details>
  <summary>01. 🌈 新增支持 添加 selectElementsByField 属性，通过传入field的字符串数组选中文本类型的元素</summary>
- 
+
 @xiaolonggee ([#123](https://github.com/CcSimple/vue-plugin-hiprint/pull/123))
 ```js
   hiprintTemplate.selectElementsByField(['name'])
@@ -66,7 +237,7 @@
   <summary>01. ✨ 调整优化 text、barcode 类型条码自动增加宽度优化 </summary>
 
   经过一段时间的测试及实验，找到了 [JsBarcode](https://github.com/lindell/JsBarcode) 与 [bwip-js](https://github.com/metafloor/bwip-js) 两个库实现条码宽度自动增加的较优方案。（感谢Q群用户 【︶ㄣ夏＾熟 。】的测试）
-  
+
   现在你可以在 text[textType='barcode']、barCode 元素中设置 barAutoWidth 属性，使条码以渲染时 svg 提供的最小尺寸自动增加宽度。
 
   > 0.0.57-beta20 版本中 条码宽度 = svg宽度 * 1.2，该倍率不是很合理，在此版本中修改为 1.05
@@ -110,7 +281,7 @@
 
 <details>
   <summary>01. 🌈 新增支持 获取打印机纸张信息 Beta ❗️ </summary>
-  
+
   当客户端运行在 window 系统环境时可以获取打印机纸张信息，你需要自行拉取最新客户端代码[electron-hiprint](https://github.com/CcSimple/electron-hiprint)，自行构建最新版本(v1.0.10)
 
   > ❗️ node-hiprint-transit 中转暂未添加支持
@@ -217,7 +388,7 @@
   const template = new hiprint.PrintTemplate({
     template: panel,
   })
-  
+
   template.selectAllElements()
   ```
 </details>
