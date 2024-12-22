@@ -564,7 +564,7 @@ var hiprint = function (t) {
       }
       return d;
     }, t.prototype.getLeft = function () {
-      return this.left;
+      return this.left - 0;
     }, t.prototype.posLeft = function () {
       var left = this.left;
       if (this.transform) left += this.getRectInfo().diffW;
@@ -579,7 +579,7 @@ var hiprint = function (t) {
     }, t.prototype.setLeft = function (t) {
       null != t && (this.left = t);
     }, t.prototype.getTop = function () {
-      return this.top;
+      return this.top - 0;
     }, t.prototype.posTop = function () {
       var top = this.top;
       if (this.transform) top += this.getRectInfo().diffH;
@@ -600,7 +600,7 @@ var hiprint = function (t) {
         var i = this.getRectInfo();
         return i.h + i.diffH;
       }
-      return this.height;
+      return this.height - 0;
     }, t.prototype.displayHeight = function () {
       return this.height + "pt";
     }, t.prototype.setHeight = function (t) {
@@ -610,7 +610,7 @@ var hiprint = function (t) {
         var i = this.getRectInfo();
         return i.w + i.diffW;
       }
-      return this.width;
+      return this.width - 0;
     }, t.prototype.displayWidth = function () {
       return this.width + "pt";
     }, t.prototype.setWidth = function (t) {
