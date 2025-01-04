@@ -1884,7 +1884,8 @@ var hiprint = function (t) {
         var gff = h.getGroupFieldsFormatter(n, i);
         var groupRowIndex = 0;
         var groupFields = gff ? (n.groupFields = gff(i, n, e)) : i.groupFields ? i.groupFields : [];
-        (e || (e = []), groupFields.length) ? _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_1__.a.groupBy(e, groupFields, function (t) {
+        e = Array.isArray(e) ? e : [];
+        groupFields.length ? _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_1__.a.groupBy(e, groupFields, function (t) {
           var e = {};
           return groupFields.forEach(function (n) {
             return e[n] = t[n];
