@@ -1,5 +1,6 @@
 ﻿(function ($) {
   $.fn.hiwprint = function (options) {
+    var hasLoaded = false;
     var usedFrame = document.getElementById('hiwprint_iframe');
     if (usedFrame) usedFrame.parentNode.removeChild(usedFrame);
     var opt = $.extend({}, $.fn.hiwprint.defaults, options);
@@ -23,6 +24,8 @@
     $iframe[0].srcdoc = '<!DOCTYPE html><html><head><title></title><meta charset="UTF-8">' + css + '</head><body></body></html>';
 
     $iframe[0].onload = function () {
+      if (hasLoaded) return;
+      hasLoaded = true;
       var printDocument = $iframe[0].contentWindow || $iframe[0].contentDocument;
       if (printDocument.document) printDocument = printDocument.document;
       if (!$iframe.attr('srcdoc')) {
