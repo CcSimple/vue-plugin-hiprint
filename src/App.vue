@@ -62,6 +62,12 @@ import printPanels from "@/demo/panels/index";
 import templates from "@/demo/templates/index";
 import { decodeVer } from "@/utils";
 
+import bwipjs from "bwip-js";
+import Nzh from "nzh";
+
+window["bwip-js"] = bwipjs;
+window["Nzh"] = Nzh;
+
 export default {
   name: "App",
   components: {
