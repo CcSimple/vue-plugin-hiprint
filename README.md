@@ -29,23 +29,34 @@ vue-plugin-hiprint (基于 [hiprint 2.5.4](http://hiprint.io/)) 当时只是为�
 
 由于hiprint官网最后一次更新时间为2019年【hiprint 2.5.4 是 [LGPL](#关于lgpl协议) 协议】，后在诸多使用者及反馈下进行了许多优化调整。
 
-[更新日志](CHANGELOG.md)（感谢各位群友支持和参与）
-
 ## vue-plugin-hiprint [更新日志](CHANGELOG.md)
-> hiprint for Vue2.x / Vue3.x (基于jQuery, 理论上应该也是支持其他框架的)
 
-> **jQuery/uniapp** 项目 见下方 [jQuery/uniapp 项目使用](#jQuery/uniapp 项目使用)
+（感谢各位群友支持和参与）
 
-## 注意事项!!
+## 关联项目矩阵
 
-- NodeJs 需要 16.x 版本 (开发使用的 16.18.1)
-- <div style="color: red">【vue-plugin-hiprint】与【hiprint.io官网】差异甚多,请忽混用!请忽混用!请忽混用!</div>
-- <div style="color: orange">请使用我提供的打印客户端,或者自行修改打印客户端的源码,以适配本项目的模板!</div>
-- 主分支是融合版本的最新代码,如果你不需要修改 hiprint 相关代码. 请使用 npm 包的方式安装.
-- 使用直接客户端时,本地开发连接没问题,部署到线上出现跨域无法连接打印客户端问题:
-- [线上跨域问题,请升级 https! 说明:https://www.cnblogs.com/daysme/p/15493523.html](https://www.cnblogs.com/daysme/p/15493523.html)
-- 如需提交 PR 请前往 github 合并后可自动发布npm包并同步代码到 gitee
-- vue-plugin-hiprint 包不包含UI界面,需要自行处理。如果想更快速引入请查看 [sv-print组件库](https://ccsimple.github.io/sv-print-docs/)
+|项目名称| 项目地址                                                                                                                                                                  | 下载地址                                                              | 描述                   |
+|---|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|----------------------|
+|vue-plugin-hiprint| [github](https://gitee.com/CcSimple/vue-plugin-hiprint)、[gitee](https://gitee.com/CcSimple/vue-plugin-hiprint)| [npm](https://www.npmjs.com/package/vue-plugin-hiprint)           | 打印设计器                |
+|electron-hiprint| [github](https://gitee.com/CcSimple/electron-hiprint)、[gitee](https://gitee.com/CcSimple/electron-hiprint)                                                            | [releases](https://github.com/CcSimple/electron-hiprint/releases) | 直接打印客户端              |
+|node-hiprint-transit| [github](https://github.com/Xavier9896/node-hiprint-transit)、[gitee](https://gitee.com/Xavier9896/node-hiprint-transit)                                               | -                                                                 | web与客户端中转服务          |
+|uni-app-hiprint| [github](https://github.com/Xavier9896/uni-app-hiprint)                                                            | -                                                                 | uni-app webview demo |
+
+> hiprint for Vue2.x / Vue3.x (基于jQuery, 也支持其他框架)
+
+> **jQuery/uniapp** 项目 见下方 [jQuery/uniapp 项目使用](#jqueryuniapp-项目使用)
+
+> [!IMPORTANT]
+> 
+> **注意事项**
+> - NodeJs 需要 16.x 版本 (开发使用 16.18.1)
+> - <div style="color: red">【vue-plugin-hiprint】与【hiprint.io官网】差异甚多,请忽混用!请忽混用!请忽混用!</div>
+> - <div style="color: orange">请使用项目关联的打印客户端,或者自行修改打印客户端的源码,以适配本项目的模板!</div>
+> - 主分支是融合版本的最新代码,如果你不需要修改 hiprint 相关代码. 请使用 npm 包的方式安装.
+> - 使用直接客户端时,本地开发连接没问题,部署到线上出现跨域无法连接打印客户端问题:
+> - [线上跨域问题,请升级 https! 说明:https://www.cnblogs.com/daysme/p/15493523.html](https://www.cnblogs.com/daysme/p/15493523.html)
+> - 如需提交 PR 请前往 github 合并后可自动发布npm包并同步代码到 gitee
+> - vue-plugin-hiprint 包不包含UI界面,需要自行处理。如果想更快速引入请查看 [sv-print组件库](https://ccsimple.github.io/sv-print-docs/)
 
 ## 快速链接
 
@@ -279,6 +290,10 @@ hiprintTemplate.print2({});
     <script src="https://unpkg.com/jquery@3.6.1/dist/jquery.js"></script>
     <!-- 条形码 -->
     <script src="https://unpkg.com/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <!-- 二维码、条形码 bwip-js -->
+    <script src="https://unpkg.com/bwip-js@4.5.1/dist/bwip-js.js"></script>
+    <!-- 数字转大写 -->
+    <script src="https://unpkg.com/nzh@1.0.14/dist/nzh.min.js"></script>
     <!-- 颜色选择器 -->
     <script src="https://unpkg.com/@claviska/jquery-minicolors@2.3.6/jquery.minicolors.min.js"></script>
     <!-- 直接打印(print2)需要 -->
