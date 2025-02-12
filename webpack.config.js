@@ -48,7 +48,7 @@ module.exports = {
     "@wtto00/html2canvas": "html2canvas",
     canvg: 'canvg',
     jspdf: "jspdf",
-    "bwip-js": 'bwip-js',
+    "bwip-js": 'bwipjs',
     "nzh": "Nzh",
   },
   optimization:{

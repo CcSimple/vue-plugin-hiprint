@@ -15,6 +15,7 @@ module.exports = {
         let pkg = fs.readFileSync(pkgPath);
         pkg.dependencies = {
           "ant-design-vue": "^1.7.8",
+          "bwip-js": "^4.0.0",
           "core-js": "^3.6.5",
           "vue": "^2.5.11",
           "concurrent-tasks": "^1.0.7",
