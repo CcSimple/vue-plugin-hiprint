@@ -30,7 +30,7 @@
     "pub-beta": "npm run build && npm --registry https://registry.npmjs.org/ publish --tag beta"
   },
   "engines": {
-    "node": "16.x"
+    "node": ">=16"
   },
   "browserslist": [
     "> 1%",
