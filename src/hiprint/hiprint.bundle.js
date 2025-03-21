@@ -316,7 +316,7 @@ var hiprint = function (t) {
     return this.orderBy(o, e).concat([i], this.orderBy(r, e));
   }, hinnn.dateFormat = function (t, e) {
     if (t) try {
-      var o = "string" == typeof t ? new Date(t) : t;
+      var o = new Date(`${t}`);
       var n = {
         "y+": o.getFullYear(),
         "M+": o.getMonth() + 1,
