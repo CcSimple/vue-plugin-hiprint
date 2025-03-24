@@ -3,6 +3,26 @@
 ### 💐️  GitHub 提交 PR 合并后可自动发布到 npm 仓库;
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
+### 💐  希望各位多看看文档、文章、更新日志;  📢 本页面支持 Ctrl/Command + F 搜索
+
+## 0.0.60 (2025-03-24)
+> 使用此版本 请更新最新的 print-lock.css
+
+<details>
+  <summary>01. ✨ 调整优化 hinnn.dateFormat 支持时间戳</summary>
+</details>
+<details>
+  <summary>02. ✨ 调整优化 engines node >=16</summary>
+</details>
+<details>
+  <summary>03. 🐛️ fix install bwipjs error</summary>
+</details>
+<details>
+  <summary>04. 🐛️ fix 某些特定情况下 onload 函数重复调用 导致重复弹出浏览器预览打印弹窗的bug</summary>
+</details>
+<details>
+  <summary>05. 🐛️ fix table 数据格式问题（Array.isArray）</summary>
+</details>
 
 ## 0.0.58 (2024-11-02)
 > 使用此版本 请更新最新的 print-lock.css
