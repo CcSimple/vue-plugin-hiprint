@@ -29,11 +29,13 @@ vue-plugin-hiprint (基于 [hiprint 2.5.4](http://hiprint.io/)) 当时只是为�
 
 由于 hiprint 官网最后一次更新时间为 2019 年【hiprint 2.5.4 是 [LGPL](#关于lgpl协议) 协议】，后在诸多使用者及反馈下进行了许多优化调整。
 
-## vue-plugin-hiprint 
+## vue-plugin-hiprint
 
 > [✨立即体验](https://ccsimple.github.io/vue-plugin-hiprint/) <br/><br/> [🌈更新日志](CHANGELOG.md) <br/><br/> [🐛常见问题(入门必看!)](#常见问题) ⚠️⚠️ [📕系列教程文章(入门必看!)](#常见问题) <br/><br/> [🚀项目生态(打印客户端、node服务端、uniapp)](#插件生态)
 
-> [🔥🔥🔥1.征集模板、2.admin模板集成示例、3.插件集成; ==> 点我🔥🔥🔥](#交流群)
+> [🔥1.征集模板、2.admin模板集成示例、3.插件集成; ==> 点我🔥](#交流群)
+
+> [❤️‍🔥付费技术支持、项目合作 ==> 点我❤️‍🔥❤️‍](#交流群)
 
 > hiprint for Vue2.x / Vue3.x (基于 jQuery, 理论上其他框架可用。[react demo 分支](https://github.com/CcSimple/vue-plugin-hiprint/tree/react_demo))
 
@@ -53,6 +55,8 @@ vue-plugin-hiprint (基于 [hiprint 2.5.4](http://hiprint.io/)) 当时只是为�
 > - vue-plugin-hiprint 包不包含 UI 界面,需要自行处理。如果想更快速引入请查看 [sv-print 组件库](https://ccsimple.github.io/sv-print-docs/)
 
 ## 文章链接
+
+快速入门: [一文彻底入门可视化打印vue-plugin-hiprint](https://mp.weixin.qq.com/s/R8juiaQsLhMmyZebv55tUA)
 
 入门篇: [【vue-plugin-hiprint】使用-入门篇](https://mp.weixin.qq.com/s/4N4f7CkxodA-fuTJ_FbkOQ)
 
