@@ -40,18 +40,6 @@
         <a-button type="primary" icon="eye" @click="preView">
           预览
         </a-button>
-        <a-button type="primary" icon="printer" @click="print">
-          直接打印
-        </a-button>
-        <a-button type="primary" icon="printer" @click="printByFragments">
-          分批直接打印
-        </a-button>
-        <a-button type="primary" @click="onlyPrint">
-          Api单独打印
-        </a-button>
-        <a-button type="primary" @click="onlyPrint2">
-          Api单独直接打印
-        </a-button>
         <a-popconfirm
           title="是否确认清空?"
           okType="danger"
@@ -65,8 +53,33 @@
           </a-button>
         </a-popconfirm>
         <json-view :template="template"/>
+        <a-dropdown>
+          <a-menu slot="overlay" @click="handleMenuClick">
+            <a-menu-item key="0">都不看,我就不看</a-menu-item>
+            <a-menu-item v-for="item in keyList" :key="item.key"> {{ item.name }}</a-menu-item>
+          </a-menu>
+          <a-button style="margin-left: 8px"> 更多功能示例
+            <a-icon type="down"/>
+          </a-button>
+        </a-dropdown>
       </a-space>
-      <a-space style="margin-bottom: 10px">
+      <a-space v-if="'1' == curKey" style="margin-bottom: 10px">
+        <div class="btn-text-desc">直接打印/api打印:</div>
+        <a-button type="primary" icon="printer" @click="print">
+          直接打印
+        </a-button>
+        <a-button type="primary" icon="printer" @click="printByFragments">
+          分批直接打印
+        </a-button>
+        <a-button type="primary" @click="onlyPrint">
+          Api单独打印
+        </a-button>
+        <a-button type="primary" @click="onlyPrint2">
+          Api单独直接打印
+        </a-button>
+      </a-space>
+      <a-space v-if="'2' == curKey" style="margin-bottom: 10px">
+        <div class="btn-text-desc">导出PDF文件/流:</div>
         <a-button type="primary" @click="exportPdf('')">
           导出获取pdf(Blob)
         </a-button>
@@ -86,7 +99,8 @@
           导出查看pdf(PdfObjectNewWindow)
         </a-button>
       </a-space>
-      <a-space style="margin-bottom: 10px">
+      <a-space v-if="'3' == curKey" style="margin-bottom: 10px">
+        <div class="btn-text-desc">ipp打印(需打印机支持):</div>
         <a-button type="primary" @click="ippPrintAttr">
           ipp获取 打印机 参数情况
         </a-button>
@@ -99,7 +113,9 @@
         <a-button type="primary" @click="ippRequestPrint">
           ipp请求 打印测试
         </a-button>
-        <div style="white-space: nowrap;">元素参数操作:</div>
+      </a-space>
+      <a-space v-if="'4' == curKey" style="margin-bottom: 10px">
+        <div class="btn-text-desc">元素参数操作:</div>
         <a-button type="primary" @click="setOptionConfig(-1)"> 测试隐藏参数[看代码]
         </a-button>
         <a-button type="primary" @click="setOptionConfig(1)"> 隐藏[文本] "边框"、"高级"
@@ -113,7 +129,8 @@
         <a-button type="primary" @click="setOptionConfig(0)"> 还原配置
         </a-button>
       </a-space>
-      <a-space style="margin-bottom: 10px">
+      <a-space v-if="'5' == curKey" style="margin-bottom: 10px">
+        <div class="btn-text-desc">模板导入导出:</div>
         <a-textarea style="width:30vw" v-model="jsonIn" @pressEnter="updateJson"
                     placeholder="复制json模板到此后 点击右侧更新"
                     allow-clear/>
@@ -125,7 +142,8 @@
         </a-button>
         <a-textarea style="width:30vw" v-model="jsonOut" placeholder="点击左侧导出json" allow-clear/>
       </a-space>
-      <a-space style="margin-bottom: 10px">
+      <a-space v-if="'6' == curKey" style="margin-bottom: 10px">
+        <div class="btn-text-desc">元素获取/更新参数:</div>
         <a-button type="primary" @click="getSelectEls">
           获取选中元素
         </a-button>
@@ -139,7 +157,9 @@
         <a-button type="primary" @click="updateFontWeight">
           选中元素字体Bolder
         </a-button>
-        <div style="white-space: nowrap;">选中元素后点击:</div>
+      </a-space>
+      <a-space v-if="'7' == curKey" style="margin-bottom: 10px">
+        <div class="btn-text-desc">元素对齐/间距(需先选中):</div>
         <a-button type="primary" @click="setElsSpace(true)"> 水平间距10
         </a-button>
         <a-button type="primary" @click="setElsSpace(false)"> 垂直间距10
@@ -328,7 +348,7 @@ import printPreview from './preview'
 import jsonView from "../json-view.vue";
 import fontSize from "./font-size.js";
 import scale from "./scale.js";
-import { decodeVer } from '@/utils'
+import {decodeVer} from '@/utils'
 // disAutoConnect();
 var hiprint, defaultElementTypeProvider, panel;
 let hiprintTemplate;
@@ -381,6 +401,17 @@ export default {
       // 导入导出json
       jsonIn: '',
       jsonOut: '',
+      // 功能
+      curKey: '',
+      keyList: [
+        {key: 1, name: '直接打印/api打印'},
+        {key: 2, name: '导出PDF文件/流'},
+        {key: 3, name: 'ipp打印(需打印机支持)'},
+        {key: 4, name: '元素参数操作'},
+        {key: 5, name: '模板导入导出'},
+        {key: 6, name: '元素获取/更新参数'},
+        {key: 7, name: '元素对齐/间距(需先选中)'},
+      ],
     }
   },
   computed: {
@@ -891,6 +922,10 @@ export default {
         ),
       });
     },
+    handleMenuClick(e) {
+      const {key} = e;
+      this.curKey = key;
+    },
     print() {
       this.doOperationWhenClientConnected(() => {
         const printerList = hiprintTemplate.getPrinterList();
@@ -922,22 +957,22 @@ export default {
       this.$error({
         title: "客户端未连接",
         content: (h) => (
-            <div>
-              连接【{hiwebSocket.host}】失败！
-              <br/>
-              请确保目标服务器已
-              <a
-                  href="https://gitee.com/CcSimple/electron-hiprint/releases"
-                  target="_blank"
-              >
-                下载
-              </a>
-              并
-              <a href="hiprint://" target="_blank">
-                运行
-              </a>
-              打印服务！
-            </div>
+          <div>
+            连接【{hiwebSocket.host}】失败！
+            <br/>
+            请确保目标服务器已
+            <a
+              href="https://gitee.com/CcSimple/electron-hiprint/releases"
+              target="_blank"
+            >
+              下载
+            </a>
+            并
+            <a href="hiprint://" target="_blank">
+              运行
+            </a>
+            打印服务！
+          </div>
         ),
       });
     },
@@ -1124,6 +1159,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
+.btn-text-desc {
+  width: 12vw;
+  text-align: right;
+  white-space: nowrap;
+}
+
 // 拖拽
 .drag_item_box {
   height: 100%;
