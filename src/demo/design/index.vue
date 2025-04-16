@@ -99,7 +99,7 @@
         <a-button type="primary" @click="ippRequestPrint">
           ipp请求 打印测试
         </a-button>
-        <div>元素参数操作:</div>
+        <div style="white-space: nowrap;">元素参数操作:</div>
         <a-button type="primary" @click="setOptionConfig(-1)"> 测试隐藏参数[看代码]
         </a-button>
         <a-button type="primary" @click="setOptionConfig(1)"> 隐藏[文本] "边框"、"高级"
@@ -139,7 +139,7 @@
         <a-button type="primary" @click="updateFontWeight">
           选中元素字体Bolder
         </a-button>
-        <div>选中元素后点击:</div>
+        <div style="white-space: nowrap;">选中元素后点击:</div>
         <a-button type="primary" @click="setElsSpace(true)"> 水平间距10
         </a-button>
         <a-button type="primary" @click="setElsSpace(false)"> 垂直间距10
