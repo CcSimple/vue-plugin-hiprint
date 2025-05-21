@@ -31,11 +31,7 @@ vue-plugin-hiprint (基于 [hiprint 2.5.4](http://hiprint.io/)) 当时只是为�
 
 ## vue-plugin-hiprint
 
-> [✨ 立即体验](https://ccsimple.github.io/vue-plugin-hiprint/) <br/><br/> [🌈 更新日志](CHANGELOG.md) <br/><br/> [🐛 常见问题(入门必看!)](#常见问题) ⚠️⚠️ [📕 系列教程文章(入门必看!)](#常见问题) <br/><br/> [🚀 项目生态(打印客户端、node 服务端、uniapp)](#插件生态)
-
-> [🔥1.征集模板、2.admin 模板集成示例、3.插件集成; ==> 点我 🔥](#交流群)
-
-> [❤️‍🔥 付费技术支持、项目合作 ==> 点我 ❤️‍🔥❤️‍](#交流群)
+> [✨ 立即体验](https://ccsimple.github.io/vue-plugin-hiprint/) <br/><br/> [🌈 更新日志](CHANGELOG.md) <br/><br/> [🐛 常见问题(入门必看!)](#常见问题) ⚠️⚠️ [📕 系列教程文章(入门必看!)](#文章链接) <br/><br/> [🚀 项目生态(打印客户端、node 服务端、uniapp)](#插件生态)
 
 > hiprint for Vue2.x / Vue3.x (基于 jQuery, 理论上其他框架可用。[react demo 分支](https://github.com/CcSimple/vue-plugin-hiprint/tree/react_demo))
 
@@ -56,31 +52,12 @@ vue-plugin-hiprint (基于 [hiprint 2.5.4](http://hiprint.io/)) 当时只是为�
 
 ## 文章链接
 
-快速入门: [一文彻底入门可视化打印 vue-plugin-hiprint](https://mp.weixin.qq.com/s/R8juiaQsLhMmyZebv55tUA)
+2元快速入门: [一文彻底入门可视化打印 vue-plugin-hiprint](https://mp.weixin.qq.com/s/R8juiaQsLhMmyZebv55tUA)
 
-入门篇: [【vue-plugin-hiprint】使用-入门篇](https://mp.weixin.qq.com/s/4N4f7CkxodA-fuTJ_FbkOQ)
+> 更多文章见公众号、小程序(文章,服务端预览,云打印)
 
-进阶篇: [【vue-plugin-hiprint】使用-进阶篇](https://mp.weixin.qq.com/s/LYZP2iqV0gy4m76mttplAw)
-
-provider: [【vue-plugin-hiprint】如何自定义可拖拽元素 provider](https://mp.weixin.qq.com/s/n9i1j8hhVJvnlfJRPRtWog)
-
-打印篇: [【vue-plugin-hiprint】使用-打印篇](https://mp.weixin.qq.com/s/P-Zz8YfELmRNi4EuED4QmA)
-
-参数篇: [【vue-plugin-hiprint】使用-参数篇](https://mp.weixin.qq.com/s/vfgSG62tAXn7Ot7y3x68fw)
-
-实战动态 provider: [【vue-plugin-hiprint】实战-动态 provider](https://mp.weixin.qq.com/s/UVkhul1tynjaUjdC_NaHfw)
-
-实战动态模板: [【vue-plugin-hiprint】实战-动态模板](https://mp.weixin.qq.com/s/JXXC9Fyy_PgPXrwh1mDBTQ)
-
-常见问题汇总 ①: [【vue-plugin-hiprint】常见问题汇总 ①](https://mp.weixin.qq.com/s/E-ZfuKLH3-GvKn4AosRvaw)
-
-常见问题汇总 ②: [【vue-plugin-hiprint】常见问题汇总 ②](https://mp.weixin.qq.com/s/UEnr24bB_P6KmpZ7iZmYvA)
-
-常见问题汇总 ③: [【vue-plugin-hiprint】常见问题汇总 ③](https://mp.weixin.qq.com/s/lRimQ-cjuwN3mg6RicPyag)
-
-hiprint 官方文档(看基础,与本项目有较多差异)：[http://hiprint.io/docs/start](http://hiprint.io/docs/start)
-
-本人写的部分文档: [https://ccsimple.github.io/sv-print-docs/config/hiprint.html](https://ccsimple.github.io/sv-print-docs/config/hiprint.html)
+![image](./res/ww.png)
+![image](./res/wmp.jpg)
 
 ## 安装使用
 
