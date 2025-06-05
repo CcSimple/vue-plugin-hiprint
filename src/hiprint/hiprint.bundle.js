@@ -50,13 +50,9 @@ import {io} from "socket.io-client";
 //引入标尺
 import lImg from "./css/image/l_img.svg";
 import vImg from "./css/image/v_img.svg";
-// pdf
-import {jsPDF} from "jspdf";
-import html2canvas from "@wtto00/html2canvas";
+
 // 数字转中文,大写,金额
 import Nzh from "nzh/dist/nzh.min.js";
-// 解析svg 到 canvas, 二维码条形码需要
-import Canvg from 'canvg';
 // 默认自定义拖拽列表
 import defaultTypeProvider from "./etypes/default-etyps-provider";
 
@@ -10844,67 +10840,12 @@ var hiprint = function (t) {
         t.map(function (t, n) {
           e.imageToBase64($(n));
         });
-      }, t.prototype.toPdf = function (t, e, options) {
-        var i = this;
-        var dtd = $.Deferred();
-        var isDownload = true;
-        if (this.printPanels.length) {
-          var r = o.a.mm.toPt(this.printPanels[0].width),
-            a = o.a.mm.toPt(this.printPanels[0].height),
-            p = $.extend({
-              scale: 2,
-              width: o.a.pt.toPx(r),
-              x: 0,
-              y: 0,
-              useCORS: !0
-            }, options || {}),
-            s = new jsPDF({
-              orientation: 1 == this.getOrient(0) ? "portrait" : "landscape",
-              unit: "pt",
-              format: this.printPanels[0].paperType ? this.printPanels[0].paperType.toLocaleLowerCase() : [r, a]
-            }),
-            l = this.getHtml(t, options);
-          if (options && undefined != options.isDownload) {
-            isDownload = options.isDownload
-          }
-          this.createTempContainer();
-          var u = this.getTempContainer();
-          this.svg2canvas(l), u.html(l[0]);
-          var d = u.find(".hiprint-printPanel .hiprint-printPaper").length;
-          $(l).css("position:fixed"), html2canvas(l[0], p).then(function (t) {
-            var n = t.getContext("2d");
-            n.mozImageSmoothingEnabled = !1, n.webkitImageSmoothingEnabled = !1, n.msImageSmoothingEnabled = !1, n.imageSmoothingEnabled = !1;
-
-            for (var o = t.toDataURL("image/jpeg"), p = 0; p < d; p++) {
-              s.addImage(o, "JPEG", 0, 0 - p * a, r, d * a), p < d - 1 && s.addPage();
-            }
-            if (isDownload) {
-              i.removeTempContainer(), e.indexOf(".pdf") > -1 ? s.save(e) : s.save(e + ".pdf");
-            } else {
-              i.removeTempContainer();
-              let type = options.type || 'blob';
-              var pdfFile = s.output(type);
-              dtd.resolve(pdfFile);
-            }
-          });
-        }
-        return dtd.promise();
       }, t.prototype.createTempContainer = function () {
         this.removeTempContainer(), $("body").prepend($('<div class="hiprint_temp_Container" style="overflow:hidden;height: 0px;box-sizing: border-box;"></div>'));
       }, t.prototype.removeTempContainer = function () {
         $(".hiprint_temp_Container").remove();
       }, t.prototype.getTempContainer = function () {
         return $(".hiprint_temp_Container");
-      }, t.prototype.svg2canvas = function (t) {
-        var that = this;
-        t.find("svg").each(function (t, e) {
-          var n = e.parentNode, p = that.parentWidthHeight(n),
-            i = document.createElement("canvas");
-          i.width = p.width, i.height = p.height;
-          var ctx = i.getContext('2d'),
-            str = new XMLSerializer().serializeToString(e);
-          Canvg.fromString(ctx, str).render(), $(e).before(i), n.removeChild(e);
-        });
       }, t.prototype.parentWidthHeight = function (t) {
         if (t.style.width.endsWith('%') || t.style.height.endsWith('%')) {
           if (t.className != 'hiprint-printPaper-content') {
