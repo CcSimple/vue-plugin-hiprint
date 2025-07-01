@@ -48,7 +48,7 @@ vue-plugin-hiprint (基于 [hiprint 2.5.4](http://hiprint.io/)) 当时只是为�
 > - 使用直接客户端时,本地开发连接没问题,部署到线上出现跨域无法连接打印客户端问题:
 > - [线上跨域问题,请升级 https! 说明:https://www.cnblogs.com/daysme/p/15493523.html](https://www.cnblogs.com/daysme/p/15493523.html)
 > - 如需提交 PR 请前往 github 合并后可自动发布 npm 包并同步代码到 gitee
-> - vue-plugin-hiprint 包不包含 UI 界面,需要自行处理。如果想更快速引入请查看 [sv-print 组件库](https://ccsimple.github.io/sv-print-docs/)
+> - vue-plugin-hiprint 包不包含 UI 界面,需要自行处理。如果想更快速引入请查看 [sv-print 组件库](https://www.ibujian.cn/svp/)
 
 ## 文章链接
 
@@ -249,12 +249,20 @@ hiPrintPlugin.disAutoConnect();
 
 /// 提供的全局方法：
 
-/// provider 可为null  args: 同模板对应调用 print 方法
+// this.$pluginName == hiprint 全局对象
+let hiprintTemplate = this.$pluginName.PrintTemplate({
+  template: {}, // 模板json [对象]
+});
+hiprintTemplate.print({name:'i不简'});
+
+/// provider 不能为null, 可以为 undefined  args: 同模板对应调用 print 方法
 
 // 1. 打印
-this.$pluginName.print(provider, templateJson, ...args);
+this.$print(undefined, templateJson, ...args);
+this.$print(provider, templateJson, ...args);
 // 2. 直接打印
-this.$pluginName.print2(provider, templateJson, ...args);
+this.print2(undefined, templateJson, ...args);
+this.print2(provider, templateJson, ...args);
 ```
 
 ## jQuery/uniapp 项目使用
