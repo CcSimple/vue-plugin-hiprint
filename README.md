@@ -418,7 +418,16 @@ hiprintTemplate.on("printError", function (data) {
 });
 ```
 
-> i18n 设置 ⬆️ 0.0.55-beta8
+> 直接打印 地址端口 与 Token 设置
+
+```js
+hiprint.init({
+  host: "http://localhost:17521", // 可在此处设置连接地址与端口号
+  token: "token", // 可在此处设置连接 token 可缺省
+});
+```
+
+## i18n 设置 ^0.0.55-beta8
 
 原生为简体中文，英语、德语、西班牙语、法语、意大利语、日语、俄语、繁体中文皆为 AI 机翻，欢迎帮助 [订正](https://github.com/CcSimple/vue-plugin-hiprint/tree/main/src/i18n)。
 
@@ -427,15 +436,6 @@ hiprintTemplate.on("printError", function (data) {
 ```js
 hiprint.init({
   lang: "en", // 设置语言 ['cn', 'en', 'de', 'es', 'fr', 'it', 'ja', 'ru', 'cn_tw']
-});
-```
-
-> 直接打印 地址端口 与 Token 设置
-
-```js
-hiprint.init({
-  host: "http://localhost:17521", // 可在此处设置连接地址与端口号
-  token: "token", // 可在此处设置连接 token 可缺省
 });
 ```
 
@@ -473,6 +473,8 @@ $("#hiwprint_iframe").css("visibility", "hidden");
 ```
 
 ## 配套直接打印客户端[electron-hiprint](https://gitee.com/CcSimple/electron-hiprint)
+
+### [electron-hiprint api](./apiDoc.md)
 
 > 使用本项目,请使用如下样子的直接打印客户端
 

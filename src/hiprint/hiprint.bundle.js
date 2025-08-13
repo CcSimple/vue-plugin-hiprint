@@ -11304,7 +11304,7 @@ var hiprint = function (t) {
 
   function getClientInfo(c) {
     p.a.instance.clear("clientInfo");
-    p.a.instance.on("getClientInfo", c);
+    p.a.instance.on("clientInfo", c);
     hiwebSocket.getClientInfo()
   }
 
