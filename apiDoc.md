@@ -497,7 +497,7 @@ socket.on("render-jpeg-error", (data) => {
 });
 ```
 
-# 4. 写在最后
+## 4. 写在最后
 
 [hiprint](https://github.com/hinnncom/hiprint) 原包中并没有内置 [socket.io-client](https://socket.io/zh-CN/docs/v4/client-api/)，`vue-plugin-hiprint` 默认内置，并提供 `print2`、`refreshPrinterList` 等 api 旨在方便用户，但 api 文档四纷五落，虽然 `electron-hiprint` 有非常全面的 api 文档，但不少用户反馈 `vue-plugin-hiprint`、`electron-hiprint` 和 `node-hiprint-transit` 的文档各有不同，不知道应该以哪个为尊，故此次对 `vue-plugin-hiprint` api 文档进行编写完善。
 
