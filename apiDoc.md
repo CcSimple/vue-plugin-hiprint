@@ -501,6 +501,6 @@ socket.on("render-jpeg-error", (data) => {
 
 [hiprint](https://github.com/hinnncom/hiprint) 原包中并没有内置 [socket.io-client](https://socket.io/zh-CN/docs/v4/client-api/)，`vue-plugin-hiprint` 默认内置，并提供 `print2`、`refreshPrinterList` 等 api 旨在方便用户，但 api 文档四纷五落，虽然 `electron-hiprint` 有非常全面的 api 文档，但不少用户反馈 `vue-plugin-hiprint`、`electron-hiprint` 和 `node-hiprint-transit` 的文档各有不同，不知道应该以哪个为尊，故此次对 `vue-plugin-hiprint` api 文档进行编写完善。
 
-本质上所有 api 都只需要获取到 `hiwebSocket.socket` 按 `electron-hiprint` 文档调用即可。
+本质上所有 API 都只需要获取到 `hiwebSocket.socket` 按 `electron-hiprint` 文档调用即可。
 
 以上内容如有错误，欢迎 PR 或 issue 指正。
