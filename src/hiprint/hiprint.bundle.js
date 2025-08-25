@@ -9865,9 +9865,9 @@ var hiprint = function (t) {
             console.log('pasteJson success');
             o.a.event.trigger("hiprintTemplateDataChanged_" + n.templateId, "复制");
             // 点击克隆出来的元素
+            ele.designTarget.trigger($.Event('blur'))
             a.designTarget.children('.resize-panel').trigger($.Event('click'));
             a.designTarget.trigger($.Event('focus'))
-            ele.designTarget.trigger($.Event('blur'))
           })
         } catch (e) {
           console.error('pasteJson error', e);
