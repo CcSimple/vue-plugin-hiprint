@@ -459,7 +459,7 @@ hiprint.print2(
       // 支持多模板，在此处继续添加如上格式即可
     ],
     options: {
-      clientId: "HB2OhMUEJuQx9YdxAAAV", // 客户端 ID
+      client: "HB2OhMUEJuQx9YdxAAAV", // 客户端 ID
     },
   },
   (res) => {
