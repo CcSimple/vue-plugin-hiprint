@@ -10623,10 +10623,10 @@ var hiprint = function (t) {
         e || (e = {});
         var i = $('<div class="hiprint-printTemplate"></div>');
         t && t.constructor === Array ? t.forEach(function (data,dataIndex) {
-          data && n.printPanels.forEach(function (n, o) {
-            i.append(n.getHtml(data, e));
+          data && n.printPanels.forEach(function (printPanel, o) {
+            i.append(printPanel.getHtml(data, e));
             // 批量打印 续排页码
-            if (dataIndex == t.length - 1) {
+            if (dataIndex == t.length - 1 && o == n.printPanels.length - 1) {
               delete hinnn._paperList;
             }
           });
