@@ -64,6 +64,7 @@
     "jspdf": "^2.5.1",
     "lodash": "^4.17.21",
     "nzh": "^1.0.8",
-    "socket.io-client": "^4.5.1"
+    "socket.io-client": "^4.5.1",
+    "dom-to-image-more": "3.7.2"
   }
 }

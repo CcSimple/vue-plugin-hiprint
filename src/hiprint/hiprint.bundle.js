@@ -52,7 +52,7 @@ import lImg from "./css/image/l_img.svg";
 import vImg from "./css/image/v_img.svg";
 // pdf
 import {jsPDF} from "jspdf";
-import html2canvas from "@wtto00/html2canvas";
+import domtoimage from 'dom-to-image-more'
 // 数字转中文,大写,金额
 import Nzh from "nzh/dist/nzh.min.js";
 // 解析svg 到 canvas, 二维码条形码需要
@@ -10873,7 +10873,7 @@ var hiprint = function (t) {
           var u = this.getTempContainer();
           this.svg2canvas(l), u.html(l[0]);
           var d = u.find(".hiprint-printPanel .hiprint-printPaper").length;
-          $(l).css("position:fixed"), html2canvas(l[0], p).then(function (t) {
+          $(l).css("position:fixed"), domtoimage.toCanvas(l[0], p).then(function (t) {
             var n = t.getContext("2d");
             n.mozImageSmoothingEnabled = !1, n.webkitImageSmoothingEnabled = !1, n.msImageSmoothingEnabled = !1, n.imageSmoothingEnabled = !1;
 
