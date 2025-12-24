@@ -56,7 +56,6 @@
   },
   "dependencies": {
     "@claviska/jquery-minicolors": "^2.3.6",
-    "@wtto00/html2canvas": "^1.4.3",
     "bwip-js": "^4.0.0",
     "canvg": "^3.0.10",
     "jquery": "^3.6.0",
@@ -64,6 +63,7 @@
     "jspdf": "^2.5.1",
     "lodash": "^4.17.21",
     "nzh": "^1.0.8",
-    "socket.io-client": "^4.5.1"
+    "socket.io-client": "^4.5.1",
+    "dom-to-image-more": "3.7.2"
   }
 }
