@@ -247,5 +247,6 @@
   "垂直间距%s": "Vertical Spacing %s",
   "水平间距%s": "Horizontal Spacing %s",
   "边框圆角": "Border Radius",
-  "显示码值": "Display Code value"
+  "显示码值": "Display Code value",
+  "当前需要高度": "Current Required Height"
 }
