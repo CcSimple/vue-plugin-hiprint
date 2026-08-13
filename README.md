@@ -614,7 +614,7 @@ hiwebSocket.setHost("https://printjs.cn:17521", "vue-plugin-hiprint");
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=CcSimple/vue-plugin-hiprint&type=Date)](https://star-history.com/#CcSimple/vue-plugin-hiprint&Date)
+[![Star History Chart](https://star-history.dera.page/svg?repos=CcSimple/vue-plugin-hiprint&type=Date)](https://star-history.dera.page/#CcSimple/vue-plugin-hiprint&Date)
 
 ## 分支说明
 
