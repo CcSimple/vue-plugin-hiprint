@@ -4,6 +4,7 @@
 ### 💐  同时自动更新 GitHub Pages 同步 Gitee;
 ### 💐  感谢各位贡献者的支持。 🔥
 ### 💐  希望各位多看看文档、文章、更新日志;  📢 本页面支持 Ctrl/Command + F 搜索
+### 💐  技术支持 更多优化功能 请看[sv-print版本(sv-print.ibujian.cn)](https://sv-print.ibujian.cn/)
 
 ## 0.0.62 (2026-10-08)
 > 感谢各位提交 PR 的码友们! 感谢~
