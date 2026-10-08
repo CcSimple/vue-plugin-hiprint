@@ -3388,13 +3388,25 @@ var hiprint = function (t) {
         } else {
           this.isSelect = !1;
           this.target = $(`<div class="hiprint-option-item hiprint-option-item-row">\n            <div class="hiprint-option-item-label">\n            ${i18n.__('字段名')}\n            </div>\n            <div class="hiprint-option-item-field">\n            <input type="text" placeholder="${i18n.__('请输入字段名')}" class="auto-submit">\n            </div>\n        </div>`);
+          this.target.find("input").on("blur", function () {
+            var v = $(this).val();
+            if (v != null && v !== "") {
+              var trimmed = v.toString().trim();
+              trimmed !== v && $(this).val(trimmed);
+            }
+          });
         }
 
         return this.target;
       }, t.prototype.getValue = function () {
-        return (this.isSelect ? this.target.find("select").val() : this.target.find("input").val()) || void 0;
+        var val = this.isSelect ? this.target.find("select").val() : this.target.find("input").val();
+        if (val != null && val !== "") {
+          val = val.toString().trim();
+          return val || void 0;
+        }
+        return void 0;
       }, t.prototype.setValue = function (t) {
-        this.isSelect ? t && (this.target.find('option[value="' + t + '"]').length || this.target.find("select").prepend('<option value="' + t + '" >' + t + "</option>"), this.target.find("select").val(t)) : this.target.find("input").val(t);
+        this.isSelect ? t && (this.target.find('option[value="' + t + '"]').length || this.target.find("select").prepend('<option value="' + t + '" >' + t + "</option>"), this.target.find("select").val(t)) : this.target.find("input").val(t != null && t !== "" ? t.toString().trim() : t);
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;

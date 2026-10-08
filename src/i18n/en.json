@@ -186,6 +186,8 @@
   "一行多组排列": "Multi Group Direction",
   "横排": "Horizontal",
   "竖排": "Vertical",
+  "顺序填充": "Sequential",
+  "横排填充": "Horizontal",
   "表格头显示": "Table Header Display",
   "每页显示": "Display Per Page",
   "首页显示": "Display On First Page",
