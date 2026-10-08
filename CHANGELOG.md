@@ -5,6 +5,90 @@
 ### 💐  感谢各位贡献者的支持。 🔥
 ### 💐  希望各位多看看文档、文章、更新日志;  📢 本页面支持 Ctrl/Command + F 搜索
 
+## 0.0.62 (2026-10-08)
+> 感谢各位提交 PR 的码友们! 感谢~
+
+> 本期无 CSS 变更，**无需**更新 print-lock.css
+
+<details>
+  <summary>01. 🌈 新增 表格 一行多组填充方式 [顺序填充 / 横排填充]</summary>
+
+表格设置「一行多组」后，新增「多组填充方式」选项，用来控制多组数据怎么取行：
+
+- `顺序填充`：原有行为，逐组取满再换下一组（1、2、3 组依次填满）
+- `横排填充`：所有组横向同步推进（1、2、3 组同时各取一行）
+
+横排填充按行序号取数并自然衔接分页，不会出现跨页重复渲染或多渲染行的情况。
+
+@SeptemberTwelve ([#220](https://github.com/CcSimple/vue-plugin-hiprint/pull/220))
+</details>
+
+<details>
+  <summary>02. 🐛️ fix 修复「多组填充方式」下拉选项在非中文环境下显示为中文</summary>
+
+上一条新增的选项标签（顺序填充 / 横排填充）在 9 个语言包中均缺少对应条目，非中文界面会回退显示中文。已补齐中文、繁体中文、日语、德语、英语、西班牙语、意大利语、法语、俄语翻译。
+</details>
+
+<details>
+  <summary>03. 🐛️ fix 修复生成 PDF 时 table 的 rowspan 属性不生效问题</summary>
+
+PDF 生成改用 `dom-to-image-more` 替代 `@wtto00/html2canvas`，修复表格 `rowspan` 合并单元格在 PDF 中失效的问题。
+
+@Wang-Huan66 ([#184](https://github.com/CcSimple/vue-plugin-hiprint/pull/184))
+</details>
+
+<details>
+  <summary>04. 🐛️ fix 修复多面板下批量打印出现页码错误</summary>
+
+批量打印最后一条数据时，仅在最后一个面板渲染完成后才清理续排页码缓存，避免多面板场景页码错乱。
+
+@ASweetBread ([#182](https://github.com/CcSimple/vue-plugin-hiprint/pull/182))
+</details>
+
+<details>
+  <summary>05. 🐛️ fix 修复多表头列合并后， 设计和预览的列宽不一致的问题</summary>
+
+非设计态且表头为 `first` / `none` 时才按完整表头结构渲染，修复多表头列合并后列宽计算错误。
+
+@xiaojun ([#166](https://github.com/CcSimple/vue-plugin-hiprint/pull/166))
+</details>
+
+<details>
+  <summary>06. 🐛️ fix 修复模板数据复制后未选中当前元素的问题</summary>
+
+复制元素后触发新克隆元素的 `click` 与设计目标元素的 `focus`、原元素的 `blur`，并调整执行顺序，确保焦点与选中态正确。
+
+@Xavier ([#169](https://github.com/CcSimple/vue-plugin-hiprint/pull/169))
+</details>
+
+<details>
+  <summary>07. ✨ 调整优化 基础设置中「字段名」输入框自动去掉两端空格</summary>
+
+输入框失焦时自动 trim，并同步在读取 / 回填值时兜底 trim，避免因误输入空格导致模板取值匹配不到数据。
+
+@funing-cmd
+</details>
+
+<details>
+  <summary>08. ✨ 调整优化 「当前需要高度」选项补齐多语言翻译</summary>
+
+@pengym ([#187](https://github.com/CcSimple/vue-plugin-hiprint/pull/187))
+</details>
+
+<details>
+  <summary>09. ✨ 调整优化 发布流程升级为 npm Trusted Publishing (OIDC)</summary>
+
+不再依赖长期有效的 `NPM_TOKEN`，改用 OIDC 换取短期凭据发布，并新增待发布版本校验（版本号未变化 / 版本已存在则中止）；同时移除 beta 流程的 Gitee Pages 部署。
+
+发布仍需在 npm 侧配置 Trusted Publisher，Environment 分别为 `npm-demo`（稳定版）与 `npm-beta`（预发布版）。
+</details>
+
+<details>
+  <summary>10. 📖 完善 打印相关 API 文档与首页布局</summary>
+
+新增 `apiDoc.md` 打印 API 文档，修正 README 表述；首页调整为手动切换功能示例，长文本不再强制换行。
+</details>
+
 ## 0.0.60 (2025-03-24)
 > 使用此版本 请更新最新的 print-lock.css
 
