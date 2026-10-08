@@ -8,9 +8,17 @@ on:
 jobs:
   deploy-gh-pages:
     runs-on: ubuntu-latest
+    # 必须与 npm 包 Trusted Publisher 里填写的 Environment name 完全一致
+    environment: npm-demo
+    permissions:
+      contents: write # 推送版本号变更
+      id-token: write # Trusted Publishing 换取 npm 短期凭据所必需
+    env:
+      # webpack 4 用 md4 计算模块 hash，OpenSSL 3 已移除该算法
+      NODE_OPTIONS: --openssl-legacy-provider
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -26,15 +34,25 @@ jobs:
           echo "${{ github.ref }}"
 
       - name: 设置 Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
-          registry-url: 'https://registry.npmjs.org'
+          # Trusted Publishing 要求 >= 22.14
+          node-version: 22
+          cache: npm
+          # 仓库未提交 lockfile，只能拿 package.json 当缓存键
+          cache-dependency-path: package.json
+          # 这里不能写 registry-url：setup-node 会顺带注入占位 NODE_AUTH_TOKEN，
+          # npm 看到它就优先走 token 认证，OIDC 交换不再触发
 
       - name: 安装依赖
         run: |
           echo "${{ github.ref }}"
+          # package-lock.json 未入库，仓库没有 lockfile，npm ci 会直接失败
           npm install
+
+      - name: 读取当前版本
+        id: current
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
 
       - name: new-version
         if: ${{ startsWith(github.ref, 'refs/tags/0.') }}
@@ -43,6 +61,24 @@ jobs:
           git config --local user.name "github-actions[bot]"
           npm run up-version newVersion
 
+      - name: 校验待发布版本
+        if: ${{ startsWith(github.ref, 'refs/tags/0.') }}
+        env:
+          OLD_VERSION: ${{ steps.current.outputs.version }}
+        run: |
+          set -euo pipefail
+          NAME=$(node -p "require('./package.json').name")
+          NEW=$(node -p "require('./package.json').version")
+          echo "::notice::$NAME $OLD_VERSION -> $NEW"
+          if [ "$NEW" = "$OLD_VERSION" ]; then
+            echo "::error::版本号未变化，scripts/change-version.js 可能执行失败"
+            exit 1
+          fi
+          if [ -n "$(npm view --registry https://registry.npmjs.org/ "$NAME@$NEW" version 2>/dev/null)" ]; then
+            echo "::error::版本 $NEW 已发布过，请勿重复发布"
+            exit 1
+          fi
+
       - name: push new changes
         if: ${{ startsWith(github.ref, 'refs/tags/0.') }}
         uses: ad-m/github-push-action@master
@@ -50,11 +86,20 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: main
 
+      - name: 构建产物
+        if: ${{ startsWith(github.ref, 'refs/tags/0.') }}
+        run: npm run build
+
+      - name: 升级 npm
+        if: ${{ startsWith(github.ref, 'refs/tags/0.') }}
+        # Trusted Publishing 要求 npm >= 11.5.1，runner 自带的版本不满足
+        run: npm install -g npm@^11.5.1
+
       - name: pubNew
         if: ${{ startsWith(github.ref, 'refs/tags/0.') }}
-        run: npm run pub
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        # 不传 NODE_AUTH_TOKEN，npm 会自动用 OIDC 换短期凭据；
+        # 也不传 --tag，万一版本算成预发布，npm 会报错而不是污染 latest
+        run: npm publish --provenance --access public --registry https://registry.npmjs.org/
 
       - name: gitee同步
         uses: wearerequired/git-mirror-action@master
