@@ -143,12 +143,3 @@ jobs:
         with:
           source-repo: git@github.com:CcSimple/vue-plugin-hiprint.git
           destination-repo: git@gitee.com:CcSimple/vue-plugin-hiprint.git
-
-      - name: giteePages
-        if: ${{ steps.check_diff.outputs.diff || steps.check_diff2.outputs.diff }}
-        uses: yanglbme/gitee-pages-action@master
-        with:
-          gitee-username: CcSimple
-          gitee-password: ${{ secrets.GITEE_PASSWORD }}
-          gitee-repo: CcSimple/vue-plugin-hiprint
-          branch: gh-pages
