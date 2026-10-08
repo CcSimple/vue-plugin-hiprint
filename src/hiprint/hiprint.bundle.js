@@ -3388,25 +3388,13 @@ var hiprint = function (t) {
         } else {
           this.isSelect = !1;
           this.target = $(`<div class="hiprint-option-item hiprint-option-item-row">\n            <div class="hiprint-option-item-label">\n            ${i18n.__('字段名')}\n            </div>\n            <div class="hiprint-option-item-field">\n            <input type="text" placeholder="${i18n.__('请输入字段名')}" class="auto-submit">\n            </div>\n        </div>`);
-          this.target.find("input").on("blur", function () {
-            var v = $(this).val();
-            if (v != null && v !== "") {
-              var trimmed = v.toString().trim();
-              trimmed !== v && $(this).val(trimmed);
-            }
-          });
         }
 
         return this.target;
       }, t.prototype.getValue = function () {
-        var val = this.isSelect ? this.target.find("select").val() : this.target.find("input").val();
-        if (val != null && val !== "") {
-          val = val.toString().trim();
-          return val || void 0;
-        }
-        return void 0;
+        return (this.isSelect ? this.target.find("select").val() : this.target.find("input").val()) || void 0;
       }, t.prototype.setValue = function (t) {
-        this.isSelect ? t && (this.target.find('option[value="' + t + '"]').length || this.target.find("select").prepend('<option value="' + t + '" >' + t + "</option>"), this.target.find("select").val(t)) : this.target.find("input").val(t != null && t !== "" ? t.toString().trim() : t);
+        this.isSelect ? t && (this.target.find('option[value="' + t + '"]').length || this.target.find("select").prepend('<option value="' + t + '" >' + t + "</option>"), this.target.find("select").val(t)) : this.target.find("input").val(t);
       }, t.prototype.destroy = function () {
         this.target.remove();
       }, t;
@@ -4935,6 +4923,24 @@ var hiprint = function (t) {
         this.target.remove();
       }, t;
     }(),
+    gd = function () {
+      function t() {
+        this.name = "gridColumnsDirection";
+      }
+
+      return t.prototype.createTarget = function () {
+        return this.target = $(`<div class="hiprint-option-item">\n        <div class="hiprint-option-item-label">\n        ${i18n.__('一行多组排列')}\n        </div>\n        <div class="hiprint-option-item-field">\n        <select class="auto-submit">\n        <option value="" >${i18n.__('顺序填充')}</option>\n        <option value="horizontal" >${i18n.__('横排填充')}</option>\n        </select>\n        </div>\n    </div>`), this.target;
+      }, t.prototype.getValue = function () {
+        var t = this.target.find("select").val();
+        if (t) return t.toString();
+      }, t.prototype.css = function (t, e) {
+        return null;
+      }, t.prototype.setValue = function (t) {
+        this.target.find("select").val(t);
+      }, t.prototype.destroy = function () {
+        this.target.remove();
+      }, t;
+    }(),
     ith = function () {
       function t() {
         this.name = "tableHeaderRepeat";
@@ -5389,7 +5395,7 @@ var hiprint = function (t) {
       t.init(), t.printElementOptionItems[e.name] = e;
     }, t.getItem = function (e) {
       return t.init(), t.printElementOptionItems[e];
-    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new paperNumberContinue(), new watermarkOptions(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new borderRadius(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(),new textWrap(), new at(), new lt(), new panelLayoutOptions(), new ut(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new rowsColumnsMergeClean(), new groupSequenceContinue(), new groupFieldsFormatter(), new groupFormatter(), new groupFooterFormatter(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new stylerHeader(), new renderFormatter(), new _t(), new wt(), new maxRows(), new xt(), new tableColumnH(), new tableE(), new tableQRCodeLevel(), new tablept(), new tableSummaryTitle(), new tableSummaryText(), new tableSummaryColspan(), new tableSummary(), new tableSummaryAlign(), new tableSummaryNumFormat(), new tableSummaryFormatter(),new showCodeTitle(), new upperCase(), new barcodeType(), new qrcodeType(), new barColor(), new barTextMode(), new barWidth(), new barAutoWidth()], t;
+    }, t._printElementOptionItems = [new fontFamily(), new r(), new a(), new p(), new i(), new s(), new l(), new pt(), new u(), new d(), new c(), new h(), new f(), new g(), new m(), new d2(), new c2(), new v(), new y(), new b(), new E(), new qrCodeLevel(), new T(), new P(), new _(), new w(), new x(), new coordinate(), new widthHeight(), new C(), new imageFit(), new O(), new H(), new D(), new paperNumberContinue(), new watermarkOptions(), new I(), new R(), new pageBreak(), new M(), new M2(), new S(), new B(), new F(), new L(), new A(), new z(), new k(), new st(), new N(), new V(), new W(), new j(), new U(), new borderRadius(), new zIndex(), new K(), new G(), new q(), new X(), new Y(), new Q(), new J(), new Z(), new tt(), new et(), new nt(), new it(), new ot(),new textWrap(), new at(), new lt(), new panelLayoutOptions(), new ut(), new gd(), new ith(), new dt(), new ct(), new ht(), new ft(), new gt(), new mt(), new rowcolumns(), new rowsColumnsMergeClean(), new groupSequenceContinue(), new groupFieldsFormatter(), new groupFormatter(), new groupFooterFormatter(), new vt(), new yt(), new bt(), new Tt(), new Et(), new Pt(), new stylerHeader(), new renderFormatter(), new _t(), new wt(), new maxRows(), new xt(), new tableColumnH(), new tableE(), new tableQRCodeLevel(), new tablept(), new tableSummaryTitle(), new tableSummaryText(), new tableSummaryColspan(), new tableSummary(), new tableSummaryAlign(), new tableSummaryNumFormat(), new tableSummaryFormatter(),new showCodeTitle(), new upperCase(), new barcodeType(), new qrcodeType(), new barColor(), new barTextMode(), new barWidth(), new barAutoWidth()], t;
   }();
 }, function (t, e, n) {
   "use strict";
@@ -5820,6 +5826,22 @@ var hiprint = function (t) {
           isEnd: !1
         };
         var getGridColumns = this.options.getGridColumns();
+        // 横排填充: 数据源按组轮流填充(1,2,3 同时填), 支持多页
+        var isHorizontalFill = "horizontal" === this.options.getGridColumnsDirection();
+        if (isHorizontalFill) {
+          a.children("tr").each(function (idx) {
+            $(this).attr("data-gidx", idx);
+          });
+        }
+        function takeRow(u) {
+          if (isHorizontalFill) {
+            // 从剩余行中取属于本组(gidx % gridColumns === u)的第一行, 自然衔接分页, 避免跨页重复/多渲染
+            return a.find("tr").filter(function () {
+              return (+$(this).attr("data-gidx")) % getGridColumns === u;
+            }).first();
+          }
+          return a.find("tr:lt(1)");
+        }
         for (var l = [], u = 0; u < getGridColumns; u++) {
           for (var d = n.find(".hiprint-printElement-tableTarget:eq(" + u + ")"), c = void 0, h = []; ;) {
             // 不分页处理
@@ -5829,33 +5851,48 @@ var hiprint = function (t) {
                 height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
                 isEnd: !0
               }, t && this.options.autoCompletion && (this.autoCompletion(p, d, tfh), s = n.outerHeight()); else {
-                var f = a.find("tr:lt(1)");
-                if (h.length == 0 && headTr) {
-                  d.find("tbody").append(headTr);
+                var f = takeRow(u);
+                if (!f || !f.length) {
+                  c = {
+                    height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
+                    isEnd: !0
+                  };
+                  t && this.options.autoCompletion && (this.autoCompletion(p, d, tfh), s = n.outerHeight());
+                } else {
+                  if (h.length == 0 && headTr) {
+                    d.find("tbody").append(headTr);
+                  }
+                  d.find("tbody").append(f);
+                  var g = f.data("rowData");
+                  l.push(g), h.push(g), s = n.outerHeight();
+                  0 == trLen && (a.prepend(f), l.pop(), h.pop(), c = {
+                    height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
+                    isEnd: !1
+                  })
                 }
-                d.find("tbody").append(f);
-                var g = f.data("rowData");
-                l.push(g), h.push(g), s = n.outerHeight();
-                0 == trLen && (a.prepend(f), l.pop(), h.pop(), c = {
-                  height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
-                  isEnd: !1
-                })
               }
             } else {
               if (s <= p) if (0 == a.find("tr").length) c = {
                 height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
                 isEnd: !0
               }, t && this.options.autoCompletion && (this.autoCompletion(p, d, tfh), s = d.outerHeight()); else {
-                var f = a.find("tr:lt(1)");
-                if (that.options.rowsColumnsMerge && (o > 0 || u > 0) && h.length == 0) {
-                  f = that.fixMergeSpan(f, a);
+                var f = takeRow(u);
+                if (!f || !f.length) {
+                  c = {
+                    height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
+                    isEnd: !0
+                  };
+                } else {
+                  if (that.options.rowsColumnsMerge && (o > 0 || u > 0) && h.length == 0) {
+                    f = that.fixMergeSpan(f, a);
+                  }
+                  d.find("tbody").append(f);
+                  var g = f.data("rowData");
+                  l.push(g), h.push(g), (((s = d.outerHeight(), "last" == this.options.tableFooterRepeat ? s : s += tfh) > p) || (this.options.maxRows && h.length > +this.options.maxRows)) && (a.prepend(f), l.pop(), h.pop(), s = d.outerHeight(), c = {
+                    height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
+                    isEnd: !1
+                    });
                 }
-                d.find("tbody").append(f);
-                var g = f.data("rowData");
-                l.push(g), h.push(g), (((s = d.outerHeight(), "last" == this.options.tableFooterRepeat ? s : s += tfh) > p) || (this.options.maxRows && h.length > +this.options.maxRows)) && (a.prepend(f), l.pop(), h.pop(), s = d.outerHeight(), c = {
-                  height: _assets_plugins_hinnn__WEBPACK_IMPORTED_MODULE_3__.a.px.toPt(s),
-                  isEnd: !1
-                });
               }
             }
 
@@ -6770,6 +6807,8 @@ var hiprint = function (t) {
         }), t;
       }, e.prototype.getGridColumns = function () {
         return this.gridColumns || 1;
+      }, e.prototype.getGridColumnsDirection = function () {
+        return this.gridColumnsDirection || "";
       }, e.prototype.getPrintElementOptionEntity = function () {
         var e = t.prototype.getPrintElementOptionEntity.call(this);
         e.fields = this.fields;

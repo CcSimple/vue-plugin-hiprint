@@ -937,6 +937,10 @@
               hidden: false
             },
             {
+              name: 'gridColumnsDirection',
+              hidden: false
+            },
+            {
               name: 'tableBorder',
               hidden: false
             },
@@ -1081,6 +1085,10 @@
           hidden: false
         },
         {
+          name: 'gridColumnsDirection',
+          hidden: false
+        },
+        {
           name: 'tableHeaderRepeat',
           hidden: false
         },
@@ -1198,7 +1206,8 @@
         }
       ],
       default: {
-        width: 550
+        width: 550,
+        gridColumnsDirection: ''
       }
     },
     hline: {
